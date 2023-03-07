@@ -1,0 +1,45 @@
+.spotlight {
+  font-size: 12px;
+  margin-bottom: $margin-large;
+  //border-bottom: 1px solid #cccccc;
+  padding-bottom: $margin-large;
+
+  &:last-of-type {
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  &__section-title {
+    font-family: 'Roboto Slab', serif;
+    font-size: 48px;
+  }
+
+  &__user-image {
+
+  }
+  &__user-name {
+    color: $brand-blue;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  &__user-detail {
+    display: block;
+  }
+
+  &__user-detail {
+    display: block;
+  }
+
+  &__ratings {
+    margin: $margin-small 0;
+    margin-bottom: $margin-small ;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .spotlight {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}

@@ -1,0 +1,30 @@
+.slick {
+
+}
+
+.slick-arrow {
+  position: absolute;
+  bottom: -58px;
+  left: 50%;
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin-left: -18px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-radius: 100%;
+  transition: all .3s ease-in-out;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.21);
+  }
+}
+
+.slick-next {
+  margin-left: 18px;
+  padding: 4px 1px 1px 8px;
+}
+
+.slick-prev {
+  margin-left: -54px;
+  padding: 4px 3px 1px 0px;
+}

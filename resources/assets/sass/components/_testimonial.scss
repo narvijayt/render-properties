@@ -1,0 +1,24 @@
+.testimonial {
+
+  &__quote-container {
+    background-color: rgba(255, 255, 255, 0.21);
+    border-radius: 100%;
+    display: inline-block;
+    height: 70px;
+    padding: 15px 9px 9px 9px;
+    width: 70px;
+    margin-bottom: 25px;
+  }
+
+  &__quote-body {
+    font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+  }
+
+  &__quote-author {
+    font-weight: bold;
+  }
+}

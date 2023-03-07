@@ -1,0 +1,41 @@
+.util {
+	&__collapse {
+		margin-left: 0px;
+		margin-right: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+		border-radius: 0px;
+
+		&:first-child {
+			border-top-left-radius: 4px;
+			border-bottom-left-radius: 4px;
+		}
+		&:last-child {
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+		}
+	}
+
+	&__collapse > [class ^= "col-"] {
+		margin-left: 0px;
+		margin-right: 0px;
+		padding-left: 2px;
+		padding-right: 2px;
+	}
+
+	&__mb--small {
+		margin-bottom: $margin-small/2;
+	}
+
+	&__mb {
+		margin-bottom: $margin-small;
+	}
+
+	&__mb--large {
+		margin-bottom: $margin-small * 2;
+	}
+
+	&__section-header {
+		margin-bottom: 30px;
+	}
+}

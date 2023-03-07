@@ -1,0 +1,242 @@
+$color-brand-orange: #F1B332
+$color-gray: #eeeeee
+
+$conversations-tab-height: 60px
+$conversations-tab-recipient-font-size: 14px
+$conversations-tab-type-font-size: 11px
+$conversations-tab-location-font-size: 10px
+
+$messages-header-avatar-size: 60px
+$messages-header-recipient-font-size: 20px
+$messages-header-profile-link-font-size: 12px
+$messages-header-height: 80px
+$messages-header-padding: 0 0 10px 0
+
+body, html
+    height: 100%
+// min-height: 100%
+
+.util-block
+    display: block
+
+.container
+    padding: 10px
+
+.message-center
+    height: 70vh
+    position: relative
+    &__sidebar
+        height: 100%
+        border: 1px solid #eeeeee
+    &__sidebar-wrapper
+        height: 100%
+
+    &__toggle-button
+        width: 100%
+        background: $color-brand-orange
+        border: none
+        color: white
+        height: 50px
+        display: block
+        margin-bottom: 10px
+    &__no-conversation-selected
+        text-align: center
+        margin-top: $margin-large
+
+.conversations
+    margin-bottom: 0
+    list-style: none
+    padding: 0
+    &__tab
+        min-height: $conversations-tab-height
+        position: relative
+        cursor: pointer
+        border-bottom: 1px solid #eeeeee
+        &--active, &:hover
+            background-color: $color-brand-orange
+            color: white
+            transition: all .3s ease-in-out
+            .conversations__tab-content-badge
+                background-color: white
+                color: $color-brand-orange
+            .conversations__tab-content-location
+                color: white
+
+    &__tab-avatar-container
+        width: $conversations-tab-height
+        height: $conversations-tab-height
+        position: absolute
+        left: 0
+        top: 0
+
+    &__tab-avatar
+        width: 100%
+        height: auto
+
+    &__tab-content-container
+        margin-left: 70px
+        margin-right: 48px
+        min-height: $conversations-tab-height
+
+    &__tab-content-recipient
+        font-size: $conversations-tab-recipient-font-size
+        font-weight: bold
+        padding-top: 3px
+
+    &__tab-content-subject
+        font-size: 12px
+
+    &__tab-content-type
+        font-size: $conversations-tab-type-font-size
+        margin-bottom: 3px
+
+    &__tab-content-location
+        font-size: $conversations-tab-location-font-size
+        color: $color-gray
+
+    &__tab-content-badge
+        position: absolute
+        top: 50%
+        right: 10px
+        margin-top: -9px
+        background-color: $color-brand-orange
+
+
+// layout
+// @media screen and (max-width: 768px)
+.messages
+    height: 100%
+    display: flex
+    flex-direction: column
+    &-header
+        flex: 0 0 160px
+    &-body
+        // flex: 0 0 200px
+        flex: 1
+        // height: 200px
+    &-footer
+        flex: 0 0 45px
+
+
+.messages-header
+    // height: $messages-header-height
+    padding: $messages-header-padding
+    border-bottom: 1px solid #eeeeee
+    &:after
+        content: ''
+        display: table
+        clear: both
+    &__avatar-container
+        width: $messages-header-avatar-size
+        height: $messages-header-avatar-size
+        float: left
+        margin-left: 20px
+    &__avatar
+        width: 100%
+        height: auto
+        border-radius: 100%
+    &__content
+        margin-left: 100px
+    &__recipient
+        font-size: $messages-header-recipient-font-size
+        margin: 0 0 0 0
+        line-height: 1
+    &__subject
+        display: block
+        margin-top: 8px
+
+    &__user-type
+        display: block
+    &__profile-link
+        font-size: $messages-header-profile-link-font-size
+        color: $color-brand-orange
+        transition: all .3s ease-in-out
+        &:hover
+            color: lighten($color-brand-orange, 20%)
+
+.messages-list
+    padding: 0 15px
+    overflow: hidden
+    list-style: none
+    padding: 0
+    &__item
+        padding: 10px
+        margin: 10px 0
+        border-radius: 3px
+        &--recipient
+            background-color: #fcedcf
+            margin-right: 50px
+
+        &--self
+            background-color: #dbecc4
+            margin-left: 50px
+    &__item-author
+        font-size: 14px
+        font-weight: bold
+    &__item-timestamp
+        font-size: 11px
+
+.messages-footer
+    boder-top: 1px solid #eeeeee
+    &__input-container
+        margin: 5px 0
+        border: 1px solid $color-gray
+    &__input
+        width: 100%
+        display: block
+        resize: none
+        padding: 5px 10px
+        border: none
+        box-shadow: none
+    &__submit
+        background-color: $color-brand-orange
+        color: white
+        transition: all .3s ease-in-out
+        line-height: 24px
+        width: 80px
+        &:hover
+            background-color: lighten($color-brand-orange, 20%)
+            color: white
+
+@media screen and (max-width: 768px)
+    .message-center
+        &__sidebar
+            position: absolute
+            width: 100%
+            top: 0
+            left: -130%
+            z-index: 1000
+            background-color: white
+            transition: left .5s ease-in-out
+            &--active
+                left: 0
+
+        &__conversation
+
+@media screen and (min-width: 768px)
+    .message-center
+        &__toggle-button
+            display: none
+    .messages
+        &-header
+            flex: 0 0 110px
+
+    .messages-header
+        padding-top: 10px
+
+    .messages-body
+        padding-left: 20px
+    .messages-footer
+        padding-left: 20px
+
+    .message-center
+        display: flex
+        height: 600px
+        &__sidebar
+            flex: 0 0 300px
+            order: -1
+        &__conversation
+            height: 100%
+            flex: 1
+            //padding-left: 20px
+

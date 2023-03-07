@@ -1,0 +1,26 @@
+.ratings {
+  display: block;
+  &__icons {
+
+  }
+
+  &__icon {
+    &--large {
+      width: 23px;
+      display: inline-block;
+    }
+    &--normal {
+      width: 20px;
+      display: inline-block;
+    }
+    &--small {
+      width: 17px;
+      display: inline-block;
+    }
+    &--tiny {
+      width: 14px;
+      display: inline-block;
+    }
+  }
+
+}

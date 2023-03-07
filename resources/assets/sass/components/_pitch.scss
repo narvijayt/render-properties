@@ -1,0 +1,17 @@
+.pitch {
+  &__link {
+    display: block;
+    text-align: center;
+    margin-bottom: $margin-medium;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .pitch {
+    &__item {
+      &:first-of-type {
+        margin-bottom: 100px
+      }
+    }
+  }
+}

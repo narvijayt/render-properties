@@ -1,0 +1,41 @@
+.btn {
+  border: none;
+  transition: all .3s ease-in-out;
+
+  &-facebook {
+    background-color: #3B5998;
+    color: white;
+    &:hover {
+      background-color: lighten(#3B5998, 15%);
+      color: white
+    }
+  }
+
+  &-primary:hover {
+    background-color: lighten($brand-primary, 15%) !important;
+  }
+
+  &-success:hover {
+    background-color: lighten($brand-success, 15%) !important;
+  }
+
+  &-info:hover {
+    background-color: lighten($brand-info, 15%) !important;
+  }
+
+  &-warning:hover {
+    background-color: lighten($brand-warning, 15%) !important;
+  }
+
+  &-danger:hover {
+    background-color: lighten($brand-danger, 15%) !important;
+  }
+  &-switch:hover,
+  &-switch:active,
+  &-switch:focus,
+  &-switch:visited,
+  &-switch.active {
+    background-color: $brand-orange !important;
+    color: white !important;
+  }
+}

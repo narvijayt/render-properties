@@ -1,0 +1,42 @@
+.match-result {
+  min-height: 60px;
+  position: relative;
+  border: 1px solid #eeeeee;
+  &__image {
+    max-width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    img {
+      width: auto;
+      height: 48px;
+    }
+  }
+  &__content {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 75px;
+    //margin-left: 60px;
+    //margin-right: 100px;
+  }
+
+  &__name {
+
+  }
+
+  &__action-container {
+    //width: 150px;
+    //position: absolute;
+    //top: 0;
+    //right: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 20px;
+    text-align: right;
+  }
+
+  &__form-action {
+    display: inline;
+  }
+}

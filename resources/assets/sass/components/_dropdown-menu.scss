@@ -1,0 +1,15 @@
+.dropdown-menu {
+  & > li > a {
+    color: $brand-blue;
+    font-size: 12px;
+    margin: 6px 10px;
+    padding: 4px 15px !important;
+    transition: all .3s ease-in-out;
+    &:hover,
+    &:focus {
+      background-color: $brand-primary !important;
+      background-image: none;
+      color: white !important;
+    }
+  }
+}

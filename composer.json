@@ -1,0 +1,77 @@
+{
+    "name": "laravel/laravel",
+    "description": "The Laravel Framework.",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=7.1.0",
+        "anhskohbo/no-captcha": "^3.1",
+        "authorizenet/authorizenet": "~1.9.6",
+        "barryvdh/laravel-cors": "^0.11.0",
+        "intervention/image": "^2.4",
+        "laracasts/flash": "^3.0",
+        "laravel/cashier-braintree": "~2.0",
+        "laravel/framework": "5.4.30",
+        "laravel/socialite": "^3.0",
+        "laravel/tinker": "~1.0",
+        "maatwebsite/excel": "2.1.*",
+        "matthewbdaly/laravel-azure-storage": "^1.0",
+        "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "~2.6",
+        "silber/bouncer": "v1.0.0-beta.4",
+        "spatie/laravel-fractal": "^4.3",
+        "twilio/sdk": "^6.44",
+        "tymon/jwt-auth": "0.5.*",
+        "watson/rememberable": "^2.0"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^2.4",
+        "barryvdh/laravel-ide-helper": "^2.4",
+        "doctrine/dbal": "^3.6",
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~5.7"
+    },
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "API\\": "API/"
+        },
+        "files": [
+            "app/Helpers/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "php artisan key:generate"
+        ],
+        "post-install-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postInstall",
+            "php artisan optimize"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan optimize"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    }
+}

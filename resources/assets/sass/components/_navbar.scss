@@ -1,0 +1,76 @@
+.navbar {
+  a {
+    margin: 0;
+    padding: 0;
+    //font-size: 13px;
+  }
+
+  &-brand {
+    height: auto;
+    height: auto;
+    margin: 0 8px 0 15px !important;
+    padding: 0;
+    width: 150px;
+  }
+
+  &-collapse {
+    background-color: white;
+  }
+
+  &-toggle {
+    .icon-bar {
+      background-color: #0f4d7f;
+    }
+  }
+
+  &__avatar {
+    height: 30px;
+    max-width: 30px !important;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+
+  &__profile-dropdown {
+    padding-right: 40px !important;
+  }
+
+  &__button {
+    color: white;
+    &:hover {
+      color: white !important;
+    }
+
+    &--login {
+      background-color: $brand-blue;
+      &:hover {
+        background-color: lighten($brand-blue, 15%) !important;
+      }
+    }
+    &--register {
+      background-color: $brand-orange;
+      &:hover {
+        background-color: lighten($brand-orange, 15%) !important;
+      }
+    }
+  }
+}
+
+.nav {
+  & > li > a {
+    //text-align: center;
+    margin: 6px 10px;
+    padding: 4px 8px;
+    transition: all .3s ease-in-out;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .nav {
+    & > li > a  {
+      margin: 15px 4px;
+
+    }
+  }
+}

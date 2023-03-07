@@ -1,0 +1,334 @@
+@media (min-width: 1200px) {
+  .container {
+    width: 980px;
+  }
+}
+
+.top-buffer {
+  margin-top: 20px;
+}
+
+.navbar {
+  font-size: 12px;
+  height: 82px;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
+
+.navbar a {
+  margin: 10px 8px;
+  text-shadow: none;
+}
+
+.navbar a .glyphicon {
+  background-color: #ccc;
+  color: #fff;
+  font-size: 24px;
+}
+
+.navbar a .glyphicon-user {
+  margin-top: -5px;
+  padding-top: 5px;
+}
+
+.navbar a .glyphicon-triangle-bottom {
+  background-color: #fff;
+  color: #ccc;
+  font-size: 16px;
+}
+
+.navbar-fixed-top {
+  margin-bottom: 0;
+  position: relative;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.hero-banner, .testimonials {
+  background-color: #484644;
+  color: #fff;
+  display: block;
+  padding: 100px 15px;
+}
+
+.banner, .hero-banner, .testimonials {
+  text-align: center;
+}
+
+.hero-banner {
+  background: url('/img/hero_banner.jpg') no-repeat fixed center;
+  background-size: cover;
+  opacity: 0.9;
+  position: relative;
+}
+
+.hero-banner::after {
+  content:"";
+  background-color: #000;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.pitch, .team {
+  background-color: rgba(199, 195, 195, 1);
+  display: block;
+  padding: 100px 15px;
+}
+
+.team {
+  margin-bottom: -40px;
+}
+
+.grow img {
+  width: 100%;
+}
+
+.grow p {
+  margin-top: 50px;
+}
+
+.pitch h3, .grow h2 {
+  font-family: 'Roboto Slab', serif;
+}
+
+.pitch a {
+  color: #000;
+  margin-top: 25px;
+  text-decoration: underline;
+}
+
+.pitch a.btn {
+  color: #fff;
+  text-decoration: none;
+}
+
+.pitch .agent-pic, .pitch .lender-pic {
+  background-size: cover;
+  color: #fff;
+  font-size: 30px;
+  line-height: 40px;
+  padding: 120px 0;
+  text-align: center;
+}
+
+.agent-pic {
+  background: url('/img/real-estate-agent.jpg') no-repeat left;
+}
+
+.lender-pic {
+  background: url('/img/mortgage-lender.jpg') no-repeat left;
+}
+
+
+.pitch p {
+  background-color: #000;
+  font-family: 'Roboto Slab', serif;
+  line-height: 50px;
+  opacity: 0.5;
+}
+
+.member-spotlight {
+  background-color: #fff;
+  color: #000;
+  display: block;
+  padding: 100px 15px;
+  text-align: center;
+}
+
+.fa-home {
+  color: #f00;
+  font-size: 20px;
+  padding: 2px;
+}
+
+.fa-phone, .fa-envelope-o, .fa-question-circle-o {
+  color: 000;
+  font-size: 40px;
+  padding: 2px;
+}
+
+.testimonials {
+  background: url('/img/testimonial_banner.jpg') no-repeat fixed center;
+  background: url('/img/testimonial_banner.jpg') no-repeat fixed center;
+  background-size: cover;
+  color: #fff;
+  opacity: 0.9;
+  position: relative;
+}
+
+.testimonials::after {
+  content:"";
+  background-color: #000;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.testimonials h1, .testimonials h3, .mission h2, .team h2 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: bold;
+}
+
+.team .logos {
+  background-color: #fff;
+}
+
+.testimonials h1 {
+  font-family:times new roman,times,serif;
+  font-size: 100px;
+  margin-bottom: -40px;
+}
+
+.stats, .hero-banner {
+  color: #e89a09;
+  font-family: 'Roboto Slab', serif;
+  font-size: 22px;
+}
+
+.hero-banner {
+  font-size: 60px;
+  font-weight: bolder;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.hero-banner span {
+  color: #fff;
+  display: block;
+  font-size: 30px;
+  line-height: 70px;
+  text-transform: uppercase;
+}
+
+.stats > div {
+  text-align: center;
+}
+
+.lender {
+  background: url('/img/blue_shirt.jpg') no-repeat fixed center;
+}
+
+.connect {
+  background: url('/img/testimonial_banner.jpg') no-repeat fixed center;
+}
+
+.terms-and-conditions, .privacy {
+  background: url('/img/keyboard2.jpg') no-repeat fixed center;
+}
+
+.faq {
+  background: url('/img/keyboard.jpg') no-repeat fixed center;
+}
+
+.profile {
+  background: url('/img/heads.jpg') no-repeat fixed center;
+}
+
+.about-us {
+  background: url('/img/about_us.jpg') no-repeat fixed center;
+}
+
+.login {
+  background: url('/img/login.jpg') no-repeat fixed center;
+}
+
+.billing {
+  background: url('/img/keyboard.jpg') no-repeat fixed center;
+}
+
+.contact {
+  background: url('/img/contact.jpg') no-repeat fixed center;
+}
+
+.lender::after, .connect::after, .about-us::after, .profile::after,
+.faq::after, .terms-and-conditions::after, .privacy::after,
+.login::after, .billing::after, .contact::after {
+  content:"";
+  background-color: #000;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.banner {
+  background-size: cover;
+  opacity: 0.9;
+  position: relative;
+  color: #fff;
+  display: block;
+  font-family: 'Roboto Slab', serif;
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  position: relative;
+  text-transform: capitalize;
+}
+
+.hr {
+  border-top: 2px solid #000;
+  margin-top: 10px;
+}
+
+.sponsors {
+  border: 1px #000 solid;
+  height: 100%;
+}
+
+.sponsors h4 {
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sponsors img {
+  margin: 20px 0;
+}
+
+.logos img {
+  margin: 5px 0;
+}
+
+.footer {
+  color: #B6B6B6;
+  background: #484644;
+  bottom: 0;
+  font-size: 12px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  margin: 40px 0 0;
+  z-index: 9999;
+}
+
+.footer a {
+  color: #fff;
+  margin: 10px 8px;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+.footer a.btn {
+  margin: 10px 5px;
+  padding: 0;
+}
+
+.footer a .fa {
+  color: #fff;
+  font-size: 20px;
+}
+

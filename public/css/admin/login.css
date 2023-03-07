@@ -1,0 +1,23 @@
+.login-logo {font-size: 35px;text-align: center;margin-bottom: 25px;font-weight: 300;}
+.login-logo a {
+    width: 100%;
+    float: left;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.login-logo a img{
+     text-align: center;
+     display: inline;
+}
+
+.login-box-body {
+    width: 100%;
+    float: left;
+}
+.has-feedback label ~ .form-control-feedback {
+	top: 0px;
+}
+.login-box-body .error {
+    color: #ec0404;
+    font-weight: normal;
+}
