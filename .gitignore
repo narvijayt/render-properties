@@ -4,3 +4,5 @@ composer.lock
 package-lock.json
 error_log
 node_modules/
+public/profile_pictures/
+public/house_pictures-bckup
