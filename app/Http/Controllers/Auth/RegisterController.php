@@ -279,9 +279,9 @@ class RegisterController extends Controller
 		) {
 			$this->createUserProvider($data, $user);
 		}
-        /*$this->notifyAdmin($user);
+        $this->notifyAdmin($user);
         $this->emailVerification($user);
-        $this->welcomeEmail($user);*/
+        $this->welcomeEmail($user);
         if ($user->user_type === UserAccountType::BROKER) 
         {
 			MatchPurchase::create([
