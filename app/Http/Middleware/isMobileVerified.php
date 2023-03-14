@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class isMobileVerified
 {
@@ -18,7 +18,7 @@ class isMobileVerified
     {
         $user = Auth::user();
         if($user->mobile_verified != 1){
-            return route('otp.sendnewotp', ['id' => $user->user_id]);
+            return redirect()->route('otp.sendnewotp', ['id' => $user->user_id]);
         }
         return $next($request);
     }

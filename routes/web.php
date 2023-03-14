@@ -6,10 +6,10 @@ Route::get('/lender-details/{brokerId}/{realtorId}', 'AutoConnectionController@l
 Route::get('/realtor-details/{brokerId}/{realtorId}', 'AutoConnectionController@realtorDetails')->name('realtordetails.automatch');
 Route::post('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@requestAutoMatch')->name('create.automatch');
 // Route::get('/sample-email/{id}', 'Pub\Users\UsersController@testEmailSample');
-Route::post('/send-otp/{id}', 'Auth\RegisterController@sendOTPToVerifyMobile')->name('otp.sendnewotp');
-Route::get('/verify-otp/{id}', 'Auth\RegisterController@verifyTestOTP')->name('verify.phone');
-Route::post('/verify-otp', 'Auth\RegisterController@verifyOTP')->name('verify.otp');
-Route::get('/resend-otp/{id}', 'Auth\RegisterController@reSendNewOTP')->name('resend.otp');
+Route::get('/send-otp/{id}', 'Auth\VerifyMobileController@sendOTPToVerifyMobile')->name('otp.sendnewotp');
+Route::get('/verify-otp/{id}', 'Auth\VerifyMobileController@verifyTestOTP')->name('verify.phone');
+Route::post('/verify-otp', 'Auth\VerifyMobileController@verifyOTP')->name('verify.otp');
+Route::get('/resend-otp/{id}', 'Auth\VerifyMobileController@reSendNewOTP')->name('resend.otp');
 
 
 Route::get('/social-reviews', 'Pub\SocialReviewsController@getSocialReviews')->name('socialreviews');
