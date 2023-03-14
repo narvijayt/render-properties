@@ -479,7 +479,7 @@
 		</label>
 	</div>
 </div>
---}} 
+
 
 	<script src="https://www.google.com/recaptcha/api.js"></script>
 	<div class="form-group row">
@@ -493,7 +493,7 @@
 			@endif
 		</div>
 	</div>
-               
+	--}}                
 <div class="form-group">
 	<button type="submit" class="btn btn-warning btn-block" id='reg-btn'>
 		@if(!empty($_GET))

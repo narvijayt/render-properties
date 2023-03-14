@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
 		'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
 		'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
 		'update_active' => \App\Http\Middleware\UpdateActivity::class,
-		'require_login' => \App\Http\Middleware\RequireLogin::class
+		'require_login' => \App\Http\Middleware\RequireLogin::class,
+		'isMobileVerified' => \App\Http\Middleware\isMobileVerified::class
     ];
 }

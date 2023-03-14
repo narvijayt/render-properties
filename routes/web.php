@@ -6,7 +6,7 @@ Route::get('/lender-details/{brokerId}/{realtorId}', 'AutoConnectionController@l
 Route::get('/realtor-details/{brokerId}/{realtorId}', 'AutoConnectionController@realtorDetails')->name('realtordetails.automatch');
 Route::post('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@requestAutoMatch')->name('create.automatch');
 // Route::get('/sample-email/{id}', 'Pub\Users\UsersController@testEmailSample');
-Route::get('/send-otp/{id}', 'Auth\RegisterController@sendTestOTP');
+Route::post('/send-otp/{id}', 'Auth\RegisterController@sendOTPToVerifyMobile')->name('otp.sendnewotp');
 Route::get('/verify-otp/{id}', 'Auth\RegisterController@verifyTestOTP')->name('verify.phone');
 Route::post('/verify-otp', 'Auth\RegisterController@verifyOTP')->name('verify.otp');
 Route::get('/resend-otp/{id}', 'Auth\RegisterController@reSendNewOTP')->name('resend.otp');
@@ -98,7 +98,7 @@ Route::get('/real-estate-blog/{title}', 'Pub\BlogsController@viewBlog')->name('a
 // Authenticated Routes
 Route::group([
 		'namespace' => 'Pub',
-		'middleware' => ['auth'],
+		'middleware' => ['auth','isMobileVerified'],
 		'as' => 'pub.',
 	],
 	function() {

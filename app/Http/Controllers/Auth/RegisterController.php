@@ -620,7 +620,7 @@ class RegisterController extends Controller
     }
     
 
-    public function sendTestOTP($id = ''){
+    public function sendOTPToVerifyMobile(Request $request, $id = ''){
         if(empty($id)){
             flash('Invalid User ID.')->error();
             return redirect()->route("login");

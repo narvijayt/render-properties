@@ -85,7 +85,7 @@ class LoginController extends Controller
                     return redirect('lender-billing-details/'.$usr['user_id'])->with('error',"Please make payment for login");
                 }*/
                 
-                if($usr['mobile_verified'] == 0){
+                /*if($usr['mobile_verified'] == 0){
                     if(isset($usr['phone_number']) && !empty($usr['phone_number']) ){
                         $response = (new MobileVerificationService())->generateOtp($usr['user_id']);
                         // echo '<pre>'; print_r($response); die;
@@ -95,7 +95,7 @@ class LoginController extends Controller
                     }else{
                         return redirect('partially-registration/'.$usr['user_id']);
                     }
-                }
+                }*/
                 if($usr['payment_status'] == 0){
                     return redirect()->route('register.accountstatus', ['id' => $usr['user_id'] ])->with('error', 'Your account is not active. Please confirm your payment status with admin to access your account.');
                 }
@@ -157,7 +157,7 @@ class LoginController extends Controller
                 }
             } else {
 
-                if($usr['mobile_verified'] == 0){
+                /*if($usr['mobile_verified'] == 0){
                     if(isset($usr['phone_number']) && !empty($usr['phone_number']) ){
                         $response = (new MobileVerificationService())->generateOtp($usr['user_id']);
                         // echo '<pre>'; print_r($response); die;
@@ -165,7 +165,7 @@ class LoginController extends Controller
             
                         return redirect()->route('verify.phone', ['id' => $usr['user_id'] ])->with('message', 'An OTP has been sent on your registered phone number. Please confirm your contact details.');
                     }
-                }
+                }*/
 
                 $this->validateLogin($request);
                 if ($request->has('email')) {
