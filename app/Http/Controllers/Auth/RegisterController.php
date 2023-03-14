@@ -683,6 +683,11 @@ class RegisterController extends Controller
             }
         }else{
             flash($response['message'])->error();
+            if($response['message'] == "Your OTP has been expired."){
+                if($this->resendOTPAgain($user->user_id)){
+                    flash("OTP has been sent successfully")->success();
+                }
+            }
             return redirect()->route('verify.phone', ['id' => $user->user_id]);
         }
     }
@@ -703,13 +708,26 @@ class RegisterController extends Controller
         }
 
         if(isset($user->phone_number) && !empty($user->phone_number) ){
+            if($this->resendOTPAgain($user->user_id)){
+                flash("OTP has been sent successfully")->success();
+                return redirect()->route('verify.phone', ['id' => $user->user_id]);
+            }
+        }
+    }
+
+    public function resendOTPAgain($id = ''){
+        
+        if(empty($id))
+            return false;
+
+        $user = User::find($id);
+
+        if(isset($user->phone_number) && !empty($user->phone_number) ){
             $response = (new MobileVerificationService())->regenerateOtp($user->user_id);
             // echo '<pre>'; print_r($response); die;
             (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
-
-            flash("OTP has been sent successfully")->success();
-            return redirect()->route('verify.phone', ['id' => $user->user_id]);
         }
+        return true;
     }
 }
 
