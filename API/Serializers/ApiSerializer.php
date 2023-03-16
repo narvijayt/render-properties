@@ -12,7 +12,7 @@ use League\Fractal\Serializer\DataArraySerializer;
 
 class ApiSerializer extends DataArraySerializer
 {
-	public function collection(?string $resourceKey, array $data)
+	public function collection(?string $resourceKey, array $data): array
 	{
 		if ($resourceKey) {
 			return [$resourceKey => $data];
@@ -21,7 +21,7 @@ class ApiSerializer extends DataArraySerializer
 		return $data;
 	}
 
-	public function item(?string $resourceKey, array $data)
+	public function item(?string $resourceKey, array $data): array
 	{
 		if ($resourceKey) {
 			return [$resourceKey => $data];
