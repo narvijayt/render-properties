@@ -625,7 +625,8 @@ $(function () {
 });
 
 // var app_url = 'https://www.realbrokerconnections.com/cpldashrbcs/';
-var app_url = 'https://render.properties/cpldashrbcs/';
+// var app_url = 'https://render.properties/cpldashrbcs/';
+var app_url = $(location).attr('host')+'/cpldashrbcs/';
 
 $(document).ready(function(){
     tinymce.init({

@@ -101,7 +101,7 @@
             
             // $("#confirm-submit-modal #actionType").val(type);
             // $("#confirm-submit-modal #userId").val(id);
-            
+            var app_url = $(location).attr('host');
             if(type==='accept') {
                 var url = app_url+'matches/'+id+'/confirm-match';
             } else if(type==='remove') {
