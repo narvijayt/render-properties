@@ -1,6 +1,6 @@
 // var app_url = 'https://www.realbrokerconnections.com/';
 // var app_url = 'https://render.properties/';
-var app_url = window.location.protocol+window + "//"+ location.hostname;;
+var app_url = window.location.protocol+"//"+ location.hostname;;
 console.log(app_url);
 var profileForm = new Vue({
 	el: '#profile-sales',

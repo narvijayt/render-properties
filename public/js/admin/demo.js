@@ -626,7 +626,7 @@ $(function () {
 
 // var app_url = 'https://www.realbrokerconnections.com/cpldashrbcs/';
 // var app_url = 'https://render.properties/cpldashrbcs/';
-var app_url = window.location.protocol+window + "//"+ location.hostname;+'/cpldashrbcs/';
+var app_url = window.location.protocol+ "//"+ location.hostname;+'/cpldashrbcs/';
 
 $(document).ready(function(){
     tinymce.init({
