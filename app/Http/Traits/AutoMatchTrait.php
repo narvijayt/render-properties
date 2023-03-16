@@ -58,13 +58,10 @@ trait AutoMatchTrait {
                     $response = (new TwilioService())->sendAutoMatchRequestSMS($user, $realtor);
                     $email = new NewLenderNotificationToRealtors($user, $realtor);
                     Mail::to($realtor->email)->send($email);
+                    User::where('user_id', '=', $user->user_id)->update(array('auto_notifications' => 1));
                 }
             }
         }
-
-        $user->auto_notifications = 1;
-        $updateUser = $user->update();
-
         return true;
     }
 }

@@ -39,7 +39,6 @@ class VerifyEmailController extends Controller
 
 		if (auth()->guest()) {
 		    if($user->user_type == "broker" ){
-				$this->sendAutoMatchRequests($user->user_id);
 				if($user->payment_status == 0){
 					return redirect('/login');
 				}else{
@@ -49,6 +48,10 @@ class VerifyEmailController extends Controller
 				Auth::login($user, true);
 			}
 		}
+		
+		if($user->user_type == "broker" ){
+	        $response = $this->sendAutoMatchRequests($user->user_id);
+	    }
 
 		return redirect()->route('pub.profile.index');
 	}
