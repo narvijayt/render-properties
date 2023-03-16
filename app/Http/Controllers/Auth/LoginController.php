@@ -31,7 +31,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $usr = User::where('email', 'ilike', '%' . $request->get('email') . '%')->first();
+        $usr = User::where('email', '=', $request->get('email') )->first();
         if(!empty($usr)) {
             if($usr['user_type'] == 'vendor'){
                 $checkCategory = Category::where('user_id','=',$usr['user_id'])->get();
