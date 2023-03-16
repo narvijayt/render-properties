@@ -46,9 +46,6 @@ class RegisterController extends Controller
 
 	use RegistersUsers;
 
-    // use AutoMatchTrait Trait
-	use AutoMatchTrait;
-
 	/**
 	 * Where to redirect users after registration.
 	 *
