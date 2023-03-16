@@ -39,7 +39,7 @@ class MatchSuggestions extends Mailable
 		} else if ($this->user->user_type === UserAccountType::REALTOR) {
 			$subject = 'Lenders in your market seeking realtor connections';
 		}
-        return $this->from('suggestions@realbrokerconnection.com')
+        return $this->from(config('mail.from.address'))
 			->subject($subject)
 			->markdown('email.matching.suggested-matches', [
 				'user'		=> $this->user,

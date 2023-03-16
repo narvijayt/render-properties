@@ -36,7 +36,7 @@ class NewSubscription extends Mailable
     {
 
         return $this->subject('')
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
 			->markdown('email.subscription.new', [
 				'user' => $this->subscription->user
 			]);

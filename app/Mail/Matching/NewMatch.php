@@ -44,7 +44,7 @@ class NewMatch extends Mailable
     {
     	$fromUser = $this->match->getOppositeParty($this->recipient);
         return $this->subject('New Match Request From '.$fromUser->first_name)
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
         	->markdown('email.matching.new', [
 				'match' => $this->match,
 				'recipient' => $this->recipient,

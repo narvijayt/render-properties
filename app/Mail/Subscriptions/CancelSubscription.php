@@ -34,7 +34,7 @@ class CancelSubscription extends Mailable
     public function build()
     {
         return $this->subject("Subscription Cancelled")
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
 			->markdown('email.subscription.cancel', [
 				'user' => $this->subscription->user,
 			]);

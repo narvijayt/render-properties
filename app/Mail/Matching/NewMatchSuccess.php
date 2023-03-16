@@ -41,7 +41,7 @@ class NewMatchSuccess extends Mailable
     public function build()
     {
         return $this->subject('New Match Success!')
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
 			->markdown('email.matching.new-success', [
 				'to' => $this->toUser,
 				'from' => $this->fromUser,

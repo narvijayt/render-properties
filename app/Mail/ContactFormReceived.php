@@ -33,7 +33,7 @@ class ContactFormReceived extends Mailable
     public function build()
     {
         
-   return $this->from($this->message->email, 'Render')
+   return $this->from(config('mail.from.address'), config('mail.from.name'))
 			->to([config('app.support_email')])
 			->cc('richard@realbrokerconnections.com','james@realbrokerconnections.com','richardtocado@gmail.com','nv@culture-red.com')
             ->bcc('nv@culture-red.com')

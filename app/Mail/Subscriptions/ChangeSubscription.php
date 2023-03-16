@@ -42,7 +42,7 @@ class ChangeSubscription extends Mailable
     public function build()
     {
         return $this->subject('Subscription Changed')
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
 			->markdown('email.subscription.change', [
 				'subscription' => $this->subscription,
 				'user' => $this->subscription->user,

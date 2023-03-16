@@ -31,7 +31,7 @@ class MatchRequestEmail extends Mailable
     {
     	$authUser = auth()->user();
        
-        return $this->from($authUser->email, 'Render')
+        return $this->from(config('mail.from.address'), 'Render')
 		->subject('New Match Request Received')
         ->markdown('email.matching.match-request');
         

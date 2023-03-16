@@ -31,7 +31,7 @@ class RenewMatchRequestEmail extends Mailable
     {
     	$authUser = auth()->user();
        
-        return $this->from($authUser->email, 'Render')
+        return $this->from(config('mail.from.address'), 'Render')
 		->subject(ucfirst($authUser->first_name).' wants renew the match request')
         ->markdown('email.matching.renew-match-request');
         

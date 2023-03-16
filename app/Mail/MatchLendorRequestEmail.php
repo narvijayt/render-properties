@@ -31,7 +31,7 @@ class MatchLendorRequestEmail extends Mailable
     {
     	$authUser = auth()->user();
        
-        return $this->from($authUser->email, 'Render')
+        return $this->from(config('mail.from.address'), 'Render')
 		->subject('Deep discount referral fee 17% paid at closing home buyer leads for Realtors.')
         ->markdown('email.matching.lendor-match-request');
         

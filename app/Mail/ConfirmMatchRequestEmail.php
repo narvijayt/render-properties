@@ -31,7 +31,7 @@ class ConfirmMatchRequestEmail extends Mailable
     {
     	$authUser = auth()->user();
        
-        return $this->from($authUser->email, 'Render')
+        return $this->from(config('mail.from.address'), config('mail.from.name'))
 		->subject(ucfirst($authUser->first_name).' has accepted your match request')
         ->markdown('email.matching.confirm-match-request');
         

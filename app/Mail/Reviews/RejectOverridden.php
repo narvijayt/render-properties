@@ -34,7 +34,7 @@ class RejectOverridden extends Mailable
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        return $this->from(config('mail.from.address'))
             ->markdown('email.reviews.reject-overridden-to-subject');
     }
 }

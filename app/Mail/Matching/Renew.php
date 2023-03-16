@@ -43,7 +43,7 @@ class Renew extends Mailable
 		$fromUser = $this->match->getOppositeParty($this->user);
 
         return $this->subject('Match Renewal Request received from '.$fromUser->full_name())
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
 			->markdown('email.matching.renew', [
 				'match' => $this->match,
 				'recipient' => $this->user,

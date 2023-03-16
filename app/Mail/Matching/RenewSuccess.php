@@ -40,7 +40,7 @@ class RenewSuccess extends Mailable
     public function build()
     {
         return $this->subject('Match Renewal Success')
-            ->from(env('MAIL_FROM_ADDRESS'))
+            ->from(config('mail.from.address'))
 			->markdown('email.matching.renew-success', [
 				'toUser' => $this->toUser,
 				'fromUser' => $this->fromUser,
