@@ -14,8 +14,8 @@ use App\Http\Traits\AutoMatchTrait;
 
 class VerifyMobileController extends Controller
 {
-    //
-
+    // use AutoMatchTrait Trait
+	use AutoMatchTrait;
     
     public function sendOTPToVerifyMobile($id = ''){
         if(empty($id)){

@@ -29,7 +29,7 @@ use App\Services\Geo\GeolocationService;
 
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
-use App\Http\Traits\AutoMatchTrait;
+
 
 class RegisterController extends Controller
 {
