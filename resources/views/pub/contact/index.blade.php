@@ -138,10 +138,13 @@
                         @endif
                     </div>
                     <script src="https://www.google.com/recaptcha/api.js"></script>
-                     <div class="form-group recaptcha">
-                        {!! app('captcha')->display() !!}
-                       {!! $errors->first('captcha-response', '<p class="alert alert-danger">:message</p>') !!}
-                    </div>
+                    <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                    <span class="msg-error error"></span>
+                    @if ($errors->has('g-recaptcha-response'))
+                        <span class="invalid-feedback" style="display: block;">
+                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                        </span>
+                    @endif
                     </br>
                 
                       <button type="submit" class="btn btn-warning btn-block">Send</button>
