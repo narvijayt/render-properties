@@ -63,7 +63,7 @@ class MobileVerificationService{
 
             return array("status" => 200, "success" => true, "message" => "Your Mobile has been verified Successfully." );
         }else{
-            return array("status" => 200, "success" => false, "message" => "Your Otp is not correct." );
+            return array("status" => 200, "success" => false, "message" => "Your OTP is not correct." );
         }
     }
 
