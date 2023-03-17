@@ -6,6 +6,8 @@
 View Details
 @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+<p>Call or text for information at <a href="tel:704-569-5072">704-569-5072</a></p>
+
+Thank You,<br>
+Team {{ config('app.name') }}
 @endcomponent

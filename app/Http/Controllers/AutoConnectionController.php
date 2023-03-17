@@ -67,7 +67,7 @@ class AutoConnectionController extends Controller
     }
 
     public function viewAutoMatchRequest($brokerId, $realtorId){
-        $brokerUser = User::find($brokerId);
+        $user = User::find($brokerId);
         $realtorUser = User::find($realtorId);
         
         $matches = Match::findForUser($realtorUser, true);
@@ -84,7 +84,7 @@ class AutoConnectionController extends Controller
                 }
                 $matchBrokerUser = User::find($broker_user_id);
                 if(in_array($realtorUser->zip,explode(",",$matchBrokerUser->zip) )){
-                    if($broker_user_id == $brokerUser->user_id){
+                    if($broker_user_id == $user->user_id){
                         flash('You already have connected with this Loan Officer.')->error();
                         return redirect()->route('lenderdetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ]);
                     }else{
@@ -96,7 +96,7 @@ class AutoConnectionController extends Controller
         }
 
         if($connection_exists == false){
-            return view('pub.auto.view', compact('brokerUser', 'realtorUser') );
+            return view('pub.auto.view', compact('user', 'realtorUser') );
         }
     }
 
@@ -141,28 +141,28 @@ class AutoConnectionController extends Controller
     }
 
     public function lenderDetails($brokerId, $realtorId){
-        $brokerUser = User::find($brokerId);
+        $user = User::find($brokerId);
         $realtorUser = User::find($realtorId);
 
-        $match = Match::findForUsers($realtorUser, $brokerUser);
+        $match = Match::findForUsers($realtorUser, $user);
         if(empty($match))
             return redirect()->route('view.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ] );
 
-        return view('pub.auto.view', compact('brokerUser', 'realtorUser', 'match') );
+        return view('pub.auto.view', compact('user', 'realtorUser', 'match') );
     }
     
     
     public function realtorDetails($brokerId, $realtorId){
         $brokerUser = User::find($brokerId);
-        $realtorUser = User::find($realtorId);
+        $user = User::find($realtorId);
 
-        $match = Match::findForUsers($realtorUser, $brokerUser);
+        $match = Match::findForUsers($user, $brokerUser);
         if(empty($match)){
             flash('No Match found.')->error();
             return redirect()->route('login');
         }
         $lendorView = true;
-        return view('pub.auto.view', compact('brokerUser', 'realtorUser', 'match', 'lendorView') );
+        return view('pub.auto.view', compact('brokerUser', 'user', 'match', 'lendorView') );
     }
 
     public function pr($array = [], $die = false){

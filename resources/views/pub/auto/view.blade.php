@@ -1,14 +1,13 @@
 @inject('states', 'App\Http\Utilities\Geo\USStates')
 @extends('layouts.app')
 
+@php $title = $user->first_name.' '.$user->last_name."'s Profile";  @endphp
 @if($match)
     @php 
-        $title = (isset($lendorView)) ? 'Real Broker Agent Details' : 'Loan Officer Details';
         $description = (isset($lendorView)) ? 'Real Broker Agent Details' : 'Loan Officer Details';
     @endphp
 @else 
     @php 
-        $title = 'Confirm Match'; 
         $description = 'Create a Match with Loan Officer';
     @endphp
 @endif
@@ -37,14 +36,14 @@
     {{ googlePlus('image', config('seo.image')) }}
 @endsection
 @section('content')
-    @component('pub.components.banner', ['banner_class' => 'lender'])
+    @component('pub.components.banner', ['banner_class' => 'profile'])
         {{$title}}
     @endcomponent
   
     <style>.banner{margin:0}.footer{margin-top:0}</style> 
     <section class="py-2">
         <div class="container">
-            <div class="row text-dark">
+            <div class="row text-dark user-profile">
                 @if(session()->has('message'))
                     <div class="alert">
                         {{ session()->get('message') }}
@@ -55,67 +54,128 @@
                     <div class="alert alert-danger">{{session('error')}}</div>
                 @endif
 
-                @if(isset($lendorView))
-                <div class="col-md-8 col-md-offset-2">
-                        <h4>Real Estate Details</h4>
-                        <div class="col-md-12">
-                            <strong class="col-md-6">Name:</strong>
-                            <p class="col-md-6">{{ $realtorUser->first_name.' '.$realtorUser->last_name}}</p>
-                        </div>
-                        <div class="col-md-12">
-                            <strong class="col-md-6">Email:</strong>
-                            <p class="col-md-6">{{ $realtorUser->email }}</p>
-                        </div>
-
-                        @if(isset($match))
-                            <div class="col-md-12">
-                                <strong class="col-md-6">Phone:</strong>
-                                <p class="col-md-6">{{ $realtorUser->phone_number }}</p>
-                            </div>
-                            <div class="col-md-12">
-                                <strong class="col-md-6">Match Status</strong>
-                                <p class="col-md-6">{{ $match->accepted_at1 != '' ? 'Connected' : 'Pending' }}</p>
-                            </div>
-                        @endif
-
-                        @if(!isset($match))
-                            <form method="post" action="{{ route('create.automatch', ['brokerId' => $brokerUser->user_id, 'realtorId' => $realtorUser->user_id]) }}">
-                                {{ csrf_field() }}
-                                <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Create Match</button>
-                            </form>
-                        @endif
-                    </div>
-                @else
-                    <div class="col-md-8 col-md-offset-2">
-                        <h4>Broker Details</h4>
-                        <div class="col-md-12">
-                            <strong class="col-md-6">Name:</strong>
-                            <p class="col-md-6">{{ $brokerUser->first_name.' '.$brokerUser->last_name}}</p>
-                        </div>
-                        <div class="col-md-12">
-                            <strong class="col-md-6">Email:</strong>
-                            <p class="col-md-6">{{ $brokerUser->email }}</p>
-                        </div>
-
-                        @if(isset($match))
-                            <div class="col-md-12">
-                                <strong class="col-md-6">Phone:</strong>
-                                <p class="col-md-6">{{ $brokerUser->phone_number }}</p>
-                            </div>
-                            <div class="col-md-12">
-                                <strong class="col-md-6">Match Status</strong>
-                                <p class="col-md-6">{{ $match->accepted_at2 != '' ? 'Connected' : 'Pending' }}</p>
-                            </div>
-                        @endif
-
-                        @if(!isset($match))
-                            <form method="post" action="{{ route('create.automatch', ['brokerId' => $brokerUser->user_id, 'realtorId' => $realtorUser->user_id]) }}">
-                                {{ csrf_field() }}
-                                <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Create Match</button>
-                            </form>
-                        @endif
-                    </div>
+                @if(isset($match) && $user->user_type = 'broker')
+                    <div class="alert alert-success">Congratulations, you are now connected with {{ $user->first_name }}. To connect with your Loan Officer, now you can call or text the {{ $user->first_name }} at <a href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a> or can send email at <a href="mailto:{{ $user->email }}">{{ $user->email }}</a> </div>
                 @endif
+
+                <div class="col-md-3 @if ($user->designation !='' && $user->designation !='null') standard-agent @endif">
+                    <div class="profile-box-inner">
+                        <div class="designation" style="display:none"><label>
+                            @if($user->designation !="" && $user->designation !='null')
+                                {{$user->designation}}
+                            @endif 
+                            </label>
+                            <img src="{{ asset('img/ribben.png') }}">
+                        </div>
+                        <div class="user-profile__avatar-container">
+                            <img src="{{$user->avatarUrl()}}" class="img-responsive user-profile__avatar" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Contact Info</h4>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <strong>Profession:</strong>
+                                    @if($user->user_type !="vendor")
+                                        {{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}
+                                    @else
+                                        Vendor 
+                                    @endif
+                                </li>
+                                <li><strong>Name:</strong>{{ $user->full_name() }}</li>
+                                @if($user->firm_name)
+                                <li><strong>Company:</strong>{{ $user->firm_name }}</li>
+                                @endif
+                                <li><strong>City:</strong>{{ $user->city }}</li>
+                                <li><strong>State:</strong>{{ $user->state }}</li>
+                                <li>
+                                    <strong>Email:</strong>
+                                    @if(isset($match))
+                                        <a href="mailto:{{$user->email}}">
+                                            {{ $user->email }}
+                                        </a>
+                                    @else
+                                        <a class="text-link" href="javascript:;">Connect with {{ $user->first_name}} to see the details.</a> 
+                                    @endif
+                                </li>
+                                
+                                @if($user->phone_number)
+                                <li><strong>Phone Number:</strong>
+                                    @if(isset($match))
+                                        <a class="text-link" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
+                                        @if ($user->phone_ext)
+                                            Ext: {{ $user->phone_ext }}
+                                        @endif
+                                    @else
+                                        <a class="text-link" href="javascript:;">Connect with {{ $user->first_name}} to see the details.</a> 
+                                    @endif
+                                </li>
+                                @endif
+                                
+                                @if($user->website)
+                                <li>
+                                    <strong>Website links:</strong>
+                                    <a href="{{ real_url($user->website) }}" target="_blank">{{ $user->website }}</a>
+                                </li>
+                                @endif
+                            </ul>
+                            <div class="clearfix"></div>
+                            
+                            <h4>Experience</h4>
+                            <ul class="list-unstyled">
+                                @if(isset($user->license))
+                                    <li><strong>License#:</strong>
+                                    {{$user->license}}
+                                    </li>
+                                @endif
+                                @if(isset($user->specialties))
+                                    <li><strong>Specialties:</strong>
+                                    {{ $user->specialties }}
+                                    </li>
+                                @endif
+                                @if($user->user_type !="broker")
+                                @if(isset($user->units_closed_monthly))
+                                    <li><strong>Number of units closed monthly:</strong>
+                                    {{ $user->units_closed_monthly }}
+                                    </li>
+                                @endif
+                                @if(isset($user->volume_closed_monthly))
+                                    <li><strong>Average volume closed monthly:</strong>
+                                    {{ $user->volume_closed_monthly }}
+                                    </li>
+                                @endif
+                                @endif
+                                <li><strong>Areas/Locations served:</strong>
+                                {{ $user->city }}, {{ $user->state }}
+                                </li>
+                            </ul>
+                        </div>    
+
+
+                        
+                        @if($user->bio!= '')
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><strong>Biographical information:</strong>{{ $user->bio }}</li>
+                            </ul>
+                        </div>
+                        @endif
+
+                        @if(!isset($match))
+                        <div class="col-md-12">
+                            <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
+                                {{ csrf_field() }}
+                                <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Connect with {{ $user->first_name }}</button>
+                            </form>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

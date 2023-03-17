@@ -9,7 +9,7 @@ use Twilio\Rest\Client;
 class TwilioService{
 
     public function sendOTPVerificationSMS( object $user, $otp){
-        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code is: '.$otp);
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code for Render: '.$otp);
     }
 
     public function sendAutoMatchRequestSMS($lendor, $realtor){
