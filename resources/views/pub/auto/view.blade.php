@@ -54,7 +54,7 @@
                     <div class="alert alert-danger">{{session('error')}}</div>
                 @endif
 
-                @if(isset($match) && $user->user_type = 'broker')
+                @if(isset($match) && $user->user_type == 'broker')
                     <div class="alert alert-success">Congratulations, you are now connected with {{ $user->first_name }}. To connect with your Loan Officer, now you can call or text the {{ $user->first_name }} at <a href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a> or can send email at <a href="mailto:{{ $user->email }}">{{ $user->email }}</a> </div>
                 @endif
 
@@ -80,11 +80,7 @@
                             <ul class="list-unstyled">
                                 <li>
                                     <strong>Profession:</strong>
-                                    @if($user->user_type !="vendor")
-                                        {{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}
-                                    @else
-                                        Vendor 
-                                    @endif
+                                    {{ $user->user_type == 'broker' ? 'lender' : 'real estate agent' }}
                                 </li>
                                 <li><strong>Name:</strong>{{ $user->full_name() }}</li>
                                 @if($user->firm_name)
