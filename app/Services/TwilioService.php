@@ -13,11 +13,11 @@ class TwilioService{
     }
 
     public function sendAutoMatchRequestSMS($lendor, $realtor){
-        $this->sendSMS( $realtor->phone_number, 'Hey '.$realtor->first_name.'! Time to increase your sales! Congratulations a Loan Officer in your area, '.$lendor->first_name.' '.$lendor->last_name.' wants to connect with you. Click on the link below to see details: '.route('view.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
+        $this->sendSMS( $realtor->phone_number, 'Hey '.$realtor->first_name.'! Time to increase your sales! Congratulations, a Loan Officer in your area, '.$lendor->first_name.' '.$lendor->last_name.' wants to connect with you. Click on the link below to see the details. '.route('view.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
     }
     
     public function sendRealtorConnectToLender($lendor, $realtor){
-        $this->sendSMS( $lendor->phone_number, 'Hey '.$lendor->first_name.'! Congratulations, a Real Estate Agent in your area '.$realtor->first_name.' '.$realtor->last_name.' has connected with you. Click on the link below to see the details '.route('realtordetails.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
+        $this->sendSMS( $lendor->phone_number, 'Hey '.$lendor->first_name.'! Congratulations, a Real Estate Agent in your area '.$realtor->first_name.' '.$realtor->last_name.' has connected with you. Click on the link below to see the details. '.route('realtordetails.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
     }
 
     public function sendSMS($to, $body){
