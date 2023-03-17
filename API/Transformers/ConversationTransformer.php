@@ -12,12 +12,12 @@ class ConversationTransformer extends TransformerAbstract
 	/**
 	 * @var array
 	 */
-	protected $availableIncludes = [
+	protected array $availableIncludes = [
 		'user',
 		'subscribers',
 	];
 
-	protected $defaultIncludes = [
+	protected array $defaultIncludes = [
 		'messages',
 		'subscribers'
 	];

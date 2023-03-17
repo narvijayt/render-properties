@@ -7,7 +7,7 @@ use App\User;
 
 class UserTransformer extends TransformerAbstract
 {
-	protected $availableIncludes = [
+	protected array $availableIncludes = [
 		'detail'
 	];
 

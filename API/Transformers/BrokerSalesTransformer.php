@@ -14,7 +14,7 @@ class BrokerSalesTransformer extends TransformerAbstract
 	/**
 	 * @var array
 	 */
-	protected $availableIncludes = [
+	protected array $availableIncludes = [
 		'broker',
 	];
 
