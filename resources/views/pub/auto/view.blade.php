@@ -161,7 +161,7 @@
                         </div>
                         @endif
 
-                        @if(!isset($match))
+                        @if(!isset($match) && $user->user_type == 'broker')
                         <div class="col-md-12">
                             <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
                                 {{ csrf_field() }}

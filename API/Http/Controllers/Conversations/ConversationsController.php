@@ -75,10 +75,10 @@ class ConversationsController extends Controller
 		    $email = new ConversationNotificationEmail($user);
 		     try{
                 Mail::to($user['receiver_email'])->send($email);
-                $this->info('Conversation mail has been succesfully sent to: '.$user['receiver_email']);
                 $conversationData['currentUser'] = $currentUser;
                 $conversationData['recipient'] = $recipient;
                 (new TwilioService())->sendConversationNotificationSMS($conversationData);
+                $this->info('Conversation mail has been succesfully sent to: '.$user['receiver_email']);
             }
             catch(\Exception $e) {
                 \Log::error("Failed sending Email : " . $e->getMessage());

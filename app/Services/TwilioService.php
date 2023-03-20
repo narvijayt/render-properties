@@ -29,7 +29,7 @@ class TwilioService{
             $realtorId = $conversationData['currentUser']->user_id;
             $brokerId = $conversationData['recipient']->user_id;
         }
-        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from '.$userType.' Click on the link below to check message and reply '. route('realtordetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId]) );
+        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from '.$userType.'. Click on the link below to check message and reply '. route('realtordetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId]) );
     }
 
     public function sendSMS($to, $body){
@@ -37,8 +37,8 @@ class TwilioService{
             
         return $client->messages->create(
             // the number you'd like to send the message to
-            // $to,
-            env('APP_ENV') != 'production' ? '+918968001610' : '+17048395599',
+            // env('APP_ENV') != 'production' ? '+918968001610' : '+17048395599',
+            env('APP_ENV') != 'production' ? '+918968001610' : $to,
             [
                 'from' => env('TWILIO_NUMBER'),
                 'body' => $body

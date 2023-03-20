@@ -156,11 +156,11 @@ class AutoConnectionController extends Controller
         $brokerUser = User::find($brokerId);
         $user = User::find($realtorId);
 
-        $match = Match::findForUsers($user, $brokerUser);
+        /*$match = Match::findForUsers($user, $brokerUser);
         if(empty($match)){
             flash('No Match found.')->error();
             return redirect()->route('login');
-        }
+        }*/
         $lendorView = true;
         return view('pub.auto.view', compact('brokerUser', 'user', 'match', 'lendorView') );
     }
