@@ -15,6 +15,7 @@ use Mail;
 use App\Mail\ConversationNotificationEmail;
 use App\ConversationUser;
 use Illuminate\Http\Response;
+use App\Services\TwilioService;
 
 class MessagesController extends Controller
 {
@@ -84,6 +85,9 @@ class MessagesController extends Controller
 		     try{
                 Mail::to($user['receiver_email'])->send($email);
                 $this->info('Conversation mail has been succesfully sent to: '.$user['receiver_email']);
+                $conversationData['currentUser'] = $currentUser;
+                $conversationData['recipient'] = $recipient;
+                (new TwilioService())->sendConversationNotificationSMS($conversationData);
             }
             catch(\Exception $e) {
                 \Log::error("Failed sending Email : " . $e->getMessage());
