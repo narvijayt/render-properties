@@ -61,7 +61,7 @@ class VerifyMobileController extends Controller
 
         $user = User::find($request->user_id);
         if($user->mobile_verified == 1){
-            flash("This link has been expired.")->success();
+            flash("This OTP has been expired.")->success();
             return redirect()->route("login");
         }
 

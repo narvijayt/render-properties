@@ -1,5 +1,11 @@
 <?php
 
+// Route::post('/login-with-otp/', 'LoginController@loginWithOTP')->name('login.withotp');
+Route::get('/otp-login/{user_id}', 'Auth\LoginController@addLoginOTP')->name('login.addotp');
+Route::post('/resend-login-otp/{user_id}', 'Auth\LoginController@resendLoginOTP')->name('login.resendloginotp');
+Route::post('/verify-login-otp', 'Auth\LoginController@verifyLoginOTP')->name('login.verifyotp');
+
+
 Route::get('/auto-match/{id}', 'AutoConnectionController@sendAutoMatchRequests');
 Route::get('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@viewAutoMatchRequest')->name('view.automatch');
 Route::get('/lender-details/{brokerId}/{realtorId}', 'AutoConnectionController@lenderDetails')->name('lenderdetails.automatch');

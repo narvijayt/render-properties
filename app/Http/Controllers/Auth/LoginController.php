@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
+use Auth;
 
 
 class LoginController extends Controller
@@ -31,8 +32,23 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $usr = User::where('email', '=', $request->get('email') )->first();
+        if(is_numeric($request->input('email') )){
+            $usr = User::whereRaw("replace(phone_number, '-', '') = '".trim($request->get('email'))."' " )->first();
+        }else{
+            $usr = User::where('email', '=', $request->get('email') )->first();
+        }
+
         if(!empty($usr)) {
+            if($request->input('loginWithOTP')){
+                $response = (new MobileVerificationService())->generateOtp($usr->user_id);    
+                // echo '<pre>'; print_r($response); die;
+                (new TwilioService())->sendLoginOTPVerificationSMS($usr, $response->otp);
+    
+                flash("OTP has been sent successfully")->success();
+                return redirect()->route('login.addotp', ['user_id' => $usr->user_id]);
+            }
+
+            
             if($usr['user_type'] == 'vendor'){
                 $checkCategory = Category::where('user_id','=',$usr['user_id'])->get();
                 if($checkCategory->isNotEmpty()){
@@ -185,6 +201,95 @@ class LoginController extends Controller
             return redirect()->back()->with('message', 'You have entered an invalid email or password.');
         }
     }
+
+    /**
+     * 
+     * 
+     */
+    public function addLoginOTP($user_id){
+        if(empty($user_id)){
+            flash('Invalid request!')->error();
+            return redirect()->route('login');
+        }
+
+        $user = User::find($user_id);
+        if(empty($user)){
+            flash('Invalid request!')->error();
+            return redirect()->route('login');
+        }
+
+        return view('auth.addotp', compact('user') );
+    }
+
+
+    /**
+     * 
+     * 
+     */
+    public function resendloginotp($user_id){
+        if(empty($user_id)){
+            flash('Invalid User ID.')->error();
+            return redirect()->back();
+        }
+
+        $user = User::find($user_id);
+        if($this->resendOTPAgain($user->user_id)){
+            flash("A new OTP has been sent successfully")->success();
+            return redirect()->route('login.addotp', ['user_id' => $user->user_id]);
+        }
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function verifyLoginOTP(Request $request){
+        $user = User::find($request->user_id);
+
+        $response = (new MobileVerificationService())->verifyOTPCode($request->user_id, $request->otp);
+        if($response['success'] == true){
+            // flash($response['message'])->success();
+            if($user->user_type == "realtor"){
+                Auth::login($user);
+                return $this->sendLoginResponse($request);
+            }else{
+                if($user->payment_status == 0){
+                    return redirect()->route('register.thankyou', ['id' => $user->user_id]);
+                }else{
+                    Auth::login($user);
+                    return $this->sendLoginResponse($request);
+                }
+            }
+        }else{
+            flash($response['message'])->error();
+            if($response['message'] == "Your OTP has been expired."){
+                if($this->resendLoginOTPAgain($user->user_id)){
+                    flash("OTP has been sent successfully")->success();
+                }
+            }
+            return redirect()->route('login.addotp', ['id' => $user->user_id]);
+        }
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function resendLoginOTPAgain($id = ''){
+        
+        if(empty($id))
+            return false;
+
+        $user = User::find($id);
+
+        if(isset($user->phone_number) && !empty($user->phone_number) ){
+            $response = (new MobileVerificationService())->regenerateOtp($user->user_id);
+            (new TwilioService())->sendLoginOTPVerificationSMS($user, $response->otp);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Where to redirect users after login.
      *

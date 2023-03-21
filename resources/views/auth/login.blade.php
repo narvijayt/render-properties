@@ -73,29 +73,11 @@
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        id="email"
-                                        name="email"
-                                        value="{{ old('email') }}"
-                                        placeholder="Email"
-                                >
-
+                                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Email or Phone Number" />
+                                <button type="submit" class="text text-primary f-right btn-text mb-10" name="loginWithOTP" value="1">Login with OTP</button>
                             </div>
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-
-                                <input
-                                        id="password"
-                                        type="password"
-                                        class="form-control"
-                                        name="password"
-                                        placeholder="Password"
-                                        required
-                                >
-                                  
-
+                                <input id="password" type="password" class="form-control" name="password" placeholder="Password" />
                             </div>
                             <div class="form-group">
                                 <div class="text-left">
@@ -123,5 +105,6 @@
 
         </div>
     </div>
-
 @endsection
+
+    

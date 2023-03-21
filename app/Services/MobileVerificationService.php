@@ -57,11 +57,13 @@ class MobileVerificationService{
                 'expire_at' => Carbon::now()
             ]);
 
-            $user->mobile_verified = 1;
-            
-            $user->update();
+            if($user->mobile_verified == 0){
+                $user->mobile_verified = 1;
+                
+                $user->update();
+            }
 
-            return array("status" => 200, "success" => true, "message" => "Your Mobile has been verified Successfully." );
+            return array("status" => 200, "success" => true, "message" => "Your OTP has been verified Successfully." );
         }else{
             return array("status" => 200, "success" => false, "message" => "Your OTP is not correct." );
         }

@@ -11,6 +11,10 @@ class TwilioService{
     public function sendOTPVerificationSMS( object $user, $otp){
         $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code for Render: '.$otp);
     }
+    
+    public function sendLoginOTPVerificationSMS( object $user, $otp){
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code to login youar account in Render is: '.$otp);
+    }
 
     public function sendAutoMatchRequestSMS($lendor, $realtor){
         $this->sendSMS( $realtor->phone_number, 'Hey '.$realtor->first_name.'! Time to increase your sales! Congratulations, a Loan Officer in your area, '.$lendor->first_name.' '.$lendor->last_name.' wants to connect with you. Click on the link below to see the details. '.route('view.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
@@ -22,14 +26,14 @@ class TwilioService{
 
     public function sendConversationNotificationSMS($conversationData){
         $userType = $conversationData['currentUser']->user_type == 'broker' ? 'Lender' : 'Realtor';
-        if($conversationData['currentUser']->user_type == 'broker'){
+        /*if($conversationData['currentUser']->user_type == 'broker'){
             $brokerId = $conversationData['currentUser']->user_id;
             $realtorId = $conversationData['recipient']->user_id;
         }else{
             $realtorId = $conversationData['currentUser']->user_id;
             $brokerId = $conversationData['recipient']->user_id;
-        }
-        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from '.$userType.'. Click on the link below to check message and reply '. route('realtordetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId]) );
+        }*/
+        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('message-center.index') );
     }
 
     public function sendSMS($to, $body){
