@@ -42,7 +42,7 @@ class TwilioService{
         return $client->messages->create(
             // the number you'd like to send the message to
             // env('APP_ENV') != 'production' ? '+918968001610' : '+17048395599',
-            env('APP_ENV') != 'production' ? '+918968001610' : $to,
+            env('APP_ENV') == 'local' ? '+918968001610' : $to,
             [
                 'from' => env('TWILIO_NUMBER'),
                 'body' => $body
