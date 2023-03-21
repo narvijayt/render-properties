@@ -1,5 +1,17 @@
 /* contact form */
 $(document).ready(function() {
+    $(document).on("click", ".otp-login-btn", function(){
+      var emailPhone = $("input[id='email']").val();
+      if(emailPhone == ''){
+        $(".otp-error-response").removeClass('d-none').html('<span class="help-block alert alert-danger">You have to entered Email or Phone number to login with OTP.</span>');
+        $("input[name='loginWithOTP']").val(0);
+      }else{
+        $(".otp-error-response").addClass('d-none').html('');
+        $("input[name='loginWithOTP']").val(1);
+        $('form')[0].submit();
+      }
+    });
+
     initializeCreditCardJsForForm('vendor_register');
     $(function() {
         $("#contact-form").validate({

@@ -66,15 +66,15 @@
                        
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @if ($errors->has('email'))
-                                    <span class="help-block alert alert-danger">
-                                          You have entered an invalid email or password.
-                                        </span>
-                                @endif
-                            {{ csrf_field() }}
+                                <span class="help-block alert alert-danger">You have entered an invalid email or password.</span>
+                            @endif
 
+                            {{ csrf_field() }}
+                            <div class="otp-error-response"></div>
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Email or Phone Number" />
-                                <button type="submit" class="text text-primary f-right btn-text mb-10" name="loginWithOTP" value="1">Login with OTP</button>
+                                <button type="button" class="text text-primary f-right btn-text mb-10 otp-login-btn">Login with OTP</button>
+                                <input type="hidden" name="loginWithOTP" value="0" />
                             </div>
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <input id="password" type="password" class="form-control" name="password" placeholder="Password" />

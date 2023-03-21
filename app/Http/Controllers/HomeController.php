@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
             $viewData = Cache::remember('home_page_queries', 20, function() {
             $realtorCount = User::where('user_type','=','realtor')->count();
-            $brokerCount = User::where('user_type','=','broker')->count();
+            $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
             $messageCount = Message::count();
             $connectionCount = Match::count();
             $messageCount = $messageCount > 121 ? $messageCount : 121;
@@ -87,7 +87,7 @@ class HomeController extends Controller
             ->get();*/
             $spotlightBrokers = User::whereNotNull('user_avatar_id')
             ->where('user_type','=','broker')
-            ->whereNotNull('braintree_id')
+            ->where('payment_status', 1)
             ->where('active','=',true)
             ->inRandomOrder()
             ->get()
@@ -112,7 +112,7 @@ class HomeController extends Controller
             ->load('reviews');
         $spotlightBrokers = User::whereNotNull('user_avatar_id')
             ->where('user_type','=','broker')
-            ->whereNotNull('braintree_id')
+            ->where('payment_status', 1)
             ->where('active','=',true)
             ->where('state', 'LIKE', '%' . $state . '%')
             ->inRandomOrder()
@@ -149,7 +149,7 @@ class HomeController extends Controller
         {
             $spotlightBrokers = User::whereNotNull('user_avatar_id')
             ->where('user_type','=','broker')
-            ->whereNotNull('braintree_id')
+            ->where('payment_status', 1)
             ->where('active','=',true)
             ->inRandomOrder()
             ->get()

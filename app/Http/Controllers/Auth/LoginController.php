@@ -12,7 +12,9 @@ use Carbon\Carbon;
 
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
+use App\Mail\SendLoginOTPNotification;
 use Auth;
+use Mail;
 
 
 class LoginController extends Controller
@@ -39,10 +41,12 @@ class LoginController extends Controller
         }
 
         if(!empty($usr)) {
-            if($request->input('loginWithOTP')){
+            if($request->input('loginWithOTP') == 1){
                 $response = (new MobileVerificationService())->generateOtp($usr->user_id);    
                 // echo '<pre>'; print_r($response); die;
                 (new TwilioService())->sendLoginOTPVerificationSMS($usr, $response->otp);
+                $email = new SendLoginOTPNotification($usr, $response->otp);
+                Mail::to($usr->email)->send($email);
     
                 flash("OTP has been sent successfully")->success();
                 return redirect()->route('login.addotp', ['user_id' => $usr->user_id]);

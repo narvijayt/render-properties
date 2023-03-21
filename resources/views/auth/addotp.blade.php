@@ -38,7 +38,7 @@
 
                 <div class="row">                    
                     <div class="col-md-12">
-                        <h4>Enter Code</h4>
+                        <h5>We have shared the OTP code with you on your registered Phone Number and Email Address. Please check your SMS or Inbox and enter that code below to access your account.</h5>
                        
                          @if (Session::has('message'))
                             <span class="help-block alert alert-success">

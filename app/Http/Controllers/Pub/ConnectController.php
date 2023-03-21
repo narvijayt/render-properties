@@ -142,9 +142,9 @@ class ConnectController extends Controller
         $params = $this->defaultParams($request->input());
         $v->validate();
         
-        $query1 = User::where('user_type','=','broker')->where('user_id','!=','3')->whereNotNull('braintree_id')->active()->inRandomOrder()->with('reviews')->whereNotNull('designation');
-		$query3 = User::where('user_type','=','broker')->where('user_id','!=','3')->whereNotNull('braintree_id')->whereNotNull('billing_first_name')->active()->inRandomOrder()->whereNull('designation');
-        $query4 = User::where('user_type','=','broker')->where('user_id','!=','3')->whereNotNull('braintree_id')->whereNull('billing_first_name')->whereDate('created_at', '<', '2020-01-01 00:00:00')->active()->inRandomOrder()->with('reviews')->whereNull('designation');
+        $query1 = User::where('user_type','=','broker')->where('user_id','!=','3')->where('payment_status', 1)->active()->inRandomOrder()->with('reviews')->whereNotNull('designation');
+		$query3 = User::where('user_type','=','broker')->where('user_id','!=','3')->where('payment_status', 1)->active()->inRandomOrder()->whereNull('designation');
+        $query4 = User::where('user_type','=','broker')->where('user_id','!=','3')->where('payment_status', 1)->whereDate('created_at', '<', '2020-01-01 00:00:00')->active()->inRandomOrder()->with('reviews')->whereNull('designation');
         
           if ($params->search_type === 'radius') {
 			$geoService = app()->make(GeolocationService::class);
