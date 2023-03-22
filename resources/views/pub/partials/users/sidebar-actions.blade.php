@@ -23,7 +23,9 @@
 		$authUser = auth()->user();
 	@endphp
 	@if($authUser->isMatchedWith($user))
-		<a class="btn btn-warning btn-block" href="sms:{{$user->phone_number}}">Send SMS</a>
+		<div class="user-profile__send-message-container">
+			<a class="btn btn-warning btn-block" href="sms:{{$user->phone_number}}">Send SMS</a>
+		</div>
 
 		@if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor')
 			<a class="btn btn-warning btn-block" href="{{ route('pub.profile.matches.index') }}">
