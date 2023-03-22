@@ -104,11 +104,18 @@ class AutoConnectionController extends Controller
         $brokerUser = User::find($brokerId);
         $realtorUser = User::find($realtorId);
 
+        $matches = Match::findForUser($realtorUser, true);
+        if($matches->count() ){
+            flash('You are already connected with another loan office in same area. Can not create new connection with multiple loan officers.')->error();
+            return redirect()->back();
+        }
+
         // $this->authorize('requestMatch', $brokerUser);
         $matchingService = app()->make(\App\Services\Matching\Matching::class);
-        $match = $matchingService->request($realtorUser, $brokerUser);
+        $match = $matchingService->request($brokerUser, $realtorUser);
         if ($match !== false) {
             $matchingService->accept($match->match_id, $brokerUser);
+            $matchingService->accept($match->match_id, $realtorUser);
 
             $response = (new TwilioService())->sendRealtorConnectToLender($brokerUser, $realtorUser);
             $email = new AutoMatchNotificationToLender($brokerUser, $realtorUser);
@@ -122,10 +129,11 @@ class AutoConnectionController extends Controller
         return redirect()->back();
     }
 
-    public function acceptAutoMatch($brokerUser, $realtorUser){        
+    public function acceptAutoMatch($brokerUser, $realtorUser){
+
         $this->authorize('confirmMatch', $brokerUser);        
         $matchingService = app()->make(\App\Services\Matching\Matching::class);
-        $match = $matchingService->findForUsers($realtorUser, $brokerUser);
+        $match = $matchingService->findForUsers($brokerUser, $realtorUser);
         if ($match === false ) 
         {
             flash('Unable to confirm match')->error();

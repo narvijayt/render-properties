@@ -32,7 +32,7 @@ trait AutoMatchTrait {
         if($user->auto_notifications == 1)
             return false;
 
-        $realtorUsers = User::where("user_type", 'realtor')->whereIn("zip", explode(",",$user->zip))->take(10)->get();
+        $realtorUsers = User::where("user_type", 'realtor')->whereIn("zip", explode(",",$user->zip))->get();
         if($realtorUsers->count()){
             foreach($realtorUsers as $realtor){
                 $realtorUser = User::find($realtor->user_id);
@@ -63,5 +63,34 @@ trait AutoMatchTrait {
             }
         }
         return true;
+    }
+
+    public function findAutoLocalLenders($user_id = ''){
+        if(empty($user_id))
+            return false;
+
+        $realtor = User::find($user_id);
+
+        if($realtor->user_type != 'realtor')
+            return false;
+
+        if($realtor->verified == false)
+            return false;
+
+        if($realtor->mobile_verified == false)
+            return false;
+
+        $matches = Match::findForUser($realtor, true);
+        if($matches->count() )
+            return false;
+
+        $brokerUsers = User::where("user_type", 'broker')->whereIn("zip", explode(",",$realtor->zip))->get();
+        if($brokerUsers->count()){
+            foreach($brokerUsers as $user){                
+                $response = (new TwilioService())->sendAutoMatchRequestSMS($user, $realtor);
+                $email = new NewLenderNotificationToRealtors($user, $realtor);
+                Mail::to($realtor->email)->send($email);
+            }
+        }
     }
 }

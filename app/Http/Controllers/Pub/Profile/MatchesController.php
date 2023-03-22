@@ -178,6 +178,15 @@ class MatchesController extends Controller
 	public function confirmMatch(Match $match)
 	{
 		$authUser = $this->auth->user();
+		if($authUser->user_type == "realtor"){
+			$realtorUser = User::find($authUser->user_id);
+			$matches = Match::findForUser($realtorUser, true);
+        	if($matches->count() ){
+				flash('You are already connected with a loan officer in same area.')->error();
+				return redirect()->back();
+			}
+		}
+		
 		$user = $match->getOppositeParty($authUser);
 		//$this->authorize('confirmMatch', $user);
 
