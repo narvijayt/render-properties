@@ -68,19 +68,19 @@ class UsersController extends Controller
         
         if(Auth::user() && $this->auth->user()->user_type == "broker"){
             // if (!$isGuestViewer && $this->auth->user()->cannot('broker-view-profiles', User::class) && $createdYear >= $currYear)
-            if( $this->auth->user()->payment_status == 0)
+            if($this->auth->user()->payment_status == 0)
             {
               return redirect('partially-registration/'.$this->auth->user()->user_id);
             }
         }
         
-            $user = User::where('user_id', $user_id)->firstOrFail();
-            if (!$isGuestViewer) 
-            {
-                $user->add_profile_view($this->auth->user());
-            }
-            $findUser = User::find($user_id);
-            if($findUser->user_type =="vendor"){
+        $user = User::where('user_id', $user_id)->firstOrFail();
+        if (!$isGuestViewer) 
+        {
+            $user->add_profile_view($this->auth->user());
+        }
+        $findUser = User::find($user_id);
+        if($findUser->user_type =="vendor"){
             $fetchOverallData = User::where('user_id',$user_id)->with('categories')->with('vendor_details')->get();
             if(($findUser !="") && ($findUser->user_type =="vendor") && (!empty($fetchOverallData) && $fetchOverallData[0]->categories->isNotEmpty()))
             {
@@ -100,21 +100,21 @@ class UsersController extends Controller
                     return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));
                 }
             }
-            }
-            if(($findUser !="") && ($findUser->user_type =="broker"))
+        }
+        if(($findUser !="") && ($findUser->user_type =="broker"))
+        {
+            if($findUser->payment == 1)
             {
-                if($findUser->braintree_id !="" && $findUser->billing_first_name !="")
-                {
-                    return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
-                }
+                return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
             }
-            if(($findUser !="") && ($findUser->user_type =="realtor"))
+        }
+        /*if(($findUser !="") && ($findUser->user_type =="realtor"))
+        {
+            if($findUser->braintree_id !="" && $findUser->billing_first_name !="")
             {
-                if($findUser->braintree_id !="" && $findUser->billing_first_name !="")
-                {
-                    return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
-                }
+                return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
             }
+        }*/
         return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));
     }
     
