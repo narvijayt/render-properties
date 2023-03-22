@@ -103,7 +103,7 @@ class UsersController extends Controller
         }
         if(($findUser !="") && ($findUser->user_type =="broker"))
         {
-            if($findUser->payment == 1)
+            if($findUser->payment_status == 1)
             {
                 return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
             }
