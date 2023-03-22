@@ -69,6 +69,7 @@ class VerifyMobileController extends Controller
         if($response['success'] == true){
             flash($response['message'])->success();
             if($user->user_type == "realtor"){
+                $this->findAutoLocalLenders($user->user_id);
                 return redirect()->route("login");
             }else{
                 if($user->payment_status == 0){

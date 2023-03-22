@@ -51,7 +51,9 @@ class VerifyEmailController extends Controller
 		
 		if($user->user_type == "broker" ){
 	        $response = $this->sendAutoMatchRequests($user->user_id);
-	    }
+	    }else if($user->user_type == "realtor"){
+			$response = $this->findAutoLocalLenders($user->user_id);
+		}
 
 		return redirect()->route('pub.profile.index');
 	}
