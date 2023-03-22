@@ -23,14 +23,16 @@
 		$authUser = auth()->user();
 	@endphp
 	@if($authUser->isMatchedWith($user))
-	@if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor')
-		<a class="btn btn-warning btn-block" href="{{ route('pub.profile.matches.index') }}">
-		Manage Matches</a>
-		<div class="text-center util__mb--large">
-			<a href="{{ route('pub.faq.index') }}#match" class="small text-info" target="_blank">
-			What is a Match?</a>
-		</div>
-	@endif
+		<a class="btn btn-warning btn-block" href="sms:{{$user->phone_number}}">Send SMS</a>
+
+		@if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor')
+			<a class="btn btn-warning btn-block" href="{{ route('pub.profile.matches.index') }}">
+			Manage Matches</a>
+			<div class="text-center util__mb--large">
+				<a href="{{ route('pub.faq.index') }}#match" class="small text-info" target="_blank">
+				What is a Match?</a>
+			</div>
+		@endif
 	@endif
 	{{---@can('requestMatch', $user)---}}
 	@if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )

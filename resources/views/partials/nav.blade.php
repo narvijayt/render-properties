@@ -16,7 +16,7 @@
 	<div class="call-text">CALL OR TEXT</div>
 	</li>
 	</ul>
-	<div class="header-number"><a href="sms:704.569.5072">704.569.5072</a></div>
+	<div class="header-number"><a href="tel:704.569.5072">704.569.5072</a></div>
 	</div>
 	</div>
         <div class="navbar-header">
