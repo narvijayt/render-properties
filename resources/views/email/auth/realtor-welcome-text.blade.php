@@ -8,8 +8,8 @@ Welcome to Render and congratulations on becoming a premier member of one of the
 3.     Refer Render to your loan officer connections. Adding them to the site and matching with them increases the marketing to your page and profile.
 4.     Find out what else Render can do for you. We have other plans and programs available to our members to help further increase your business and exposure. Give us a call or drop us an email to find out more, we’re adding site enhancements all the time!
  
-Once again, congratulations and welcome! If there’s anything we can do for you, don’t hesitate to contact us. Call (704) 935-3588 or email member@render.properties today!
+Once again, congratulations and welcome! If there’s anything we can do for you, don’t hesitate to contact us. Call <a href="tel:7045695072">704-569-5072</a> or email member@render.properties today!
 
-Thanks,<br>
-{{ config('app.name') }}
+Thank You,<br>
+Team {{ config('app.name') }}
 @endcomponent

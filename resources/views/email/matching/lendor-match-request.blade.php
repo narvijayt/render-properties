@@ -17,7 +17,7 @@ You can view the request in your profile
 View Match Requests
 @endcomponent
 
-<p>Call or text for information at <a href="tel:704-569-5072">704-569-5072</a></p>
+<p>Call or text for information at <a href="tel:7045695072">704-569-5072</a></p>
 
 Thank You,<br>
 {{ ucfirst($authUser->first_name) }}

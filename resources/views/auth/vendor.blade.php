@@ -28,7 +28,6 @@
 @section('content')
     @component('pub.components.banner', ['banner_class' => 'lender'])
         <h1 class="banner-title">Register</h1>
-			<!--- <h3 class="pl-0 text-white" style="margin-top:0"><i class="fa fa-mobile"></i> Call us Today: <a href="tel:704-946-6980" style="color:orange;font-weight:bold;">704-946-6980</a> for questions about our program</h3>-->
     @endcomponent
 	
 <style>.banner{margin:0}.footer{margin-top:0}</style>	

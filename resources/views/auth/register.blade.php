@@ -38,7 +38,6 @@
 	@endif
     <div class="container">
 	    <div class="text-center">
-	      <!--<h2 class="call-us"><a href="tel:704-946-6980" style="color:orange;font-weight:bold;"><i class="fa fa-mobile"></i> Call: 704-946-6980</a> for questions about our program</h2>-->
 		 
 		 </div> 
 		  

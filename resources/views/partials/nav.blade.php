@@ -16,7 +16,7 @@
 	<div class="call-text">CALL OR TEXT</div>
 	</li>
 	</ul>
-	<div class="header-number"><a href="tel:704.569.5072">704.569.5072</a></div>
+	<div class="header-number"><a href="tel:7045695072">704.569.5072</a></div>
 	</div>
 	</div>
         <div class="navbar-header">
@@ -38,8 +38,6 @@
                 --}}
                 <img src="{{url('/')}}/img/logo-full.png">
             </a>
-			
-			<!--<div class="call-us">Call for more information:<a href="tel:704-946-6980">704-946-6980</a></div>-->
 			
         </div>
         <div class="collapse navbar-collapse" id="realbroker-navbar-collapse">
