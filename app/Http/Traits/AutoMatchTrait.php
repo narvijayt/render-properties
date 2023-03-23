@@ -92,5 +92,6 @@ trait AutoMatchTrait {
                 Mail::to($realtor->email)->send($email);
             }
         }
+        return true;
     }
 }

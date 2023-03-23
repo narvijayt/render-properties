@@ -162,12 +162,20 @@
                         @endif
 
                         @if(!isset($match) && $user->user_type == 'broker')
-                        <div class="col-md-12">
-                            <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
-                                {{ csrf_field() }}
-                                <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Connect with {{ $user->first_name }}</button>
-                            </form>
-                        </div>
+                            <div class="col-md-12">
+                                <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
+                                    {{ csrf_field() }}
+                                    <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Connect with {{ $user->first_name }}</button>
+                                </form>
+                            </div>
+                        @elseif(isset($match))
+                            <div class="clearfix col-md-12">
+                                <div class="row col-md-4">
+                                    <div class="user-profile__send-message-container">
+                                        <a class="btn btn-warning btn-block" href="sms:{{$user->phone_number}}">Send SMS</a>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>

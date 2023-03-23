@@ -704,7 +704,7 @@ class User extends Authenticatable implements ISecurable
 	public function isPayingCustomer()
 	{
 		return ($this->isPrepaidCustomer()
-			|| ($this->braintree_id !== null 
+			|| ($this->payment_status !== 0 
 			
 			//&& $this->subscribed('main')
 			));
