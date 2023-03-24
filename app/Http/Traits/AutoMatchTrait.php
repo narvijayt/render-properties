@@ -84,7 +84,7 @@ trait AutoMatchTrait {
         if($matches->count() )
             return false;
 
-        $brokerUsers = User::where("user_type", 'broker')->whereIn("zip", explode(",",$realtor->zip))->get();
+        $brokerUsers = User::where("user_type", 'broker')->where('payment_status', 1)->whereIn("zip", explode(",",$realtor->zip))->get();
         if($brokerUsers->count()){
             foreach($brokerUsers as $user){                
                 $response = (new TwilioService())->sendAutoMatchRequestSMS($user, $realtor);
