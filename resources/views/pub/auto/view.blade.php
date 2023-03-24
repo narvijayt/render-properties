@@ -54,8 +54,26 @@
                     <div class="alert alert-danger">{{session('error')}}</div>
                 @endif
 
-                @if(isset($match) && $user->user_type == 'broker')
-                    <div class="alert alert-success">Congratulations, you are now connected with {{ $user->first_name }}. To connect with your Loan Officer, now you can call or text the {{ $user->first_name }} at <a href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a> or can send email at <a href="mailto:{{ $user->email }}">{{ $user->email }}</a> </div>
+                @if(isset($match))
+                    @if($user->user_type == 'broker')
+                        <div class="col-md-12">
+                            <div class="alert alert-success">Congratulations, you are now connected with {{ $user->first_name }}. To connect with your Loan Officer, now you can call or text the {{ $user->first_name }} at <a href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a> or can send email at <a href="mailto:{{ $user->email }}">{{ $user->email }}</a> </div>
+                        </div>
+                    @endif
+
+                    <div class="row open-profile-details">
+                        <div class="col-md-12">
+                            <div class="col-sm-6 col-md-4">
+                                <i class="fa fa-phone-square"></i> <a href="tel:{{ $user->phone_number}}"> {{ $user->phone_number }}</a>
+                            </div>
+                            <div class="col-sm-6 col-md-4 hide-desktop">
+                                <i class="fa fa-wechat"></i> <a href="sms:{{ $user->phone_number}}"> Send SMS </a>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <i class="fa fa-envelope"></i> <a href="mailto:{{ $user->email}}"> {{ $user->email }}</a>
+                            </div>
+                        </div>
+                    </div>
                 @endif
 
                 <div class="col-md-3 @if ($user->designation !='' && $user->designation !='null') standard-agent @endif">
@@ -167,14 +185,6 @@
                                     {{ csrf_field() }}
                                     <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Connect with {{ $user->first_name }}</button>
                                 </form>
-                            </div>
-                        @elseif(isset($match))
-                            <div class="clearfix col-md-12">
-                                <div class="row col-md-4">
-                                    <div class="user-profile__send-message-container">
-                                        <a class="btn btn-warning btn-block" href="sms:{{$user->phone_number}}">Send SMS</a>
-                                    </div>
-                                </div>
                             </div>
                         @endif
                     </div>
