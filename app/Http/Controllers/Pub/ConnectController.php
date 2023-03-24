@@ -267,9 +267,9 @@ class ConnectController extends Controller
 		});
         $params = $this->defaultParams($request->input());
         $v->validate();
-        $query1 = User::where('user_type','=','realtor')->where('user_id','!=','3')->active()->inRandomOrder()->with('reviews')->doesnthave('checkuser_with_unmatch')->whereNotNull('designation');
-	    $query3 = User::where('user_type','=','realtor')->where('user_id','!=','3')->active()->inRandomOrder()->with('reviews')->doesnthave('checkuser_with_unmatch')->whereNotNull('billing_first_name')->whereNotNull('braintree_id')->whereNull('designation');
-		$query4 = User::where('user_type','=','realtor')->where('user_id','!=','3')->active()->inRandomOrder()->with('reviews')->doesnthave('checkuser_with_unmatch')->whereNull('billing_first_name')->whereNull('designation')->whereNull('braintree_id');
+        $query1 = User::where('user_type','=','realtor')->where('user_id','!=','3')->active()->inRandomOrder()->with('reviews')->doesnthave('unmatch_relator')->whereNotNull('designation');
+	    $query3 = User::where('user_type','=','realtor')->where('user_id','!=','3')->active()->inRandomOrder()->with('reviews')->doesnthave('unmatch_relator')->whereNotNull('billing_first_name')->whereNotNull('braintree_id')->whereNull('designation');
+		$query4 = User::where('user_type','=','realtor')->where('user_id','!=','3')->active()->inRandomOrder()->with('reviews')->doesnthave('unmatch_relator')->whereNull('billing_first_name')->whereNull('designation')->whereNull('braintree_id');
 		if ($params->search_type === 'radius') {
 			$geoService = app()->make(GeolocationService::class);
 			$location = $geoService->query($params->location);

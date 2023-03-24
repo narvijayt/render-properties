@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
         
         $viewData = Cache::remember('home_page_queries', 20, function() {
-            $realtorCount = User::where('user_type','=','realtor')->doesnthave('checkuser_with_unmatch')->count();
+            $realtorCount = User::where('user_type','=','realtor')->doesnthave('unmatch_relator')->count();
             $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
             $messageCount = Message::count();
             $connectionCount = Match::count();
@@ -76,7 +76,7 @@ class HomeController extends Controller
             ->where('user_type','=','realtor')
             ->where('active','=',true)
             ->inRandomOrder()
-            ->doesnthave('checkuser_with_unmatch')
+            ->doesnthave('unmatch_relator')
             ->take(3)
             ->get()
             ->load('reviews');  
@@ -108,7 +108,7 @@ class HomeController extends Controller
             ->where('user_type','=','realtor')
             ->where('active','=',true)
             ->where('state', 'LIKE', '%' . $state . '%')
-            ->doesnthave('checkuser_with_unmatch')
+            ->doesnthave('unmatch_relator')
             ->inRandomOrder()
             ->take(3)
             ->get()
@@ -134,7 +134,7 @@ class HomeController extends Controller
             $spotlightRealtors = User::whereNotNull('user_avatar_id')
                 ->where('user_type','=','realtor')
                 ->where('active','=',true)
-                ->doesnthave('checkuser_with_unmatch')
+                ->doesnthave('unmatch_relator')
                 ->inRandomOrder()
                 ->take(3)
                 ->get()

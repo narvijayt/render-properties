@@ -13,7 +13,7 @@ class TwilioService{
     }
     
     public function sendLoginOTPVerificationSMS( object $user, $otp){
-        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code to login youar account in Render is: '.$otp);
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code to login your account in Render is: '.$otp);
     }
 
     public function sendAutoMatchRequestSMS($lendor, $realtor){
