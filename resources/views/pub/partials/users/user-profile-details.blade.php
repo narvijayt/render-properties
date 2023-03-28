@@ -1,42 +1,51 @@
 @php 
-$match = false;
+$match = (!isset($match)) ? false : $match;
 @endphp
 
 
-@auth
+@if(Auth::user())
     @php 
         $authUser = auth()->user();
         if($authUser->isMatchedWith($user)){
             $match = true;
         }
     @endphp
-@endauth
+@endif
 
 <div class="row">
     <div class="col-md-6">
-        <h3 class="text-primary">{{ $user->first_name }} {!! ($match) ? $user->last_name : get_locked_html_string($user->last_name) !!}</h3>
-        
-        <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
+        <div class="user-basic-info-section">
+            <h3 class="text-primary">{{ $user->first_name }} {!! ($match) ? $user->last_name : get_locked_html_string($user->last_name) !!}</h3>
+            
+            <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
 
-        <div class="text-uppercase d-flex">
-            <div class="col">Render Rating: </div>
-            <div class="col"><h5 class="m-0">4.75 (Out of 5)</h5></div>
+            <div class="text-uppercase d-flex">
+                <div class="col">Render Rating: </div>
+                <div class="col"><h5 class="m-0">4.75 (Out of 5)</h5></div>
+            </div>
         </div>
 
-        <div class="card bg-light p-2 mt-2 mb-3">
+        <div class="card bg-light mp-2 p-2 mt-2 mb-3">
             <h4 class="text-primary mt-0">Join Render's lead program. Match with this agent today!</h4>
             <p>To connect with this agent, click to match:</p>
-            @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
-                <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
-                    {{ csrf_field() }}
-                    <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
-                </form>
-            @elseif($match)
+            @if(Auth::user())
+                @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
+                    <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
+                        {{ csrf_field() }}
+                        <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
+                    </form>
+                @endif
+            @elseif($match && Auth::user())
                 <div class="user-profile__send-message-container">
                     @if($user->user_id != Auth::user()->user_id)
                         <send-message :recipient="{{ $user }}"></send-message>
                     @endif
                 </div>
+            @elseif($match== false && $user->user_type == 'broker' && (isset($realtorUser) && in_array($realtorUser->zip, explode(",", $user->zip))))
+                <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
+                    {{ csrf_field() }}
+                    <button type="submit" name="create-auto-match" id="create-auto-match" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
+                </form>
             @endif
 
             <div class="form-group mb-2 user-contact-info">
@@ -44,6 +53,13 @@ $match = false;
                     <i class="fa fa-phone"></i> <a class="text-dark" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
                 @else
                     <i class="fa fa-phone"></i> {!! get_locked_html_string($user->phone_number) !!}
+                @endif
+            </div>
+            <div class="form-group mb-2 user-contact-info hide-desktop">
+                @if($match)
+                    <i class="fa fa-wechat"></i> <a class="text-dark" href="sms:{{ $user->phone_number }}">Send SMS</a>
+                @else
+                    <i class="fa fa-wechat"></i> {!! get_locked_html_string('Send SMS') !!}
                 @endif
             </div>
             <div class="form-group mb-2 user-contact-info">

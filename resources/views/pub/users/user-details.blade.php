@@ -40,7 +40,7 @@
 	@component('pub.components.banner', ['banner_class' => 'profile'])
 		<h1 class="banner-title">{{ $user->full_name() }}&#39s Profile</h1>
 	@endcomponent
-    <div class="container">
+    <div class="container user-profile-view">
         <div class="row">
             <div class="col-md-3 @if ($user->designation !='' && $user->designation !='null') standard-agent @endif">
                 <div class="profile-box-inner">

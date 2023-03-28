@@ -1608,10 +1608,10 @@ button#registerVendor {
 /**************** 21-03-2023 Ends *********************/
 
 /**************** 24-03-2023 Starts *********************/
-.hide-desktop{ display: none;}
+.hide-desktop{ display: none !important;}
 .open-profile-details{font-size: 20px;color: #f0b41c;margin-right: 4px; margin-bottom: 15px;}
 @media(max-width:991px){
-    .hide-desktop{display: block;}
+    .hide-desktop{display: block !important;}
     .profile-box-inner{ min-height: 220px;}
 }
 /**************** 24-03-2023 Ends *********************/
@@ -1633,6 +1633,17 @@ button#registerVendor {
 /**************** 28-03-2023 Starts *********************/
 .text-locked{position: relative;}
 .text-locked:after{background: #ddd;position: absolute;width: 100%;content: "";height: 100%;left: 0;}
+
+@media(max-width:1199px){
+    .user-contact-info{ font-size:13px;}
+    .user-contact-info .fa{font-size: 12px;width: 30px;height: 30px;line-height: 22px;margin-right: 8px;min-width: 30px;}
+    .mp-2{ padding: 1rem;}
+}
+@media(max-width:991px){
+    .user-basic-info-section, .user-basic-info-section .d-flex{ text-align: center; justify-content: center;}
+    .user-profile-view .profile-box-inner{ min-height: auto;}
+    .user-profile-view .user-profile__avatar-container{ margin-bottom: 10px;}
+}
 /**************** 28-03-2023 Ends *********************/
 
 @media(max-width:625px)

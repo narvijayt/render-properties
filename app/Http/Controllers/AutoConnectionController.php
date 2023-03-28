@@ -83,7 +83,7 @@ class AutoConnectionController extends Controller
                     $broker_user_id = $match->user_id1;
                 }
                 $matchBrokerUser = User::find($broker_user_id);
-                if(in_array($realtorUser->zip,explode(",",$matchBrokerUser->zip) )){
+                //if(in_array($realtorUser->zip,explode(",",$matchBrokerUser->zip) )){
                     if($broker_user_id == $user->user_id){
                         flash('You already have connected with this Loan Officer.')->error();
                         return redirect()->route('lenderdetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ]);
@@ -91,7 +91,7 @@ class AutoConnectionController extends Controller
                         flash('You already have an connection with another Loan Office within the same ZIP Code area.')->error();
                         return redirect()->route('login');
                     }
-                }
+                //}
             }
         }
 
@@ -107,6 +107,11 @@ class AutoConnectionController extends Controller
         $matches = Match::findForUser($realtorUser, true);
         if($matches->count() ){
             flash('You are already connected with another loan office in same area. Can not create new connection with multiple loan officers.')->error();
+            return redirect()->back();
+        }
+
+        if(!in_array($realtorUser->zip,explode(",",$brokerUser->zip) )){
+            flash('This user does not belong to your service area. You can not connect to this user.')->error();
             return redirect()->back();
         }
 
