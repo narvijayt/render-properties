@@ -116,10 +116,12 @@ class UsersController extends Controller
             }
         }*/
 
-        if(env('APP_ENV') == "local"){
+        //if(env('APP_ENV') == "local"){
             return view('pub.users.user-details', compact('user','categoryName','fetchOverallData','userSocialReviews'));
+        /*
         }
         return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));
+        */
     }
     
     /**
