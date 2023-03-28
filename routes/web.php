@@ -11,7 +11,7 @@ Route::get('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@vi
 Route::get('/lender-details/{brokerId}/{realtorId}', 'AutoConnectionController@lenderDetails')->name('lenderdetails.automatch');
 Route::get('/realtor-details/{brokerId}/{realtorId}', 'AutoConnectionController@realtorDetails')->name('realtordetails.automatch');
 Route::post('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@requestAutoMatch')->name('create.automatch');
-// Route::get('/sample-email/{id}', 'Pub\Users\UsersController@testEmailSample');
+Route::get('/sample-email/{id}', 'Pub\Users\UsersController@testEmailSample');
 Route::get('/send-otp/{id}', 'Auth\VerifyMobileController@sendOTPToVerifyMobile')->name('otp.sendnewotp');
 Route::get('/verify-otp/{id}', 'Auth\VerifyMobileController@verifyTestOTP')->name('verify.phone');
 Route::post('/verify-otp', 'Auth\VerifyMobileController@verifyOTP')->name('verify.otp');

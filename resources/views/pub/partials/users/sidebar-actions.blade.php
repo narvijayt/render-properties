@@ -14,9 +14,9 @@
 </div>
 @auth
     <div class="user-profile__send-message-container">
-			@if($user->user_id != Auth::user()->user_id)
-				<send-message :recipient="{{ $user }}"></send-message>
-			@endif
+		@if($user->user_id != Auth::user()->user_id)
+			<send-message :recipient="{{ $user }}"></send-message>
+		@endif
 	</div>
     @php
 		/** @var \App\User $authUser */

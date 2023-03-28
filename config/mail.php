@@ -114,7 +114,12 @@ return [
     |
     */
 
-    'sendmail' => '/usr/sbin/sendmail -bs',
+    'mailers' => [
+        'office365mail' => [
+            'transport' => 'office365mail',
+        ],
+        'sendmail' => '/usr/sbin/sendmail -bs',
+    ],
 
     /*
     |--------------------------------------------------------------------------

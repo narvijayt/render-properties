@@ -101,13 +101,13 @@ class UsersController extends Controller
                 }
             }
         }
-        if(($findUser !="") && ($findUser->user_type =="broker"))
+        /*if(($findUser !="") && ($findUser->user_type =="broker"))
         {
             if($findUser->payment_status == 1)
             {
                 return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
             }
-        }
+        }*/
         /*if(($findUser !="") && ($findUser->user_type =="realtor"))
         {
             if($findUser->braintree_id !="" && $findUser->billing_first_name !="")
@@ -115,6 +115,10 @@ class UsersController extends Controller
                 return view('pub.users.premium_users', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
             }
         }*/
+
+        if(env('APP_ENV') == "local"){
+            return view('pub.users.user-details', compact('user','categoryName','fetchOverallData','userSocialReviews'));
+        }
         return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));
     }
     
@@ -309,8 +313,8 @@ class UsersController extends Controller
         {
             $email = new NewUserAdminNotification($user);
             // Mail::to(config('mail.from.address'))->send($email);
-            // Mail::to("amit@culture-red.com")->send($email);
-            Mail::to("richardtocado@gmail.com")->send($email);
+            Mail::to("amit@culture-red.com")->send($email);
+            // Mail::to("richardtocado@gmail.com")->send($email);
             return back();
         }
         catch(Exception $e)

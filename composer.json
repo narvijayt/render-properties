@@ -17,6 +17,7 @@
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "2.1.*",
         "matthewbdaly/laravel-azure-storage": "^1.0",
+        "motze92/office365-mail": "^2.0",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "~2.6",
         "silber/bouncer": "v1.0.0-beta.4",

@@ -1616,6 +1616,24 @@ button#registerVendor {
 }
 /**************** 24-03-2023 Ends *********************/
 
+/**************** 27-03-2023 Starts *********************/
+.m-0 { margin: 0;}
+.d-flex{display: flex;flex-direction: row;flex-wrap: wrap;width: 100%;}
+.card{position: relative;display: -ms-flexbox;display: flex;-ms-flex-direction: column;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 0.25rem;}
+.bg-light{ background: #fafbfc;}
+.card-bordered{ border: 1px solid #c5d0e1;}
+.p-3{ padding: 3rem;}.p-2{ padding: 2rem;}.p-1{ padding: 1rem;}
+.pl-3{ padding: 3rem;}.pl-2{ padding: 2rem;}.pl-1{ padding: 1rem;}
+.pr-3{ padding: 3rem;}.pr-2{ padding: 2rem;}.pr-1{ padding: 1rem;}
+.user-contact-info{display: flex; align-items: center;}
+.user-contact-info .fa{background: #143475;padding: 5px;color: #fff;border-radius: 100%;font-size: 14px;width: 40px;height: 40px;text-align: center;vertical-align: middle;line-height: 30px; margin-right: 15px;}
+
+/**************** 27-03-2023 Ends *********************/
+
+/**************** 28-03-2023 Starts *********************/
+.text-locked{position: relative;}
+.text-locked:after{background: #ddd;position: absolute;width: 100%;content: "";height: 100%;left: 0;}
+/**************** 28-03-2023 Ends *********************/
 
 @media(max-width:625px)
 {
