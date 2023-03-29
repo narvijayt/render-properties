@@ -28,10 +28,12 @@ $match = (!isset($match)) ? false : $match;
         <div class="card bg-light mp-2 p-2 mt-2 mb-3">
             @if($match)
                 <h4 class="text-primary mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
+                <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
             @else
                 <h4 class="text-primary mt-0">Join Render's lead program. Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!</h4>
+                <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
             @endif
-            <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
+            
             @if(Auth::user())
                 @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
                     <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
