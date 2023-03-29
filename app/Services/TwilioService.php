@@ -5,6 +5,7 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\User;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Log;
 
 class TwilioService{
 
@@ -39,14 +40,20 @@ class TwilioService{
     public function sendSMS($to, $body){
         $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
             
-        return $client->messages->create(
-            // the number you'd like to send the message to
-            // env('APP_ENV') != 'production' ? '+918968001610' : '+17048395599',
-            env('APP_ENV') == 'local' ? '+918968001610' : $to,
-            [
-                'from' => env('TWILIO_NUMBER'),
-                'body' => $body
-            ]
-        );
+        try{
+            return $client->messages->create(
+                // the number you'd like to send the message to
+                // env('APP_ENV') != 'production' ? '+918968001610' : '+17048395599',
+                env('APP_ENV') == 'local' ? '+918968001610' : $to,
+                [
+                    'from' => env('TWILIO_NUMBER'),
+                    'body' => $body
+                ]
+            );
+        }catch (\Exception $e) {
+            // return $e->getMessage();
+            Log::info($e->getMessage());
+            return false;
+        }
     }
 }
