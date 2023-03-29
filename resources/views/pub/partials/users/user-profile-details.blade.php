@@ -19,10 +19,10 @@ $match = (!isset($match)) ? false : $match;
             
             <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
 
-            <div class="text-uppercase d-flex">
-                <!-- <div class="col">Render Rating: </div> -->
+            <!-- <div class="text-uppercase d-flex">
+                <div class="col">Render Rating: </div>
                 <div class="col"><h5 class="m-0">4.75 (Out of 5)</h5></div>
-            </div>
+            </div> -->
         </div>
 
         <div class="card bg-light mp-2 p-2 mt-2 mb-3">
