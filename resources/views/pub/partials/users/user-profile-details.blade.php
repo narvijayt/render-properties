@@ -25,7 +25,7 @@ $match = (!isset($match)) ? false : $match;
             </div> -->
         </div>
 
-        <div class="card bg-light mp-2 p-2 mt-2 mb-3">
+        <div class="card bg-light mp-2 p-2 mt-2 mb-3"> 
             @if($match)
                 <h4 class="text-primary mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
                 <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
