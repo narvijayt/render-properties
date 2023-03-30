@@ -34,7 +34,7 @@ $match = (!isset($match)) ? false : $match;
                 <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
             @endif
             
-            @if(Auth::user())
+            @if(!$match && Auth::user())
                 @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
                     <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
                         {{ csrf_field() }}
