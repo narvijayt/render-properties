@@ -14,6 +14,7 @@ class TwilioService{
     }
     
     public function sendLoginOTPVerificationSMS( object $user, $otp){
+        
         $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code to login your account in Render is: '.$otp);
     }
 
@@ -36,7 +37,7 @@ class TwilioService{
             $realtorId = $conversationData['currentUser']->user_id;
             $brokerId = $conversationData['recipient']->user_id;
         }*/
-        
+
         $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('message-center.index') );
     }
 

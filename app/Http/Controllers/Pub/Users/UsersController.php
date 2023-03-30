@@ -316,7 +316,7 @@ class UsersController extends Controller
             $email = new NewUserAdminNotification($user);
             // Mail::to(config('mail.from.address'))->send($email);
             // Mail::to("amit@culture-red.com")->send($email);
-            Mail::to("richardtocado@gmail.com")->send($email);
+            Mail::to("richardtocado@gmail.com")->send($email); 
             return back();
         }
         catch(Exception $e)

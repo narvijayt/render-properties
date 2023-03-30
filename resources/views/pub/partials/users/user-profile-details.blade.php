@@ -39,7 +39,7 @@ $match = (!isset($match)) ? false : $match;
                     <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
                         {{ csrf_field() }}
                         <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
-                    </form>
+                    </form> 
                 @endif
             @elseif($match && Auth::user())
                 <div class="user-profile__send-message-container">
