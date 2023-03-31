@@ -1,7 +1,7 @@
 @component('mail::message')
-<p>Hey {{ ucfirst($user->first_name) }},<br/> 
+<p>Hey {{ ucfirst($user->first_name) }},</p>
 
-Please enter the below mentioned OTP to login into your account. </p>
+<p>Please enter the below mentioned OTP to login into your account. </p>
 
 <p>OTP Code: <strong style="font-size:18px; line-height:18px;">{{ $otp_code }}</strong></p>
 
