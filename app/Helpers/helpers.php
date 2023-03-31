@@ -345,13 +345,17 @@ function weekly_csv(\Illuminate\Database\Eloquent\Collection $users) {
 if(!function_exists('get_locked_html_string')){
 	function get_locked_html_string($value = ''){
 		if(empty($value))
-			return false;
-
-		$string_length = strlen($value);
-		$new_string = '';
-		for($loop=1;$loop<=$string_length;$loop++){
-			$new_string .= 'X';
+			return false;		
+		
+		if(!Auth::user()){
+			return '<a href="'.route('login').'">Please login to view</a>';
+		}else{
+			$string_length = strlen($value);
+			$new_string = '';
+			for($loop=1;$loop<=$string_length;$loop++){
+				$new_string .= 'X';
+			}
+			return '<span class="text-locked">'.$new_string.'</span>';
 		}
-		return '<span class="text-locked">'.$new_string.'</span>';
 	}
 }

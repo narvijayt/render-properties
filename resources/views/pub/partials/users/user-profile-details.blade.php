@@ -1,5 +1,6 @@
 @php 
 $match = (!isset($match)) ? false : $match;
+$viewDetails = false;
 @endphp
 
 
@@ -9,13 +10,17 @@ $match = (!isset($match)) ? false : $match;
         if($authUser->isMatchedWith($user)){
             $match = true;
         }
+
+        if($match == false && $authUser->user_type == 'broker'){
+            $viewDetails = true;
+        }
     @endphp
 @endif
 
 <div class="row">
     <div class="col-md-6">
         <div class="user-basic-info-section">
-            <h3 class="text-primary">{{ $user->first_name }} {!! ($match) ? $user->last_name : get_locked_html_string($user->last_name) !!}</h3>
+            <h3 class="text-primary">{{ $user->first_name }} {{ ($match || Auth::user()) ? $user->last_name : '' }}</h3>
             
             <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
 
@@ -27,10 +32,12 @@ $match = (!isset($match)) ? false : $match;
 
         <div class="card bg-light mp-2 p-2 mt-2 mb-3"> 
             @if($match)
-                <h4 class="text-primary mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
+                <h4 class="text-primary match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
                 <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
             @else
-                <h4 class="text-primary mt-0">Join Render's lead program. Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!</h4>
+                <h4 class="text-primary match-info-heading mt-0">
+                    @if(!Auth::user())Join Render's lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
+                </h4>
                 <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
             @endif
             
@@ -55,21 +62,21 @@ $match = (!isset($match)) ? false : $match;
             @endif
 
             <div class="form-group mb-2 user-contact-info">
-                @if($match)
+                @if($match || $viewDetails)
                     <i class="fa fa-phone"></i> <a class="text-dark" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
                 @else
                     <i class="fa fa-phone"></i> {!! get_locked_html_string($user->phone_number) !!}
                 @endif
             </div>
-            <div class="form-group mb-2 user-contact-info hide-desktop">
-                @if($match)
-                    <i class="fa fa-wechat"></i> <a class="text-dark" href="sms:{{ $user->phone_number }}">Send SMS</a>
+            <div class="form-group mb-2 user-contact-info">
+                @if($match || $viewDetails)
+                    <i class="fa fa-wechat"></i> <a class="text-dark send-sms-link" href="sms:{{ $user->phone_number }}">Send SMS</a>
                 @else
                     <i class="fa fa-wechat"></i> {!! get_locked_html_string('Send SMS') !!}
                 @endif
             </div>
             <div class="form-group mb-2 user-contact-info">
-                @if($match)
+                @if($match || $viewDetails)
                     <i class="fa fa-envelope"></i> <a class="text-dark" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                 @else
                     <i class="fa fa-envelope"></i> {!! get_locked_html_string($user->email) !!}
@@ -80,19 +87,19 @@ $match = (!isset($match)) ? false : $match;
         @if($user->firm_name)
             <div class="form-group">
                 <strong class="text-uppercase">Company:</strong>
-                <div class="">{!! ($match) ? $user->firm_name : get_locked_html_string($user->firm_name) !!}</div>
+                <div class="">{!! ($match || $viewDetails) ? $user->firm_name : get_locked_html_string($user->firm_name) !!}</div>
             </div>
         @endif
 
         <div class="form-group">
             <strong class="text-uppercase">Location:</strong>
-            <div class="">{!! ($match) ? $user->city : get_locked_html_string($user->city) !!}{!! ($match) ? ', '.$user->state : get_locked_html_string(', '.$user->state) !!}</div>
+            <div class="">{!! ($match || $viewDetails) ? $user->city.','.$user->state : get_locked_html_string($user->city.', '.$user->state) !!}</div>
         </div>
 
         @if($user->website)
             <div class="form-group">
                 <strong class="text-uppercase">Website:</strong>
-                @if($match)
+                @if($match || $viewDetails)
                     <div class=""><a href="{{ $user->website }}" target="_blank">{{ $user->website }}</a></div>
                 @else
                     <div class="">{!! get_locked_html_string($user->website) !!}</div>
@@ -103,14 +110,14 @@ $match = (!isset($match)) ? false : $match;
         @if($user->license)
             <div class="form-group">
                 <strong class="text-uppercase">Real Estate License:</strong>
-                <div class="">{!! ($match) ? $user->license : get_locked_html_string($user->license) !!}</div>
+                <div class="">{!! ($match || $viewDetails) ? $user->license : get_locked_html_string($user->license) !!}</div>
             </div>
         @endif
 
         @if($user->zip)
             <div class="form-group">
                 <strong class="text-uppercase">Areas/Locations Served:</strong>
-                <div class="">{!! ($match) ? $user->zip : get_locked_html_string($user->zip) !!}</div>
+                <div class="">{!! ($match || $viewDetails) ? $user->zip : get_locked_html_string($user->zip) !!}</div>
             </div>
         @endif
     </div>

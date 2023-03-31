@@ -1,24 +1,30 @@
 @extends('layouts.app')
-@section('title') {{ $user->full_name() }}'s Profile @endsection
+@if(Auth::user())
+	@php $user_name = $user->full_name(); @endphp
+@else
+	@php $user_name = $user->first_name; @endphp
+@endif
+
+@section('title') {{ $user_name }}'s Profile @endsection
 @section('meta')
 	@php
-		$description = $user->full_name().' Render profile'
+		$description = $user_name.' Render profile'
 	@endphp
 	{{ meta('description', $description) }}
 	   <?php 
     if($user->user_type !="vendor"){
       $type = title_case($user->user_type === 'broker' ? 'Lender' : 'real estate agent');
       if($user->designation !='' && $user->designation !='null' && $user->user_type  === "realtor"){?>
-         {{ meta('keywords', $user->full_name().' Render profile,'.' Unpaid Member, '. $type .', Standard Gold Agent') }}
+         {{ meta('keywords', $user_name.' Render profile,'.' Unpaid Member, '. $type .', Standard Gold Agent') }}
         <?php } ?>
       
-      {{ meta('keywords', $user->full_name().' Render profile,'.' Unpaid Member, '. $type) }}
+      {{ meta('keywords', $user_name.' Render profile,'.' Unpaid Member, '. $type) }}
     <?php }else{
      $type = "Vendor";?>
-    {{ meta('keywords', $user->full_name().' Render profile,'.' Premium Member, '. $type) }}
+    {{ meta('keywords', $user_name.' Render profile,'.' Premium Member, '. $type) }}
     <?php } ?>
 
-	{{ openGraph('og:title', $user->full_name().'\'s user profile') }}
+	{{ openGraph('og:title', $user_name.'\'s user profile') }}
 	{{ openGraph('og:type', 'profile') }}
 	{{ openGraph('og:url', Request::url()) }}
 	{{ openGraph('og:image', $user->avatarUrl()) }}
@@ -26,19 +32,19 @@
 	{{ openGraph('og:site_name', config('app.name')) }}
 	{{ openGraph('fb:admins', config('seo.facebook_id')) }}
 	{{ twitter('twitter:card', 'summary') }}
-	{{ twitter('twitter:title', $user->full_name().'\'s user profile') }}
+	{{ twitter('twitter:title', $user_name.'\'s user profile') }}
 	{{ twitter('twitter:site', config('seo.twitter_handle')) }}
 	{{ twitter('twitter:description', $description) }}
 	{{ twitter('twitter:creator', config('seo.twitter_handle')) }}
 	{{ twitter('twitter:image', $user->avatarUrl()) }}
-	{{ googlePlus('name', $user->full_name().'\'s user profile') }}
+	{{ googlePlus('name', $user_name.'\'s user profile') }}
 	{{ googlePlus('description', $description) }}
 	{{ googlePlus('image', $user->avatarUrl()) }}
 @endsection
 <?php /** @var \App\User $user */ ?>
 @section('content')
 	@component('pub.components.banner', ['banner_class' => 'profile'])
-		<h1 class="banner-title">{{ $user->full_name() }}&#39s Profile</h1>
+		<h1 class="banner-title">{{ $user_name }}&#39s Profile</h1>
 	@endcomponent
     <div class="container user-profile-view">
         <div class="row">
