@@ -1649,6 +1649,12 @@ button#registerVendor {
 /**************** 31-03-2023 Starts *********************/
 .match-info-heading{font-size: 30px;line-height: 1.2;}
 .d-inline-block{ display: inline-block;}
+.user-contact-info a{ font-size: 18px;}
+.user-contact-info .text-locked{ font-size: 14px;}
+@media(max-width:767px){
+    .user-contact-info a{ font-size: 16px;}
+    .user-contact-info .text-locked{ font-size: 13px;}
+}
 /**************** 31-03-2023 Ends *********************/
 
 @media(max-width:625px)
