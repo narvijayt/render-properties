@@ -92,10 +92,10 @@
                         <li><a href="{{ route('pub.message-center.index') }}">Message Center <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->unread_message_count() > 0 ){{ auth()->user()->unread_message_count() }} @endif</span></a></li>
                         
                         @can('manage-payment', \App\User::class)
-                        <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li>
+                        <!-- <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li> -->
                         @endcan
                           @if(auth()->user()->user_type == 'vendor' && auth()->user()->braintree_id !="")
-                            <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li>
+                            <!-- <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li> -->
                             @endif
                         <li role="separator" class="divider"></li>
                         <li>

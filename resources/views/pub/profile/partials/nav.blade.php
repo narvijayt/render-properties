@@ -15,10 +15,10 @@
     {{--@endif--}}
     {{--<li><a href="{{ route('pub.profile.broker-profile.index') }}">Broker Profile</a></li>--}}
     @can('manage-payment', \App\User::class)
-         <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li>
+         <!-- <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li> -->
     @endif
     @if(auth()->user()->user_type == 'vendor' && auth()->user()->braintree_id !="")
-    <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li>
+    <!-- <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li> -->
     @endif
     <li><a href="{{ route('pub.profile.profileSocialReviews') }}"  >Social Reviews</a></li>
 

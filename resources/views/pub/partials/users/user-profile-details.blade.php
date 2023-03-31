@@ -100,7 +100,7 @@ $viewDetails = false;
             <div class="form-group">
                 <strong class="text-uppercase">Website:</strong>
                 @if($match || $viewDetails)
-                    <div class=""><a href="{{ $user->website }}" target="_blank">{{ $user->website }}</a></div>
+                    <div class=""><a href="{{ strpos($user->website,'http') ? $user->website : 'https://'.$user->website  }}" target="_blank">{{ $user->website }}</a></div>
                 @else
                     <div class="">{!! get_locked_html_string($user->website) !!}</div>
                 @endif
