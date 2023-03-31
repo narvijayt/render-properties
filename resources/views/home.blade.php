@@ -195,7 +195,7 @@
                                 
                                 
                
-				  <div class="col-md-12 mt-2 mb-2">
+				  <div class="col-md-12 mb-2 d-inline-block">
 			<a data-toggle="modal" data-target="#myModal1" class="btn btn-warning util__mb--small border-btn text-uppercase btn-searcModal">Search Profiles</a>
 			</div>
             </div>
