@@ -230,14 +230,14 @@ class LoginController extends Controller
      * 
      * 
      */
-    public function resendloginotp($user_id){
+    public function resendLoginOTP($user_id){
         if(empty($user_id)){
             flash('Invalid User ID.')->error();
             return redirect()->back();
         }
 
         $user = User::find($user_id);
-        if($this->resendOTPAgain($user->user_id)){
+        if($this->resendLoginOTPAgain($user->user_id)){
             flash("A new OTP has been sent successfully")->success();
             return redirect()->route('login.addotp', ['user_id' => $user->user_id]);
         }
@@ -289,6 +289,10 @@ class LoginController extends Controller
         if(isset($user->phone_number) && !empty($user->phone_number) ){
             $response = (new MobileVerificationService())->regenerateOtp($user->user_id);
             (new TwilioService())->sendLoginOTPVerificationSMS($user, $response->otp);
+            
+            $email = new SendLoginOTPNotification($user, $response->otp);
+            Mail::to($user->email)->send($email);
+
             return true;
         }
         return false;
