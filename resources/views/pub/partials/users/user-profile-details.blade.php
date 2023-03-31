@@ -38,11 +38,11 @@ $viewDetails = false;
                 <h4 class="text-primary match-info-heading mt-0">
                     @if(!Auth::user())Join Render's lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
                 </h4>
-                <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
             @endif
             
             @if(!$match && Auth::user())
                 @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
+                    <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
                     <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
                         {{ csrf_field() }}
                         <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>

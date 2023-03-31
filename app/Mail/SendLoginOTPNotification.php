@@ -43,7 +43,7 @@ class SendLoginOTPNotification extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->subject("Render: OTP to Login")
+        return $this->subject("Your OTP to Log In")
             ->markdown('email.login-otp');
     }
 }
