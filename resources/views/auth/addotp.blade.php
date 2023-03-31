@@ -67,7 +67,7 @@
 
                             <button type="submit" class="btn btn-warning btn-block">Verify</button>
                         </form>
-                        <p>Did not received the OTP?<a href="{{ route('login.resendloginotp', ['id' => $user->user_id]) }}" class="btn btn-link">Resend Now</a></p>
+                        <p>Didn't receive the OTP?<a href="{{ route('login.resendloginotp', ['id' => $user->user_id]) }}" class="btn btn-link">Send Again</a></p>
                     </div>
                 </div>
             </div>
