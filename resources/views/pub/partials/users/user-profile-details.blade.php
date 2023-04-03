@@ -36,7 +36,7 @@ $viewDetails = false;
                 <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
             @else
                 <h4 class="text-primary match-info-heading mt-0">
-                    @if(!Auth::user())Join Render's lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
+                    @if(!Auth::user())Join {!! get_application_name() !!}'s lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
                 </h4>
             @endif
             

@@ -5,7 +5,7 @@
 @php
 $user_type = $user->user_type === 'realtor' ? 'lender' : 'realtor';
 @endphp
-# {{ $user->first_name }}, here is what you are missing on Render
+# {{ $user->first_name }}, here is what you are missing on {!! get_application_name() !!}
 
 @if ($matches > 0 || $unreadCount > 0)
 #### People are trying to contact you!

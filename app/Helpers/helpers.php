@@ -359,3 +359,9 @@ if(!function_exists('get_locked_html_string')){
 		}
 	}
 }
+
+if(!function_exists('get_application_name')){
+	function get_application_name(){
+		return 'Render<sup>TM</sup>';
+	}
+}

@@ -141,8 +141,8 @@
         @if(Auth::user())
             <ul class="list-unstyled details-list-icons mt-2">
                 
-            @if($user->referral_fee_acknowledged == "Yes")
-                    <li><strong> Interested in working with Render home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads..</strong></li>
+                @if($user->referral_fee_acknowledged == "Yes")
+                    <li><strong> Interested in working with {!! get_application_name() !!} home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads..</strong></li>
                 @endif
                 
                 {{--

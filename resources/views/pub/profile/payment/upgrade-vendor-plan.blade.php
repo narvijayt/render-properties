@@ -262,7 +262,7 @@
                 <input type="hidden" name="prev_subscription_id"value="{{auth()->user()->payment_transaction_id}}">
                 <!---<div id="dropin-container"></div>-->
                 <input type="hidden" name="user_id" value="{{auth()->user()->user_id}}">
-                <h6 style="font-size: 15px;">Your information is securely stored on Authorize.net using 256-bit bank grade encryption. Render does not store credit card information on their servers.</h6>
+                <h6 style="font-size: 15px;">Your information is securely stored on Authorize.net using 256-bit bank grade encryption. {!! get_application_name() !!} does not store credit card information on their servers.</h6>
 			    <div class="row">
     				<div class="col-md-6">
     					<h6>Card Number</h6>

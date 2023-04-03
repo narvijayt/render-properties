@@ -194,7 +194,7 @@
 										<td width="550" align="left" style="padding-bottom:20px; padding-top:5px;">
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<p >Render will be introducing the new Platinum Membership to the public. Before that happens, existing members get the first shot to upgrade and <a target="_blank" style="font-weight:bold;" href="{{url('/vendor-platinum-membership-packages',[$user->user_id])}}">claim their Zip Code</a>.</p>
+													<p >{!! get_application_name() !!} will be introducing the new Platinum Membership to the public. Before that happens, existing members get the first shot to upgrade and <a target="_blank" style="font-weight:bold;" href="{{url('/vendor-platinum-membership-packages',[$user->user_id])}}">claim their Zip Code</a>.</p>
 												</div>
 											</div>
 										</td>
@@ -286,7 +286,7 @@
 										<td width="550" align="left" style="padding-bottom:5px; padding-top:5px;">
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<p><a href="{{url('/')}}" target="_blank" style="color:#f7991f; text-decoration:none; font-weight:bold;">Render</a> has partnered with <a href="https://www.lendingtree.com/" target="_blank" style="color:#0BA57C; text-decoration:none; font-weight:bold;">Lending Tree</a> to give Platinum Members exclusive access to the largest mortgage lead funnel in the Nation! </p>
+													<p><a href="{{url('/')}}" target="_blank" style="color:#f7991f; text-decoration:none; font-weight:bold;">{!! get_application_name() !!}</a> has partnered with <a href="https://www.lendingtree.com/" target="_blank" style="color:#0BA57C; text-decoration:none; font-weight:bold;">Lending Tree</a> to give Platinum Members exclusive access to the largest mortgage lead funnel in the Nation! </p>
 												</div>
 											</div>
 										</td>
@@ -298,7 +298,7 @@
 										<td width="550" align="left" style="padding-bottom:5px; padding-top:5px;">
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<p >Platinum Members have the unique opportunity to be featured on Render's Blog, Podcast, Youtube Channel and Social Media Outlets; Not to mention our weekly email blast to real estate agents. It's time to take your business to the next level. Sign up now and claim your zip code.</p>
+													<p >Platinum Members have the unique opportunity to be featured on {!! get_application_name() !!}'s Blog, Podcast, Youtube Channel and Social Media Outlets; Not to mention our weekly email blast to real estate agents. It's time to take your business to the next level. Sign up now and claim your zip code.</p>
 												</div>
 											</div>
 										</td>

@@ -10,5 +10,5 @@ Message: {{$user['conv_message']}}<br>
 
 
 Thanks,<br>
-{{ config('app.name') }}
+Team {!! get_application_name() !!}
 @endcomponent

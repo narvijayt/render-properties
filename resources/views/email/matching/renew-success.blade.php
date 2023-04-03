@@ -4,7 +4,7 @@
 ])
 # Congratulations {{ $toUser->first_name }}, you have successfully renewed your match with {{ $fromUser->first_name }}
 
-You and {{ $fromUser->first_name }} are now matched on Render. View and edit your
+You and {{ $fromUser->first_name }} are now matched on {!! get_application_name() !!}. View and edit your
 matches in your profile.
 
 @component('mail::button', ['url' => route('pub.profile.matches.index') ])
@@ -12,5 +12,5 @@ matches in your profile.
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+Team {!! get_application_name() !!}
 @endcomponent

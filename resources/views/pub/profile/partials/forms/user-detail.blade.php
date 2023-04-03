@@ -269,7 +269,7 @@
     <div class="form-group {{ $errors->has('referral_fee_acknowledged') ? 'has-error' : '' }}">
             <label class="control-label">
                 @if($errors->has('referral_fee_acknowledged'))<i class="fa fa-times-circle-o"></i>@endif 
-                Are you interested in working with Render home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads?
+                Are you interested in working with {!! get_application_name() !!} home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads?
             </label>
         	<div class="radio fancy_radio">
         		<div class="input-radio-group">
@@ -347,7 +347,7 @@
         <div class="form-group-row">
             <label class="control-label">
             @if($errors->has('contact_me_for_match'))<i class="fa fa-times-circle-o"></i>@endif 
-                Render referral fees are low because Render matches our loan officer members with Realtor members. Can our loan officers contact you to see if you would be a match to work together?
+            {!! get_application_name() !!} referral fees are low because {!! get_application_name() !!} matches our loan officer members with Realtor members. Can our loan officers contact you to see if you would be a match to work together?
             </label>
         	<div class="radio fancy_radio">
         		<div class="input-radio-group">
@@ -381,7 +381,7 @@
         <div class="form-group-row">
             <label class="control-label">
                 @if($errors->has('lo_matching_acknowledged'))<i class="fa fa-times-circle-o"></i>@endif 
-                I understand that I have to match with a Render Loan Officer to be part of the home buyer leads program.
+                I understand that I have to match with a {!! get_application_name() !!} Loan Officer to be part of the home buyer leads program.
             </label>
         	<div class="radio fancy_radio">
         		<div class="input-radio-group">

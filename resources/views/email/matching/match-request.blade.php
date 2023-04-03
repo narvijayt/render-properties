@@ -12,5 +12,5 @@ View Match Requests
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+Team {!! get_application_name() !!}
 @endcomponent

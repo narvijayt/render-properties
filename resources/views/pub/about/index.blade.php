@@ -57,7 +57,7 @@
                     <div class="col-md-8">
                         <h2 class="text-center util__section-header">Mission</h2>
                         <p class="top_buffer">
-                            <strong>Welcome to Render, where we believe the "solution" is the connection.</strong> After several years in both the mortgage and real estate business we found that it was difficult and time consuming finding other professionals with the same goals. We learned that there is a need for Mortgage and Real Estate Professionals to have a source to come together, exchange ideas and build productive partnerships. This site does just that!
+                            <strong>Welcome to {!! get_application_name() !!}, where we believe the "solution" is the connection.</strong> After several years in both the mortgage and real estate business we found that it was difficult and time consuming finding other professionals with the same goals. We learned that there is a need for Mortgage and Real Estate Professionals to have a source to come together, exchange ideas and build productive partnerships. This site does just that!
                         </p>
                         <p>
                             Mortgage Lenders are able to search and find active buyer agents looking to build new lender partnerships. Real Estate Agents are able to search and find lenders that specialize in the purchase market, and provide the products and service to cater to their clients needs. Additionally, both Lenders and Real Estate Agents receive 30 days free coaching and additional online marketing presence.
@@ -90,7 +90,7 @@
                         </div>
                         <div class="col-md-8">
                             <strong>Richard Tocado</strong><br/>
-                            Founder, Render
+                            Founder, {!! get_application_name() !!}
                             ​
                             <ul>
                                 <li>President and Founder of the Richard Tocado Companies</li>

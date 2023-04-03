@@ -136,7 +136,7 @@
                     </div>
                     <div class="clearfix"></div>
 					<div class="col-md-12">
-					    <p class="alert alert-warning alert-sm" style="font-size: 11px;">Your information is securely stored on Authorize.net using 256-bit bank grade encryption. Render does not store credit card information on their servers.
+					    <p class="alert alert-warning alert-sm" style="font-size: 11px;">Your information is securely stored on Authorize.net using 256-bit bank grade encryption. {!! get_application_name() !!} does not store credit card information on their servers.
 					</p></div>
 					<div class="col-md-6 mb-2">
 						<label>Card Number</label>

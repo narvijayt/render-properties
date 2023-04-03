@@ -5,11 +5,11 @@
 <div style="width: 100%; background: #f5f8fa; padding: 20px;">
 @if($user->user_type == "broker")
     <h1 style="font-size: 18px; color: #184586;">
-        A new Lender has registered on Render. Below are the contact details:
+        A new Lender has registered on {!! get_application_name() !!}. Below are the contact details:
     </h1>
 @else
     <h1 style="font-size: 18px; color: #184586;">
-        A new Real Estate Agent has registered on Render. Below are the contact details:
+        A new Real Estate Agent has registered on {!! get_application_name() !!}. Below are the contact details:
     </h1>
 @endif
     <div style="width: 100%; background: #fff; padding: 5px 5px; boder: 1px solid #ddd;">
@@ -71,5 +71,5 @@
 </div>
 
 Thanks,<br>
-{{ config('app.name') }}
+Team {!! get_application_name() !!}
 @endcomponent

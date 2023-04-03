@@ -174,7 +174,7 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-					<h6 style="font-size: 15px;">Your information is securely stored on Authorize.net using 256-bit bank grade encryption. Render does not store credit card information on their servers.</h6>
+					<h6 style="font-size: 15px;">Your information is securely stored on Authorize.net using 256-bit bank grade encryption. {!! get_application_name() !!} does not store credit card information on their servers.</h6>
 					<div class="col-md-6">
 						<h6>Card Number</h6>
 						<input type="number" name="card_num" id="card_num" class="form-control" placeholder="Credit/Debit Card Number" autocomplete="off" required="" aria-required="true">

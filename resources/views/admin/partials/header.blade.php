@@ -4,8 +4,8 @@ $user = User::find(3);
 @endphp
 <header class="main-header">
     <a href="#" class="logo">
-        <span class="logo-mini"><b>Render</b></span>
-        <span class="logo-lg"><b>Render</b></span>
+        <span class="logo-mini"><b>{!! get_application_name() !!}</b></span>
+        <span class="logo-lg"><b>{!! get_application_name() !!}</b></span>
     </a>
     <nav class="navbar navbar-static-top">
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

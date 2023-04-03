@@ -370,7 +370,7 @@
 
 	<div class="form-group">
     	<div class="radio fancy_radio">
-    		<span>Are you interested in working with Render home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads?</span>
+    		<span>Are you interested in working with {!! get_application_name() !!} home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads?</span>
     		<div class="input-radio-group">
         		<label class="radio-inline">
         		    <input id="referral_fee_acknowledged_yes" class="form-control" type="radio" name="referral_fee_acknowledged" value="Yes" @if (old('referral_fee_acknowledged') && old('referral_fee_acknowledged') == "Yes") checked="checked" @endif required /> <span>Yes</span>
@@ -400,7 +400,7 @@
     
     <div class="form-group">
     	<div class="radio fancy_radio">
-    		<span>Render referral fees are low because Render matches our loan officer members with Realtor members. Can our loan officers contact you to see if you would be a match to work together?</span> 
+    		<span>{!! get_application_name() !!} referral fees are low because {!! get_application_name() !!} matches our loan officer members with Realtor members. Can our loan officers contact you to see if you would be a match to work together?</span> 
     		<div class="input-radio-group">
         		<label class="radio-inline">
         		    <input id="contact_me_for_match_yes" class="form-control" type="radio" name="contact_me_for_match" value="Yes" @if (old('contact_me_for_match') && old('contact_me_for_match') == "Yes") checked="checked" @endif required /> <span>Yes</span>
@@ -435,7 +435,7 @@
     
     <div class="form-group">
     	<div class="radio fancy_radio">
-    		<span>I understand that I have to match with a Render Loan Officer to be part of the home buyer leads program.</span> 
+    		<span>I understand that I have to match with a {!! get_application_name() !!} Loan Officer to be part of the home buyer leads program.</span> 
     		<div class="input-radio-group">
         		<label class="radio-inline">
         		    <input id="lo_matching_acknowledged_yes" class="form-control" type="radio" name="lo_matching_acknowledged" value="Yes" @if (old('lo_matching_acknowledged') && old('lo_matching_acknowledged') == "Yes") checked="checked" @endif required /> <span>Yes</span>

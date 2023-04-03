@@ -52,7 +52,7 @@
     			        </div>
     			        
                         <div class="home-banner-heading">Render: the connecting<br>point like no other.</div>
-    					<p>Render connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>
+    					<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>
     					
                         <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button>
                     </div>
@@ -451,7 +451,7 @@
 <div class="render-logo">
 <img src="{{url('/')}}/img/render-logo.png">
 </div>
-<h2>Render Makes Business <br>
+<h2>{!! get_application_name() !!} Makes Business <br>
 Better For Everyone.</h2>
 <div class="business-box">
 <h5>Realtors Join <span class="badge">FREE!</span></h5>

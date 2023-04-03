@@ -28,7 +28,7 @@
 @endsection
 @section('content')
     @component('pub.components.banner', ['banner_class' => 'lender'])
-        Thank you for registering with Render
+        Thank you for registering with {!! get_application_name() !!}
     @endcomponent
   
     <style>.banner{margin:0}.footer{margin-top:0}</style> 
@@ -45,7 +45,7 @@
                     <div class="alert alert-danger">{{session('error')}}</div>
                 @endif
                 <div class="col-md-8 col-md-offset-2">
-                    <h4 class="mb-3">Thank you for registering with Render. Please let us know if you need any further assistance. A loan officer partner will be reaching out to you soon to begin the process of setting up the CRM and starting the first time buyer lead program.</h4>
+                    <h4 class="mb-3">Thank you for registering with {!! get_application_name() !!}. Please let us know if you need any further assistance. A loan officer partner will be reaching out to you soon to begin the process of setting up the CRM and starting the first time buyer lead program.</h4>
                 
                     <p class="register-info-left"><h2 class="mt-0 mb-3 text-center">If you need pricing and availability information, please call or text <a href="tel:7045695072">704-569-5072</a>.</h2></p>
                 </div>

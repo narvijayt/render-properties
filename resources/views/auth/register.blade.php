@@ -63,12 +63,12 @@
         				    {{--
                             <li><strong><span data-preserver-spaces="true">Register Today - </span></strong>Lock in your price to find your Realtor matches.</li>
                             <li><strong><span data-preserver-spaces="true">Members Connect with Match Exclusively with Realtors </span></strong>and build your network with real estate agents from your desk.</li>
-                            <li><strong><span data-preserver-spaces="true">The Realtor referrals, home services, and vendor advertising can increase loan officer value 50X. </span></strong>Revenue from vendors drives digital marketing for loan officers and Realtors, making Render the best place to build successful business relationships.</li>
+                            <li><strong><span data-preserver-spaces="true">The Realtor referrals, home services, and vendor advertising can increase loan officer value 50X. </span></strong>Revenue from vendors drives digital marketing for loan officers and Realtors, making {!! get_application_name() !!} the best place to build successful business relationships.</li>
                             --}}
                             <li><strong><span data-preserver-spaces="true">Members Connect with Match Exclusively with Productive Realtors.</span></strong></li>
                             <li><strong><span data-preserver-spaces="true">Gain access to our CRM that blasts the leads out to one loan officer and 5 agents at the same time. This ensures the loan officer is only working with the productive agent that claims the lead.</span></strong></li>
                             <li><strong><span data-preserver-spaces="true">The Realtor referrals, home buyer leads, the CRM on lead blast, and Richard Tocado's influence with EXP Realtors give you a complete mortgage purchase program.</span></strong></li>
-                            <li><strong><span data-preserver-spaces="true">Register today to be connected by a  Render rep for pricing and availability.</span></strong></li>
+                            <li><strong><span data-preserver-spaces="true">Register today to be connected by a {!! get_application_name() !!} rep for pricing and availability.</span></strong></li>
                        </ul>
                     </div>
                 </div>

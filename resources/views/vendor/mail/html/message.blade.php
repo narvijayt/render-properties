@@ -32,7 +32,7 @@ This email was sent to <a href="mailto:{{ $user->email }}">{{ $user->email }}</a
 <a href="{{ route('unsubscribe.index', ['uid' => $user->uid, 'type' => $email_type]) }}">Unsubscribe</a> | <a href="{{ route('pub.profile.settings.index') }}">Email Preferences</a>
             @endisset
 
-Render | 1024 Spyglass Lane, Waxhaw, NC 28173 | &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+            {!! get_application_name() !!} | 1024 Spyglass Lane, Waxhaw, NC 28173 | &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
         @endcomponent
     @endslot
 @endcomponent

@@ -28,7 +28,7 @@ Unsubscribe: {{ route('unsubscribe.index', ['uid' => $user->uid, 'type' => $emai
 Email Preferences: {{ route('pub.profile.settings.index') }}
             @endisset
 
-Render | 1024 Spyglass Lane, Waxhaw, NC 28173 | © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+            {!! get_application_name() !!} | 1024 Spyglass Lane, Waxhaw, NC 28173 | © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
         @endcomponent
     @endslot
 @endcomponent

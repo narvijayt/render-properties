@@ -39,7 +39,7 @@
 @section('content')
 
     @component('pub.components.banner', ['banner_class' => 'contact'])
-        <h1 class="banner-title">Registration on Render!</h1>
+        <h1 class="banner-title">Registration on {!! get_application_name() !!}!</h1>
     @endcomponent
     <div class="container">
         <div class="row">

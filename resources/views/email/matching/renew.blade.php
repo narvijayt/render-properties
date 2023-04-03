@@ -11,6 +11,6 @@ You can view the request in your profile
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+Team {!! get_application_name() !!}
 @endcomponent
 
