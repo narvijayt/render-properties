@@ -17,6 +17,8 @@ use App\Mail\MatchLendorRequestEmail;
 use App\Mail\ConfirmMatchRequestEmail;
 use App\Mail\RenewMatchRequestEmail;
 use App\Mail\ConfirmRenewMatchRequestEmail;
+use App\Services\TwilioService;
+use Illuminate\Support\Facades\Log;
 
 class MatchesController extends Controller
 {
@@ -162,6 +164,7 @@ class MatchesController extends Controller
             }else{
                 $this->matchRequestEmail($user);
             }
+			(new TwilioService())->sendNewRequestMatchNotification($authUser, $user);
            	event(new NewMatch($match, $user));
 		} else {
 			flash('Unable to send match request')->error();
@@ -178,14 +181,14 @@ class MatchesController extends Controller
 	public function confirmMatch(Match $match)
 	{
 		$authUser = $this->auth->user();
-		if($authUser->user_type == "realtor"){
+		/*if($authUser->user_type == "realtor"){
 			$realtorUser = User::find($authUser->user_id);
 			$matches = Match::findForUser($realtorUser, true);
         	if($matches->count() ){
 				flash('You are already connected with a loan officer in same area.')->error();
 				return redirect()->back();
 			}
-		}
+		}*/
 		
 		$user = $match->getOppositeParty($authUser);
 		//$this->authorize('confirmMatch', $user);
@@ -200,6 +203,7 @@ class MatchesController extends Controller
 		}
 		
         $this->confirmMatchRequestEmail($user);
+		(new TwilioService())->sendMatchAcceptedNotification($authUser, $user);
 
 		flash('You have successfully matched with '.$user->full_name())->success();
 

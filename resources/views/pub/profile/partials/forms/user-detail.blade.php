@@ -266,100 +266,95 @@
     
     <div class="col-md-12">
 
-    <div class="form-group {{ $errors->has('referral_fee_acknowledged') ? 'has-error' : '' }}">
-            <label class="control-label">
-                @if($errors->has('referral_fee_acknowledged'))<i class="fa fa-times-circle-o"></i>@endif 
-                Are you interested in working with {!! get_application_name() !!} home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads?
-            </label>
-        	<div class="radio fancy_radio">
-        		<div class="input-radio-group">
-            		<label class="radio-inline">
-            		    <input id="referral_fee_acknowledged_yes" class="form-control" type="radio" name="referral_fee_acknowledged" value="Yes" @if (isset($user->referral_fee_acknowledged) && $user->referral_fee_acknowledged == "Yes") checked="checked" @endif /> <span>Yes</span>
-            		</label>
-            		<label class="radio-inline">
-            		    <input id="referral_fee_acknowledged_no" class="form-control" type="radio" name="referral_fee_acknowledged" value="No" @if (isset($user->referral_fee_acknowledged) && $user->referral_fee_acknowledged == "No") checked="checked" @endif /><span>No</span>
-            		</label>
-        		</div>
-        	</div>
-        	 @if($errors->has('rbc_free_marketing'))
-                <span class="help-block">{{ $errors->first('rbc_free_marketing') }}</span>
-            @endif
-        </div>
-        
         {{--
-        <div class="form-group {{ $errors->has('rbc_free_marketing') ? 'has-error' : '' }}">
-            <label class="control-label">
-                @if($errors->has('rbc_free_marketing'))<i class="fa fa-times-circle-o"></i>@endif Are you interested in working with free buyer leads as these can help expand your network and potentially increase your business opportunities?
-            </label>
-        	<div class="radio fancy_radio">
-        		<div class="input-radio-group">
-            		<label class="radio-inline">
-            		    <input id="rbc_free_marketing_yes" class="form-control" type="radio" name="rbc_free_marketing" value="Yes" @if (isset($user->rbc_free_marketing) && $user->rbc_free_marketing == "Yes") checked="checked" @endif /> <span>Yes</span>
-            		</label>
-            		<label class="radio-inline">
-            		    <input id="rbc_free_marketing_no" class="form-control" type="radio" name="rbc_free_marketing" value="No" @if (isset($user->rbc_free_marketing) && $user->rbc_free_marketing == "No") checked="checked" @endif /><span>No</span>
-            		</label>
-        		</div>
-        	</div>
-        	 @if($errors->has('rbc_free_marketing'))
-                <span class="help-block">{{ $errors->first('rbc_free_marketing') }}</span>
-            @endif
-        </div>
+            <div class="form-group {{ $errors->has('referral_fee_acknowledged') ? 'has-error' : '' }}">
+                <label class="control-label">
+                    @if($errors->has('referral_fee_acknowledged'))<i class="fa fa-times-circle-o"></i>@endif 
+                    Are you interested in working with {!! get_application_name() !!} home buyer leads with zero upfront fees and paying a 17% referral at closing for buyer leads?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="referral_fee_acknowledged_yes" class="form-control" type="radio" name="referral_fee_acknowledged" value="Yes" @if (isset($user->referral_fee_acknowledged) && $user->referral_fee_acknowledged == "Yes") checked="checked" @endif /> <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="referral_fee_acknowledged_no" class="form-control" type="radio" name="referral_fee_acknowledged" value="No" @if (isset($user->referral_fee_acknowledged) && $user->referral_fee_acknowledged == "No") checked="checked" @endif /><span>No</span>
+                        </label>
+                    </div>
+                </div>
+                @if($errors->has('rbc_free_marketing'))
+                    <span class="help-block">{{ $errors->first('rbc_free_marketing') }}</span>
+                @endif
+            </div>
+               
+            <div class="form-group {{ $errors->has('rbc_free_marketing') ? 'has-error' : '' }}">
+                <label class="control-label">
+                    @if($errors->has('rbc_free_marketing'))<i class="fa fa-times-circle-o"></i>@endif Are you interested in working with free buyer leads as these can help expand your network and potentially increase your business opportunities?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="rbc_free_marketing_yes" class="form-control" type="radio" name="rbc_free_marketing" value="Yes" @if (isset($user->rbc_free_marketing) && $user->rbc_free_marketing == "Yes") checked="checked" @endif /> <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="rbc_free_marketing_no" class="form-control" type="radio" name="rbc_free_marketing" value="No" @if (isset($user->rbc_free_marketing) && $user->rbc_free_marketing == "No") checked="checked" @endif /><span>No</span>
+                        </label>
+                    </div>
+                </div>
+                @if($errors->has('rbc_free_marketing'))
+                    <span class="help-block">{{ $errors->first('rbc_free_marketing') }}</span>
+                @endif
+            </div>
         
+            <div class="form-group">
+                <label class="control-label">
+                    @if($errors->has('open_to_lender_relations'))<i class="fa fa-times-circle-o"></i>@endif Are you open to new lender relationships that will benefit your business?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="open_to_lender_relations_yes" class="form-control" type="radio" name="open_to_lender_relations" value="Yes" @if (isset($user->open_to_lender_relations) && $user->open_to_lender_relations == "Yes") checked="checked" @endif /> <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="open_to_lender_relations_no" class="form-control" type="radio" name="open_to_lender_relations" value="No" @if (isset($user->open_to_lender_relations) && $user->open_to_lender_relations == "No") checked="checked" @endif /><span>No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         
+            <div class="form-group">
+                <label class="control-label">
+                    @if($errors->has('co_market'))<i class="fa fa-times-circle-o"></i>@endif Would you like to find a loan officer to co-market with Zillow, Realtor.com or other lead sources with you?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="co_market_yes" class="form-control" type="radio" name="co_market" value="Yes" @if (isset($user->co_market) && $user->co_market == "Yes") checked="checked" @endif /> <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="co_market_no" class="form-control" type="radio" name="co_market" value="No" @if (isset($user->co_market) && $user->co_market == "No") checked="checked" @endif /><span>No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         
-        
-        <div class="form-group">
-            <label class="control-label">
-                @if($errors->has('open_to_lender_relations'))<i class="fa fa-times-circle-o"></i>@endif Are you open to new lender relationships that will benefit your business?
-            </label>
-        	<div class="radio fancy_radio">
-        		<div class="input-radio-group">
-            		<label class="radio-inline">
-            		    <input id="open_to_lender_relations_yes" class="form-control" type="radio" name="open_to_lender_relations" value="Yes" @if (isset($user->open_to_lender_relations) && $user->open_to_lender_relations == "Yes") checked="checked" @endif /> <span>Yes</span>
-            		</label>
-            		<label class="radio-inline">
-            		    <input id="open_to_lender_relations_no" class="form-control" type="radio" name="open_to_lender_relations" value="No" @if (isset($user->open_to_lender_relations) && $user->open_to_lender_relations == "No") checked="checked" @endif /><span>No</span>
-            		</label>
-        		</div>
-        	</div>
-        </div>
-        
-        
-        <div class="form-group">
-            <label class="control-label">
-                @if($errors->has('co_market'))<i class="fa fa-times-circle-o"></i>@endif Would you like to find a loan officer to co-market with Zillow, Realtor.com or other lead sources with you?
-            </label>
-        	<div class="radio fancy_radio">
-        		<div class="input-radio-group">
-            		<label class="radio-inline">
-            		    <input id="co_market_yes" class="form-control" type="radio" name="co_market" value="Yes" @if (isset($user->co_market) && $user->co_market == "Yes") checked="checked" @endif /> <span>Yes</span>
-            		</label>
-            		<label class="radio-inline">
-            		    <input id="co_market_no" class="form-control" type="radio" name="co_market" value="No" @if (isset($user->co_market) && $user->co_market == "No") checked="checked" @endif /><span>No</span>
-            		</label>
-        		</div>
-        	</div>
-        </div>
+            <div class="form-group-row">
+                <label class="control-label">
+                @if($errors->has('contact_me_for_match'))<i class="fa fa-times-circle-o"></i>@endif 
+                {!! get_application_name() !!} referral fees are low because {!! get_application_name() !!} matches our loan officer members with Realtor members. Can our loan officers contact you to see if you would be a match to work together?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="contact_me_for_match_yes" class="form-control" type="radio" name="contact_me_for_match" value="Yes" @if (isset($user->contact_me_for_match) && $user->contact_me_for_match == "Yes") checked="checked" @endif > <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="contact_me_for_match_no" class="form-control" type="radio" name="contact_me_for_match" value="No" @if (isset($user->contact_me_for_match) && $user->contact_me_for_match == "No") checked="checked" @endif ><span>No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         --}}
-        
-        
-        <div class="form-group-row">
-            <label class="control-label">
-            @if($errors->has('contact_me_for_match'))<i class="fa fa-times-circle-o"></i>@endif 
-            {!! get_application_name() !!} referral fees are low because {!! get_application_name() !!} matches our loan officer members with Realtor members. Can our loan officers contact you to see if you would be a match to work together?
-            </label>
-        	<div class="radio fancy_radio">
-        		<div class="input-radio-group">
-            		<label class="radio-inline">
-            		    <input id="contact_me_for_match_yes" class="form-control" type="radio" name="contact_me_for_match" value="Yes" @if (isset($user->contact_me_for_match) && $user->contact_me_for_match == "Yes") checked="checked" @endif > <span>Yes</span>
-            		</label>
-            		<label class="radio-inline">
-            		    <input id="contact_me_for_match_no" class="form-control" type="radio" name="contact_me_for_match" value="No" @if (isset($user->contact_me_for_match) && $user->contact_me_for_match == "No") checked="checked" @endif ><span>No</span>
-            		</label>
-        		</div>
-        	</div>
-        </div>
         
         <div class="form-group-row">
             <label class="control-label">

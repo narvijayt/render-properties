@@ -12,6 +12,8 @@ use App\Services\TwilioService;
 
 trait AutoMatchTrait {
     public function sendAutoMatchRequests($user_id = ''){
+        return true;
+        /*
         if(empty($user_id))
             return false;
 
@@ -62,10 +64,12 @@ trait AutoMatchTrait {
                 }
             }
         }
-        return true;
+        return true;*/
     }
 
     public function findAutoLocalLenders($user_id = ''){
+        return true;
+        /*
         if(empty($user_id))
             return false;
 
@@ -92,6 +96,6 @@ trait AutoMatchTrait {
                 Mail::to($realtor->email)->send($email);
             }
         }
-        return true;
+        return true;*/
     }
 }

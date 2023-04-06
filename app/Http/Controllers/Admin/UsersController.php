@@ -387,6 +387,9 @@ class UsersController extends Controller
         $findUser->active = $request->active;
         if($findUser->user_type=='broker'){
             $findUser->payment_status = $request->payment_status;
+            if($request->payment_status == 1){
+                $findUser->billing_first_name = $findUser->first_name;
+            }
         }
         $updateUser = $findUser->update();
         if($updateUser){

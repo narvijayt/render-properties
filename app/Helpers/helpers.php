@@ -72,14 +72,15 @@ function real_url($url)
 	fputcsv($file, $columns);
 
 	$users->each(function (App\User $user) use ($file) {
-	    $paidAccount = "No";
+	    /*$paidAccount = "No";
 	    $subscribeUser = Subscribe::where('user_id', $user->user_id)->first();
 	    if(!empty($subscribeUser)) {
 	        $braintreePlan  = BraintreePlan::where('braintree_plan', $subscribeUser->braintree_plan)->first();
 	        if(!empty($braintreePlan)) {
 	            $paidAccount = ($braintreePlan->cost > "0") ? "Yes" : "No";
 	        }
-	    }
+	    }*/
+		$paidAccount = ($user->payment_status == 1) ? "Yes" : "No";
 	   	fputcsv($file, [
 			$user->user_id,
 			$user->email,
@@ -140,14 +141,15 @@ function bulider_csv(\Illuminate\Database\Eloquent\Collection $users) {
 
 	$users->each(function (App\User $user) use ($file) {
 	    
-	    $paidAccount = "No";
-	    $subscribeUser = Subscribe::where('user_id', $user->user_id)->first();
+	    $paidAccount = ($user->payment_status == 1) ? "Yes" : "No";
+	    /*$subscribeUser = Subscribe::where('user_id', $user->user_id)->first();
 	    if(!empty($subscribeUser)) {
 	        $braintreePlan  = BraintreePlan::where('braintree_plan', $subscribeUser->braintree_plan)->first();
 	        if(!empty($braintreePlan)) {
 	            $paidAccount = ($braintreePlan->cost > "0") ? "Yes" : "No";
 	        }
-	    }
+	    }*/
+
 	    
 	    if($user->checkuser_with_unmatch == 'null'){
     		fputcsv($file, [
@@ -255,14 +257,16 @@ function weekly_csv(\Illuminate\Database\Eloquent\Collection $users) {
 	fputcsv($file, $columns);
 
 	$users->each(function (App\User $user) use ($file) {
-	    $paidAccount = "No";
+	    /*$paidAccount = "No";
 	    $subscribeUser = Subscribe::where('user_id', $user->user_id)->first();
 	    if(!empty($subscribeUser)) {
 	        $braintreePlan  = BraintreePlan::where('braintree_plan', $subscribeUser->braintree_plan)->first();
 	        if(!empty($braintreePlan)) {
 	            $paidAccount = ($braintreePlan->cost > "0") ? "Yes" : "No";
 	        }
-	    }
+	    }*/
+		$paidAccount = ($user->payment_status == 1) ? "Yes" : "No";
+
 	    if($user->checkuser_with_unmatch == 'null'){
            	fputcsv($file, [
 			$user->user_id,

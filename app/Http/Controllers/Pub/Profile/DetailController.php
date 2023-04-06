@@ -190,9 +190,9 @@ class DetailController extends Controller
             $findUser->lo_matching_acknowledged = $request->lo_matching_acknowledged;
             $findUser->open_to_lender_relations = $request->open_to_lender_relations;
             $findUser->co_market = isset($request->co_market) ? $request->co_market : 'No';
-            $findUser->contact_me_for_match = $request->contact_me_for_match;
+            $findUser->contact_me_for_match = isset($request->contact_me_for_match) ? $request->contact_me_for_match : null;
             $findUser->how_long_realtor = $request->how_long_realtor;
-            $findUser->referral_fee_acknowledged = $request->referral_fee_acknowledged;
+            $findUser->referral_fee_acknowledged = (isset($request->referral_fee_acknowledged)) ? $request->referral_fee_acknowledged : null;
             
             $findUser->update();
         }

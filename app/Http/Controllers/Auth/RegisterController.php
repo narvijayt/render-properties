@@ -255,10 +255,10 @@ class RegisterController extends Controller
             $findUser->lo_matching_acknowledged = $data['lo_matching_acknowledged'];
             $findUser->open_to_lender_relations = $data['open_to_lender_relations'];
             $findUser->co_market = isset($data['co_market']) ? $data['co_market'] : "No";
-            $findUser->contact_me_for_match = $data['contact_me_for_match'];
+            $findUser->contact_me_for_match = isset($data['contact_me_for_match']) ? $data['contact_me_for_match'] : null;
             $findUser->how_long_realtor = $data['how_long_realtor'];
             $findUser->contact_term = (isset($data['enable_emails'])) ? $data['enable_emails'] : 0;
-            $findUser->referral_fee_acknowledged = $data['referral_fee_acknowledged'];
+            $findUser->referral_fee_acknowledged = isset($data['referral_fee_acknowledged']) ? $data['referral_fee_acknowledged'] : null;
         }
         $findUser->update();
         $user->assign('user');

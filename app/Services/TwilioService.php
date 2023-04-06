@@ -41,6 +41,22 @@ class TwilioService{
         $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('message-center.index') );
     }
 
+    /**
+     * Send SMS Notification when Lender or Realtor Send Manual Match Request to Each Other
+     * 
+     */
+    public function sendNewRequestMatchNotification($authUser, $user){
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. You can view the request in your profile '. route('pub.profile.matches.index') );
+    }
+    
+    /**
+     * Send SMS Notification when Lender or Realtor Accepts Manual Match Requestm received from Each Other
+     * 
+     */
+    public function sendMatchAcceptedNotification($authUser, $user){
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Congratulations, '.$authUser->first_name.' has accpeted your match request. You can view the list of available matches in your profile '. route('pub.profile.matches.index') );
+    }
+
     public function sendSMS($to, $body){
         $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
             
