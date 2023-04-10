@@ -103,10 +103,12 @@ class UsersController extends Controller
             }
         }
 
-        $authUser = auth()->user();
         $match = false;
-        if($authUser->isMatchedWith($user)){
-            $match = Match::findForUsers($authUser, $user, true);
+        if(Auth::user()){
+            $authUser = auth()->user();
+            if($authUser->isMatchedWith($user)){
+                $match = Match::findForUsers($authUser, $user, true);
+            }
         }
 
         /*if(($findUser !="") && ($findUser->user_type =="broker"))
