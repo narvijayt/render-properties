@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title') Verify OTP @endsection
+@section('title') Verify Phone Number @endsection
 @section('meta')
     @php
         $description = 'Verify your Mobile with OTP Code'
@@ -7,7 +7,7 @@
     {{ meta('description', $description) }}
     {{ meta('keywords', config('seo.keyword')) }}
 
-    {{ openGraph('og:title', 'Verify OTP') }}
+    {{ openGraph('og:title', 'Verify Phone Number') }}
     {{ openGraph('og:type', 'product') }}
     {{ openGraph('og:url', Request::url()) }}
     {{ openGraph('og:image', config('seo.image')) }}
@@ -16,20 +16,20 @@
     {{ openGraph('fb:admins', config('seo.facebook_id')) }}
 
     {{ twitter('twitter:card', 'summary') }}
-    {{ twitter('twitter:title', 'Verify OTP') }}
+    {{ twitter('twitter:title', 'Verify Phone Number') }}
     {{ twitter('twitter:site', config('seo.twitter_handle')) }}
     {{ twitter('twitter:description', $description) }}
     {{ twitter('twitter:creator', config('seo.twitter_handle')) }}
     {{ twitter('twitter:image', config('seo.image')) }}
 
-    {{ googlePlus('name', 'Verify OTP') }}
+    {{ googlePlus('name', 'Verify Phone Number') }}
     {{ googlePlus('description', $description) }}
     {{ googlePlus('image', config('seo.image')) }}
 @endsection
 
 @section('content')
     @component('pub.components.banner', ['banner_class' => 'privacy'])
-        <h1 class="banner-title">Verify OTP Code</h1>
+        <h1 class="banner-title">Verify Phone Number</h1>
     @endcomponent
 
     <div class="container text-center">
@@ -38,7 +38,7 @@
 
                 <div class="row">                    
                     <div class="col-md-12">
-                        <h4>Enter Code</h4>
+                        <h5>We have shared the OTP code with you on your registered Phone Number. Please check your SMS and enter that code below to veirfy your phone number.</h5>
                        
                          @if (Session::has('message'))
                             <span class="help-block alert alert-success">
