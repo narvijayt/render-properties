@@ -2,13 +2,13 @@
 @extends('layouts.app')
 
 @php $title = $user->first_name.' '.$user->last_name."'s Profile";  @endphp
-@if($match)
+@if($match && $match->isAccepted())
     @php 
-        $description = (isset($lendorView)) ? 'Real Broker Agent Details' : 'Loan Officer Details';
+        $description = $authUser == "broker" ? 'Real Broker Agent Details' : 'Loan Officer Details';
     @endphp
 @else 
     @php 
-        $description = 'Create a Match with Loan Officer';
+        $description = 'Confirm Match';
     @endphp
 @endif
 
@@ -53,13 +53,15 @@
                 <div class="alert alert-danger">{{session('error')}}</div>
             @endif
 
-            @if(isset($match))
+            {{--
+            @if(isset($match) && $match->isAccepted())
                 @if($user->user_type == 'broker')
                     <div class="col-md-12">
                         <div class="alert alert-success">Congratulations, you are now connected with {{ $user->first_name }}. To connect with your Loan Officer, now you can call or text the {{ $user->first_name }} at <a href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a> or can send email at <a href="mailto:{{ $user->email }}">{{ $user->email }}</a> </div>
                     </div>
                 @endif
             @endif
+            --}}
 
             <div class="col-md-3 @if ($user->designation !='' && $user->designation !='null') standard-agent @endif">
                 <div class="profile-box-inner">
@@ -73,16 +75,6 @@
                     <div class="user-profile__avatar-container">
                         <img src="{{$user->avatarUrl()}}" class="img-responsive user-profile__avatar" />
                     </div>
-                    {{-- 
-                        @if(!isset($match) && $user->user_type == 'broker' && (isset($realtorUser) && in_array($realtorUser->zip, explode(",", $user->zip))))
-                            <div class="col-md-12 mt-3 text-center">
-                                <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
-                                    {{ csrf_field() }}
-                                    <button type="submit" name="create-auto-match" id="create-auto-match" class="btn btn-success">Connect with {{ $user->first_name }}</button>
-                                </form>
-                            </div>
-                        @endif
-                    --}}
                 </div>
             </div>
             <div class="col-md-9">

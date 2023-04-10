@@ -9,7 +9,10 @@ use Mail;
 use App\Match;
 use App\Mail\NewLenderNotificationToRealtors;
 use App\Mail\AutoMatchNotificationToLender;
+use App\Mail\autoConfirmMatchRequestEmail;
 use App\Services\TwilioService;
+use App\Mail\ConfirmMatchRequestEmail;
+use App\Events\Matching\NewMatchSuccess;
 
 use App\Http\Traits\AutoMatchTrait;
 
@@ -66,15 +69,14 @@ class AutoConnectionController extends Controller
         }
     }
 
-    public function viewAutoMatchRequest($brokerId, $realtorId){
-        $user = User::find($brokerId);
-        $realtorUser = User::find($realtorId);
+    public function viewAutoMatchRequest($authUserId, $userId){
+        $authUser = User::find($authUserId);
+        $user = User::find($userId);
         
-        $matches = Match::findForUser($realtorUser, true);
+        $match = Match::findForUsers($authUser, $user, true);
+        // $this->pr($match); die;        
 
-        $connection_exists = false;
-
-        if($matches->count() ){
+        /*if($matches->count() ){
             $broker_user_id = '';
             foreach($matches as $match){
                 if($match->user_id1 == $realtorUser->user_id){
@@ -86,52 +88,48 @@ class AutoConnectionController extends Controller
                 //if(in_array($realtorUser->zip,explode(",",$matchBrokerUser->zip) )){
                     if($broker_user_id == $user->user_id){
                         flash('You already have connected with this Loan Officer.')->error();
-                        return redirect()->route('lenderdetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ]);
+                        return redirect()->route('matchdetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ]);
                     }else{
                         flash('You already have an connection with another Loan Office within the same ZIP Code area.')->error();
                         return redirect()->route('login');
                     }
                 //}
             }
-        }
+        }*/
 
-        if($connection_exists == false){
-            return view('pub.auto.view', compact('user', 'realtorUser') );
-        }
+        return view('pub.auto.view', compact('user', 'authUser', 'match') );
     }
 
-    public function requestAutoMatch(Request $request, $brokerId, $realtorId){
-        $brokerUser = User::find($brokerId);
-        $realtorUser = User::find($realtorId);
+    public function requestAutoMatch(Request $request, $authUserId, $userId){
+        $authUser = User::find($authUserId);
+        $user = User::find($userId);
 
-        $matches = Match::findForUser($realtorUser, true);
-        if($matches->count() ){
-            flash('You are already connected with another loan office in same area. Can not create new connection with multiple loan officers.')->error();
-            return redirect()->back();
-        }
-
-        if(!in_array($realtorUser->zip,explode(",",$brokerUser->zip) )){
-            flash('This user does not belong to your service area. You can not connect to this user.')->error();
-            return redirect()->back();
-        }
-
-        // $this->authorize('requestMatch', $brokerUser);
+        $match = Match::find($request->input('match_id') );
         $matchingService = app()->make(\App\Services\Matching\Matching::class);
-        $match = $matchingService->request($brokerUser, $realtorUser);
-        if ($match !== false) {
-            $matchingService->accept($match->match_id, $brokerUser);
-            $matchingService->accept($match->match_id, $realtorUser);
+        if ($matchingService->accept($match->match_id, $authUser) !== true) {
+            flash('Something went wrong! Please try again.')->error();
+            return redirect()->back();
 
-            $response = (new TwilioService())->sendRealtorConnectToLender($brokerUser, $realtorUser);
-            $email = new AutoMatchNotificationToLender($brokerUser, $realtorUser);
-            Mail::to($brokerUser->email)->send($email);
 
-            flash('You are now connected with Loan Officer')->success();
-            return redirect()->route('lenderdetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ]);
+            // $response = (new TwilioService())->sendRealtorConnectToLender($brokerUser, $realtorUser);
+            // $email = new AutoMatchNotificationToLender($brokerUser, $realtorUser);
+            // Mail::to($brokerUser->email)->send($email);
+
+            // flash('You are now connected with Loan Officer')->success();
+            // return redirect()->route('matchdetails.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ]);
         }
 
-        flash('Something went wrong! Please try again.')->error();
-        return redirect()->back();
+
+        $email = new autoConfirmMatchRequestEmail($authUser, $user);
+        Mail::to($user->email)->send($email);
+
+		(new TwilioService())->sendMatchAcceptedNotification($authUser, $user);
+
+        flash('You have successfully matched with '.$user->full_name())->success();
+
+		event(new NewMatchSuccess($match->user1, $match->user2));
+
+        return redirect()->route('matchdetails.automatch', ['authUserId' => $authUserId, 'userId' => $userId ]);
     }
 
     public function acceptAutoMatch($brokerUser, $realtorUser){
@@ -153,15 +151,15 @@ class AutoConnectionController extends Controller
         return redirect()->back();
     }
 
-    public function lenderDetails($brokerId, $realtorId){
-        $user = User::find($brokerId);
-        $realtorUser = User::find($realtorId);
+    public function matchDetails($authUserId, $userId){
+        $user = User::find($userId);
+        $authUser = User::find($authUserId);
 
-        $match = Match::findForUsers($realtorUser, $user);
+        $match = Match::findForUsers($authUser, $user);
         if(empty($match))
-            return redirect()->route('view.automatch', ['brokerId' => $brokerId, 'realtorId' => $realtorId ] );
+            return redirect()->route('view.automatch', ['authUserId' => $brokerId, 'userId' => $userId ] );
 
-        return view('pub.auto.view', compact('user', 'realtorUser', 'match') );
+        return view('pub.auto.view', compact('user', 'authUser', 'match') );
     }
     
     
@@ -182,5 +180,22 @@ class AutoConnectionController extends Controller
         echo  '<pre>'; print_r($array); echo '<pre>';
         if($die == true)    
             die;
+    }
+
+    /* 
+	** accepted match request 
+	*/
+	public function confirmMatchRequestEmail(User $user)
+	{
+        
+        try {
+            $email = new ConfirmMatchRequestEmail($user);
+		    Mail::to($user->email)->send($email);
+
+            return back();
+        } catch(Exception $e) {
+            echo "catch";
+            return back();
+        }
     }
 }

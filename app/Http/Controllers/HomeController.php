@@ -21,7 +21,9 @@ class HomeController extends Controller
     {
         
         $viewData = Cache::remember('home_page_queries', 20, function() {
-            $realtorCount = User::where('user_type','=','realtor')->doesnthave('unmatch_relator')->count();
+            $realtorCount = User::where('user_type','=','realtor')->whereDoesntHave('unmatch_relator', function($q) {
+                $q->where('deleted_at', null);
+               })->count();
             $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
             $messageCount = Message::count();
             $connectionCount = Match::count();
@@ -76,7 +78,9 @@ class HomeController extends Controller
             ->where('user_type','=','realtor')
             ->where('active','=',true)
             ->inRandomOrder()
-            ->doesnthave('unmatch_relator')
+            ->whereDoesntHave('unmatch_relator', function($q) {
+                $q->where('deleted_at', null);
+               })
             ->take(3)
             ->get()
             ->load('reviews');  
@@ -108,7 +112,9 @@ class HomeController extends Controller
             ->where('user_type','=','realtor')
             ->where('active','=',true)
             ->where('state', 'LIKE', '%' . $state . '%')
-            ->doesnthave('unmatch_relator')
+            ->whereDoesntHave('unmatch_relator', function($q) {
+                $q->where('deleted_at', null);
+               })
             ->inRandomOrder()
             ->take(3)
             ->get()
@@ -134,7 +140,9 @@ class HomeController extends Controller
             $spotlightRealtors = User::whereNotNull('user_avatar_id')
                 ->where('user_type','=','realtor')
                 ->where('active','=',true)
-                ->doesnthave('unmatch_relator')
+                ->whereDoesntHave('unmatch_relator', function($q) {
+                    $q->where('deleted_at', null);
+                   })
                 ->inRandomOrder()
                 ->take(3)
                 ->get()

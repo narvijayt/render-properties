@@ -7,11 +7,11 @@ $viewDetails = false;
 @if(Auth::user())
     @php 
         $authUser = auth()->user();
-        if($authUser->isMatchedWith($user)){
+        if($match == false && $authUser->isMatchedWith($user)){
             $match = true;
         }
 
-        if($match == false && $authUser->user_type == 'broker'){
+        if( $match || $authUser->user_type == 'broker'){
             $viewDetails = true;
         }
     @endphp
@@ -32,8 +32,18 @@ $viewDetails = false;
 
         <div class="card bg-light mp-2 p-2 mt-2 mb-3"> 
             @if($match)
-                <h4 class="text-primary match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
-                <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                @if($match->isAccepted())
+                    <h4 class="text-primary match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
+                    <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                @else
+                    @if(Auth::user() && Auth::user()->user_id == $match->user_id1)
+                        <h4 class="text-primary match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
+                        <!-- <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p> -->
+                    @else
+                        <h4 class="text-primary match-info-heading mt-0">Congratulations! You and requested by {{ ucfirst($user->first_name) }} to connect.</h4>
+                        <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                    @endif
+                @endif
             @else
                 <h4 class="text-primary match-info-heading mt-0">
                     @if(!Auth::user())Join {!! get_application_name() !!}'s lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
@@ -48,16 +58,17 @@ $viewDetails = false;
                         <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
                     </form> 
                 @endif
-            @elseif($match && Auth::user())
+            @elseif( ($match && $match->isAccepted() ) && Auth::user())
                 <div class="user-profile__send-message-container">
                     @if($user->user_id != Auth::user()->user_id)
                         <send-message :recipient="{{ $user }}"></send-message>
                     @endif
                 </div>
-            @elseif($match== false && $user->user_type == 'broker' && (isset($realtorUser) && in_array($realtorUser->zip, explode(",", $user->zip))))
-                <form method="post" action="{{ route('create.automatch', ['brokerId' => $user->user_id, 'realtorId' => $realtorUser->user_id]) }}">
+            @elseif(($match && $match->isAccepted() == false) && (Auth::user()->user_id != $match->user_id1) )
+                <form method="post" action="{{ route('create.automatch', ['authUserId' => $authUser->user_id, 'userId' => $user->user_id]) }}">
                     {{ csrf_field() }}
-                    <button type="submit" name="create-auto-match" id="create-auto-match" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
+                    <input type="hidden" name="match_id" value="{{ $match->match_id }}" />
+                    <button type="submit" name="create-auto-match" id="create-auto-match" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Confirm Match</button>
                 </form>
             @endif
 

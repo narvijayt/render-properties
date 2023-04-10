@@ -38,7 +38,7 @@ class TwilioService{
             $brokerId = $conversationData['recipient']->user_id;
         }*/
 
-        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('message-center.index') );
+        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('pub.message-center.index') );
     }
 
     /**
@@ -46,7 +46,9 @@ class TwilioService{
      * 
      */
     public function sendNewRequestMatchNotification($authUser, $user){
-        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. You can view the request in your profile '. route('pub.profile.matches.index') );
+        // $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. You can view the request in your profile '. route('pub.profile.matches.index') );
+        
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. Click on the link below to check the details '. route('view.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
     }
     
     /**
@@ -54,7 +56,7 @@ class TwilioService{
      * 
      */
     public function sendMatchAcceptedNotification($authUser, $user){
-        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Congratulations, '.$authUser->first_name.' has accpeted your match request. You can view the list of available matches in your profile '. route('pub.profile.matches.index') );
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Congratulations, '.$authUser->first_name.' has accpeted your match request. Click on the link below to check the details '. route('matchdetails.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
     }
 
     public function sendSMS($to, $body){

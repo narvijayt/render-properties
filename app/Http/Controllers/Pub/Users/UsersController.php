@@ -36,6 +36,7 @@ use net\authorize\api\controller as AnetController;
 
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
+use App\Match;
 
 class UsersController extends Controller
 {
@@ -101,6 +102,13 @@ class UsersController extends Controller
                 }
             }
         }
+
+        $authUser = auth()->user();
+        $match = false;
+        if($authUser->isMatchedWith($user)){
+            $match = Match::findForUsers($authUser, $user, true);
+        }
+
         /*if(($findUser !="") && ($findUser->user_type =="broker"))
         {
             if($findUser->payment_status == 1)
@@ -117,7 +125,7 @@ class UsersController extends Controller
         }*/
 
         //if(env('APP_ENV') == "local"){
-            return view('pub.users.user-details', compact('user','categoryName','fetchOverallData','userSocialReviews'));
+            return view('pub.users.user-details', compact('user','categoryName','fetchOverallData','userSocialReviews', 'match'));
         /*
         }
         return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));

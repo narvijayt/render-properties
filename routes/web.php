@@ -7,10 +7,12 @@ Route::post('/verify-login-otp', 'Auth\LoginController@verifyLoginOTP')->name('l
 
 
 Route::get('/auto-match/{id}', 'AutoConnectionController@sendAutoMatchRequests');
-Route::get('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@viewAutoMatchRequest')->name('view.automatch');
-Route::get('/lender-details/{brokerId}/{realtorId}', 'AutoConnectionController@lenderDetails')->name('lenderdetails.automatch');
-Route::get('/realtor-details/{brokerId}/{realtorId}', 'AutoConnectionController@realtorDetails')->name('realtordetails.automatch');
-Route::post('/match-request/{brokerId}/{realtorId}', 'AutoConnectionController@requestAutoMatch')->name('create.automatch');
+Route::get('/match-request/{authUserId}/{userId}', 'AutoConnectionController@viewAutoMatchRequest')->name('view.automatch');
+Route::get('/match-details/{authUserId}/{userId}', 'AutoConnectionController@matchDetails')->name('matchdetails.automatch');
+// Route::get('/realtor-details/{authUserId}/{userId}', 'AutoConnectionController@realtorDetails')->name('realtordetails.automatch');
+Route::post('/match-request/{authUserId}/{userId}', 'AutoConnectionController@requestAutoMatch')->name('create.automatch');
+
+
 Route::get('/sample-email/{id}', 'Pub\Users\UsersController@testEmailSample');
 Route::get('/send-otp/{id}', 'Auth\VerifyMobileController@sendOTPToVerifyMobile')->name('otp.sendnewotp');
 Route::get('/verify-otp/{id}', 'Auth\VerifyMobileController@verifyTestOTP')->name('verify.phone');
