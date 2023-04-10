@@ -40,7 +40,7 @@ $viewDetails = false;
                         <h4 class="text-primary match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
                         <!-- <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p> -->
                     @else
-                        <h4 class="text-primary match-info-heading mt-0">Congratulations! You and requested by {{ ucfirst($user->first_name) }} to connect.</h4>
+                        <h4 class="text-primary match-info-heading mt-0">Congratulations! You are requested by {{ ucfirst($user->first_name) }} to connect.</h4>
                         <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
                     @endif
                 @endif

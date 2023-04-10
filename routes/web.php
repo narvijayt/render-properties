@@ -106,7 +106,8 @@ Route::get('/real-estate-blog/{title}', 'Pub\BlogsController@viewBlog')->name('a
 // Authenticated Routes
 Route::group([
 		'namespace' => 'Pub',
-		'middleware' => ['auth','isMobileVerified'],
+		// 'middleware' => ['auth','isMobileVerified'],
+		'middleware' => ['auth'],
 		'as' => 'pub.',
 	],
 	function() {
