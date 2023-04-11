@@ -294,7 +294,7 @@
        <div class="row">
           <div class="col-md-8 pr-0">  
 		<div class="receive_checkbox">
-			   Would you be interested in providing video or text content that RBC would use to promote your profile?
+			   Would you be interested in providing video or text content that Render would use to promote your profile?
 			 
 			     </div>
 			     </div>

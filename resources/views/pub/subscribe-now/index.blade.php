@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2" style="color: #0a4a80">
                 <h3>Premium Subscription Required</h3>
-                <h4>Indulge—in so much value, for so little! Please take advantage of our “Pre Spring Sale” and save on a subscription to RBC today.</h4>
+                <h4>Indulge—in so much value, for so little! Please take advantage of our “Pre Spring Sale” and save on a subscription to Render today.</h4>
 
                 <p>Search and view Realtors seeking loan officers in your local area or all over the country.</p>
 

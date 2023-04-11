@@ -140,7 +140,7 @@ $(document).ready(function() {
                 open_to_lender_relations: "To contact with Lenders, you must opt in for new lender relationships.",
                 co_market: "Please answer this question",
                 contact_me_for_match: "Please answer this question",
-                enable_emails: "To receive the free marketing and training that RBC offers you must opt in to being contacted by loan officers and vendors.",
+                enable_emails: "To receive the free marketing and training that Render offers you must opt in to being contacted by loan officers and vendors.",
                 how_long_realtor: "This field is required to enter",
             },
             errorElement: 'span',
