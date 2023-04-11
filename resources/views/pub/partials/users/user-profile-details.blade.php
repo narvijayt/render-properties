@@ -80,7 +80,7 @@ $viewDetails = false;
                     </div>
                 @endif
 
-                if(!empty($user->email))
+                @if(!empty($user->email))
                     <div class="full-row">
                         <i class="fa fa-envelope"></i>
                         @if($match || $viewDetails)
