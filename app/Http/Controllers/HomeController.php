@@ -21,10 +21,12 @@ class HomeController extends Controller
     {
         
         $viewData = Cache::remember('home_page_queries', 20, function() {
-            $realtorCount = User::where('user_type','=','realtor')->whereDoesntHave('unmatch_relator', function($q) {
-                $q->where('deleted_at', null);
-               })->count();
-            $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
+            // $realtorCount = User::where('user_type','=','realtor')->whereDoesntHave('unmatch_relator', function($q) {
+            //     $q->where('deleted_at', null);
+            //    })->count();
+            // $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
+            $realtorCount = User::where('user_type','=','realtor')->count();
+            $brokerCount = User::where('user_type','=','broker')->count();
             $messageCount = Message::count();
             $connectionCount = Match::count();
             $messageCount = $messageCount > 121 ? $messageCount : 121;
