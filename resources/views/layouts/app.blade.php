@@ -102,23 +102,23 @@
 		</script>
 	@if(url()->current() == 'https://www.render.properties')
 		<!-- Conversion Pixel for [misc]- DO NOT MODIFY -->
-		<img src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=misc&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
+		<img style="display:none;" src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=misc&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
 		<!-- End of Conversion Pixel -->
 	@elseif(Request::segment(1) === 'contact')
 		<!-- Conversion Pixel for [content]- DO NOT MODIFY -->
-		<img src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=content&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
+		<img style="display:none;" src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=content&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
 		<!-- End of Conversion Pixel -->
 	@elseif(Request::segment(1) === 'search-profiles')
 		<!-- Conversion Pixel for [registration]- DO NOT MODIFY -->
-		<img src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=registration&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
+		<img style="display:none;" src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=registration&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
 		<!-- End of Conversion Pixel -->
 	@elseif(isset($_GET['type']) && $_GET['type'] === 'realtor')   
 		<!-- Conversion Pixel for [signup]- DO NOT MODIFY -->
-		<img src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=signup&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
+		<img style="display:none;" src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=signup&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
 		<!-- End of Conversion Pixel -->
 	@elseif(isset($_GET['type']) && $_GET['type'] === 'lender')  
 		<!-- Conversion Pixel for [lead]- DO NOT MODIFY -->
-		<img src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=lead&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
+		<img style="display:none;" src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=lead&pixid=6ebfe037-db9d-4717-bb0b-4bb3c4d8e135" width="1" height="1" border="0">
 		<!-- End of Conversion Pixel -->
 	@endif
 		<link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">  
