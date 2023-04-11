@@ -1,5 +1,9 @@
 /* contact form */
 $(document).ready(function() {
+    $(document).on("click", ".disbaled-contact-link", function(e){
+      alert("Request a Match with the user to access contact details.");
+    });
+
     $(document).on("click", ".send-sms-link", function(e){
       var isMobile = false; //initiate as false
       // device detection

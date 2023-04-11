@@ -9390,17 +9390,17 @@
 				var t = this,
 					e = t.$createElement,
 					n = t._self._c || e;
-				return n("div", [n("button", {
-					staticClass: "btn btn-warning btn-block util__mb--small",
+				return n("div", [n("a", {
+					staticClass: "text-dark text-uppercase",
 					attrs: {
-						type: "button"
+						href: "javascript:;"
 					},
 					on: {
 						click: function (e) {
 							t.show()
 						}
 					}
-				}, [t._v("Send A Message")]), t._v(" "), n("div", {
+				}, [t._v("Chat")]), t._v(" "), n("div", {
 					directives: [{
 						name: "show",
 						rawName: "v-show",

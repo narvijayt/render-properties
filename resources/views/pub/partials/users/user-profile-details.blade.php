@@ -33,37 +33,33 @@ $viewDetails = false;
         <div class="card bg-light mp-2 p-2 mt-2 mb-3"> 
             @if($match)
                 @if($match->isAccepted())
-                    <h4 class="text-primary match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
-                    <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                    <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
+                    <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
                 @else
                     @if(Auth::user() && Auth::user()->user_id == $match->user_id1)
-                        <h4 class="text-primary match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
+                        <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
                         <!-- <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p> -->
                     @else
-                        <h4 class="text-primary match-info-heading mt-0">Congratulations! You are requested by {{ ucfirst($user->first_name) }} to connect.</h4>
-                        <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                        <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! You are requested by {{ ucfirst($user->first_name) }} to connect.</h4>
+                        <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
                     @endif
                 @endif
             @else
-                <h4 class="text-primary match-info-heading mt-0">
+                <h4 class="text-primary text-center match-info-heading mt-0">
                     @if(!Auth::user())Join {!! get_application_name() !!}'s lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
                 </h4>
             @endif
             
             @if(!$match && Auth::user())
                 @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
-                    <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
+                    <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
                     <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
                         {{ csrf_field() }}
                         <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
                     </form> 
                 @endif
-            @elseif( ($match && $match->isAccepted() ) && Auth::user())
-                <div class="user-profile__send-message-container">
-                    @if($user->user_id != Auth::user()->user_id)
-                        <send-message :recipient="{{ $user }}"></send-message>
-                    @endif
-                </div>
+            @elseif(!$match && !Auth::user())
+                <p class="text-center text-dark font-weight-bold mb-1">Please login to connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}.</p>
             @elseif(($match && $match->isAccepted() == false) && (Auth::user()->user_id != $match->user_id1) )
                 <form method="post" action="{{ route('create.automatch', ['authUserId' => $authUser->user_id, 'userId' => $user->user_id]) }}">
                     {{ csrf_field() }}
@@ -72,26 +68,66 @@ $viewDetails = false;
                 </form>
             @endif
 
-            <div class="form-group mb-2 user-contact-info">
-                @if($match || $viewDetails)
-                    <i class="fa fa-phone"></i> <a class="text-dark" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
-                @else
-                    <i class="fa fa-phone"></i> {!! get_locked_html_string($user->phone_number) !!}
-                @endif
+            <div class="text-center user-contact-details">
+                <div class="full-row">
+                    <i class="fa fa-phone"></i>
+                    @if($match || $viewDetails)
+                        <a class="text-dark" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
+                    @else
+                        {!! get_locked_html_string($user->phone_number) !!}
+                    @endif
+                </div>
+
+                <div class="full-row">
+                    <i class="fa fa-envelope"></i>
+                    @if($match || $viewDetails)
+                        <a class="text-dark" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                    @else
+                        {!! get_locked_html_string($user->email) !!}
+                    @endif
+                </div>
             </div>
-            <div class="form-group mb-2 user-contact-info">
-                @if($match || $viewDetails)
-                    <i class="fa fa-wechat"></i> <a class="text-dark send-sms-link" href="sms:{{ $user->phone_number }}">Send SMS</a>
-                @else
-                    <i class="fa fa-wechat"></i> {!! get_locked_html_string('Send SMS') !!}
-                @endif
-            </div>
-            <div class="form-group mb-2 user-contact-info">
-                @if($match || $viewDetails)
-                    <i class="fa fa-envelope"></i> <a class="text-dark" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-                @else
-                    <i class="fa fa-envelope"></i> {!! get_locked_html_string($user->email) !!}
-                @endif
+                
+            <div class="action-buttons-section mt-1">
+                <div class="form-group mb-2 text-sms-section">
+                    @if($match || $viewDetails)
+                        <a class="btn btn-warning text-dark text-uppercase send-sms-link" href="sms:{{ $user->phone_number }}">Send a Text </a>
+                    @else
+                        <a class="btn btn-warning text-dark text-uppercase disbaled-contact-link" href="javascript:;">Send a Text</a>
+                    @endif
+                </div>
+
+                <div class="icons-box">
+                    <div class="form-group mb-2 user-contact-info">
+                        @if($match || $viewDetails)
+                            <a class="text-dark text-uppercase" href="tel:{{ $user->phone_number }}"><i class="fa fa-phone"></i></a> 
+                            <a class="text-dark text-uppercase" href="tel:{{ $user->phone_number }}">Call</a>
+                        @else
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;"><i class="fa fa-phone"></i></a>
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;">Call</a>
+                        @endif
+                    </div>
+                    <div class="form-group mb-2 user-contact-info">
+                        @if($match || $viewDetails)
+                            <a class="text-dark text-uppercase" href="mailto:{{ $user->email }}"><i class="fa fa-envelope"></i></a>
+                            <a class="text-dark text-uppercase" href="mailto:{{ $user->email }}">Email</a>
+                        @else
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;"><i class="fa fa-envelope"></i></a>
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;">Email</a>
+                        @endif
+                    </div>
+
+                    <div class="form-group mb-2 user-contact-info">
+                        @if( ($match && $match->isAccepted() ) && Auth::user())
+                            @if($user->user_id != Auth::user()->user_id)    
+                                <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
+                            @endif
+                        @else
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;"><i class="fa fa-wechat"></i></a>
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;">Chat</a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
 
