@@ -63,12 +63,12 @@
 
                         <h4>2. Use License</h4>
 
-                        <p>Permission is granted to temporarily download one copy of the materials (information or software) on {!! get_application_name() !!}'s web site for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                        <p>Permission is granted to temporarily download one copy of the materials (information or software) on Render's web site for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
                         </p>
                         <ul>
                             <li>modify or copy the materials;</li>
                             <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                            <li>attempt to decompile or reverse engineer any software contained on {!! get_application_name() !!}'s web site;</li>
+                            <li>attempt to decompile or reverse engineer any software contained on Render's web site;</li>
                             <li>remove any copyright or other proprietary notations from the materials; or</li>
                             <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
                         </ul>
@@ -78,17 +78,17 @@
 
                         <h4>3. Disclaimer</h4>
 
-                        <p>The materials on {!! get_application_name() !!}'s web site are provided "as is". {!! get_application_name() !!} makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, {!! get_application_name() !!} does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet web site or otherwise relating to such materials or on any sites linked to this site.
+                        <p>The materials on Render's web site are provided "as is". {!! get_application_name() !!} makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties, including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights. Further, {!! get_application_name() !!} does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its Internet web site or otherwise relating to such materials or on any sites linked to this site.
                         </p>
 
                         <h4>4. Limitations</h4>
 
-                        <p>In no event shall {!! get_application_name() !!} or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on {!! get_application_name() !!}'s Internet site, even if {!! get_application_name() !!} or a {!! get_application_name() !!} authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
+                        <p>In no event shall {!! get_application_name() !!} or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption,) arising out of the use or inability to use the materials on Render's Internet site, even if {!! get_application_name() !!} or a {!! get_application_name() !!} authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.
                         </p>
 
                         <h4>5. Revisions and Errata</h4>
 
-                        <p>The materials appearing on {!! get_application_name() !!}'s web site could include technical, typographical, or photographic errors. {!! get_application_name() !!} does not warrant that any of the materials on its web site are accurate, complete, or current. {!! get_application_name() !!} may make changes to the materials contained on its web site at any time without notice. {!! get_application_name() !!} does not, however, make any commitment to update the materials.
+                        <p>The materials appearing on Render's web site could include technical, typographical, or photographic errors. {!! get_application_name() !!} does not warrant that any of the materials on its web site are accurate, complete, or current. {!! get_application_name() !!} may make changes to the materials contained on its web site at any time without notice. {!! get_application_name() !!} does not, however, make any commitment to update the materials.
                         </p>
 
                         <h4>6. Links</h4>
@@ -103,7 +103,7 @@
 
                         <h4>8. Governing Law</h4>
 
-                        <p>Any claim relating to {!! get_application_name() !!}'s web site shall be governed by the laws of the State of North Carolina without regard to its conflict of law provisions.
+                        <p>Any claim relating to Render's web site shall be governed by the laws of the State of North Carolina without regard to its conflict of law provisions.
                         </p>
 
                     </div>

@@ -298,7 +298,7 @@
 										<td width="550" align="left" style="padding-bottom:5px; padding-top:5px;">
 											<div class="contentEditableContainer contentTextEditable">
 												<div class="contentEditable" >
-													<p >Platinum Members have the unique opportunity to be featured on {!! get_application_name() !!}'s Blog, Podcast, Youtube Channel and Social Media Outlets; Not to mention our weekly email blast to real estate agents. It's time to take your business to the next level. Sign up now and claim your zip code.</p>
+													<p >Platinum Members have the unique opportunity to be featured on Render's Blog, Podcast, Youtube Channel and Social Media Outlets; Not to mention our weekly email blast to real estate agents. It's time to take your business to the next level. Sign up now and claim your zip code.</p>
 												</div>
 											</div>
 										</td>

@@ -46,7 +46,7 @@ $viewDetails = false;
                 @endif
             @else
                 <h4 class="text-primary text-center match-info-heading mt-0">
-                    @if(!Auth::user())Join {!! get_application_name() !!}'s lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
+                    @if(!Auth::user())Join Render's lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
                 </h4>
             @endif
             
