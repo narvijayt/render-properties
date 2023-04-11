@@ -69,23 +69,27 @@ $viewDetails = false;
             @endif
 
             <div class="text-center user-contact-details">
-                <div class="full-row">
-                    <i class="fa fa-phone"></i>
-                    @if($match || $viewDetails)
-                        <a class="text-dark" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
-                    @else
-                        {!! get_locked_html_string($user->phone_number) !!}
-                    @endif
-                </div>
+                @if(!empty($user->phone_number))
+                    <div class="full-row">
+                        <i class="fa fa-phone"></i>
+                        @if($match || $viewDetails)
+                            <a class="text-dark" href="tel:{{ $user->phone_number }}">{{ $user->phone_number }}</a>
+                        @else
+                            {!! get_locked_html_string($user->phone_number) !!}
+                        @endif
+                    </div>
+                @endif
 
-                <div class="full-row">
-                    <i class="fa fa-envelope"></i>
-                    @if($match || $viewDetails)
-                        <a class="text-dark" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
-                    @else
-                        {!! get_locked_html_string($user->email) !!}
-                    @endif
-                </div>
+                if(!empty($user->email))
+                    <div class="full-row">
+                        <i class="fa fa-envelope"></i>
+                        @if($match || $viewDetails)
+                            <a class="text-dark" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                        @else
+                            {!! get_locked_html_string($user->email) !!}
+                        @endif
+                    </div>
+                @endif
             </div>
                 
             <div class="action-buttons-section mt-1">
