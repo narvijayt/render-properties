@@ -41,6 +41,7 @@ class ReportAllUsers extends Command
 	public function handle()
 	{
 	 \Log::info("all users");
+	 ini_set('memory_limit', '2048M');
 	   $users = User::where('email','!=','admin@realbrokerconnection.com')->orderBy('created_at', 'asc')->with('checkuser_with_unmatch')->get();
 	   $file = bulider_csv($users);
 	    $totalRegUser = 0;

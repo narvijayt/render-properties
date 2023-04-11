@@ -174,7 +174,7 @@ function bulider_csv(\Illuminate\Database\Eloquent\Collection $users) {
     			$paidAccount,
     		]);
 	    }else{
-	         if($user->checkuser_with_unmatch['match_action'] =='accept'){
+	         if(isset($user->checkuser_with_unmatch) && $user->checkuser_with_unmatch['match_action'] =='accept'){
 	            $findUser = User::find($user->checkuser_with_unmatch['user_init']);
         	            fputcsv($file, [
         			$user->user_id,
