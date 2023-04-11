@@ -1636,7 +1636,7 @@ button#registerVendor {
 
 @media(max-width:1199px){
     .user-contact-info{ font-size:13px;}
-    .user-contact-info .fa{font-size: 12px;width: 30px;height: 30px;line-height: 22px;margin-right: 8px;min-width: 30px;}
+    .user-contact-info .fa{font-size: 22px;margin-right: 8px;}
     .mp-2{ padding: 1rem;}
 }
 @media(max-width:991px){
