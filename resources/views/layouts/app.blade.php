@@ -151,6 +151,33 @@
 	@else
 		<div id="app">
 	@endif
+
+	@if(auth()->user() && (auth()->user()->mobile_verified == 0 || !auth()->user()->verified) )
+		<div class="alert alert-dark-danger text-center radius-0" role="alert">
+			@if(auth()->user()->mobile_verified == 0)
+				<div class="d-block {{ (!auth()->user()->verified) ? 'mb-1' : '' }}">
+					<strong>Your Phone Number is not verified.</strong> Please click on the button to verify your Phone Number
+					<form action="{{ route('otp.sendnewotp', ['id' => auth()->user()->user_id]) }}" method="get" style="display: inline;">
+						<button type="submit" class="btn btn-primary btn-sm">Verify Phone Number</button>
+					</form>
+				</div>
+			@endif
+			
+			
+			@if(!auth()->user()->verified)
+				<div class="d-block">
+					<strong>Please check your email inbox/spam to verify your email.</strong> If email didn't receive, please click on resend button
+					<form action="{{ route('auth.resend-email-verification') }}" method="POST" style="display: inline;">
+						{{ csrf_field() }}
+						<button type="submit" class="btn btn-primary btn-sm">Resend Email</button>
+					</form>
+				</div>
+			@endif
+			
+		</div>
+	@endif
+
+
 	@include('partials.nav')
 	
 	@yield('content')

@@ -2,24 +2,27 @@
 
 @section('content')
     @component('pub.components.container')
-        @if(!auth()->user()->verified)
-            <div class="alert alert-info alert" role="alert">
-                <strong>Please check your email inbox/spam to verify your email.</strong> If email didn't received, please click on resend button
-                <form action="{{ route('auth.resend-email-verification') }}" method="POST" style="display: inline;">
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn btn-primary btn-sm">Resend Email</button>
-                </form>
-            </div>
-        @endif
+        {{--
+            @if(!auth()->user()->verified)
+                <div class="alert alert-info alert" role="alert">
+                    <strong>Please check your email inbox/spam to verify your email.</strong> If email didn't received, please click on resend button
+                    <form action="{{ route('auth.resend-email-verification') }}" method="POST" style="display: inline;">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-primary btn-sm">Resend Email</button>
+                    </form>
+                </div>
+            @endif
 
-        @if(!auth()->user()->mobile_verified)
-            <div class="alert alert-info alert" role="alert">
-                <strong>Your Phone Number is not verified.</strong> Please click on the button to verify your Phone Number
-                <form action="{{ route('otp.sendnewotp', ['id' => auth()->user()->user_id]) }}" method="get" style="display: inline;">
-                    <button type="submit" class="btn btn-primary btn-sm">Verify Phone Number</button>
-                </form>
-            </div>
-        @endif
+        
+            @if(!auth()->user()->mobile_verified)
+                <div class="alert alert-danger" role="alert">
+                    <strong>Your Phone Number is not verified.</strong> Please click on the button to verify your Phone Number
+                    <form action="{{ route('otp.sendnewotp', ['id' => auth()->user()->user_id]) }}" method="get" style="display: inline;">
+                        <button type="submit" class="btn btn-primary btn-sm">Verify Phone Number</button>
+                    </form>
+                </div>
+            @endif
+        --}}
 
 
            <!---@if(auth()->user()->user_type)
