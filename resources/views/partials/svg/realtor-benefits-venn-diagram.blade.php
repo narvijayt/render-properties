@@ -1,7 +1,7 @@
-@if(isset($regPage) && !empty($regPage))
-    @if($regPage->footer != '')
+@if(isset($realtorRegPage) && !empty($realtorRegPage))
+    @if($realtorRegPage->footer != '')
         <div class="venn-img">
-            @php echo $regPage->footer; @endphp
+            @php echo $realtorRegPage->footer; @endphp
         </div>
     @endif
 @endif

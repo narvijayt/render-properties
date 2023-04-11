@@ -8,7 +8,8 @@ abstract class PageIdEnum
     const PRIVACY_POLICY = 3;
     const FAQ = 4;
     const TERMS_CONDITION = 5;
-    const REGISTER = 6;
+    const LENDERREGISTER = 6;
+    const REALTORREGISTER = 14;
     const CONTACT = 7;
     const ADVERTISE = 10;
 }

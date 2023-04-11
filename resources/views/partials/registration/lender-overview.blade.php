@@ -1,6 +1,6 @@
-@if(isset($regPage) && !empty($regPage))
-    @if($regPage->header != '')
-        @php echo html_entity_decode($regPage->header); @endphp
+@if(isset($lenderRegPage) && !empty($lenderRegPage))
+    @if($lenderRegPage->header != '')
+        @php echo html_entity_decode($lenderRegPage->header); @endphp
     @else
         <h4 class="text-center">Register to enjoy these benefits:</h4>
         ​​<ul>

@@ -66,13 +66,14 @@ class RegisterController extends Controller
 	public function showRegistrationForm(Request $request)
 	{
 	 $registerType = $request->has('type') ? $request->get('type') : '';
-	 $regPage = Page::find(PageIdEnum::REGISTER);
+	 $lenderRegPage = Page::find(PageIdEnum::LENDERREGISTER);
+	 $realtorRegPage = Page::find(PageIdEnum::REALTORREGISTER);
         if ($request->input('remember_token')) 
         {
 			$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
-			return view('auth.register', compact('user', 'registerType', 'regPage'));
+			return view('auth.register', compact('user', 'registerType', 'lenderRegPage', 'realtorRegPage'));
 		}
-        return view('auth.register', compact('registerType', 'regPage'));
+        return view('auth.register', compact('registerType', 'lenderRegPage', 'realtorRegPage'));
 	}
 
 	/**

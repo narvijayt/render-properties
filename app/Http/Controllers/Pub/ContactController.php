@@ -55,8 +55,8 @@ class ContactController extends Controller
 	}
 	
 	public function registerToday() {
-	    $regPage = Page::find(PageIdEnum::REGISTER);
-	    $findRegMeta = Meta::where('page_id','=',PageIdEnum::REGISTER)->get();
+	    $regPage = Page::find(PageIdEnum::LENDERREGISTER);
+	    $findRegMeta = Meta::where('page_id','=',PageIdEnum::LENDERREGISTER)->get();
 	    if($findRegMeta->isNotEmpty()){
 	        $regMeta = Meta::find($findRegMeta[0]->id);
 	    }else{
