@@ -9,14 +9,14 @@
         <div class="col-md-8">
 
             <form action="{{ route('pub.profile.profileSocialReviews.update') }}" method="post">
-                <h4 class="margin-top-none">Add Social Reviews To Your RBC Profile</h4>
+                <h4 class="margin-top-none">Add Social Reviews To Your {!! get_application_name() !!} Profile</h4>
                 {{ csrf_field() }}
                 
                 {{ method_field('PATCH') }}
 
                 <div class="form-group{{ $errors->has('zillow_screenname') ? ' has-error' : '' }}">
                     <label for="zillow_screenname" class="control-label">Zillow</label>
-                    <p><code>Add your Zillow Screen Name to the field below and Zillow reviews will be published on your RBC profile page.</code></p>
+                    <p><code>Add your Zillow Screen Name to the field below and Zillow reviews will be published on your {!! get_application_name() !!} profile page.</code></p>
 
                     <input placeholder="Type/Paste Your Zillow Screen Name Here" id="zillow_screenname" type="text" class="form-control" name="zillow_screenname" value="{{isset($socialReviews->zillow_screenname) ? $socialReviews->zillow_screenname : ''}}"/>
 
