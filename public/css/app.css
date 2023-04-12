@@ -1681,6 +1681,11 @@ button#registerVendor {
 .alert-dark-danger .btn:hover{background-color: #fff !important;text-decoration: underline;}
 /**************** 11-04-2023 Ends *********************/
 
+
+/**************** 12-04-2023 Starts *********************/
+.text-underline{ text-decoration: underline;}
+/**************** 12-04-2023 Ends *********************/
+
 @media(max-width:625px)
 {
 body .navbar .header-contact { width: 100%; float: right;}

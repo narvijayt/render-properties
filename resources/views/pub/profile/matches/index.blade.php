@@ -11,6 +11,12 @@
         {{--@endcan--}}
     </div>
     <div class="row">
+        @if($activeMatches->count() == 0 && $pendingMatches->count() == 0 )
+            <div class="col-md-12">
+                <div class="alert alert-info">You have not any match. <a class="text-underline" href="{{ Auth::user()->user_type == 'broker' ? route('pub.connect.realtorProfiles') : route('pub.connect.lenderProfiles') }}">Browse {{ Auth::user()->user_type == "broker" ? "Realtors" : "Lenders" }}</a> in your area.</div>
+            </div>
+        @endif
+
         <div class="col-md-12">
 
             @if ($activeMatches->count() !== 0)
