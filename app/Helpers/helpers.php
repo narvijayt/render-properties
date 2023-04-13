@@ -372,7 +372,7 @@ if(!function_exists('get_application_name')){
 
 
 if(!function_exists('user_verified_badge')){
-	function user_verified_badge($user_id = '', $className = ''){
+	function user_verified_badge($user_id = '', $showDeatils = false, $className = ''){
 		if(empty($user_id))
 			return false;
 
@@ -384,6 +384,10 @@ if(!function_exists('user_verified_badge')){
 		if($user->mobile_verified == false)
 			return false;
 
-		return '<span class="verified-badge '.$className.'"><img src="'.url('/').'/img/verified.png" /></span>';
+		$response = '<span class="verified-badge '.$className.'"><img src="'.url('/').'/img/verified.png" /></span>';
+		if($showDeatils == true){
+			$response .= '<span class="verified-details">verified contact details</span>';
+		}
+		return $response;
 	}
 }

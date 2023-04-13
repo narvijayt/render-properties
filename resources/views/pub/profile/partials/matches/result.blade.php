@@ -11,7 +11,7 @@
                     <img src="{{ $oppUser->avatarUrl() }}" />
                 </div>
                 <div class="match-result__name">
-                    {{ $oppUser->full_name() }} {!! user_verified_badge($user->user_id, 'badge-sm') !!}
+                    {{ $oppUser->full_name() }} {!! user_verified_badge($user->user_id, false, 'badge-sm') !!}
                   
                 </div>
                 <span>

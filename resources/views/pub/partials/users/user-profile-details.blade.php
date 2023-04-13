@@ -20,7 +20,7 @@ $viewDetails = false;
 <div class="row">
     <div class="col-md-6">
         <div class="user-basic-info-section">
-            <h3 class="text-primary">{{ $user->first_name }} {{ ($match || Auth::user()) ? $user->last_name : '' }} {!! user_verified_badge($user->user_id) !!}</h3>
+            <h3 class="text-primary">{{ $user->first_name }} {{ ($match || Auth::user()) ? $user->last_name : '' }} {!! user_verified_badge($user->user_id, true) !!}</h3>
             
             <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
 
