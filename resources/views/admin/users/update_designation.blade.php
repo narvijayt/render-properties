@@ -46,6 +46,10 @@
                                     <input type="email" class="form-control" id="email" value="{{$user->email}}" readonly/>
                                 </div>
                                 <div class="form-group">
+                                    <label for="email">Mobile Number</label>
+                                    <input type="tel" class="form-control" name="phone_number" id="phone_number" value="{{$user->phone_number}}" />
+                                </div>
+                                <div class="form-group">
                                     <label for="status">Status</label>
                                     <select class="form-control" id="status" name="active">
                                         <option value="1" @if($user->active == 1) selected @endif>Active</option>
@@ -53,7 +57,7 @@
                                     </select>
                                 </div>
                                 
-                                @if($user->user_type = 'broker')
+                                @if($user->user_type == 'broker')
                                     <div class="form-group">
                                         <label for="status">Payment Status</label>
                                         <select class="form-control" id="payment_status" name="payment_status">

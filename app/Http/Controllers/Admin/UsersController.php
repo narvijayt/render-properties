@@ -385,6 +385,7 @@ class UsersController extends Controller
         $findUser = User::find($userId);
         $findUser->designation = $designation;
         $findUser->active = $request->active;
+        $findUser->phone_number = $request->phone_number;
         if($findUser->user_type=='broker'){
             $findUser->payment_status = $request->payment_status;
             if($request->payment_status == 1){
