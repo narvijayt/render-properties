@@ -20,7 +20,7 @@ $viewDetails = false;
 <div class="row">
     <div class="col-md-6">
         <div class="user-basic-info-section">
-            <h3 class="text-primary">{{ $user->first_name }} {{ ($match || Auth::user()) ? $user->last_name : '' }}</h3>
+            <h3 class="text-primary">{{ $user->first_name }} {{ ($match || Auth::user()) ? $user->last_name : '' }} {!! user_verified_badge($user->user_id) !!}</h3>
             
             <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
 
@@ -34,7 +34,7 @@ $viewDetails = false;
             @if($match)
                 @if($match->isAccepted())
                     <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
-                    <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                    <p class="text-center text-dark font-weight-bold mb-1">Now you can send text to this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} by clicking "Send a Text" button below:</p>
                 @else
                     @if(Auth::user() && Auth::user()->user_id == $match->user_id1)
                         <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>

@@ -369,3 +369,21 @@ if(!function_exists('get_application_name')){
 		return 'Render<sup>TM</sup>';
 	}
 }
+
+
+if(!function_exists('user_verified_badge')){
+	function user_verified_badge($user_id = '', $className = ''){
+		if(empty($user_id))
+			return false;
+
+		$user = User::find($user_id);
+
+		if($user->verified == false)
+			return false;
+
+		if($user->mobile_verified == false)
+			return false;
+
+		return '<span class="verified-badge '.$className.'"><img src="'.url('/').'/img/verified.png" /></span>';
+	}
+}

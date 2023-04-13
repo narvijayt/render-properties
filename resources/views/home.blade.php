@@ -178,7 +178,7 @@
                   <div class="designation" style="display:none"><label>@if($user->designation !="" && $user->designation !='null'){{$user->designation}}@endif </label> <img src="{{ asset('img/ribben.png') }}"></div>
          <img src="{{ $user->avatarUrl(\App\Enums\AvatarSizeEnum::MEDIUM) }}" class="search-result__avatar"> 
                     <h4 class="mb-0 pb-0">
-                        <a href="{{ route('pub.user.show', $user->user_id) }}">{{ $user->first_name }}</a>
+                        <a href="{{ route('pub.user.show', $user->user_id) }}">{{ $user->first_name }} {!! user_verified_badge($user->user_id) !!}</a>
                          <small class="spotlight__user-detail"><strong class="text-dark"> 
                          @if($user->user_type == 'realtor'){{ucwords('real estate agent')}}@endif
                          @if($user->user_type == 'broker'){{ucwords('lender')}}@endif

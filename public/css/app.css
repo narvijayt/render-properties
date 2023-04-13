@@ -1686,6 +1686,13 @@ button#registerVendor {
 .text-underline{ text-decoration: underline;}
 /**************** 12-04-2023 Ends *********************/
 
+/**************** 13-04-2023 Ends *********************/
+.verified-badge{position: relative;top: -5px;margin-left: -3px;}
+.verified-badge img{ width: 22px;}
+.verified-badge.badge-sm{top: -2px;margin-left: -2px;}
+.badge-sm img{width: 16px;}
+/**************** 13-04-2023 Ends *********************/
+
 @media(max-width:625px)
 {
 body .navbar .header-contact { width: 100%; float: right;}

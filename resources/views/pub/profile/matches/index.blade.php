@@ -13,7 +13,10 @@
     <div class="row">
         @if($activeMatches->count() == 0 && $pendingMatches->count() == 0 && $renewableMatches->count() == 0)
             <div class="col-md-12">
-                <div class="alert alert-info">You have not any match. <a class="text-underline" href="{{ Auth::user()->user_type == 'broker' ? route('pub.connect.realtorProfiles') : route('pub.connect.lenderProfiles') }}">Browse {{ Auth::user()->user_type == "broker" ? "Realtors" : "Lenders" }}</a> in your area.</div>
+                <div class="alert alert-warning">You don't have any matches yet, please browse and send match request to lenders in your area.</div>
+                <div class="text-center">
+                    <a class="btn btn-warning" href="{{ Auth::user()->user_type == 'broker' ? route('pub.connect.realtorProfiles') : route('pub.connect.lenderProfiles') }}">Browse {{ Auth::user()->user_type == "broker" ? "Realtors" : "Lenders" }}</a>
+                </div>
             </div>
         @endif
 
@@ -32,7 +35,7 @@
                 </ul>
             @endif
 
-            @if($pendingMatches !== 0)
+            @if($pendingMatches->count() !== 0)
                 <h3>Pending Matches</h3>
                 <ul class="list-unstyled">
                     @foreach($pendingMatches as $match)
@@ -44,7 +47,7 @@
                 </ul>
             @endif
 
-            @if($renewableMatches !== 0)
+            @if($renewableMatches->count() !== 0)
                 <h3>Renewable Matches</h3>
                 <ul class="list-unstyled">
                     @foreach($renewableMatches as $match)
