@@ -386,7 +386,7 @@ if(!function_exists('user_verified_badge')){
 
 		$response = '<span class="verified-badge '.$className.'"><img src="'.url('/').'/img/verified.png" /></span>';
 		if($showDeatils == true){
-			$response .= '<span class="verified-details">verified contact details</span>';
+			$response .= '<span class="verified-details text-warning">verified contact details</span>';
 		}
 		return $response;
 	}
