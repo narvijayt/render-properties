@@ -55,7 +55,7 @@ class ReportNewUsersListEveryFriday extends Command
         $file = weekly_csv($users);
         $mail = new weeklyRegisteredUsers($file, 'new-registered-users-till',$totalRegUser);
             try{
-                \Mail::to('richard@realbrokerconnections.com')->cc(['membership@realbrokerconnections.com','richardtocado@gmail.com','nv@culture-red.com','ty@culture-red.com','james@realbrokerconnections.com','lindsay@realbrokerconnections.com','derek@realbrokerconnections.com,marketing@render.properties'])->send($mail);
+                \Mail::to('richard@realbrokerconnections.com')->cc(['membership@realbrokerconnections.com','richardtocado@gmail.com','nv@culture-red.com','ty@culture-red.com','james@realbrokerconnections.com','lindsay@realbrokerconnections.com','derek@realbrokerconnections.com','marketing@render.properties'])->send($mail);
                 // \Mail::to('amit@culture-red.com')->send($mail);
                 // \Mail::to('jacksmithjs1431@gmail.com')->cc(['priya.negi60degreedigital@gmail.com'])->send($mail);
                 $this->output = new ConsoleOutput;
