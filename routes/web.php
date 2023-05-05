@@ -171,6 +171,10 @@ Route::group([
 		// Message Center
 		Route::get('/message-center', 'MessageCenter\MessageCenterController@index')->name('message-center.index');
         Route::get('/message-center/test', 'MessageCenter\MessageCenterController@test')->name('message-center.test');
+		
+        // Manage Subscriptions Profile
+		Route::get('/subscriptions', 'Profile\SubscriptionController@index')->name('subscription.index');
+        Route::get('/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('subscription.renew');
 
         // Payments
         Route::get('/profile/payment', 'Profile\PaymentController@index')->name('profile.payment.index');

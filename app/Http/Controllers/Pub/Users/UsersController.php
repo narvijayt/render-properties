@@ -40,6 +40,7 @@ use App\Match;
 use App\Services\Stripe;
 use App\UserSubscriptions;
 use Response;
+use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
@@ -584,16 +585,17 @@ class UsersController extends Controller
     }
 
     public function manageSubscriptionStatus(Request $request){
+        Log::info("manageSubscriptionStatus Hook Called");
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $payload = @file_get_contents('php://input');
+        Log::info("Payload Data : ".json_encode($payload));
         $event = (new Stripe())->getWebhookEvent($payload, $sig_header);
-
+        Log::info("Event Response Data : ".json_encode($event));
         if(isset($event->status) && $event->status == 400){
             http_response_code(400);
             exit();
         }
 
-        dd($event);
         http_response_code(200);
         exit();
 
