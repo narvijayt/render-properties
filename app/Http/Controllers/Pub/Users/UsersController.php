@@ -344,6 +344,13 @@ class UsersController extends Controller
 
     public function loadLenderBillingDetails($id){
         $userDetails = User::find($id);
+
+        if(Auth::user()){
+            return redirect()->route("login");
+        }else if($userDetails->user_type != "broker"){
+            flash('Invalid Request.')->success();
+            return redirect()->route("login");
+        }
         if($userDetails->payment_status == 1){
             flash('You have already paid for the your subscription.')->success();
             return redirect()->route("login");
