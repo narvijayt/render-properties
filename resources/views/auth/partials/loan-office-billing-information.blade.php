@@ -45,7 +45,7 @@
                     <div class="alert alert-danger">{{session('error')}}</div>
                 @endif
              
-                <form class="vendor_register" id="vendor_register" method="post" enctype="multipart/form-data">
+                <form class="lender-ragistration" id="lender-ragistration" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="col-md-6 p-0 vendor-billingInfo">
                         <div class="vendor-reg-box">
@@ -112,8 +112,7 @@
                                     <h4>Subscription</h4>
                                     <div class="form-group">
                                         <select name="amount" id="amount" class="form-control">
-                                            <option value="29.00">Monthly - $29.00 per month</option>
-                                            <!--<option value="995.00">Yearly - $995.00 per year (Save 16% paying annual)</option>-->
+                                            <option value="19.80">Monthly - $19.80 per month</option>
                                         </select>
                                     </div>
                                 </div>
@@ -124,6 +123,13 @@
                                 <h1 class="box-title line-left family-mont">Payment Details</h1>
                                 <p>Please enter your payment details</p>              
                             </div>
+                            <!-- Display status message -->
+                            <div id="paymentResponse" class="alert alert-danger hidden"></div>
+
+                            <div id="card-element">
+                                <!-- Stripe.js will create card input elements here -->
+                            </div>
+                            <?php /*
                             <div class="row"> 
                                 <div class="col-md-12"> <div class="card-wrapper"></div></div>
                                 <div class="col-md-12">
@@ -162,6 +168,13 @@
                                     </div>
                                 </div><!------  Col-md-6---->
                             </div><!------ ROW--->
+                            */ ?>
+
+                            <div class="form-group mt-3">
+                                <button type="submit" class="btn btn-lg btn-success btn-min-width" id="doPaymentButton">Continue</button>
+                            </div>
+
+                            
                         </div>
                     </div>  <!----- Col-md-12--->
                     <div class="clearfix"></div>
@@ -170,4 +183,147 @@
             </div>
         </div>
     </section>
+
+    <div class="loader-overlay loader-outer form-loader loaderInner hidden"><div class="loader">Please wait...<div class="loader-inner"></div></div></div>
 @endsection
+
+@push('scripts-footer')
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+// Get API Key
+let STRIPE_PUBLISHABLE_KEY = '<?= env('APP_ENV') != "production" ? env('STRIPE_TEST_PUBLISHABLE_KEY') : env('STRIPE_LIVE_PUBLISHABLE_KEY')?>';
+
+
+// Create an instance of the Stripe object and set your publishable API key
+const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+// Render Credit card input into the form
+let elements = stripe.elements();
+var style = {
+    base: {
+        lineHeight: "30px",
+        fontSize: "16px",
+        border: "1px solid #ff0000",
+    }
+};
+let cardElement = elements.create('card', { style: style });
+cardElement.mount('#card-element');
+
+cardElement.on('change', function (event) {
+    displayError(event);
+});
+
+
+
+// Select subscription form element
+const lenderForm = document.querySelector("#lender-ragistration");
+
+// Attach an event handler to subscription form
+lenderForm.addEventListener("submit", handleSubscrSubmit);
+
+
+async function handleSubscrSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    
+    if($("input[name='accept_terms']").is(":checked") === false){
+        if($("input[name='accept_terms']").closest(".checkbox").hasClass("is-invalid") === false){
+            $("input[name='accept_terms']").closest(".checkbox").addClass("is-invalid");
+        }
+        showMessage("Please accept the Terms and Condition to complete the payment.");
+        setLoading(false);
+    }else{
+        $("input[name='accept_terms']").closest(".checkbox").removeClass("is-invalid");
+    }
+    // Post the subscription info to the server-side script
+    fetch("<?=route("register.createSubscription")?>", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>' }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("data ", data);
+        if (data.subscriptionId && data.clientSecret) {
+            paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+        } else {
+            setLoading(false);
+            showMessage(data.error);
+        }
+    })
+    .catch(console.error);
+}
+
+function paymentProcess(subscriptionId, clientSecret, customerId){
+    let customer_name = document.getElementById("first_name").value +" "+document.getElementById("last_name").value;
+    
+    // Create payment method and confirm payment intent.
+    stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+            card: cardElement,
+            billing_details: {
+                name: customer_name,
+            },
+        }
+    }).then((result) => {
+        if(result.error) {
+            showMessage(result.error.message);
+            setLoading(false);
+        } else {
+            // Successful subscription payment
+            // Post the transaction info to the server-side script and redirect to the payment status page
+            fetch("<?=route("register.createStripePayment")?>", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ subscription_id: subscriptionId, customer_id: customerId,payment_intent: result.paymentIntent, user_id: '<?=$userDetails->user_id?>'}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // console.log("data ", data);
+                if (data.subscription) {
+                    window.location = "<?=route("register.paymentStatus", ["user_id" => $userDetails->user_id])?>";
+                } else {
+                    showMessage(data.error);
+                    setLoading(false);
+                }
+            })
+            .catch(console.error);
+        }
+    });
+}
+
+
+
+function displayError(event) {
+    if (event.error) {
+        showMessage(event.error.message);
+    }
+}
+
+// Display message
+function showMessage(messageText) {
+    const messageContainer = document.querySelector("#paymentResponse");
+    
+    messageContainer.classList.remove("hidden");
+    messageContainer.textContent = messageText;
+    
+    setTimeout(function () {
+        messageContainer.classList.add("hidden");
+        messageText.textContent = "";
+    }, 5000);
+}
+
+// Show a spinner on payment submission
+function setLoading(isLoading) {
+    if (isLoading) {
+        // Disable the button and show a spinner
+        document.querySelector("#doPaymentButton").disabled = true;
+        $(".form-loader").removeClass("hidden");
+    } else {
+        // Enable the button and hide spinner
+        document.querySelector("#doPaymentButton").disabled = false;
+        $(".form-loader").addClass("hidden");
+    }
+}
+</script>
+@endpush

@@ -338,6 +338,10 @@ Route::get('/platinum-membership-upgrade/{id}', 'Pub\Users\UsersController@plati
 Route::get('/lender-billing-details/{id}', 'Pub\Users\UsersController@loadLenderBillingDetails');
 Route::post('/lender-billing-details/{id}', 'Pub\Users\UsersController@storeLenderBillingDetails');
 
+Route::post('/create-subscription', 'Pub\Users\UsersController@createSubscription')->name('register.createSubscription');
+Route::post('/create-payment', 'Pub\Users\UsersController@createStripePayment')->name('register.createStripePayment');
+Route::get('/payment-status/{user_id}', 'Pub\Users\UsersController@paymentStatus')->name('register.paymentStatus');
+
 Route::get('/cpldashrbcs/login', 'Admin\UsersController@showLogin');
 Route::post('/cpldashrbcs/login', 'Admin\UsersController@doLogin');
 Route::get('/cpldashrbcs/logout', function(){

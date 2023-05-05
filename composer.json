@@ -22,6 +22,7 @@
         "pusher/pusher-php-server": "~2.6",
         "silber/bouncer": "v1.0.0-beta.4",
         "spatie/laravel-fractal": "^4.3",
+        "stripe/stripe-php": "^10.12",
         "twilio/sdk": "^6.44",
         "tymon/jwt-auth": "0.5.*",
         "watson/rememberable": "^2.0"

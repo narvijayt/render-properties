@@ -1695,6 +1695,14 @@ button#registerVendor {
 .standard-agent .verified-badge img {  border: none;}
 /**************** 13-04-2023 Ends *********************/
 
+/**************** 05-05-2023 Starts *********************/
+.is-invalid, .is-invalid a {color: #eb1c26;}
+.is-invalid input[type='checkbox']{ border:1px solid #eb1c26;}
+.loader-overlay{position: fixed; width: 100%; height: 100%; top: 0; left: 0; vertical-align: middle; text-align: center; background: #000; z-index: 999999; opacity: .9;}
+.loader-overlay .loader{ top: 50%; color: #fff;}
+/**************** 05-05-2023 Ends *********************/
+
+
 @media(max-width:625px)
 {
 body .navbar .header-contact { width: 100%; float: right;}
