@@ -10,6 +10,7 @@ class Stripe{
 
     public function __construct(){
         \Stripe\Stripe::setApiKey(env('APP_ENV') != "production"  ? env('STRIPE_TEST_SECRET_KEY') : env('STRIPE_LIVE_SECRET_KEY') );
+
     }
 
     /**
@@ -126,6 +127,41 @@ class Stripe{
                 $subscription = \Stripe\Subscription::retrieve($subscription_id);  
                 return $subscription;
             }catch(Exception $e) {   
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
+
+
+    /**
+     * Retrieve webhook event details
+     * 
+     * @accept $payload, $sig_header  
+     * 
+     * @return array or object  |   succsss or error
+     */
+    public function getWebhookEvent($payload = '', $sig_header = ''){
+
+        // This is your Stripe CLI webhook secret for testing your endpoint locally.
+        $endpoint_secret = 'whsec_bdbb2bb66281be2a7dea8e4213958a2a668860cc8dc2c460c83b7a26dd5b00f0';
+
+        $errors = [];
+        if(empty($payload)){
+            $errors["invalid_payload"] = "Invalid Payload";
+        }
+
+        if(empty($sig_header)){
+            $errors["invalid_sig_header"] = "Invalid Request";
+        }
+
+        if(empty($errors)){
+            try {
+                $event = \Stripe\Webhook::constructEvent($payload, $sig_header, $endpoint_secret);
+                return $event;
+            } catch(\UnexpectedValueException $e) {
+                $errors['api_error_message'] = $e->getMessage();   
+            } catch(\Stripe\Exception\SignatureVerificationException $e) {
                 $errors['api_error_message'] = $e->getMessage();   
             }
         }

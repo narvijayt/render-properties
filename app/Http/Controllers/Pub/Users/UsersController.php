@@ -568,15 +568,73 @@ class UsersController extends Controller
 
                 flash('Account has been registered successfully.')->success();
                 
-                if(isset($user->phone_number) && !empty($user->phone_number) ){
+                Auth::login($user);
+                // return $this->sendLoginResponse($request);
+                return redirect()->route("login");
+
+                /*if(isset($user->phone_number) && !empty($user->phone_number) ){
                     $response = (new MobileVerificationService())->generateOtp($user->user_id);
                     
                     (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
         
                     return redirect()->route('verify.phone', ['id' => $user->user_id])->with('message', 'An OTP has been sent on your registered phone number. Please confirm your contact details.');
-                }
+                }*/
             }
         }
+    }
+
+    public function manageSubscriptionStatus(Request $request){
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $payload = @file_get_contents('php://input');
+        $event = (new Stripe())->getWebhookEvent($payload, $sig_header);
+
+        if(isset($event->status) && $event->status == 400){
+            http_response_code(400);
+            exit();
+        }
+
+        dd($event);
+        http_response_code(200);
+        exit();
+
+        // Handle the event
+        switch ($event->type) {
+            case 'subscription_schedule.aborted':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            case 'subscription_schedule.canceled':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            case 'subscription_schedule.completed':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            case 'subscription_schedule.created':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            case 'subscription_schedule.expiring':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            case 'subscription_schedule.released':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            case 'subscription_schedule.updated':
+            $subscriptionSchedule = $event->data->object;
+            break;
+
+            // ... handle other event types
+            default:
+            echo 'Received unknown event type ' . $event->type;
+            break;
+        }
+
+        http_response_code(200);
+        exit();
     }
     
     public function billingInformation(Request $request) 
