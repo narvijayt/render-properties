@@ -182,7 +182,7 @@
                 </form>
             </div>
         </div>
-        <div class="loader-overlay loader-outer form-loader loaderInner hidden"><div class="loader">Please wait...<div class="loader-inner"></div></div></div>
+        <div class="loader-overlay loader-outer form-loader hidden"><div class="loader">Please wait...<div class="loader-inner"></div></div></div>
     </section>
 @endsection
 
