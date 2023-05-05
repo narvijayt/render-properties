@@ -144,7 +144,7 @@ class Stripe{
     public function getWebhookEvent($payload = '', $sig_header = ''){
 
         // This is your Stripe CLI webhook secret for testing your endpoint locally.
-        $endpoint_secret = 'whsec_bdbb2bb66281be2a7dea8e4213958a2a668860cc8dc2c460c83b7a26dd5b00f0';
+        $endpoint_secret = 'whsec_mK1FqlgmVtnl6WvWBjFXFwxqfyR5uxhd';
 
         $errors = [];
         if(empty($payload)){
