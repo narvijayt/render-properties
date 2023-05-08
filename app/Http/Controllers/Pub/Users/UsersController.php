@@ -608,6 +608,8 @@ class UsersController extends Controller
                         $userSubscription->plan_period_end = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
                     }else if($subscriptionSchedule->status == "past_due"){
                         // Send notification of failed payment
+                    }else if($subscriptionSchedule->status == "canceled"){
+                        User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
                     }
 
                     $userSubscription->status = $subscriptionSchedule->status;
