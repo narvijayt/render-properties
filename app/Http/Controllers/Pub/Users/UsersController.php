@@ -601,7 +601,7 @@ class UsersController extends Controller
             case 'customer.subscription.updated':
                 $subscriptionSchedule = $event->data->object;
                 if($subscriptionSchedule->object == "subscription"){
-                    $userSubscription = UserSubscriptions::find($subscriptionSchedule->id);
+                    $userSubscription = UserSubscriptions::where('stripe_subscription_id',$subscriptionSchedule->id)->first();
                     
                     if($subscriptionSchedule->status == "active"){
                         $userSubscription->plan_period_start = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
