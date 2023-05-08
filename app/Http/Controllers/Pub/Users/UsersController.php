@@ -587,21 +587,15 @@ class UsersController extends Controller
     }
 
     public function manageSubscriptionStatus(Request $request){
-        // Log::info("manageSubscriptionStatus Hook Called");
+
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $payload = @file_get_contents('php://input');
-        // Log::info("Payload Data : ".json_encode($payload));
         $event = (new Stripe())->getWebhookEvent($payload, $sig_header);
-        // Log::info("Event Response Data : ".json_encode($event));
         if(isset($event->status) && $event->status == 400){
             echo json_encode($event);
             http_response_code(400);
             exit();
         }
-
-        http_response_code(200);
-        exit();
-
         // Handle the event
         switch ($event->type) {
             case 'customer.subscription.updated':
