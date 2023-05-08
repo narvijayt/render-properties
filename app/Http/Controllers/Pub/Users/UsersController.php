@@ -498,7 +498,7 @@ class UsersController extends Controller
             }
         }
 
-        $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('STRIPE_TEST_PRICE_ID')]);
+        $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
 
         if(isset($subscription->id)){
             $output = [ 
@@ -516,7 +516,7 @@ class UsersController extends Controller
         $payment_intent = $request->input('payment_intent'); 
         $subscription_id = $request->input('subscription_id');
         $customer_id = $request->input('customer_id');
-        $subscr_plan_id = env('STRIPE_TEST_PRICE_ID'); 
+        $subscr_plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID'); 
 
         $customer = (new Stripe())->getCustomer($customer_id);
         $user = User::find($request->input('user_id'));
@@ -525,27 +525,29 @@ class UsersController extends Controller
             $subscription = (new Stripe())->getSubscription($subscription_id);
 
             $created = date("Y-m-d H:i:s", $payment_intent->created); 
+            $status = $payment_intent['status'];
             $current_period_start = $current_period_end = ''; 
             if(!empty($subscription)){ 
                 $created = date("Y-m-d H:i:s", $subscription->created); 
                 $current_period_start = date("Y-m-d H:i:s", $subscription->current_period_start); 
                 $current_period_end = date("Y-m-d H:i:s", $subscription->current_period_end); 
+                $status = $subscription->status;
             }
 
             $userSubscription = new UserSubscriptions();
             $userSubscription->user_id = $user->user_id;
-            $userSubscription->plan_id = env('STRIPE_TEST_PRICE_ID');
+            $userSubscription->plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
             $userSubscription->payment_method = "Stripe";
             $userSubscription->stripe_subscription_id = $subscription->id;
             $userSubscription->stripe_payment_intent_id = $payment_intent['id'];
             $userSubscription->paid_amount = ($payment_intent['amount']/100);
             $userSubscription->currency = $payment_intent['currency'];
-            $userSubscription->plan_interval = "month";
+            $userSubscription->plan_interval = $subscription->items->data->plan->interval;
             $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
             $userSubscription->customer_email = $user->email;
             $userSubscription->plan_period_start = $current_period_start;
             $userSubscription->plan_period_end = $current_period_end;
-            $userSubscription->status = $payment_intent['status'];
+            $userSubscription->status = $status;
 
             $userSubscription->save();
             return Response::json(['subscription' => $userSubscription], 200);
@@ -585,13 +587,14 @@ class UsersController extends Controller
     }
 
     public function manageSubscriptionStatus(Request $request){
-        Log::info("manageSubscriptionStatus Hook Called");
+        // Log::info("manageSubscriptionStatus Hook Called");
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $payload = @file_get_contents('php://input');
-        Log::info("Payload Data : ".json_encode($payload));
+        // Log::info("Payload Data : ".json_encode($payload));
         $event = (new Stripe())->getWebhookEvent($payload, $sig_header);
-        Log::info("Event Response Data : ".json_encode($event));
+        // Log::info("Event Response Data : ".json_encode($event));
         if(isset($event->status) && $event->status == 400){
+            echo json_encode($event);
             http_response_code(400);
             exit();
         }
@@ -601,37 +604,27 @@ class UsersController extends Controller
 
         // Handle the event
         switch ($event->type) {
-            case 'subscription_schedule.aborted':
-            $subscriptionSchedule = $event->data->object;
-            break;
+            case 'customer.subscription.updated':
+                $subscriptionSchedule = $event->data->object;
+                if($subscriptionSchedule->object == "subscription"){
+                    $userSubscription = UserSubscriptions::find($subscriptionSchedule->id);
+                    
+                    if($subscriptionSchedule->status == "active"){
+                        $userSubscription->plan_period_start = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
+                        $userSubscription->plan_period_end = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
+                    }else if($subscriptionSchedule->status == "past_due"){
+                        // Send notification of failed payment
+                    }
 
-            case 'subscription_schedule.canceled':
-            $subscriptionSchedule = $event->data->object;
-            break;
-
-            case 'subscription_schedule.completed':
-            $subscriptionSchedule = $event->data->object;
-            break;
-
-            case 'subscription_schedule.created':
-            $subscriptionSchedule = $event->data->object;
-            break;
-
-            case 'subscription_schedule.expiring':
-            $subscriptionSchedule = $event->data->object;
-            break;
-
-            case 'subscription_schedule.released':
-            $subscriptionSchedule = $event->data->object;
-            break;
-
-            case 'subscription_schedule.updated':
-            $subscriptionSchedule = $event->data->object;
+                    $userSubscription->status = $subscriptionSchedule->status;
+                    $userSubscription->save();
+                    echo json_encode($userSubscription);
+                }
             break;
 
             // ... handle other event types
             default:
-            echo 'Received unknown event type ' . $event->type;
+                echo 'Received unknown event type ' . $event->type;
             break;
         }
 
