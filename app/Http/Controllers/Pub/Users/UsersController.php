@@ -606,6 +606,7 @@ class UsersController extends Controller
                 $subscriptionSchedule = $event->data->object;
                 if($subscriptionSchedule->object == "subscription"){
                     $userSubscription = UserSubscriptions::where('stripe_subscription_id',$subscriptionSchedule->id)->first();
+                    $userSubscription = UserSubscriptions::find($userSubscription->id);
                     
                     if($subscriptionSchedule->status == "active"){
                         $userSubscription->plan_period_start = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 

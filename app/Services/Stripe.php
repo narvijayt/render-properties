@@ -99,6 +99,7 @@ class Stripe{
                     ]], 
                     'payment_behavior' => 'default_incomplete', 
                     'expand' => ['latest_invoice.payment_intent'], 
+                    'proration_behavior' => 'none'
                 ]); 
                 return $subscription;
             }catch(Exception $e) { 
@@ -211,8 +212,8 @@ class Stripe{
             $errors["invalid_customer_id"] = "Customer ID is missing";
         }
 
-        if(empty($paymentMethod)){
-            $errors["invalid_paymentMethod"] = "Payment Method Data is missing";
+        if(empty($paymentMethod_id)){
+            $errors["invalid_paymentMethod_id"] = "Payment Method Data is missing";
         }
 
         if(empty($errors)){
@@ -221,10 +222,11 @@ class Stripe{
             $stripe = new \Stripe\StripeClient($secret_key);
 
             try {   
-                $subscription = \Stripe\PaymentMethods::attach($paymentMethod_id, [
-                    'customer'  =>  $customer_id
-                ]);  
-                return $subscription;
+                $customerPaymentMethod = $stripe->paymentMethods->attach(
+                    $paymentMethod_id,
+                    ['customer' => $customer_id]
+                );
+                return $customerPaymentMethod;
             }catch(Exception $e) {  
                 $errors['api_error_message'] = $e->getMessage();   
             }
