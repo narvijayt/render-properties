@@ -16,8 +16,6 @@ use App\Category;
 use App\Payment;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 
-use App\UserSubscriptions;
-
 class User extends Authenticatable implements ISecurable
 {
 	use Notifiable, HasRolesAndAbilities, Securable, Billable;
@@ -846,8 +844,7 @@ class User extends Authenticatable implements ISecurable
    /**
      * Get the subscription plan associated with the user.
      */
-    public function subscription(): HasOne
-    {
-        return $this->hasOne(UserSubscriptions::class, 'user_id');
+    public function userSubscription(){
+        return $this->hasOne(UserSubscriptions::Class, UserSubscriptions::USER_ID, self::PKEY);
     }
 }

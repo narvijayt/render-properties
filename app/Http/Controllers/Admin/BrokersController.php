@@ -18,7 +18,7 @@ class BrokersController extends Controller
         $query = User::where('user_type', 'broker');
         
         if($request->input('payment_status') && $request->input('payment_status') != "all"){
-            $payment_status = $request->input('payment_status') == "paid" ? 1 : 0;
+            $payment_status = $request->input('payment_status') == "unpaid" ? 0 : 1;
             $query->where('payment_status', $payment_status );
         }
         
@@ -49,6 +49,16 @@ class BrokersController extends Controller
                         $subQuery->where(DB::raw('lower(email)'), 'like', '%'. $search_string. '%');
                     });
                 });
+            }
+        }
+
+        if($payment_status == 1){
+            if($request->input('payment_status') == "online_paid"){
+                $query->whereHas('userSubscription', function($q) {
+                    $q->where('status', 'active');
+                });
+            }else if($request->input('payment_status') == "manual_paid"){
+                $query->whereDoesntHave('userSubscription');
             }
         }
         

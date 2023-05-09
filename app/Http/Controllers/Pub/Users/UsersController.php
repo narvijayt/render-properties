@@ -576,7 +576,7 @@ class UsersController extends Controller
                 
                 Auth::login($user);
                 // return $this->sendLoginResponse($request);
-                return redirect()->route("pub.profile.subscription.index")->with('message', 'Account has been registered successfully.');
+                return redirect()->route("pub.profile.subscription.index")->with('message', 'Thank you for the payment. Your Account has been registered successfully.');
 
                 /*if(isset($user->phone_number) && !empty($user->phone_number) ){
                     $response = (new MobileVerificationService())->generateOtp($user->user_id);
