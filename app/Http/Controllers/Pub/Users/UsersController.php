@@ -41,6 +41,7 @@ use App\Services\Stripe;
 use App\UserSubscriptions;
 use Response;
 use Illuminate\Support\Facades\Log;
+use App\Mail\SubscriptionPaymentFailed;
 
 class UsersController extends Controller
 {
@@ -617,6 +618,10 @@ class UsersController extends Controller
                             // Send notification of failed payment
                         }else if($subscriptionSchedule->status == "unpaid"){
                             User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
+
+                            $user = User::find($userSubscription->user_id);
+                            $email = new SubscriptionPaymentFailed($user);
+                            Mail::to($user->email)->send($email);
                         }
 
                         $subscriptionArray['status'] = $subscriptionSchedule->status;
