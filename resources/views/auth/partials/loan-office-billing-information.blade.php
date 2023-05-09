@@ -93,14 +93,6 @@
                                     <label for="billing_postal_code">Zip</label>
                                     <input type="text" id="billing_postal_code" class="form-control" name="zip" placeholder="Postal Code" value="{{$userDetails->zip}}"  required="" aria-required="true"/>
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <div class="checkbox">
-                                        <label>
-                                          <input type="checkbox" <?=isset($_REQUEST['accept_terms']) ? 'checked' : ''?> name="accept_terms" value="1"> I have read and agree to the <a href="{{ route('pub.terms-and-conditions.index')}}" target="_blank">Terms and Conditions</a>.
-                                        </label>
-                                    </div>
-                                    <p>{!! get_application_name() !!} has a 30 day refund policy. If your not happy for any reason please <a href="https://www.render.properties/contact" target="_blank">contact us</a> for a full refund within  30 days of signing up for a paid membership.</p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -224,7 +216,7 @@ async function handleSubscrSubmit(e) {
     e.preventDefault();
     setLoading(true);
     
-    if($("input[name='accept_terms']").is(":checked") === false){
+    /*if($("input[name='accept_terms']").is(":checked") === false){
         if($("input[name='accept_terms']").closest(".checkbox").hasClass("is-invalid") === false){
             $("input[name='accept_terms']").closest(".checkbox").addClass("is-invalid");
         }
@@ -232,7 +224,7 @@ async function handleSubscrSubmit(e) {
         setLoading(false);
     }else{
         $("input[name='accept_terms']").closest(".checkbox").removeClass("is-invalid");
-    }
+    }*/
     // Post the subscription info to the server-side script
     fetch("<?=route("register.createSubscription")?>", {
         method: "POST",

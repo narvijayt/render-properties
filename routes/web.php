@@ -173,9 +173,9 @@ Route::group([
         Route::get('/message-center/test', 'MessageCenter\MessageCenterController@test')->name('message-center.test');
 		
         // Manage Subscriptions Profile
-		Route::get('/subscriptions', 'Profile\SubscriptionController@index')->name('profile.subscription.index');
-        Route::post('/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('profile.subscription.renew');
-        Route::post('/subscriptions/attach-payment-method', 'Profile\SubscriptionController@attachPaymentMethod')->name('profile.subsctiption.attachPaymentMethod');
+		Route::get('/profile/subscriptions', 'Profile\SubscriptionController@index')->name('profile.subscription.index');
+        Route::post('/profile/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('profile.subscription.renew');
+        Route::post('/profile/subscriptions/attach-payment-method', 'Profile\SubscriptionController@attachPaymentMethod')->name('profile.subsctiption.attachPaymentMethod');
 
         // Payments
         Route::get('/profile/payment', 'Profile\PaymentController@index')->name('profile.payment.index');

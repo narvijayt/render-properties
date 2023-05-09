@@ -364,9 +364,9 @@ class UsersController extends Controller
     
     public function storeLenderBillingDetails(Request $request){
             
-        if($request->input('accept_terms') == false){
+        /*if($request->input('accept_terms') == false){
             return redirect()->back()->with('error',"Please accpet terms and condition to complete the order.");
-        }
+        }*/
         $input = $request->all();
         
         $input['number'] = str_replace(" ","",$input['number']);
@@ -572,11 +572,11 @@ class UsersController extends Controller
                 $this->emailVerification($user);
                 $this->welcomeEmail($user);
 
-                flash('Account has been registered successfully.')->success();
+                // flash('Account has been registered successfully.')->success();
                 
                 Auth::login($user);
                 // return $this->sendLoginResponse($request);
-                return redirect()->route("login");
+                return redirect()->route("pub.profile.subscription.index")->with('message', 'Account has been registered successfully.');
 
                 /*if(isset($user->phone_number) && !empty($user->phone_number) ){
                     $response = (new MobileVerificationService())->generateOtp($user->user_id);

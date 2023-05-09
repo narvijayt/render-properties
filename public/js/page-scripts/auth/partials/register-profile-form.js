@@ -116,6 +116,9 @@ $(document).ready(function() {
                 how_long_realtor:{
                      required: true
                 },
+                accept_terms:{
+                    required: true
+                },
             },
             messages: {
                 first_name: {
@@ -142,6 +145,9 @@ $(document).ready(function() {
                 contact_me_for_match: "Please answer this question",
                 enable_emails: "To receive the free marketing and training that Render offers you must opt in to being contacted by loan officers and vendors.",
                 how_long_realtor: "This field is required to enter",
+                accept_terms: {
+                    required: "Please accept the Terms and Condition to continue the registration",
+                }
             },
             errorElement: 'span',
             errorPlacement: function (error, element) {

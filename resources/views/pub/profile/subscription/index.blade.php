@@ -14,9 +14,9 @@
                         <h4>Monthly Lender Membership For 19.80 USD</h4>
                         <ul>
                             <li><strong>Price:</strong> <span class=""> ${{ number_format($userSubscription['paid_amount'], 2, '.', '') }}</span></li>
-                            <li><strong>Registred Date:</strong> <span class="">{{ date("Y-m-d", strtotime($userSubscription['created_at'])) }}</span></li>
-                            <li><strong>Start Date:</strong> <span class="">{{ date("Y-m-d", strtotime($userSubscription['plan_period_start'])) }}</span></li>
-                            <li><strong>End Date:</strong> <span class="">{{ date("Y-m-d", strtotime($userSubscription['plan_period_end'])) }}</span></li>
+                            <li><strong>Registred Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userSubscription['created_at'])) }}</span></li>
+                            <li><strong>Start Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userSubscription['plan_period_start'])) }}</span></li>
+                            <li><strong>End Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userSubscription['plan_period_end'])) }}</span></li>
                         </ul>                        
                     @endif
                 </div>
