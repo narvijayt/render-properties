@@ -23,7 +23,7 @@
             </li>
         </ul>
 
-        @if($userSubscription['status'] != 'active')
+        @if($userSubscription['status'] != 'active' && $userSubscription['attach_payment_status'] == 0)
             <div class="panel panel-default subscription-billing-section mt-2">
                 <div class="panel-heading">Renew Subscription Plan Now!</div>
                 <div class="panel-body">

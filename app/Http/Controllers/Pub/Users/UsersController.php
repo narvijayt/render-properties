@@ -607,6 +607,7 @@ class UsersController extends Controller
                 if($subscriptionSchedule->object == "subscription"){
                     $userSubscription = UserSubscriptions::where('stripe_subscription_id',$subscriptionSchedule->id)->first();
                     $userSubscription = UserSubscriptions::find($userSubscription->id);
+                    $userSubscription->attach_payment_status = 0;
                     
                     if($subscriptionSchedule->status == "active"){
                         $userSubscription->plan_period_start = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 

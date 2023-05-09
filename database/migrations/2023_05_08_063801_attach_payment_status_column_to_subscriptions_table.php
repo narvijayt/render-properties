@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddbufferDaysColumnToSubscriptionsTable extends Migration
+class AttachPaymentStatusColumnToSubscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddbufferDaysColumnToSubscriptionsTable extends Migration
     {
         Schema::table('user_subscriptions', function (Blueprint $table) {
             //
-            $table->integer('plan_buffer_days')->after('status')->default(7);
+            $table->tinyInteger('attach_payment_status')->after('status')->default(0);
         });
     }
 
@@ -28,7 +28,7 @@ class AddbufferDaysColumnToSubscriptionsTable extends Migration
     {
         Schema::table('user_subscriptions', function (Blueprint $table) {
             //
-            $table->dropColumn('plan_buffer_days');
+            $table->dropColumn('attach_payment_status');
         });
     }
 }
