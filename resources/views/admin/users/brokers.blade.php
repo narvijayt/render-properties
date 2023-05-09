@@ -108,14 +108,12 @@
                             @endif
                             </tbody>
                         </table>
-                        
                         <div class="page-div">
                             @if(isset($users) && !empty($users))
                                 {{ $users->appends($_GET)->links() }}
                             @endif
                         </div>
-                    </div>
-                    
+                    </div>  
                 </div>
             </div>
         </div>
