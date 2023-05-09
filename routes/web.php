@@ -173,8 +173,9 @@ Route::group([
         Route::get('/message-center/test', 'MessageCenter\MessageCenterController@test')->name('message-center.test');
 		
         // Manage Subscriptions Profile
-		Route::get('/subscriptions', 'Profile\SubscriptionController@index')->name('subscription.index');
-        Route::get('/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('subscription.renew');
+		Route::get('/subscriptions', 'Profile\SubscriptionController@index')->name('profile.subscription.index');
+        Route::post('/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('profile.subscription.renew');
+        Route::post('/subscriptions/attach-payment-method', 'Profile\SubscriptionController@attachPaymentMethod')->name('profile.subsctiption.attachPaymentMethod');
 
         // Payments
         Route::get('/profile/payment', 'Profile\PaymentController@index')->name('profile.payment.index');
@@ -339,7 +340,7 @@ Route::post('/user-registration', 'Pub\Users\UsersController@createUser');
 Route::post('/consumer-register', 'Pub\Users\UsersController@createConsumer');
 Route::get('/partially-registration/{id}', 'Pub\Users\UsersController@partiallyRegistration');
 Route::get('/platinum-membership-upgrade/{id}', 'Pub\Users\UsersController@platiniuMemberUpgrade');
-Route::get('/lender-billing-details/{id}', 'Pub\Users\UsersController@loadLenderBillingDetails');
+Route::get('/lender-billing-details/{id}', 'Pub\Users\UsersController@loadLenderBillingDetails')->name("lenderBillingDetails");
 Route::post('/lender-billing-details/{id}', 'Pub\Users\UsersController@storeLenderBillingDetails');
 
 Route::post('/create-subscription', 'Pub\Users\UsersController@createSubscription')->name('register.createSubscription');

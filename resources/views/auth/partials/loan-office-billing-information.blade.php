@@ -192,7 +192,6 @@
 // Get API Key
 let STRIPE_PUBLISHABLE_KEY = '<?= env('APP_ENV') != "production" ? env('STRIPE_TEST_PUBLISHABLE_KEY') : env('STRIPE_LIVE_PUBLISHABLE_KEY')?>';
 
-
 // Create an instance of the Stripe object and set your publishable API key
 const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 

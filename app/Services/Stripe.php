@@ -132,6 +132,35 @@ class Stripe{
         }
         return ['status' => 400, 'error' => true, 'message' => $errors];
     }
+    
+    /**
+     * Retrieve customer info from Stripe
+     * 
+     * @accept $subscription_id
+     * 
+     * @return array or object  |   succsss or error
+     */
+    public function updateSubscription($subscription_id = '', $updateData = []){
+
+        $errors = [];
+        if(empty($subscription_id)){
+            $errors["invalid_subscription_id"] = "Invalid Subscription ID";
+        }
+        
+        if(empty($updateData)){
+            $errors["invalid_updateData"] = "Invalid Update Data";
+        }
+
+        if(empty($errors)){
+            try {   
+                $subscription = \Stripe\Subscription::update($subscription_id, $updateData);  
+                return $subscription;
+            }catch(Exception $e) {   
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
 
 
     /**
@@ -162,6 +191,67 @@ class Stripe{
             } catch(\UnexpectedValueException $e) {
                 $errors['api_error_message'] = $e->getMessage();   
             } catch(\Stripe\Exception\SignatureVerificationException $e) {
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
+
+    /**
+     * Retrieve webhook event details
+     * 
+     * @accept $payload, $sig_header  
+     * 
+     * @return array or object  |   succsss or error
+     */
+    public function attachPaymentMethodToCustomer($customer_id = '', $paymentMethod_id = ''){
+
+        $errors = [];
+        if(empty($customer_id)){
+            $errors["invalid_customer_id"] = "Customer ID is missing";
+        }
+
+        if(empty($paymentMethod)){
+            $errors["invalid_paymentMethod"] = "Payment Method Data is missing";
+        }
+
+        if(empty($errors)){
+            // This is your Stripe CLI webhook secret for testing your endpoint locally.
+            $secret_key = env('APP_ENV') == "production" ? env('STRIPE_LIVE_SECRET_KEY') : env('STRIPE_TEST_SECRET_KEY');
+            $stripe = new \Stripe\StripeClient($secret_key);
+
+            try {   
+                $subscription = \Stripe\PaymentMethods::attach($paymentMethod_id, [
+                    'customer'  =>  $customer_id
+                ]);  
+                return $subscription;
+            }catch(Exception $e) {  
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+            return $response;
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
+
+    public function createPaymentIntent($customer_id, $paymentData = []){
+
+        
+        $errors = [];
+        if(empty($subscription_id)){
+            $errors["invalid_subscription_id"] = "Subscription ID is missing";
+        }
+
+        if(empty($updateData)){
+            $errors["invalid_updateData"] = "Update Data is missing";
+        }
+
+        if(empty($errors)){
+            try {   
+                $subscription = \Stripe\PaymentIntents::create([
+                    
+                ]);  
+                return $subscription;
+            }catch(Exception $e) {   
                 $errors['api_error_message'] = $e->getMessage();   
             }
         }

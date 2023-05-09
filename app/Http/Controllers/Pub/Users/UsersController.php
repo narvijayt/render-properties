@@ -522,9 +522,10 @@ class UsersController extends Controller
         $user = User::find($request->input('user_id'));
         // Check whether the charge was successful 
         if(!empty($payment_intent) && $payment_intent['status'] == 'succeeded'){
+            $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $payment_intent['payment_method']]);
             $subscription = (new Stripe())->getSubscription($subscription_id);
 
-            $created = date("Y-m-d H:i:s", $payment_intent->created); 
+            $created = date("Y-m-d H:i:s", $payment_intent['created']); 
             $status = $payment_intent['status'];
             $current_period_start = $current_period_end = ''; 
             if(!empty($subscription)){ 
@@ -542,7 +543,7 @@ class UsersController extends Controller
             $userSubscription->stripe_payment_intent_id = $payment_intent['id'];
             $userSubscription->paid_amount = ($payment_intent['amount']/100);
             $userSubscription->currency = $payment_intent['currency'];
-            $userSubscription->plan_interval = $subscription->items->data->plan->interval;
+            $userSubscription->plan_interval = $subscription->items->data[0]->plan->interval;
             $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
             $userSubscription->customer_email = $user->email;
             $userSubscription->plan_period_start = $current_period_start;
@@ -560,8 +561,8 @@ class UsersController extends Controller
         $user = User::find($user_id);
         $userSubscription = UserSubscriptions::where('user_id', $user_id)->first();
         
-        if(!empty($userSubscription)){
-            if($userSubscription->status == "succeeded"){
+        if($userSubscription->count()){
+            if($userSubscription->status == "active"){
 
                 User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
 
@@ -583,6 +584,9 @@ class UsersController extends Controller
                     return redirect()->route('verify.phone', ['id' => $user->user_id])->with('message', 'An OTP has been sent on your registered phone number. Please confirm your contact details.');
                 }*/
             }
+        }else{
+            flash("Subscription membership is missing.")->error();
+            return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
         }
     }
 
@@ -608,7 +612,7 @@ class UsersController extends Controller
                         $userSubscription->plan_period_end = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
                     }else if($subscriptionSchedule->status == "past_due"){
                         // Send notification of failed payment
-                    }else if($subscriptionSchedule->status == "canceled"){
+                    }else if($subscriptionSchedule->status == "unpaid"){
                         User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
                     }
 
