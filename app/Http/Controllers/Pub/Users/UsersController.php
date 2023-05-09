@@ -607,20 +607,24 @@ class UsersController extends Controller
                 if($subscriptionSchedule->object == "subscription"){
                     $subscriptionArray = [];
                     $userSubscription = UserSubscriptions::where('stripe_subscription_id',$subscriptionSchedule->id)->first();
-                    $subscriptionArray['attach_payment_status'] = 0;
+                    if($userSubscription){
+                        $subscriptionArray['attach_payment_status'] = 0;
 
-                    if($subscriptionSchedule->status == "active"){
-                        $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
-                        $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
-                    }else if($subscriptionSchedule->status == "past_due"){
-                        // Send notification of failed payment
-                    }else if($subscriptionSchedule->status == "unpaid"){
-                        User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
+                        if($subscriptionSchedule->status == "active"){
+                            $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
+                            $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
+                        }else if($subscriptionSchedule->status == "past_due"){
+                            // Send notification of failed payment
+                        }else if($subscriptionSchedule->status == "unpaid"){
+                            User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
+                        }
+
+                        $subscriptionArray['status'] = $subscriptionSchedule->status;
+                        UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
+                        echo json_encode($userSubscription);
+                    }else{
+                        echo 'Received unknown subscription request ' . $subscriptionSchedule->id;        
                     }
-
-                    $subscriptionArray['status'] = $subscriptionSchedule->status;
-                    UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
-                    echo json_encode($userSubscription);
                 }
             break;
 
