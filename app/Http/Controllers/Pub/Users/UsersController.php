@@ -346,8 +346,8 @@ class UsersController extends Controller
     }
 
     public function loadLenderBillingDetails($id){
-        $userDetails = User::find($id);
-
+        $userDetails = User::with('userSubscription')->find($id);
+        
         if(Auth::user()){
             return redirect()->route("login");
         }else if($userDetails->user_type != "broker"){
@@ -358,6 +358,7 @@ class UsersController extends Controller
             flash('You have already paid for the your subscription.')->success();
             return redirect()->route("login");
         }
+        
         return view('auth.partials.loan-office-billing-information', compact('userDetails') );
     }
     
@@ -521,7 +522,7 @@ class UsersController extends Controller
         $subscr_plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID'); 
 
         $customer = (new Stripe())->getCustomer($customer_id);
-        $user = User::find($request->input('user_id'));
+        $user = User::with('userSubscription')->find($request->input('user_id'));
         // Check whether the charge was successful 
         if(!empty($payment_intent) && $payment_intent['status'] == 'succeeded'){
             $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $payment_intent['payment_method']]);
@@ -537,7 +538,11 @@ class UsersController extends Controller
                 $status = $subscription->status;
             }
 
-            $userSubscription = new UserSubscriptions();
+            if(isset($userDetails->userSubscription) && $userDetails->userSubscription->exists == true){
+                $userSubscription = UserSubscriptions::find($userDetails->userSubscription->id);
+            }else{
+                $userSubscription = new UserSubscriptions();
+            }
             $userSubscription->user_id = $user->user_id;
             $userSubscription->plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
             $userSubscription->payment_method = "Stripe";
@@ -553,6 +558,22 @@ class UsersController extends Controller
             $userSubscription->status = $status;
 
             $userSubscription->save();
+
+            if($userSubscription->status == "active"){
+                User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
+            }
+
+            if(isset($userDetails->userSubscription) && $userDetails->userSubscription->exists == true){
+                // After Payment and Subscription Created Successfully
+
+            }else{
+                if($user->verified == false){
+                    $this->newUserAdminNotification($user);
+                    $this->welcomeEmail($user);
+                    $this->emailVerification($user);
+                }
+            }
+
             return Response::json(['subscription' => $userSubscription], 200);
         }else{
             return Response::json(['status' => $payment_intent['status'], 'payment_intent' => $payment_intent ], 400);
@@ -566,25 +587,9 @@ class UsersController extends Controller
         if($userSubscription->count()){
             if($userSubscription->status == "active"){
 
-                User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
-
-                $this->newUserAdminNotification($user);
-                $this->emailVerification($user);
-                $this->welcomeEmail($user);
-
-                // flash('Account has been registered successfully.')->success();
-                
                 Auth::login($user);
-                // return $this->sendLoginResponse($request);
+                
                 return redirect()->route("pub.profile.subscription.index")->with('message', 'Thank you for the payment. Your Account has been registered successfully.');
-
-                /*if(isset($user->phone_number) && !empty($user->phone_number) ){
-                    $response = (new MobileVerificationService())->generateOtp($user->user_id);
-                    
-                    (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
-        
-                    return redirect()->route('verify.phone', ['id' => $user->user_id])->with('message', 'An OTP has been sent on your registered phone number. Please confirm your contact details.');
-                }*/
             }
         }else{
             flash("Subscription membership is missing.")->error();

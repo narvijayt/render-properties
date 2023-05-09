@@ -196,7 +196,7 @@ var style = {
         border: "1px solid #ff0000",
     }
 };
-let cardElement = elements.create('card', { style: style });
+let cardElement = elements.create('card', { hidePostalCode: true, style: style });
 cardElement.mount('#card-element');
 
 cardElement.on('change', function (event) {
