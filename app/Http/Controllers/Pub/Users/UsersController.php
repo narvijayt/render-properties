@@ -43,6 +43,7 @@ use Response;
 use Illuminate\Support\Facades\Log;
 use App\Mail\SubscriptionPaymentFailed;
 use App\Mail\SubscriptionCancelled;
+use App\Mail\PaymentConfirmation;
 
 class UsersController extends Controller
 {
@@ -538,8 +539,8 @@ class UsersController extends Controller
                 $status = $subscription->status;
             }
 
-            if(isset($userDetails->userSubscription) && $userDetails->userSubscription->exists == true){
-                $userSubscription = UserSubscriptions::find($userDetails->userSubscription->id);
+            if(isset($user->userSubscription) && $user->userSubscription->exists == true){
+                $userSubscription = UserSubscriptions::find($user->userSubscription->id);
             }else{
                 $userSubscription = new UserSubscriptions();
             }
@@ -563,9 +564,9 @@ class UsersController extends Controller
                 User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
             }
 
-            if(isset($userDetails->userSubscription) && $userDetails->userSubscription->exists == true){
+            if(isset($user->userSubscription) && $user->userSubscription->exists == true){
                 // After Payment and Subscription Created Successfully
-
+                
             }else{
                 if($user->verified == false){
                     $this->newUserAdminNotification($user);
@@ -573,6 +574,9 @@ class UsersController extends Controller
                     $this->emailVerification($user);
                 }
             }
+
+            $email = new PaymentConfirmation($user);
+            Mail::to($user->email)->send($email);
 
             return Response::json(['subscription' => $userSubscription], 200);
         }else{
@@ -588,7 +592,7 @@ class UsersController extends Controller
             if($userSubscription->status == "active"){
 
                 Auth::login($user);
-                
+
                 return redirect()->route("pub.profile.subscription.index")->with('message', 'Thank you for the payment. Your Account has been registered successfully.');
             }
         }else{

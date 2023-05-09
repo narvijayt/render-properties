@@ -6,14 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-
 use App\User;
 
-class SubscriptionCancelled extends Mailable
+class PaymentConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    protected $user;
+
     /**
      * Create a new message instance.
      *
@@ -35,7 +35,7 @@ class SubscriptionCancelled extends Mailable
         $user = $this->user;
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
-			->subject("Render: {$this->user->first_name}, Subscription has been Cancelled!")
-            ->markdown('email.subscription.cancelled', compact('user'));
+			->subject("Render: {$this->user->first_name}, Payment Invoice")
+            ->markdown('email.subscription.payment-invoice', compact('user'));
     }
 }

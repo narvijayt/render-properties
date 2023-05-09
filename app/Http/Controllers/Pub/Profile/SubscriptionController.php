@@ -9,14 +9,16 @@ use App\User;
 use App\UserSubscriptions;
 use Response;
 use App\Services\Stripe;
+use Mail;
+use App\Mail\PaymentConfirmation;
 
 class SubscriptionController extends Controller
 {
     //
 
     public function index(){
-        $userSubscription = UserSubscriptions::where("user_id",Auth::user()->user_id)->first();
-        return view('pub.profile.subscription.index', compact('userSubscription'));
+        $userDetails = User::with("userSubscription")->find(Auth::user()->user_id);
+        return view('pub.profile.subscription.index', compact('userDetails'));
     }
 
     public function attachPaymentMethod(Request $request){
@@ -38,5 +40,12 @@ class SubscriptionController extends Controller
 
             return Response::json(['customerPaymentMethod' => $customerPaymentMethod], 200);
         }
+    }
+
+    public function paymentInvoice(){
+        $user = User::with('userSubscription')->find(Auth::user()->user_id);
+        // dd($user->userSubscription->plan_period_start);
+        $email = new PaymentConfirmation($user);
+        Mail::to($user->email)->send($email);
     }
 }

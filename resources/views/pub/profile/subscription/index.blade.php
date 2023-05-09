@@ -1,5 +1,5 @@
 @extends('pub.profile.layouts.profile')
-@php $userDetails = Auth::user(); @endphp
+
 @section('title', 'Manage Subscription')
 
 @section('page_content')
@@ -10,20 +10,20 @@
         <ul class="list-group">
             <li class="list-group-item clearfix">
                 <div class="pull-left">
-                    @if(!empty($userSubscription))
+                    @if(!empty($userDetails->userSubscription))
                         <h4>Monthly Lender Membership For 19.80 USD</h4>
                         <ul>
-                            <li><strong>Price:</strong> <span class=""> ${{ number_format($userSubscription['paid_amount'], 2, '.', '') }}</span></li>
-                            <li><strong>Registred Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userSubscription['created_at'])) }}</span></li>
-                            <li><strong>Start Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userSubscription['plan_period_start'])) }}</span></li>
-                            <li><strong>End Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userSubscription['plan_period_end'])) }}</span></li>
+                            <li><strong>Price:</strong> <span class=""> ${{ number_format($userDetails->userSubscription->paid_amount, 2, '.', '') }}</span></li>
+                            <li><strong>Registred Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->created_at)) }}</span></li>
+                            <li><strong>Start Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_start)) }}</span></li>
+                            <li><strong>End Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_end)) }}</span></li>
                         </ul>                        
                     @endif
                 </div>
             </li>
         </ul>
 
-        @if($userSubscription['status'] != 'active' && $userSubscription['attach_payment_status'] == 0)
+        @if($userDetails->userSubscription->status != 'active' && $userDetails->userSubscription->attach_payment_status == 0)
             <div class="panel panel-default subscription-billing-section mt-2">
                 <div class="panel-heading">Renew Subscription Plan Now!</div>
                 <div class="panel-body">
