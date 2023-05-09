@@ -605,21 +605,21 @@ class UsersController extends Controller
             case 'customer.subscription.updated':
                 $subscriptionSchedule = $event->data->object;
                 if($subscriptionSchedule->object == "subscription"){
+                    $subscriptionArray = [];
                     $userSubscription = UserSubscriptions::where('stripe_subscription_id',$subscriptionSchedule->id)->first();
-                    $userSubscription = UserSubscriptions::find($userSubscription->id);
-                    $userSubscription->attach_payment_status = 0;
-                    
+                    $subscriptionArray['attach_payment_status'] = 0;
+
                     if($subscriptionSchedule->status == "active"){
-                        $userSubscription->plan_period_start = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
-                        $userSubscription->plan_period_end = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
+                        $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
+                        $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
                     }else if($subscriptionSchedule->status == "past_due"){
                         // Send notification of failed payment
                     }else if($subscriptionSchedule->status == "unpaid"){
                         User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
                     }
 
-                    $userSubscription->status = $subscriptionSchedule->status;
-                    $userSubscription->save();
+                    $subscriptionArray['status'] = $subscriptionSchedule->status;
+                    UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
                     echo json_encode($userSubscription);
                 }
             break;

@@ -30,8 +30,7 @@ class SubscriptionController extends Controller
 
                 $subscriptionData = (new Stripe())->updateSubscription($userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
                 if($subscriptionData->id){
-                    $userSubscription->attach_payment_status = 1;
-                    $userSubscription->save();
+                    UserSubscriptions::Where('user_id', $userSubscription->user_id)->update(['attach_payment_status' => 1]);
                 }
 
                 return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
