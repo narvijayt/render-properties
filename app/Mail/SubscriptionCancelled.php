@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\User;
 
-class SubscriptionPaymentFailed extends Mailable
+class SubscriptionCancelled extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,7 +34,7 @@ class SubscriptionPaymentFailed extends Mailable
     {
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
-			->subject("Render: {$this->user->first_name}, Subscription Auto Payment Failed!")
-            ->markdown('email.subscription.payment-failed');
+			->subject("Render: {$this->user->first_name}, Subscription has been Cancelled!")
+            ->markdown('email.subscription.cancelled');
     }
 }

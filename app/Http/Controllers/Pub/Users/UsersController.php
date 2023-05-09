@@ -42,6 +42,7 @@ use App\UserSubscriptions;
 use Response;
 use Illuminate\Support\Facades\Log;
 use App\Mail\SubscriptionPaymentFailed;
+use App\Mail\SubscriptionCancelled;
 
 class UsersController extends Controller
 {
@@ -616,11 +617,13 @@ class UsersController extends Controller
                             $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
                         }else if($subscriptionSchedule->status == "past_due"){
                             // Send notification of failed payment
-                        }else if($subscriptionSchedule->status == "unpaid"){
-                            User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
-
                             $user = User::find($userSubscription->user_id);
                             $email = new SubscriptionPaymentFailed($user);
+                            Mail::to($user->email)->send($email);
+                        }else if($subscriptionSchedule->status == "unpaid"){
+                            User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
+                            $user = User::find($userSubscription->user_id);
+                            $email = new SubscriptionCancelled($user);
                             Mail::to($user->email)->send($email);
                         }
 
