@@ -541,6 +541,7 @@ class UsersController extends Controller
 
             if(isset($user->userSubscription) && $user->userSubscription->exists == true){
                 $userSubscription = UserSubscriptions::find($user->userSubscription->id);
+                $userSubscription->plan_interval_count = $userSubscription->plan_interval_count +1;
             }else{
                 $userSubscription = new UserSubscriptions();
             }
@@ -551,7 +552,7 @@ class UsersController extends Controller
             $userSubscription->stripe_payment_intent_id = $payment_intent['id'];
             $userSubscription->paid_amount = ($payment_intent['amount']/100);
             $userSubscription->currency = $payment_intent['currency'];
-            $userSubscription->plan_interval = $subscription->items->data[0]->plan->interval;
+            $userSubscription->plan_interval = $subscription->plan->interval;
             $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
             $userSubscription->customer_email = $user->email;
             $userSubscription->plan_period_start = $current_period_start;
@@ -624,6 +625,7 @@ class UsersController extends Controller
                         if($subscriptionSchedule->status == "active"){
                             $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
                             $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
+                            $subscriptionArray['plan_interval_count'] = $userSubscription->plan_interval_count +1;
                         }else if($subscriptionSchedule->status == "past_due"){
                             // Send notification of failed payment
                             $user = User::find($userSubscription->user_id);

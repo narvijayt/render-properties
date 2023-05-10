@@ -35,7 +35,7 @@ class PaymentConfirmation extends Mailable
         $user = $this->user;
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
-			->subject("Render: {$this->user->first_name}, Payment Invoice")
+			->subject("Render: Payment Invoice")
             ->markdown('email.subscription.payment-invoice', compact('user'));
     }
 }

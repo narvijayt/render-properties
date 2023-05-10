@@ -35,7 +35,7 @@ class SubscriptionPaymentFailed extends Mailable
         $user =$this->user;
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
-			->subject("Render: {$this->user->first_name}, Subscription Auto Payment Failed!")
+			->subject("Render: Subscription Failed")
             ->markdown('email.subscription.payment-failed', compact('user'));
     }
 }

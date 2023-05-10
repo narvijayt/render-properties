@@ -1,7 +1,7 @@
 @component('mail::message')
 <p>Hey {{ ucfirst($user->first_name) }},</p>
 
-<p>Your Payment has been captured successfully. Invoice details mentioned below.  </p>
+<p>Your Payment has been captured successfully. Invoice details are mentioned below.  </p>
 <div style="margin-bottom:25px;">
     <h3 style="margin-bottom:5px;">Order Details</h3>
     <table style="border:1px solid #c1c1c1; width:100%; display:inline-block;" cellpadding="0" cellspacing="0">

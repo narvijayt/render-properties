@@ -35,7 +35,7 @@ class SubscriptionCancelled extends Mailable
         $user = $this->user;
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
-			->subject("Render: {$this->user->first_name}, Subscription has been Cancelled!")
+			->subject("A Suspension has occurred on your Account - Render")
             ->markdown('email.subscription.cancelled', compact('user'));
     }
 }
