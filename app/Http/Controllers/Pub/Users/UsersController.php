@@ -638,6 +638,13 @@ class UsersController extends Controller
 
                         $subscriptionArray['status'] = $subscriptionSchedule->status;
                         UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
+
+                        if( ($userSubscription->plan_period_end != date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end) ) && $subscriptionSchedule->status == "active"){
+                            $user = User::find($userSubscription->user_id);
+                            $email = new PaymentConfirmation($user);
+                            Mail::to($user->email)->send($email);
+                        }
+
                         echo json_encode($userSubscription);
                     }else{
                         echo 'Received unknown subscription request ' . $subscriptionSchedule->id;        

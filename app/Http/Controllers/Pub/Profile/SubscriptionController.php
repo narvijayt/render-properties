@@ -10,7 +10,9 @@ use App\UserSubscriptions;
 use Response;
 use App\Services\Stripe;
 use Mail;
-use App\Mail\PaymentConfirmation;
+// use App\Mail\PaymentConfirmation;
+// use App\Mail\SubscriptionCancelled;
+// use App\Mail\SubscriptionPaymentFailed;
 
 class SubscriptionController extends Controller
 {
@@ -45,7 +47,19 @@ class SubscriptionController extends Controller
     public function paymentInvoice(){
         $user = User::with('userSubscription')->find(Auth::user()->user_id);
         // dd($user->userSubscription->plan_period_start);
-        $email = new PaymentConfirmation($user);
-        Mail::to($user->email)->send($email);
+
+        // Payment Invoice Email
+        // $email = new PaymentConfirmation($user);
+        // Mail::to($user->email)->send($email);
+
+
+        // Subscription Cancelled Mail
+        // $email = new SubscriptionCancelled($user);
+        // Mail::to("amit@culture-red.com")->send($email);
+        
+        // Subscription Payment Failed  Mail
+        // $email = new SubscriptionPaymentFailed($user);
+        // Mail::to("amit@culture-red.com")->send($email);
+        die("Completed!");
     }
 }
