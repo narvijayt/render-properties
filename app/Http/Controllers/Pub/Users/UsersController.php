@@ -529,7 +529,7 @@ class UsersController extends Controller
         $user = User::with('userSubscription')->find($request->input('user_id'));
         // Check whether the charge was successful 
         if(!empty($payment_intent) && $payment_intent['status'] == 'succeeded'){
-            // $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $payment_intent['payment_method']]);
+            $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $payment_intent['payment_method']]);
             $subscription = (new Stripe())->getSubscription($subscription_id);
 
             $created = date("Y-m-d H:i:s", $payment_intent['created']); 
