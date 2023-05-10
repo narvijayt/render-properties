@@ -121,44 +121,6 @@ async function handleSubscrSubmit(e) {
     });
 }
 
-function paymentProcess(subscriptionId, clientSecret, customerId){
-    let customer_name = document.getElementById("first_name").value +" "+document.getElementById("last_name").value;
-    
-    // Create payment method and confirm payment intent.
-    stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-            card: cardElement,
-            billing_details: {
-                name: customer_name,
-            },
-        }
-    }).then((result) => {
-        if(result.error) {
-            showMessage(result.error.message);
-            setLoading(false);
-        } else {
-            // Successful subscription payment
-            // Post the transaction info to the server-side script and redirect to the payment status page
-            fetch("<?=route("register.createStripePayment")?>", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ subscription_id: subscriptionId, customer_id: customerId,payment_intent: result.paymentIntent, user_id: '<?=$userDetails->user_id?>'}),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // console.log("data ", data);
-                if (data.subscription) {
-                    window.location = "<?=route("register.paymentStatus", ["user_id" => $userDetails->user_id])?>";
-                } else {
-                    showMessage(data.error);
-                    setLoading(false);
-                }
-            })
-            .catch(console.error);
-        }
-    });
-}
-
 
 
 function displayError(event) {

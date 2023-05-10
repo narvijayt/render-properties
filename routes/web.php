@@ -346,7 +346,9 @@ Route::post('/lender-billing-details/{id}', 'Pub\Users\UsersController@storeLend
 
 Route::post('/create-subscription', 'Pub\Users\UsersController@createSubscription')->name('register.createSubscription');
 Route::post('/create-payment', 'Pub\Users\UsersController@createStripePayment')->name('register.createStripePayment');
+Route::post('/update-customer', 'Pub\Users\UsersController@updateCustomerPaymentMethod')->name('register.updateCustomerPaymentMethod');
 Route::get('/payment-status/{user_id}', 'Pub\Users\UsersController@paymentStatus')->name('register.paymentStatus');
+Route::get('/subscription-renewed/{user_id}', 'Pub\Users\UsersController@subscriptionRenewed')->name('register.subscriptionRenewed');
 Route::post('/stripe-webhook', 'Pub\Users\UsersController@manageSubscriptionStatus')->name('stripe.webhook');
 
 Route::get('/cpldashrbcs/login', 'Admin\UsersController@showLogin');

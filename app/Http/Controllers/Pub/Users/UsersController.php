@@ -668,6 +668,47 @@ class UsersController extends Controller
         exit();
     }
     
+    public function updateCustomerPaymentMethod(Request $request){
+        $user = User::with('userSubscriptions')->find($request->input('user_id') );
+        $customer_id = $user->stripe_customer_id;
+        $paymentMethod = $request->input('paymentMethod');
+        if(!empty($customer_id)){
+            $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($customer_id, $paymentMethod['id']);
+            if($customerPaymentMethod->id){
+                $userSubscription = UserSubscriptions::where("user_id",$user->user_id)->first();
+
+                $subscriptionData = (new Stripe())->updateSubscription($userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
+                if($subscriptionData->id){
+                    UserSubscriptions::Where('user_id', $userSubscription->user_id)->update(['attach_payment_status' => 1]);
+                }
+
+                return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
+            }
+
+            return Response::json(['customerPaymentMethod' => $customerPaymentMethod], 200);
+        }
+    }
+
+    public function subscriptionRenewed($user_id = ''){
+        if(empty($user_id))
+            return redirect()->route('login')->with('error', 'Invalid Request!');
+
+        $user = User::with('userSubscriptions')->find($user_id);
+        
+        if($user->userSubscription->exists == true){
+            if($user->userSubscription->status == "active"){
+                Auth::login($user);
+                return redirect()->route("pub.profile.subscription.index")->with('message', 'Thank you for the payment. Your subscription plan has been renewed successfully.');
+            }else{
+                return view('auth.partials.subscription-information', compact('user') );
+            }
+        }else{
+            flash("Subscription membership is missing.")->error();
+            return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+        }
+
+    }
+
     public function billingInformation(Request $request) 
     {
         Validator::extend('honey_pot', function ($attribute, $value, $parameters) {

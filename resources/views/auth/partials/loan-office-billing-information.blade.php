@@ -216,32 +216,60 @@ async function handleSubscrSubmit(e) {
     e.preventDefault();
     setLoading(true);
     
-    /*if($("input[name='accept_terms']").is(":checked") === false){
-        if($("input[name='accept_terms']").closest(".checkbox").hasClass("is-invalid") === false){
-            $("input[name='accept_terms']").closest(".checkbox").addClass("is-invalid");
-        }
-        showMessage("Please accept the Terms and Condition to complete the payment.");
-        setLoading(false);
-    }else{
-        $("input[name='accept_terms']").closest(".checkbox").removeClass("is-invalid");
-    }*/
-    // Post the subscription info to the server-side script
-    fetch("<?=route("register.createSubscription")?>", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>' }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("data ", data);
-        if (data.subscriptionId && data.clientSecret) {
-            paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
-        } else {
-            setLoading(false);
-            showMessage(data.error);
-        }
-    })
-    .catch(console.error);
+    <?php if($userDetails->userSubscription->exists == true){ ?>
+        // Create payment method and confirm payment intent.
+        stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                name: '<?=$userDetails->first_name.' '.$userDetails->last_name?>',
+            },
+        }).then((result) => {
+            console.log("result ", result);
+            if(result.error) {
+                showMessage(result.error.message);
+                setLoading(false);
+            } else {
+                // Successful subscription payment
+                // Post the transaction info to the server-side script and redirect to the payment status page
+                fetch("<?=route("register.updateCustomerPaymentMethod")?>", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>', paymentMethod: result.paymentMethod}),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("data ", data);
+                    if (data.subscription) {
+                        // window.location = window.location.href;
+                        window.location = "<?=route("register.subscriptionRenewed", ["user_id" => $userDetails->user_id])?>";
+                    } else {
+                        showMessage(data.error);
+                        setLoading(false);
+                    }
+                })
+                .catch(console.error);
+            }
+        });
+    <?php }else{ ?>
+        // Post the subscription info to the server-side script
+        fetch("<?=route("register.createSubscription")?>", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>' }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("data ", data);
+            if (data.subscriptionId && data.clientSecret) {
+                paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+            } else {
+                setLoading(false);
+                showMessage(data.error);
+            }
+        })
+        .catch(console.error);
+    <?php } ?>
 }
 
 function paymentProcess(subscriptionId, clientSecret, customerId){
