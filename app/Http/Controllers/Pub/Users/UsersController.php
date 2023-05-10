@@ -502,7 +502,10 @@ class UsersController extends Controller
             }
         }
 
-        $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
+        $subscription = UserSubscriptions::where('user_id', $user->user_id)->first();
+        if($subscription->exists == false){
+            $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
+        }
 
         if(isset($subscription->id)){
             $output = [ 
@@ -544,17 +547,18 @@ class UsersController extends Controller
                 $userSubscription->plan_interval_count = $userSubscription->plan_interval_count +1;
             }else{
                 $userSubscription = new UserSubscriptions();
+                $userSubscription->user_id = $user->user_id;
+                $userSubscription->plan_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+                $userSubscription->payment_method = "Stripe";
+                $userSubscription->stripe_subscription_id = $subscription->id;
+                $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
+                $userSubscription->customer_email = $user->email;
             }
-            $userSubscription->user_id = $user->user_id;
-            $userSubscription->plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
-            $userSubscription->payment_method = "Stripe";
-            $userSubscription->stripe_subscription_id = $subscription->id;
+            
             $userSubscription->stripe_payment_intent_id = $payment_intent['id'];
             $userSubscription->paid_amount = ($payment_intent['amount']/100);
             $userSubscription->currency = $payment_intent['currency'];
             $userSubscription->plan_interval = $subscription->plan->interval;
-            $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
-            $userSubscription->customer_email = $user->email;
             $userSubscription->plan_period_start = $current_period_start;
             $userSubscription->plan_period_end = $current_period_end;
             $userSubscription->status = $status;
