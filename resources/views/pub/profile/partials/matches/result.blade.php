@@ -67,7 +67,7 @@
                     @php
                         echo '<button class="btn btn-warning btn-sm" onclick="confirmMatch(\''.$oppUser->user_id.'\' , \'renew\');">Renew Match</button>';
                     @endphp
-                    <div>Renewable until {{ $match->deleted_at->addMonth(1)->format("F m, Y") }}</div>
+                    <div>Renewable until {{ (!empty($match->deleted_at)) ? $match->deleted_at->addMonth(1)->format("F m, Y") : '' }}</div>
                 @endcan
                 @can('acceptRenewMatch', $oppUser)
                    @php
