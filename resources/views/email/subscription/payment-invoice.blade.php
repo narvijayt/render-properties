@@ -35,8 +35,8 @@
         </tr>
         <tr>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">Monthly Lender Membership For $19.80 USD</td>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ date("d-m-Y", strtotime($user->userSubscription->plan_period_start)) }}</td>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ date("d-m-Y", strtotime($user->userSubscription->plan_period_end)) }}</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ date("m-d-Y", strtotime($user->userSubscription->plan_period_start)) }}</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ date("m-d-Y", strtotime($user->userSubscription->plan_period_end)) }}</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ ucfirst($user->userSubscription->status) }}</td>
         </tr>
     </table>
