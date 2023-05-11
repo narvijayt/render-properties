@@ -609,7 +609,7 @@ class UsersController extends Controller
     
     
     public function updateCustomerPaymentMethod(Request $request){
-        $user = User::find($request->input('user_id') );
+        $user = User::with('userSubscription')->find($request->input('user_id') );
         $customer_id = $user->stripe_customer_id;
         $paymentMethod = $request->input('paymentMethod');
         if(!empty($customer_id)){
@@ -633,7 +633,7 @@ class UsersController extends Controller
         if(empty($user_id))
             return redirect()->route('login')->with('error', 'Invalid Request!');
 
-        $user = User::with('userSubscriptions')->find($user_id);
+        $user = User::with('userSubscription')->find($user_id);
         
         if($user->userSubscription->exists == true){
             if($user->userSubscription->status == "active"){
