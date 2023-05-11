@@ -259,4 +259,30 @@ class Stripe{
         }
         return ['status' => 400, 'error' => true, 'message' => $errors];
     }
+
+
+    /**
+     * Retrieve invoice info from Stripe
+     * 
+     * @accept $subscription_id
+     * 
+     * @return array or object  |   succsss or error
+     */
+    public function getInvoice($invoice_id = ''){
+
+        $errors = [];
+        if(empty($invoice_id)){
+            $errors["invalid_invoice_id"] = "Invalid Invoice ID";
+        }
+
+        if(empty($errors)){
+            try {   
+                $invoice = \Stripe\Invoices::retrieve($invoice_id);  
+                return $invoice;
+            }catch(Exception $e) {   
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
 }
