@@ -277,7 +277,10 @@ class Stripe{
 
         if(empty($errors)){
             try {   
-                $invoice = \Stripe\Invoices::retrieve($invoice_id);  
+                $secret_key = env('APP_ENV') == "production" ? env('STRIPE_LIVE_SECRET_KEY') : env('STRIPE_TEST_SECRET_KEY');
+                $stripe = new \Stripe\StripeClient($secret_key);
+                $invoice = $stripe->invoices->retrieve($invoice_id);
+                
                 return $invoice;
             }catch(Exception $e) {   
                 $errors['api_error_message'] = $e->getMessage();   
