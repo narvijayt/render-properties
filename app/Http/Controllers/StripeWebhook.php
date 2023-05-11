@@ -35,7 +35,7 @@ class StripeWebhook extends Controller
                 if($subscriptionSchedule->object == "subscription"){
                     $subscriptionArray = [];
                     $subscriptionInvoice = (new Stripe())->getInvoice($subscriptionSchedule->latest_invoice);
-                    if($subscriptionInvoice->status != "open"){
+                    if($subscriptionInvoice->status != "draft"){
                         $userSubscription = UserSubscriptions::where('stripe_subscription_id',$subscriptionSchedule->id)->first();
                         if($userSubscription){
                             $subscriptionArray['attach_payment_status'] = 0;
@@ -70,7 +70,7 @@ class StripeWebhook extends Controller
                             echo 'Received unknown subscription request ' . $subscriptionSchedule->id;
                         }
                     }else{
-                        echo 'Received Open Invoice Update Request. Subscription ID: ' . $subscriptionSchedule->id.' and Invoice ID: '.$subscriptionInvoice->id;
+                        echo 'Received requiest under draft Invoice status. Subscription ID: ' . $subscriptionSchedule->id.' and Invoice ID: '.$subscriptionInvoice->id;
                     }
                 }
             break;
