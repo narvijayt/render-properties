@@ -609,7 +609,7 @@ class UsersController extends Controller
     
     
     public function updateCustomerPaymentMethod(Request $request){
-        $user = User::with('userSubscriptions')->find($request->input('user_id') );
+        $user = User::find($request->input('user_id') );
         $customer_id = $user->stripe_customer_id;
         $paymentMethod = $request->input('paymentMethod');
         if(!empty($customer_id)){
