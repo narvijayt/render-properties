@@ -153,7 +153,8 @@ class Stripe{
         }
 
         if(empty($errors)){
-            try {   
+            try {
+                $updateData['proration_behavior'] =  "none";
                 $subscription = \Stripe\Subscription::update($subscription_id, $updateData);  
                 return $subscription;
             }catch(Exception $e) {   
