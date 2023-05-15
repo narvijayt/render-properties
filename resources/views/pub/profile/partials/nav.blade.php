@@ -15,7 +15,10 @@
     {{--@endif--}}
     {{--<li><a href="{{ route('pub.profile.broker-profile.index') }}">Broker Profile</a></li>--}}
     @can('manage-payment', \App\User::class)
-         <!-- <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li> -->
+          @php $userSubscription = Auth::user()->userSubscription; @endphp
+          @if($userSubscription->exists == true)
+               <li><a href="{{ route('pub.profile.subscription.index') }}">Billing Info</a></li>
+          @endif
     @endif
     @if(auth()->user()->user_type == 'vendor' && auth()->user()->braintree_id !="")
     <!-- <li><a href="{{ route('pub.profile.payment.plans') }}"  >Billing Info</a></li> -->

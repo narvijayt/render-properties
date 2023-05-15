@@ -37,9 +37,18 @@ use net\authorize\api\controller as AnetController;
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
 use App\Match;
+use App\Services\Stripe;
+use App\UserSubscriptions;
+use Response;
+use Illuminate\Support\Facades\Log;
+use App\Mail\SubscriptionPaymentFailed;
+use App\Mail\SubscriptionCancelled;
+use App\Mail\PaymentConfirmation;
 
 class UsersController extends Controller
 {
+
+    
 	/**
 	 * Show action
 	 *
@@ -338,16 +347,28 @@ class UsersController extends Controller
     }
 
     public function loadLenderBillingDetails($id){
-        $userDetails = User::find($id);
+        $userDetails = User::with('userSubscription')->find($id);
+        
+        if(Auth::user()){
+            return redirect()->route("login");
+        }else if($userDetails->user_type != "broker"){
+            flash('Invalid Request.')->success();
+            return redirect()->route("login");
+        }
+        if($userDetails->payment_status == 1){
+            flash('You have already paid for the your subscription.')->success();
+            return redirect()->route("login");
+        }
+        
         return view('auth.partials.loan-office-billing-information', compact('userDetails') );
     }
     
     
     public function storeLenderBillingDetails(Request $request){
             
-        if($request->input('accept_terms') == false){
+        /*if($request->input('accept_terms') == false){
             return redirect()->back()->with('error',"Please accpet terms and condition to complete the order.");
-        }
+        }*/
         $input = $request->all();
         
         $input['number'] = str_replace(" ","",$input['number']);
@@ -466,7 +487,168 @@ class UsersController extends Controller
             return redirect('/lender-billing-details/'.$input['user_id'])->with('error', 'Transaction Failed - ' . $errorMessages[0]->getText());
         }
     }
+
+
+    public function createSubscription(Request $request){
+
+        $user = User::find($request->input('user_id'));
+        if($user->stripe_customer_id == ''){
+            $customer = (new Stripe())->createCustomer(['name' => $user->first_name.' '.$user->last_name, 'email' => $user->email]);
+            if(isset($customer->id)){
+                User::Where('user_id', $user->user_id)->update(['stripe_customer_id' => $customer->id]);
+                $user = User::find($user->user_id);
+            }else{
+                return Response::json($customer, 400);
+            }
+        }
+
+        $subscription = UserSubscriptions::where('user_id', $user->user_id)->first();
+        if($subscription->exists == false){
+            $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
+        }
+
+        if(isset($subscription->id)){
+            $output = [ 
+                'subscriptionId' => $subscription->id, 
+                'clientSecret' => $subscription->latest_invoice->payment_intent->client_secret, 
+                'customerId' => $user->stripe_customer_id 
+            ];          
+            return Response::json($output, 200);
+        }else{
+            return Response::json($customer, 400);
+        }
+    }
+
+    public function createStripePayment(Request $request){
+        $payment_intent = $request->input('payment_intent'); 
+        $subscription_id = $request->input('subscription_id');
+        $customer_id = $request->input('customer_id');
+        $subscr_plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID'); 
+
+        $customer = (new Stripe())->getCustomer($customer_id);
+        $user = User::with('userSubscription')->find($request->input('user_id'));
+        // Check whether the charge was successful 
+        if(!empty($payment_intent) && $payment_intent['status'] == 'succeeded'){
+            $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $payment_intent['payment_method']]);
+            $subscription = (new Stripe())->getSubscription($subscription_id);
+
+            $created = date("Y-m-d H:i:s", $payment_intent['created']); 
+            $status = $payment_intent['status'];
+            $current_period_start = $current_period_end = ''; 
+            if(!empty($subscription)){ 
+                $created = date("Y-m-d H:i:s", $subscription->created); 
+                $current_period_start = date("Y-m-d H:i:s", $subscription->current_period_start); 
+                $current_period_end = date("Y-m-d H:i:s", $subscription->current_period_end); 
+                $status = $subscription->status;
+            }
+
+            if(isset($user->userSubscription) && $user->userSubscription->exists == true){
+                $userSubscription = UserSubscriptions::find($user->userSubscription->id);
+                $userSubscription->plan_interval_count = $userSubscription->plan_interval_count +1;
+            }else{
+                $userSubscription = new UserSubscriptions();
+                $userSubscription->user_id = $user->user_id;
+                $userSubscription->plan_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+                $userSubscription->payment_method = "Stripe";
+                $userSubscription->stripe_subscription_id = $subscription->id;
+                $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
+                $userSubscription->customer_email = $user->email;
+            }
+            
+            $userSubscription->stripe_payment_intent_id = $payment_intent['id'];
+            $userSubscription->paid_amount = ($payment_intent['amount']/100);
+            $userSubscription->currency = $payment_intent['currency'];
+            $userSubscription->plan_interval = $subscription->plan->interval;
+            $userSubscription->plan_period_start = $current_period_start;
+            $userSubscription->plan_period_end = $current_period_end;
+            $userSubscription->status = $status;
+
+            $userSubscription->save();
+
+            if($userSubscription->status == "active"){
+                User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
+            }
+
+            if(isset($user->userSubscription) && $user->userSubscription->exists == true){
+                // After Payment and Subscription Created Successfully
+                
+            }else{
+                if($user->verified == false){
+                    $this->newUserAdminNotification($user);
+                    $this->welcomeEmail($user);
+                    $this->emailVerification($user);
+                }
+            }
+
+            $email = new PaymentConfirmation($user);
+            Mail::to($user->email)->send($email);
+
+            return Response::json(['subscription' => $userSubscription], 200);
+        }else{
+            return Response::json(['status' => $payment_intent['status'], 'payment_intent' => $payment_intent ], 400);
+        }
+    }
+
+    public function paymentStatus($user_id){
+        $user = User::find($user_id);
+        $userSubscription = UserSubscriptions::where('user_id', $user_id)->first();
+        
+        if($userSubscription->count()){
+            if($userSubscription->status == "active"){
+
+                Auth::login($user);
+
+                return redirect()->route("pub.profile.subscription.index")->with('message', 'Thank you for the payment. Your Account has been registered successfully.');
+            }
+        }else{
+            flash("Subscription membership is missing.")->error();
+            return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+        }
+    }
+
     
+    
+    public function updateCustomerPaymentMethod(Request $request){
+        $user = User::with('userSubscription')->find($request->input('user_id') );
+        $customer_id = $user->stripe_customer_id;
+        $paymentMethod = $request->input('paymentMethod');
+        if(!empty($customer_id)){
+            $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($customer_id, $paymentMethod['id']);
+            if($customerPaymentMethod->id){
+                $userSubscription = UserSubscriptions::where("user_id",$user->user_id)->first();
+
+                $subscriptionData = (new Stripe())->updateSubscription($userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
+                if($subscriptionData->id){
+                    UserSubscriptions::Where('user_id', $userSubscription->user_id)->update(['attach_payment_status' => 1]);
+                }
+
+                return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
+            }
+
+            return Response::json(['customerPaymentMethod' => $customerPaymentMethod], 200);
+        }
+    }
+
+    public function subscriptionRenewed($user_id = ''){
+        if(empty($user_id))
+            return redirect()->route('login')->with('error', 'Invalid Request!');
+
+        $user = User::with('userSubscription')->find($user_id);
+        
+        if($user->userSubscription->exists == true){
+            if($user->userSubscription->status == "active"){
+                Auth::login($user);
+                return redirect()->route("pub.profile.subscription.index")->with('message', 'Thank you for the payment. Your subscription plan has been renewed successfully.');
+            }else{
+                return view('auth.partials.subscription-information', compact('user') );
+            }
+        }else{
+            flash("Subscription membership is missing.")->error();
+            return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+        }
+
+    }
+
     public function billingInformation(Request $request) 
     {
         Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
@@ -564,7 +746,7 @@ class UsersController extends Controller
                 $this->createUserProvider($data, $user);
             }
             
-            $realUser= User::find($user->user_id);
+            /*$realUser= User::find($user->user_id);
             $this->newUserAdminNotification($realUser);
             $this->emailVerification($realUser);
             $this->welcomeEmail($realUser);
@@ -579,8 +761,9 @@ class UsersController extends Controller
                 return redirect()->route('verify.phone', ['id' => $user->user_id])->with('message', 'An OTP has been sent on your registered phone number. Please confirm your contact details.');
             }
             // return redirect()->route('register.thankyou', ['id' => $user->user_id]);
+            */
             
-            // return redirect('/lender-billing-details/'.$user->user_id);
+            return redirect('/lender-billing-details/'.$user->user_id);
         }
     }
     

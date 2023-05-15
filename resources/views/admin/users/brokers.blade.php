@@ -13,7 +13,12 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Brokers</h3>
+                        <div class="col-md-10">
+                            <h3 class="box-title">Brokers</h3>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <h4>Total: {{ $users->total() }}</h4>
+                        </div>
                     </div>
                     <div class="box-body">
                         <form name="broker-form" action="{{ route('admin.brockers') }}" method="get">
@@ -31,7 +36,8 @@
                                     <div class="form-input">
                                         <select class="form-control" name="payment_status">
                                             <option value="all">All</option>
-                                            <option value="paid" {{ (isset($_REQUEST['payment_status']) && $_REQUEST['payment_status'] == "paid" ) ? "selected" : "" }}>Paid</option>
+                                            <option value="online_paid" {{ (isset($_REQUEST['payment_status']) && $_REQUEST['payment_status'] == "online_paid" ) ? "selected" : "" }}>Online Payment</option>
+                                            <option value="manual_paid" {{ (isset($_REQUEST['payment_status']) && $_REQUEST['payment_status'] == "manual_paid" ) ? "selected" : "" }}>Manual Payment</option>
                                             <option value="unpaid" {{ (isset($_REQUEST['payment_status']) && $_REQUEST['payment_status'] == "unpaid" ) ? "selected" : "" }}>Unpaid</option>
                                         </select>
                                     </div>
@@ -44,6 +50,7 @@
                                 </div>
                             </div>
                         </form>
+
 						<div id="dlt-msg" class="alert alert-success" style="display:none;"></div>
                         <table id="realor_table" class="table table-bordered table-striped">
                             <thead>
@@ -60,7 +67,7 @@
                             </thead>
                             <tbody>
                             @if(isset($users) && !empty($users))
-                                @php $i = 1; @endphp
+                                @php $i = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? ( ($_REQUEST['page']-1)*20) + 1 : 1; @endphp
                                 @foreach($users as $user)
                                     <tr class="row_<?= $user['user_id']; ?>">
                                         <td>{{$i++}}</td>
@@ -103,11 +110,10 @@
                         </table>
                         <div class="page-div">
                             @if(isset($users) && !empty($users))
-                                {{ $users->links() }}
+                                {{ $users->appends($_GET)->links() }}
                             @endif
-                        </div>  
-                    </div>
-                    
+                        </div>
+                    </div>  
                 </div>
             </div>
         </div>

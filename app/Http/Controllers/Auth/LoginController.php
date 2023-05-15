@@ -117,7 +117,8 @@ class LoginController extends Controller
                     }
                 }*/
                 if($usr['payment_status'] == 0){
-                    return redirect()->route('register.accountstatus', ['id' => $usr['user_id'] ])->with('error', 'Your account is not active. Please confirm your payment status with admin to access your account.');
+                    // return redirect()->route('register.accountstatus', ['id' => $usr['user_id'] ])->with('error', 'Your account is not active. Please confirm your payment status with admin to access your account.');
+                    return redirect()->route('lenderBillingDetails', ['id' => $usr['user_id'] ])->with('error', 'Please confirm your payment details and continue to get access to your acccount dashboard.');
                 }
                
                 $createdYear = $usr['created_at']->year;

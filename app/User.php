@@ -839,4 +839,12 @@ class User extends Authenticatable implements ISecurable
        return $this->belongsTo('App\MatchLog','user_id', 'user_with')->where('match_action', '=', 'accept');
        
    }
+
+
+   /**
+     * Get the subscription plan associated with the user.
+     */
+    public function userSubscription(){
+        return $this->hasOne(UserSubscriptions::Class, UserSubscriptions::USER_ID, self::PKEY);
+    }
 }

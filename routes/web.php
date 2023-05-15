@@ -171,7 +171,13 @@ Route::group([
 		// Message Center
 		Route::get('/message-center', 'MessageCenter\MessageCenterController@index')->name('message-center.index');
         Route::get('/message-center/test', 'MessageCenter\MessageCenterController@test')->name('message-center.test');
-
+		
+        // Manage Subscriptions Profile
+		Route::get('/profile/subscriptions', 'Profile\SubscriptionController@index')->name('profile.subscription.index');
+        Route::post('/profile/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('profile.subscription.renew');
+        Route::post('/profile/subscriptions/attach-payment-method', 'Profile\SubscriptionController@attachPaymentMethod')->name('profile.subsctiption.attachPaymentMethod');
+		Route::get('/profile/payment-invoice', 'Profile\SubscriptionController@paymentInvoice')->name('profile.subscription.paymentInvoice');
+        
         // Payments
         Route::get('/profile/payment', 'Profile\PaymentController@index')->name('profile.payment.index');
         Route::get('/profile/payment/token', 'Profile\PaymentController@token')->name('profile.payment.token');
@@ -335,8 +341,15 @@ Route::post('/user-registration', 'Pub\Users\UsersController@createUser');
 Route::post('/consumer-register', 'Pub\Users\UsersController@createConsumer');
 Route::get('/partially-registration/{id}', 'Pub\Users\UsersController@partiallyRegistration');
 Route::get('/platinum-membership-upgrade/{id}', 'Pub\Users\UsersController@platiniuMemberUpgrade');
-Route::get('/lender-billing-details/{id}', 'Pub\Users\UsersController@loadLenderBillingDetails');
+Route::get('/lender-billing-details/{id}', 'Pub\Users\UsersController@loadLenderBillingDetails')->name("lenderBillingDetails");
 Route::post('/lender-billing-details/{id}', 'Pub\Users\UsersController@storeLenderBillingDetails');
+
+Route::post('/create-subscription', 'Pub\Users\UsersController@createSubscription')->name('register.createSubscription');
+Route::post('/create-payment', 'Pub\Users\UsersController@createStripePayment')->name('register.createStripePayment');
+Route::post('/update-customer', 'Pub\Users\UsersController@updateCustomerPaymentMethod')->name('register.updateCustomerPaymentMethod');
+Route::get('/payment-status/{user_id}', 'Pub\Users\UsersController@paymentStatus')->name('register.paymentStatus');
+Route::get('/subscription-renewed/{user_id}', 'Pub\Users\UsersController@subscriptionRenewed')->name('register.subscriptionRenewed');
+Route::post('/stripe-webhook', 'StripeWebhook@manageSubscriptionStatus')->name('stripe.webhook');
 
 Route::get('/cpldashrbcs/login', 'Admin\UsersController@showLogin');
 Route::post('/cpldashrbcs/login', 'Admin\UsersController@doLogin');
