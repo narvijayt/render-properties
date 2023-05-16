@@ -4,7 +4,7 @@
 		  <div class="col-md-4 col-sm-3  col-xs-12">
 			 <a href="{{ route('home') }}" class="footer__brand">
                     {{--@include('partials.svg.rbc-logo-dark-background')--}}
-                    <img src="{{url('/')}}/img/logo-02.png">
+                    <img src="{{url('/')}}/img/render-properties-logo.png">
                 </a>
 			</div>
 		<div class=" col-md-8 col-sm-9 col-xs-12 footer-flex">

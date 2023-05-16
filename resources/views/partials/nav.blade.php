@@ -39,7 +39,7 @@
                 @if(request()->route()->getName() == 'home')
                     <img src="{{url('/')}}/img/logo-full.png">
                 @else
-                    <img src="{{url('/')}}/img/logo-02.png">
+                    <img src="{{url('/')}}/img/render-properties-logo.png">
                 @endif
             </a>
 			
