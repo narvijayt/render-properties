@@ -13,5 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         'braintree/*',
+        'https://render.properties/stripe-webhook',
+        'https://www.render.properties/stripe-webhook',
     ];
 }
