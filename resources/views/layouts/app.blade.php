@@ -49,6 +49,8 @@
 		gtag('config', 'G-74K9XE4F27');
 		</script>
 		<link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">  
+
+		<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11006668907"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-11006668907'); </script>
 	</head>
 	
 	<body>
