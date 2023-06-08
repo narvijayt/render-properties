@@ -499,6 +499,9 @@ class UsersController extends Controller
                     'name' => $user->first_name.' '.$user->last_name, 
                     'email' => $user->email,
                     'payment_method' => $paymentMethod['id'],
+                    'invoice_settings'  =>  [
+                        'default_payment_method'    =>  $paymentMethod['id']
+                    ]
                 ]
             );
             if(isset($customer->id)){
@@ -515,7 +518,7 @@ class UsersController extends Controller
         if($user->userSubscription->exists == false){
             $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
             if($subscription->id){
-                $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $paymentMethod['id']]);
+                $updateSubscription = (new Stripe())->updateSubscription($subscription->id, ['default_payment_method' => $paymentMethod['id']]);
             }
         }else{
             $subscription = (new Stripe())->updateSubscription($user->userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
