@@ -252,8 +252,39 @@ async function handleSubscrSubmit(e) {
             }
         });
     <?php }else{ ?>
-        // Post the subscription info to the server-side script
-        fetch("<?=route("register.createSubscription")?>", {
+        stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                name: '<?=$userDetails->first_name.' '.$userDetails->last_name?>',
+            },
+        }).then((result) => {
+            console.log("result ", result);
+            if(result.error) {
+                showMessage(result.error.message);
+                setLoading(false);
+            } else {
+                fetch("<?=route("register.createCustomerSubscription")?>", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>', paymentMethod: result.paymentMethod }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("data ", data);
+                    if (data.subscription){
+                        // paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+                        window.location = "<?=route("register.paymentStatus", ["user_id" => $userDetails->user_id])?>";
+                    } else {
+                        showMessage(data.error);
+                        setLoading(false);
+                    }
+                })
+                .catch(console.error);
+            }
+        }).catch(console.error);
+        // Post the subscription info to the server-side script        
+        /*fetch("<?=route("register.createCustomerSubscription")?>", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>' }),
@@ -261,14 +292,18 @@ async function handleSubscrSubmit(e) {
         .then(response => response.json())
         .then(data => {
             console.log("data ", data);
-            if (data.subscriptionId && data.clientSecret) {
-                paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+            if (data.subscriptionId){
+                if(data.clientSecret) {
+                    paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+                }else{
+                    
+                }
             } else {
                 setLoading(false);
                 showMessage(data.error);
             }
         })
-        .catch(console.error);
+        .catch(console.error);*/
     <?php } ?>
 }
 

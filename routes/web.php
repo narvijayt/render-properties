@@ -344,7 +344,7 @@ Route::get('/platinum-membership-upgrade/{id}', 'Pub\Users\UsersController@plati
 Route::get('/lender-billing-details/{id}', 'Pub\Users\UsersController@loadLenderBillingDetails')->name("lenderBillingDetails");
 Route::post('/lender-billing-details/{id}', 'Pub\Users\UsersController@storeLenderBillingDetails');
 
-Route::post('/create-subscription', 'Pub\Users\UsersController@createSubscription')->name('register.createSubscription');
+Route::post('/create-subscription', 'Pub\Users\UsersController@createCustomerSubscription')->name('register.createCustomerSubscription');
 Route::post('/create-payment', 'Pub\Users\UsersController@createStripePayment')->name('register.createStripePayment');
 Route::post('/update-customer', 'Pub\Users\UsersController@updateCustomerPaymentMethod')->name('register.updateCustomerPaymentMethod');
 Route::get('/payment-status/{user_id}', 'Pub\Users\UsersController@paymentStatus')->name('register.paymentStatus');

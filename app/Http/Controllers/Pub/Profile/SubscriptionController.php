@@ -20,7 +20,11 @@ class SubscriptionController extends Controller
 
     public function index(){
         $userDetails = User::with("userSubscription")->find(Auth::user()->user_id);
-        return view('pub.profile.subscription.index', compact('userDetails'));
+        $subscription = [];
+        if($userDetails->userSubscription->exists == true){
+            $subscription = (new Stripe())->getSubscription($userDetails->userSubscription->stripe_subscription_id);
+        }
+        return view('pub.profile.subscription.index', compact('userDetails', 'subscription'));
     }
 
     public function attachPaymentMethod(Request $request){

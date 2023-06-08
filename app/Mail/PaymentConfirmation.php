@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
+use App\Services\Stripe;
 
 class PaymentConfirmation extends Mailable
 {
@@ -33,9 +34,13 @@ class PaymentConfirmation extends Mailable
     public function build()
     {
         $user = $this->user;
+        $subscription = [];
+        if($user->userSubscription->exists == true){
+            $subscription = (new Stripe())->getSubscription($user->userSubscription->stripe_subscription_id);
+        }
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
 			->subject("Render: Payment Invoice")
-            ->markdown('email.subscription.payment-invoice', compact('user'));
+            ->markdown('email.subscription.payment-invoice', compact('user', 'subscription'));
     }
 }

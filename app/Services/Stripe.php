@@ -34,10 +34,7 @@ class Stripe{
         if(empty($errors)){
 
             try {   
-                $customer = \Stripe\Customer::create([ 
-                    'name' => $data['name'],
-                    'email' => $data['email']
-                ]);
+                $customer = \Stripe\Customer::create($data);
 
                 return $customer;
             }catch(Exception $e) {
@@ -99,7 +96,8 @@ class Stripe{
                     ]], 
                     'payment_behavior' => 'default_incomplete', 
                     'expand' => ['latest_invoice.payment_intent'], 
-                    'proration_behavior' => 'none'
+                    'proration_behavior' => 'none',
+                    'trial_end' => strtotime("+30 days"),
                 ]); 
                 return $subscription;
             }catch(Exception $e) { 
