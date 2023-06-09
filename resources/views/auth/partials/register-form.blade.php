@@ -490,7 +490,7 @@
 	</label>
 	<p>{!! get_application_name() !!} has a 30 day refund policy. If your not happy for any reason please <a href="{{ route('pub.contact.index') }}" target="_blank">contact us</a> for a full refund within  30 days of signing up for a paid membership.</p>
 </div>
-{{--
+
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <div class="form-group row">
 	<div class="col-md-6 offset-md-4">
@@ -503,7 +503,7 @@
 		@endif
 	</div>
 </div> 
---}}
+
 
 <div class="form-group">
 	<button type="submit" class="btn btn-warning btn-block" id='reg-btn'>
