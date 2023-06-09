@@ -104,7 +104,7 @@
                                     <h4>Subscription</h4>
                                     <div class="form-group">
                                         <select name="amount" id="amount" class="form-control">
-                                            <option value="19.80">Monthly - $59.00 per month</option>
+                                            <option value="19.80">Monthly - $59.00 (With 30 Days  Free Trial) </option>
                                         </select>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
                             <div class="box-title-box mb-2">
                                 <h1 class="box-title line-left family-mont">Payment Details</h1>
                                 <h4>Try Free for 30 Days!</h4>
-                                <p>Please enter your payment details</p>              
+                                <p>$0 for first 30 Days, $59.00 per month after 30 days. Please enter your payment details.</p>
                             </div>
                             <!-- Display status message -->
                             <div id="paymentResponse" class="alert alert-danger hidden"></div>
