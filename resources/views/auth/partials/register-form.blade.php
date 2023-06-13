@@ -483,13 +483,14 @@
 --}}
 
 	
-           
+@if($_GET['type'] == 'lender')      
 <div class="checkbox fancy_checkbox">
 	<label>
 		<input class="rcv_email" type="checkbox" <?=isset($_REQUEST['accept_terms']) ? 'checked' : ''?> name="accept_terms" value="1"><span> I have read and agree to the <a href="{{ route('pub.terms-and-conditions.index')}}" target="_blank">Terms and Conditions</a> </span>
 	</label>
 	<p>{!! get_application_name() !!} has a 30 day refund policy. If your not happy for any reason please <a href="{{ route('pub.contact.index') }}" target="_blank">contact us</a> for a full refund within  30 days of signing up for a paid membership.</p>
 </div>
+@endif
 
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <div class="form-group row">
