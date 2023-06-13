@@ -104,7 +104,7 @@
                                     <h4>Subscription</h4>
                                     <div class="form-group">
                                         <select name="amount" id="amount" class="form-control">
-                                            <option value="19.80">Monthly - $59.00 (With 30 Days  Free Trial) </option>
+                                            <option value="59.00">Monthly - $59.00 </option>
                                         </select>
                                     </div>
                                 </div>

@@ -96,10 +96,9 @@ class Stripe{
                     ]], 
                     'collection_method' => 'charge_automatically', 
                     // 'payment_behavior' => 'default_incomplete', 
-                    // 'payment_behavior' => 'default_incomplete', 
                     'expand' => ['latest_invoice.payment_intent'], 
                     'proration_behavior' => 'none',
-                    'trial_end' => strtotime("+30 days"),
+                    // 'trial_end' => strtotime("+30 days"),
                 ]); 
                 return $subscription;
             }catch(Exception $e) { 
