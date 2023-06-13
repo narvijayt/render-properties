@@ -110,6 +110,29 @@ class StripeWebhook extends Controller
             break;
 
             case 'invoice.payment_failed':
+                $invoice = $event->data->object;
+                if($invoice->object == "invoice" && (isset($invoice->subscription) && !empty($invoice->subscription)) ){
+                    $userSubscription = UserSubscriptions::where('stripe_subscription_id',$invoice->subscription)->first();
+                    if($userSubscription->exists == true){
+                        $subscription = (new Stripe())->getSubscription($invoice->subscription);
+                        if($subscription->status == "past_due"){
+                            // Send notification of failed payment
+                            $user = User::find($userSubscription->user_id);
+                            $email = new SubscriptionPaymentFailed($user);
+                            Mail::to($user->email)->send($email);
+                        }else if($subscription->status == "unpaid"){
+                            User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
+                            $user = User::find($userSubscription->user_id);
+                            $email = new SubscriptionCancelled($user);
+                            Mail::to($user->email)->send($email);
+                        }
+
+                        $subscriptionArray['status'] = $subscription->status;
+                        UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
+
+                        echo json_encode($userSubscription);
+                    }
+                }
                 
             break;
             // ... handle other event types
