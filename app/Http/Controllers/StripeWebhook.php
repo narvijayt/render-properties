@@ -44,6 +44,7 @@ class StripeWebhook extends Controller
                                 $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
                                 $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
                                 $subscriptionArray['plan_interval_count'] = $userSubscription->plan_interval_count +1;
+                                $subscriptionArray['paid_amount'] = ($subscriptionSchedule->plan->amount/100);
                             }else if($subscriptionSchedule->status == "past_due"){
                                 // Send notification of failed payment
                                 $user = User::find($userSubscription->user_id);
@@ -60,10 +61,12 @@ class StripeWebhook extends Controller
                             UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
 
                             if( ($userSubscription->plan_period_end != date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end) ) && $subscriptionSchedule->status == "active"){
-                                User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
-                                $user = User::find($userSubscription->user_id);
-                                $email = new PaymentConfirmation($user);
-                                Mail::to($user->email)->send($email);
+                                User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 1]);
+                                $user = User::with("userSubscription")->find($userSubscription->user_id);
+                                if($subscriptionInvoice->amount_paid > 0){
+                                    $email = new PaymentConfirmation($user);
+                                    Mail::to($user->email)->send($email);
+                                }
                             }
 
                             echo json_encode($userSubscription);
@@ -76,6 +79,62 @@ class StripeWebhook extends Controller
                 }
             break;
 
+            case 'invoice.paid':
+                $invoice = $event->data->object;
+                if($invoice->object == "invoice" && (isset($invoice->subscription) && !empty($invoice->subscription)) ){
+                    $userSubscription = UserSubscriptions::where('stripe_subscription_id',$invoice->subscription)->first();
+                    if($userSubscription->exists == true){
+                        $subscriptionArray['attach_payment_status'] = 0;
+                        $subscription = (new Stripe())->getSubscription($invoice->subscription);
+
+                        $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscription->current_period_start); 
+                        $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscription->current_period_end);
+                        $subscriptionArray['plan_interval_count'] = $userSubscription->plan_interval_count +1;
+                        $subscriptionArray['paid_amount'] = ($subscription->plan->amount/100);
+
+                        $subscriptionArray['status'] = $subscription->status;
+                        UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
+
+                        if( ($userSubscription->plan_period_end != date("Y-m-d H:i:s", $subscription->current_period_end) ) && $subscription->status == "active"){
+                            User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 1]);
+                            $user = User::with("userSubscription")->find($userSubscription->user_id);
+                            if($invoice->amount_paid > 0){
+                                $email = new PaymentConfirmation($user);
+                                Mail::to($user->email)->send($email);
+                            }
+                        }
+
+                        echo json_encode($userSubscription);
+                    }
+                }
+            break;
+
+            case 'invoice.payment_failed':
+                $invoice = $event->data->object;
+                if($invoice->object == "invoice" && (isset($invoice->subscription) && !empty($invoice->subscription)) ){
+                    $userSubscription = UserSubscriptions::where('stripe_subscription_id',$invoice->subscription)->first();
+                    if($userSubscription->exists == true){
+                        $subscription = (new Stripe())->getSubscription($invoice->subscription);
+                        if($subscription->status == "past_due"){
+                            // Send notification of failed payment
+                            $user = User::find($userSubscription->user_id);
+                            $email = new SubscriptionPaymentFailed($user);
+                            Mail::to($user->email)->send($email);
+                        }else if($subscription->status == "unpaid"){
+                            User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 0]);
+                            $user = User::find($userSubscription->user_id);
+                            $email = new SubscriptionCancelled($user);
+                            Mail::to($user->email)->send($email);
+                        }
+
+                        $subscriptionArray['status'] = $subscription->status;
+                        UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
+
+                        echo json_encode($userSubscription);
+                    }
+                }
+                
+            break;
             // ... handle other event types
             default:
                 echo 'Received unknown event type ' . $event->type;

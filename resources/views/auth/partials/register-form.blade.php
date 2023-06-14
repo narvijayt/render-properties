@@ -483,7 +483,7 @@
 --}}
 
 	
-@if($_GET['type'] == 'lender')      
+@if($_GET['type'] == 'lender')       
 <div class="checkbox fancy_checkbox">
 	<label>
 		<input class="rcv_email" type="checkbox" <?=isset($_REQUEST['accept_terms']) ? 'checked' : ''?> name="accept_terms" value="1"><span> I have read and agree to the <a href="{{ route('pub.terms-and-conditions.index')}}" target="_blank">Terms and Conditions</a> </span>

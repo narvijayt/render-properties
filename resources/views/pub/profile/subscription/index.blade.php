@@ -11,9 +11,15 @@
             <li class="list-group-item clearfix">
                 <div class="pull-left">
                     @if(!empty($userDetails->userSubscription))
-                        <h4>Monthly Lender Membership For 19.80 USD</h4>
+                        <h4>Monthly Lender Membership For {{ number_format( ($subscription->plan->amount/100),2, '.', '') }} {{ strtoupper($subscription->plan->currency) }}</h4>
                         <ul>
-                            <li><strong>Price:</strong> <span class=""> ${{ number_format($userDetails->userSubscription->paid_amount, 2, '.', '') }}</span></li>
+                            <li>
+                                <strong>Price:</strong> 
+                                <span class=""> ${{ number_format($userDetails->userSubscription->paid_amount, 2, '.', '') }}</span>
+                                @if($userDetails->userSubscription->paid_amount == 0)
+                                    <span class="badge badge-warning">{{ ucfirst($userDetails->userSubscription->status)}}</span>
+                                @endif
+                            </li>
                             <li><strong>Registred Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->created_at)) }}</span></li>
                             <li><strong>Start Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_start)) }}</span></li>
                             <li><strong>End Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_end)) }}</span></li>
@@ -22,8 +28,10 @@
                 </div>
             </li>
         </ul>
-
-        @if($userDetails->userSubscription->status != 'active' && $userDetails->userSubscription->attach_payment_status == 0)
+        {{--
+            @php echo '<pre>'; print_r($userDetails->userSubscription); echo '</pre>'; @endphp
+        --}}
+        @if( !in_array($userDetails->userSubscription->status,['active', 'trialing']) && $userDetails->userSubscription->attach_payment_status == 0)
             <div class="panel panel-default subscription-billing-section mt-2">
                 <div class="panel-heading">Renew Subscription Plan Now!</div>
                 <div class="panel-body">

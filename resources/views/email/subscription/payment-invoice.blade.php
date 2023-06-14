@@ -13,13 +13,13 @@
         </tr>
         <tr>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">1</td>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">Monthly Lender Membership For $19.80 USD</td>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">1 Month</td>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">$19.80</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">Monthly Lender Membership For {{ number_format( ($subscription->plan->amount/100), 2, '.', '') }} USD</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ $subscription->plan->interval_count.' '.$subscription->plan->interval }}</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">${{ number_format( ($subscription->plan->amount/100), 2, '.', '') }}</td>
         </tr>
         <tr>
             <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:right;" colspan="3">Total</th>
-            <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:left;">$19.80</th>
+            <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:left;">${{ number_format( ($subscription->plan->amount/100), 2, '.', '') }}</th>
         </tr>
     </table>
 </div>
@@ -34,7 +34,7 @@
             <th style="width:20%; border:1px solid #c1c1c1; padding:5px 10px; text-align:left;">Status</th>
         </tr>
         <tr>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">Monthly Lender Membership For $19.80 USD</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">Monthly Lender Membership For {{ number_format( ($subscription->plan->amount/100), 2, '.', '') }} USD</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ date("m-d-Y", strtotime($user->userSubscription->plan_period_start)) }}</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ date("m-d-Y", strtotime($user->userSubscription->plan_period_end)) }}</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ ucfirst($user->userSubscription->status) }}</td>

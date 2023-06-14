@@ -104,16 +104,17 @@
                                     <h4>Subscription</h4>
                                     <div class="form-group">
                                         <select name="amount" id="amount" class="form-control">
-                                            <option value="19.80">Monthly - $19.80 per month</option>
+                                            <option value="59.00">Monthly - $59.00 </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             
-                            <div class="box-title-box">
+                            <div class="box-title-box mb-2">
                                 <h1 class="box-title line-left family-mont">Payment Details</h1>
-                                <p>Please enter your payment details</p>              
+                                <h4>Try Free for 30 Days!</h4>
+                                <p>$0 for first 30 Days, $59.00 per month after 30 days. Please enter your payment details.</p>
                             </div>
                             <!-- Display status message -->
                             <div id="paymentResponse" class="alert alert-danger hidden"></div>
@@ -162,7 +163,7 @@
                             </div><!------ ROW--->
                             */ ?>
 
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-2">
                                 <button type="submit" class="btn btn-lg btn-success btn-min-width" id="doPaymentButton">Continue</button>
                             </div>
 
@@ -252,8 +253,39 @@ async function handleSubscrSubmit(e) {
             }
         });
     <?php }else{ ?>
-        // Post the subscription info to the server-side script
-        fetch("<?=route("register.createSubscription")?>", {
+        stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                name: '<?=$userDetails->first_name.' '.$userDetails->last_name?>',
+            },
+        }).then((result) => {
+            console.log("result ", result);
+            if(result.error) {
+                showMessage(result.error.message);
+                setLoading(false);
+            } else {
+                fetch("<?=route("register.createCustomerSubscription")?>", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>', paymentMethod: result.paymentMethod }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("data ", data);
+                    if (data.subscription){
+                        // paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+                        window.location = "<?=route("register.paymentStatus", ["user_id" => $userDetails->user_id])?>";
+                    } else {
+                        showMessage(data.error);
+                        setLoading(false);
+                    }
+                })
+                .catch(console.error);
+            }
+        }).catch(console.error);
+        // Post the subscription info to the server-side script        
+        /*fetch("<?=route("register.createCustomerSubscription")?>", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: '<?=$userDetails->user_id?>' }),
@@ -261,14 +293,18 @@ async function handleSubscrSubmit(e) {
         .then(response => response.json())
         .then(data => {
             console.log("data ", data);
-            if (data.subscriptionId && data.clientSecret) {
-                paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+            if (data.subscriptionId){
+                if(data.clientSecret) {
+                    paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
+                }else{
+                    
+                }
             } else {
                 setLoading(false);
                 showMessage(data.error);
             }
         })
-        .catch(console.error);
+        .catch(console.error);*/
     <?php } ?>
 }
 

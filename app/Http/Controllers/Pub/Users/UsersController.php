@@ -489,11 +489,21 @@ class UsersController extends Controller
     }
 
 
-    public function createSubscription(Request $request){
+    public function createCustomerSubscription(Request $request){
 
-        $user = User::find($request->input('user_id'));
+        $user = User::with('userSubscription')->find($request->input('user_id'));
+        $paymentMethod = $request->input('paymentMethod');
         if($user->stripe_customer_id == ''){
-            $customer = (new Stripe())->createCustomer(['name' => $user->first_name.' '.$user->last_name, 'email' => $user->email]);
+            $customer = (new Stripe())->createCustomer(
+                [
+                    'name' => $user->first_name.' '.$user->last_name, 
+                    'email' => $user->email,
+                    'payment_method' => $paymentMethod['id'],
+                    'invoice_settings'  =>  [
+                        'default_payment_method'    =>  $paymentMethod['id']
+                    ]
+                ]
+            );
             if(isset($customer->id)){
                 User::Where('user_id', $user->user_id)->update(['stripe_customer_id' => $customer->id]);
                 $user = User::find($user->user_id);
@@ -501,19 +511,73 @@ class UsersController extends Controller
                 return Response::json($customer, 400);
             }
         }
+        
+        $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($user->stripe_customer_id, $paymentMethod['id']);
 
-        $subscription = UserSubscriptions::where('user_id', $user->user_id)->first();
-        if($subscription->exists == false){
+        // $userSubscription = UserSubscriptions::where('user_id', $user->user_id)->first();
+        if($user->userSubscription->exists == false){
             $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
+            if($subscription->id){
+                $updateSubscription = (new Stripe())->updateSubscription($subscription->id, ['default_payment_method' => $paymentMethod['id']]);
+            }
+        }else{
+            $subscription = (new Stripe())->updateSubscription($user->userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
         }
 
         if(isset($subscription->id)){
-            $output = [ 
-                'subscriptionId' => $subscription->id, 
-                'clientSecret' => $subscription->latest_invoice->payment_intent->client_secret, 
-                'customerId' => $user->stripe_customer_id 
-            ];          
-            return Response::json($output, 200);
+            
+            
+            $created = date("Y-m-d H:i:s", $subscription->created); 
+            $current_period_start = date("Y-m-d H:i:s", $subscription->current_period_start); 
+            $current_period_end = date("Y-m-d H:i:s", $subscription->current_period_end); 
+            $status = $subscription->status;
+        
+
+            if(isset($user->userSubscription) && $user->userSubscription->exists == true){
+                $userSubscription = UserSubscriptions::find($user->userSubscription->id);
+                $userSubscription->plan_interval_count = $userSubscription->plan_interval_count +1;
+            }else{
+                $userSubscription = new UserSubscriptions();
+                $userSubscription->user_id = $user->user_id;
+                $userSubscription->plan_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+                $userSubscription->payment_method = "Stripe";
+                $userSubscription->stripe_subscription_id = $subscription->id;
+                $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
+                $userSubscription->customer_email = $user->email;
+            }
+            
+            $userSubscription->stripe_payment_intent_id = $paymentMethod['id'];
+            $userSubscription->paid_amount = ($subscription->latest_invoice->amount_paid/100);
+            $userSubscription->currency = $subscription->latest_invoice->currency;
+            $userSubscription->plan_interval = $subscription->plan->interval;
+            $userSubscription->plan_period_start = $current_period_start;
+            $userSubscription->plan_period_end = $current_period_end;
+            $userSubscription->attach_payment_status = 1;
+            $userSubscription->status = $status;
+
+            $userSubscription->save();
+
+            if($userSubscription->status == "active" || $userSubscription->status == "trialing"){
+                User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
+            }
+
+            if(isset($user->userSubscription) && $user->userSubscription->exists == true){
+                // After Payment and Subscription Created Successfully
+                
+            }else{
+                if($user->verified == false){
+                    $this->newUserAdminNotification($user);
+                    $this->welcomeEmail($user);
+                    $this->emailVerification($user);
+                }
+            }
+
+            if($userSubscription->paid_amount > 0){
+                $email = new PaymentConfirmation($user);
+                Mail::to($user->email)->send($email);
+            }
+
+            return Response::json(['subscription' => $userSubscription], 200);
         }else{
             return Response::json($customer, 400);
         }
@@ -590,11 +654,11 @@ class UsersController extends Controller
     }
 
     public function paymentStatus($user_id){
-        $user = User::find($user_id);
+        $user = User::with('userSubscription')->find($user_id);
         $userSubscription = UserSubscriptions::where('user_id', $user_id)->first();
         
-        if($userSubscription->count()){
-            if($userSubscription->status == "active"){
+        if($user->userSubscription->exists == true){
+            if($userSubscription->status == "active" || $userSubscription->status == "trialing"){
 
                 Auth::login($user);
 
