@@ -546,9 +546,16 @@ class UsersController extends Controller
                 $userSubscription->customer_email = $user->email;
             }
             
+            if(!is_object($subscription->latest_invoice)){
+                $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
+            }else{
+                $subscriptionInvoice = $subscription->latest_invoice;
+            }
+
+
             $userSubscription->stripe_payment_intent_id = $paymentMethod['id'];
-            $userSubscription->paid_amount = ($subscription->latest_invoice->amount_paid/100);
-            $userSubscription->currency = $subscription->latest_invoice->currency;
+            $userSubscription->paid_amount = ($subscriptionInvoice->amount_paid/100);
+            $userSubscription->currency = $subscriptionInvoice->currency;
             $userSubscription->plan_interval = $subscription->plan->interval;
             $userSubscription->plan_period_start = $current_period_start;
             $userSubscription->plan_period_end = $current_period_end;
