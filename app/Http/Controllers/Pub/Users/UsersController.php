@@ -580,6 +580,7 @@ class UsersController extends Controller
             }
 
             if($userSubscription->paid_amount > 0){
+                $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new PaymentConfirmation($user);
                 Mail::to($user->email)->send($email);
             }

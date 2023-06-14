@@ -37,11 +37,10 @@ class PaymentConfirmation extends Mailable
         $subscription = [];
         if($user->userSubscription->exists == true){
             $subscription = (new Stripe())->getSubscription($user->userSubscription->stripe_subscription_id);
-        
-            // return $this->view('view.name');
-            return $this->from(config('mail.from.address'), 'Render')
-                ->subject("Render: Payment Invoice")
-                ->markdown('email.subscription.payment-invoice', compact('user', 'subscription'));
         }
+        // return $this->view('view.name');
+        return $this->from(config('mail.from.address'), 'Render')
+            ->subject("Render: Payment Invoice")
+            ->markdown('email.subscription.payment-invoice', compact('user', 'subscription'));
     }
 }

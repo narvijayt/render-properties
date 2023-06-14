@@ -62,8 +62,8 @@ class StripeWebhook extends Controller
 
                             if( ($userSubscription->plan_period_end != date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end) ) && $subscriptionSchedule->status == "active"){
                                 User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 1]);
-                                $user = User::with("userSubscription")->find($userSubscription->user_id);
                                 if($subscriptionInvoice->amount_paid > 0){
+                                    $user = User::with("userSubscription")->find($userSubscription->user_id);
                                     $email = new PaymentConfirmation($user);
                                     Mail::to($user->email)->send($email);
                                 }
@@ -97,8 +97,8 @@ class StripeWebhook extends Controller
 
                         if( ($userSubscription->plan_period_end != date("Y-m-d H:i:s", $subscription->current_period_end) ) && $subscription->status == "active"){
                             User::Where('user_id', $userSubscription->user_id)->update(['payment_status' => 1]);
-                            $user = User::with("userSubscription")->find($userSubscription->user_id);
                             if($invoice->amount_paid > 0){
+                                $user = User::with("userSubscription")->find($userSubscription->user_id);
                                 $email = new PaymentConfirmation($user);
                                 Mail::to($user->email)->send($email);
                             }
