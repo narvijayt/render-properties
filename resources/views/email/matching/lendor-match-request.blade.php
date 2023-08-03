@@ -18,7 +18,7 @@ You can view the request in your profile
 
 
 <p>Hi {{ ucfirst($user->first_name) }}</p>
-<p>I see that you are a Realtor registered on <a href="{{ url('') }}">{{ url('') }}</a> and would like to be part of the home buyer lead program. As a loan officer member of the program and I wanted to introduce myself. Are you still interested in taking advantage of the discounted referral fee home buyer leads program? If so, I'd be happy to assist. Please accept my match request and I will reach out to see if we are a good fit to work together.</p>
+<p>I see that you are a Realtor registered on <a href="{{ url('') }}">{{ url('') }}</a> and would like to be part of the home buyer lead program. As a loan officer member of the program, and I wanted to introduce myself. Are you still interested in taking advantage of the discounted referral fee home buyer leads program? If so, I'd be happy to assist. Please accept my match request and I will reach out to see if we are a good fit to work together.</p>
 
 @component('mail::button', ['url' => route('view.automatch', ['authUserId' => $user->user_id, 'userId' => $authUser->user_id]) ])
 View Match Requests

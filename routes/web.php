@@ -326,6 +326,9 @@ Route::group([
         Route::get('/all-industry','VendorController@allIndustry');
         Route::get('/edit-industry/{id}','VendorController@editIndustry');
         Route::post('/edit-industry/{id}','VendorController@updateIndustry');
+
+        // Setting Routes
+        Route::post('/price-settings','SettingsController@pricing')->name("settings.pricing");
     }
 );
 Route::POST('/check-username', 'Admin\UsersController@checkUsername');
