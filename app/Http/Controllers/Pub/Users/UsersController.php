@@ -635,6 +635,11 @@ class UsersController extends Controller
         if(!empty($payment_intent) && $payment_intent['status'] == 'succeeded'){
             $updateSubscription = (new Stripe())->updateSubscription($subscription_id, ['default_payment_method' => $payment_intent['payment_method']]);
             $subscription = (new Stripe())->getSubscription($subscription_id);
+            if(!is_object($subscription->latest_invoice)){
+                $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
+            }else{
+                $subscriptionInvoice = $subscription->latest_invoice;
+            }
 
             $created = date("Y-m-d H:i:s", $payment_intent['created']); 
             $status = $payment_intent['status'];
@@ -660,7 +665,7 @@ class UsersController extends Controller
             }
             
             $userSubscription->stripe_payment_intent_id = $payment_intent['id'];
-            $userSubscription->paid_amount = ($payment_intent['amount']/100);
+            $userSubscription->paid_amount = ($subscriptionInvoice->amount_paid/100);
             $userSubscription->currency = $payment_intent['currency'];
             $userSubscription->plan_interval = $subscription->plan->interval;
             $userSubscription->plan_period_start = $current_period_start;

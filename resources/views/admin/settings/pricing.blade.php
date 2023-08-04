@@ -1,7 +1,7 @@
 @extends('admin.layouts.main')
 @section('content')
     <section class="content-header">
-        <h1>Registration Price Plan</h1>
+        <h1>Lender Registration Price</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="#">Settings</a></li>
