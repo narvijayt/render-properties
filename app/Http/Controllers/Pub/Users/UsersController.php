@@ -369,7 +369,11 @@ class UsersController extends Controller
             $registrationPrice = $pricing->regular_price;
             if($pricing->sale_price > 0 && !empty($pricing->couponId)){
                 // $optionLabel = "Pay - $".$pricing->sale_price." for ".$pricing->sale_period." month(s) and then $".$pricing->regular_price;
-                $optionLabel = "$".$pricing->sale_price."/month for first ".$pricing->sale_period." month(s) and $".$pricing->regular_price."/month afterward";
+                if($pricing->sale_period > 1){
+                    $optionLabel = "$".$pricing->sale_price."/month for first ".$pricing->sale_period." months and $".$pricing->regular_price."/month afterward";
+                }else{
+                    $optionLabel = "$".$pricing->sale_price."/month for first month and $".$pricing->regular_price."/month afterward";
+                }
                 $registrationPrice = $pricing->sale_price;
             }
         }
