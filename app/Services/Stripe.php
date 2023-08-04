@@ -326,4 +326,37 @@ class Stripe{
         }
         return ['status' => 400, 'error' => true, 'message' => $errors];       
     }
+    
+    /**
+     * Create new Pricing Plan for Subscriptions
+     * 
+     * 
+     */
+    public function createPricePlan($data = []){
+        $errors = [];
+        if(!isset($data['unit_amount']) || empty($data['unit_amount'])){
+            $errors["invalid_unit_amount"] = "Amount is missing.";
+        }
+        
+        if(!isset($data['recurring']) || empty($data['recurring'])){
+            $errors["invalid_recurring"] = "Please set duration type.";
+        }
+
+        if(!isset($data['product']) || empty($data['product'])){
+            $errors["invalid_product"] = "Product ID is required.";
+        }
+    
+        
+        if(empty($errors)){
+            try {   
+                $data['currency'] = "usd";                
+                $secret_key = env('APP_ENV') == "production" ? env('STRIPE_LIVE_SECRET_KEY') : env('STRIPE_TEST_SECRET_KEY');
+                $stripe = new \Stripe\StripeClient($secret_key);
+                return $stripe->prices->create($data);
+            }catch(Exception $e) {   
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];       
+    }
 }

@@ -23,6 +23,11 @@ class SubscriptionController extends Controller
         $subscription = [];
         if($userDetails->userSubscription->exists == true){
             $subscription = (new Stripe())->getSubscription($userDetails->userSubscription->stripe_subscription_id);
+            if(!is_object($subscription->latest_invoice)){
+                $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
+            }else{
+                $subscriptionInvoice = $subscription->latest_invoice;
+            }
         }
         return view('pub.profile.subscription.index', compact('userDetails', 'subscription'));
     }

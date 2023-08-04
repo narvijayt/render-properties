@@ -14,7 +14,7 @@
                         <h4>Monthly Lender Membership For {{ number_format( ($subscription->plan->amount/100),2, '.', '') }} {{ strtoupper($subscription->plan->currency) }}</h4>
                         <ul>
                             <li>
-                                <strong>Price:</strong> 
+                                <strong>Price Paid:</strong> 
                                 <span class=""> ${{ number_format($userDetails->userSubscription->paid_amount, 2, '.', '') }}</span>
                                 @if($userDetails->userSubscription->paid_amount == 0)
                                     <span class="badge badge-warning">{{ ucfirst($userDetails->userSubscription->status)}}</span>

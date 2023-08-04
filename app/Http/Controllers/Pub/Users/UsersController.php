@@ -535,7 +535,7 @@ class UsersController extends Controller
         if($user->userSubscription->exists == false){
             $subscriptionArray = [
                 'stripe_customer_id' => $user->stripe_customer_id,
-                'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')
+                'price_id' => $pricing->planId
             ];
 
             if(!empty($couponId)){
@@ -565,7 +565,7 @@ class UsersController extends Controller
             }else{
                 $userSubscription = new UserSubscriptions();
                 $userSubscription->user_id = $user->user_id;
-                $userSubscription->plan_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+                $userSubscription->plan_id = $pricing->planId;
                 $userSubscription->payment_method = "Stripe";
                 $userSubscription->stripe_subscription_id = $subscription->id;
                 $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
@@ -622,7 +622,7 @@ class UsersController extends Controller
         $payment_intent = $request->input('payment_intent'); 
         $subscription_id = $request->input('subscription_id');
         $customer_id = $request->input('customer_id');
-        $subscr_plan_id = env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID'); 
+        $pricing = (new RegistrationPlans())->first();      
 
         $customer = (new Stripe())->getCustomer($customer_id);
         $user = User::with('userSubscription')->find($request->input('user_id'));
@@ -647,7 +647,7 @@ class UsersController extends Controller
             }else{
                 $userSubscription = new UserSubscriptions();
                 $userSubscription->user_id = $user->user_id;
-                $userSubscription->plan_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+                $userSubscription->plan_id = $pricing->planId;
                 $userSubscription->payment_method = "Stripe";
                 $userSubscription->stripe_subscription_id = $subscription->id;
                 $userSubscription->customer_name = $user->first_name.' '.$user->last_name;

@@ -39,7 +39,7 @@ class SettingsController extends Controller
 
             $pricing = (new RegistrationPlans())->first();
             
-            $createCoupon = false;
+            $createPlan = $createCoupon = false;
             if(!empty($pricing)){
                 if($request->input('sale_price') != ""){
                     if($request->input('sale_price') != $pricing->sale_price){
@@ -48,11 +48,29 @@ class SettingsController extends Controller
                         $createCoupon = true;
                     }
                 }
+
+                if($request->input("regular_price") != $pricing->regular_price){
+                    $createPlan = true;
+                }
             }else{
                 if($request->input('sale_price') != ""){
                     $createCoupon = true;
                 }
 
+            }
+            
+            
+            if($createPlan == true){
+                $priceData = [
+                    "currency" => "usd",
+                    "unit_amount" => ($request->input('regular_price')*100),
+                    'recurring' => ['interval' => 'month'],
+                    'product' => env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRODUCT_ID') : env('STRIPE_TEST_PRODUCT_ID'),
+                ];
+                $plan = (new Stripe())->createPricePlan($priceData);
+                if($plan->error == true){
+                    return redirect()->back()->with("errors", $plan->message)->withInput();
+                }
             }
             
             if($createCoupon == true){
@@ -70,16 +88,19 @@ class SettingsController extends Controller
             }
 
             
+            $planId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
             $pricing = (new RegistrationPlans())->first();
-            
             if(is_null($pricing) || $pricing->exists === false){
                 $pricing = new RegistrationPlans();
+            }else{
+                $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
             }
 
             $pricing->regular_price = $request->input('regular_price');
             $pricing->sale_price = $request->input('sale_price');
             $pricing->sale_period = $request->input('sale_period');
             $pricing->couponId = $createCoupon == true? $coupon->id : null;
+            $pricing->planId = $createPlan == true? $plan->id : $planId;
             if($pricing->save()){
                 return redirect()->route("settings.pricing")->with("message", "Price updated successfully.");
             }else{
