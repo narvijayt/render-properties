@@ -44,7 +44,7 @@ class StripeWebhook extends Controller
                                 $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_start); 
                                 $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscriptionSchedule->current_period_end);
                                 $subscriptionArray['plan_interval_count'] = $userSubscription->plan_interval_count +1;
-                                $subscriptionArray['paid_amount'] = ($subscriptionSchedule->plan->amount/100);
+                                $subscriptionArray['paid_amount'] = ($subscriptionInvoice->amount_paid/100);
                             }else if($subscriptionSchedule->status == "past_due"){
                                 // Send notification of failed payment
                                 $user = User::find($userSubscription->user_id);
@@ -90,7 +90,7 @@ class StripeWebhook extends Controller
                         $subscriptionArray['plan_period_start'] = date("Y-m-d H:i:s", $subscription->current_period_start); 
                         $subscriptionArray['plan_period_end'] = date("Y-m-d H:i:s", $subscription->current_period_end);
                         $subscriptionArray['plan_interval_count'] = $userSubscription->plan_interval_count +1;
-                        $subscriptionArray['paid_amount'] = ($subscription->plan->amount/100);
+                        $subscriptionArray['paid_amount'] = ($invoice->amount_paid/100);
 
                         $subscriptionArray['status'] = $subscription->status;
                         UserSubscriptions::Where('user_id', $userSubscription->user_id)->update($subscriptionArray);
