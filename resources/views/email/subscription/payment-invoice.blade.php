@@ -15,8 +15,14 @@
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">1</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">Monthly Lender Membership For {{ number_format( ($subscription->plan->amount/100), 2, '.', '') }} USD</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">{{ $subscription->plan->interval_count.' '.$subscription->plan->interval }}</td>
-            <td style="border:1px solid #c1c1c1; padding:5px 10px;">${{ number_format( ($subscriptionInvoice->amount_paid/100), 2, '.', '') }}</td>
+            <td style="border:1px solid #c1c1c1; padding:5px 10px;">${{ number_format( ($subscription->plan->amount/100), 2, '.', '') }}</td>
         </tr>
+        @if( ($subscriptionInvoice->subtotal != $subscriptionInvoice->amount_paid) && isset($subscriptionInvoice->total_discount_amounts))
+        <tr>
+            <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:right;" colspan="3">Discount</th>
+            <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:left;">${{ number_format( ($subscriptionInvoice->total_discount_amounts[0]->amount/100), 2, '.', '') }}</th>
+        </tr>
+        @endif
         <tr>
             <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:right;" colspan="3">Total</th>
             <th style="border:1px solid #c1c1c1; padding:5px 10px; text-align:left;">${{ number_format( ($subscriptionInvoice->amount_paid/100), 2, '.', '') }}</th>
