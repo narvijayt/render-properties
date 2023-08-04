@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Log;
 use App\Mail\SubscriptionPaymentFailed;
 use App\Mail\SubscriptionCancelled;
 use App\Mail\PaymentConfirmation;
+use App\RegistrationPlans;
 
 class UsersController extends Controller
 {
@@ -360,7 +361,18 @@ class UsersController extends Controller
             return redirect()->route("login");
         }
         
-        return view('auth.partials.loan-office-billing-information', compact('userDetails') );
+        $optionLabel = "Monthly - $59.00";
+        $registrationPrice = "59.00";
+        $pricing = (new RegistrationPlans())->first();
+        if(!is_null($pricing)){
+            $optionLabel = "Monthly - $".$pricing->regular_price;
+            $registrationPrice = $pricing->regular_price;
+            if($pricing->sale_price > 0 && !empty($pricing->couponId)){
+                $optionLabel = "Pay - $".$pricing->sale_price." for ".$pricing->sale_period." month(s) and then $".$pricing->regular_price;
+                $registrationPrice = $pricing->sale_price;
+            }
+        }
+        return view('auth.partials.loan-office-billing-information', compact('userDetails', 'pricing', 'optionLabel', 'registrationPrice') );
     }
     
     
@@ -513,10 +525,24 @@ class UsersController extends Controller
         }
         
         $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($user->stripe_customer_id, $paymentMethod['id']);
-
+        
+        $couponId = '';
+        $pricing = (new RegistrationPlans())->first();
+        if(!is_null($pricing)){
+            $couponId = $pricing->couponId;
+        }
         // $userSubscription = UserSubscriptions::where('user_id', $user->user_id)->first();
         if($user->userSubscription->exists == false){
-            $subscription = (new Stripe())->createSubscription(['stripe_customer_id' => $user->stripe_customer_id, 'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')]);
+            $subscriptionArray = [
+                'stripe_customer_id' => $user->stripe_customer_id,
+                'price_id' => env('APP_ENV') == "production" ?  env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID')
+            ];
+
+            if(!empty($couponId)){
+                $subscriptionArray['coupon'] = $couponId;
+            }
+
+            $subscription = (new Stripe())->createSubscription($subscriptionArray);
             if($subscription->id){
                 $updateSubscription = (new Stripe())->updateSubscription($subscription->id, ['default_payment_method' => $paymentMethod['id']]);
             }
@@ -544,6 +570,7 @@ class UsersController extends Controller
                 $userSubscription->stripe_subscription_id = $subscription->id;
                 $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
                 $userSubscription->customer_email = $user->email;
+                $userSubscription->couponId = $couponId;
             }
             
             if(!is_object($subscription->latest_invoice)){

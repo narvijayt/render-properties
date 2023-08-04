@@ -97,6 +97,7 @@
                         </div>
                     </div>
                     
+                    
                     <div class="col-md-6 p-0">
                         <div class="card-form package-infobox">
                             <div class="row"> 
@@ -104,7 +105,7 @@
                                     <h4>Subscription</h4>
                                     <div class="form-group">
                                         <select name="amount" id="amount" class="form-control">
-                                            <option value="59.00">Monthly - $59.00 </option>
+                                            <option value="{{ $registrationPrice }}"> {{ $optionLabel }} </option>
                                         </select>
                                     </div>
                                 </div>

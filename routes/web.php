@@ -328,7 +328,8 @@ Route::group([
         Route::post('/edit-industry/{id}','VendorController@updateIndustry');
 
         // Setting Routes
-        Route::post('/price-settings','SettingsController@pricing')->name("settings.pricing");
+        Route::get('/price-settings','SettingsController@pricing')->name("settings.pricing");
+        Route::post('/price-settings','SettingsController@storePricing')->name("settings.storepricing");
     }
 );
 Route::POST('/check-username', 'Admin\UsersController@checkUsername');

@@ -169,7 +169,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ route('settings.pricing') }}">
                     <i class="fa fa-cogs"></i><span>Settings</span>
                 </a>
             </li>

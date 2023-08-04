@@ -89,7 +89,7 @@ class Stripe{
 
         if(empty($errors)){
             try { 
-                $subscription = \Stripe\Subscription::create([ 
+                $requestArray = [ 
                     'customer' => $data['stripe_customer_id'], 
                     'items' => [[ 
                         'price' => $data['price_id'], 
@@ -99,8 +99,11 @@ class Stripe{
                     'expand' => ['latest_invoice.payment_intent'], 
                     'proration_behavior' => 'none',
                     // 'trial_end' => strtotime("+30 days"),
-                ]); 
-                return $subscription;
+                ];
+                if(isset($data['coupon']) && !empty($data['coupon'])){
+                    $requestArray["coupon"] = $data["coupon"];
+                }
+                return \Stripe\Subscription::create($requestArray);
             }catch(Exception $e) { 
                 $errors["api_error_message"] = $e->getMessage();
             } 
@@ -287,5 +290,40 @@ class Stripe{
             }
         }
         return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
+
+
+    /**
+     * Create new Coupon Code on the Stripe
+     * 
+     * 
+     */
+    public function createCoupon($data = []){
+        $errors = [];
+        if(!isset($data['amount_off']) || empty($data['amount_off'])){
+            $errors["invalid_amount_off"] = "Amount Off is missing.";
+        }
+        
+        if(!isset($data['duration']) || empty($data['duration'])){
+            $errors["invalid_duration"] = "Please set duration type.";
+        }else if($data['duration'] != "once"){
+            if(!isset($data['duration_in_months']) || empty($data['duration_in_months'])){
+                $errors["invalid_duration_in_months"] = "Duration in months required.";
+            }
+        }
+        
+        if(empty($errors)){
+            try {   
+                $data['currency'] = "usd";
+                $data['amount_off'] = ($data["amount_off"]*100);
+                $secret_key = env('APP_ENV') == "production" ? env('STRIPE_LIVE_SECRET_KEY') : env('STRIPE_TEST_SECRET_KEY');
+                $stripe = new \Stripe\StripeClient($secret_key);
+
+                return $stripe->coupons->create($data);
+            }catch(Exception $e) {   
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];       
     }
 }
