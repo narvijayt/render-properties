@@ -510,8 +510,7 @@ class ConnectController extends Controller
     
     public function searchProfile(Request $request)
     {
-        // $allCategory = Category::orWhereNotNull('braintree_id')->get();
-        $allCategory = Category::get();
+        $allCategory = Category::orWhereNotNull('braintree_id')->get();
         foreach($allCategory as $category){
             $allVendorWithCategory[] = $category->category_id;
         }
