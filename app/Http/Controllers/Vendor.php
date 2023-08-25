@@ -453,6 +453,12 @@ class Vendor extends Controller
             $vendorDetails->payment_status = 'Completed';
             $vendorDetails->save();
 
+            $vendorCategory = Category::where('user_id', $user->user_id);
+            if(!is_null($vendorCategory)){
+                $vendorCategory->braintree_id = 1;
+                $vendorCategory->save();
+            }
+
             if(isset($user->userSubscription) && $user->userSubscription->exists == true){
                 // After Payment and Subscription Created Successfully
                 
@@ -536,7 +542,7 @@ class Vendor extends Controller
 
                     return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
                 }else{
-                    
+
                 }
             }
 
