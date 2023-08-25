@@ -70,7 +70,7 @@
 					 <ul class="dropdown-menu">					     
 							<li><a href="{{ route('register', [ 'type' => 'realtor' ]) }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
 							<li><a href="{{ route('register', [ 'type' => 'lender' ]) }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
-							{{-- <li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li> --}}
+							<li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>
 					    </ul>
 					    </li>
                 @endguest
@@ -127,26 +127,26 @@
             <button type="button" class="close" data-dismiss="modal">&#10005;</button>
               <div class="modal-body text-center">
         	       <div class="row"> 
-            	       <div class="col-md-6"> 	       
+            	       <div class="col-md-4"> 	       
             				  <a href="{{url('search-realtor-profiles')}}">		   
             				  <img src="{{url('/')}}/img/Real-Estate-Agent-icon.png">
             				 <button type="button" class="btn btn-primary btn-block btn-md">Search Realtors</button>
             				 </a>
             		    </div>
-            		    <div class="col-md-6"> 	
+            		    <div class="col-md-4"> 	
             				 <a href="{{url('search-lender-profiles')}}">
             					<img src="{{url('/')}}/img/Lender-icon.png">
             				 <button type="button" class="btn btn-primary btn-block btn-md">Search Lenders</button>
             				 </a>
         		        </div>
-        		        {{--
+        		        
         		        <div class="col-md-4"> 	
             				 <a href="{{url('search-vendor')}}">
             					<img src="{{url('/')}}/img/seller.png">
             				 <button type="button" class="btn btn-primary btn-block btn-md">Search Vendors</button>
             				 </a>
         		        </div>
-        		        --}}
+        		        
         		  </div>
               </div>
         </div>

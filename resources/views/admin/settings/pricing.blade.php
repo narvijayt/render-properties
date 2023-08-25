@@ -1,11 +1,11 @@
 @extends('admin.layouts.main')
 @section('content')
     <section class="content-header">
-        <h1>Lender Registration Price</h1>
+        <h1>Registration Plans</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="#">Settings</a></li>
-            <li class="active">Price</li>
+            <li class="active">Registration Plans</li>
         </ol>
     </section>
 
@@ -26,7 +26,7 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Manage Pricing</h3>
+                        <h3 class="box-title">Lender Registration Price</h3>
                     </div>
                     
                     <form name="pricing-form" id="pricing-form" method="post" action="{{ route('settings.storepricing') }}">
@@ -67,6 +67,52 @@
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <div class="box mt-5">
+                    <div class="box-header">
+                        <h3 class="box-title">Vendor Registration Plans</h3>
+                        <a href="{{ route('settings.vendorPackage.create') }}" class="btn btn-sm btn-success pull-right">Create New Package</a>
+                    </div>
+                    <div class="box-body">
+                        <table id="packages" class="table table-bordered table-striped py-2">
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Base Price ($)</th>
+                                    <th>Add-On Price ($)</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(!is_null($vendorPackages))
+                                    @foreach($vendorPackages as $index=>$package)
+                                        <tr>
+                                            <td>{{ ($index+1) }}</td>
+                                            <td>{{ $package->title }}</td>
+                                            <td>{{ ucfirst($package->packageType) }}</td>
+                                            <td>{{ $package->basePrice }}</td>
+                                            <td>{{ $package->addOnPrice }}</td>
+                                            <td>{{ $package->status == 0 ? 'Inactive' : 'Active' }}</td>
+                                            <td>
+                                                <a href="{{ route('settings.vendorPackage.edit', [packageId => $package->id]) }}" class="btn btn-sm btn-primary"> <i class="fa fa-pencil-square-o"></i> </a>
+                                            </td>
+                                        </tr>   
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>                        
+                    </div>
+
+                    <div class="page-div">
+                        @if(isset($vendorPackages) && !empty($vendorPackages))
+                            {{ $vendorPackages->appends($_GET)->links() }}
+                        @endif
+                    </div>
+
                 </div>
             </div>
         </div>

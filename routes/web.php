@@ -330,6 +330,9 @@ Route::group([
         // Setting Routes
         Route::get('/price-settings','SettingsController@pricing')->name("settings.pricing");
         Route::post('/price-settings','SettingsController@storePricing')->name("settings.storepricing");
+        Route::get('/price-settings/create-vendor-package','SettingsController@createVendorPackage')->name("settings.vendorPackage.create");
+        Route::get('/price-settings/edit-vendor-package/{packageId}','SettingsController@editVendorPackage')->name("settings.vendorPackage.edit");
+        Route::post('/price-settings/store-vendor-package','SettingsController@storeVendorPackage')->name("settings.vendorPackage.store");
     }
 );
 Route::POST('/check-username', 'Admin\UsersController@checkUsername');
@@ -383,7 +386,9 @@ Route::post('/vendor-register','Auth\RegisterController@registerVendor')->name('
 Route::get('/vendor-packages/{id}','Auth\RegisterController@loadAllVendorPackages')->name('loadVendorPackages');
 Route::get('/vendor-platinum-membership-packages/{id}','Auth\RegisterController@loadPlatiniumVendor')->name('loadPlatiniumVendor');
 Route::get('/vendor-package-payment','Auth\RegisterController@loadPackagePayment')->name('package-payment');
-Route::post('/vendor-package-payment', 'Vendor@packagePayment');
+// Route::post('/vendor-package-payment', 'Vendor@packagePayment');
+Route::post('/vendor-package-payment', 'Vendor@createCustomerSubscription')->name('vendor.createCustomerSubscription');
+Route::post('/update-vendor-payment', 'Vendor@updateCustomerPaymentMethod')->name('vendor.updateCustomerPaymentMethod');
 Route::post('/advertisement/banner','VendorAdvertisement@uploadAdvertisementBanner')->name('advertisementBanner');
 Route::match(['POST', 'GET'], '/geoUsers', 'HomeController@fetchGeolocationUsers')->name('geolocationUsers');
 

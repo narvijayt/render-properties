@@ -523,7 +523,7 @@ class UsersController extends Controller
             );
             if(isset($customer->id)){
                 User::Where('user_id', $user->user_id)->update(['stripe_customer_id' => $customer->id]);
-                $user = User::find($user->user_id);
+                $user = User::with('userSubscription')->find($user->user_id);
             }else{
                 return Response::json($customer, 400);
             }
@@ -539,8 +539,9 @@ class UsersController extends Controller
         // $userSubscription = UserSubscriptions::where('user_id', $user->user_id)->first();
         if($user->userSubscription->exists == false){
             $subscriptionArray = [
-                'stripe_customer_id' => $user->stripe_customer_id,
-                'price_id' => $pricing->planId
+                'customer' => $user->stripe_customer_id,
+                "default_payment_method" => $paymentMethod['id'],
+                'items' => [[ "price" => $pricing->planId]]
             ];
 
             if(!empty($couponId)){
@@ -548,9 +549,9 @@ class UsersController extends Controller
             }
 
             $subscription = (new Stripe())->createSubscription($subscriptionArray);
-            if($subscription->id){
+            /*if($subscription->id){
                 $updateSubscription = (new Stripe())->updateSubscription($subscription->id, ['default_payment_method' => $paymentMethod['id']]);
-            }
+            }*/
         }else{
             $subscription = (new Stripe())->updateSubscription($user->userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
         }
@@ -601,7 +602,7 @@ class UsersController extends Controller
             }
 
             if(isset($user->userSubscription) && $user->userSubscription->exists == true){
-                // After Payment and Subscription Created Successfully
+                // After Payment and Subscription Updated Successfully
                 
             }else{
                 if($user->verified == false){
@@ -711,7 +712,11 @@ class UsersController extends Controller
             }
         }else{
             flash("Subscription membership is missing.")->error();
-            return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+            if($user->user_type == "vendor"){
+                return redirect()->route("loadVendorPackages", ["id" => $user_id]);
+            }else{
+                return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+            }
         }
     }
 

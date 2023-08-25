@@ -6,10 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\VendorPackages;
+use App\VendorDetails;
 use App\User;
 use App\Services\Stripe;
 
-class PaymentConfirmation extends Mailable
+class VendorPaymentInvoice extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,8 +36,7 @@ class PaymentConfirmation extends Mailable
     public function build()
     {
         $user = $this->user;
-        $subscription = [];
-        $subscriptionInvoice = [];
+        $subscription = $subscriptionInvoice = $package = [];
         if($user->userSubscription->exists == true){
             $subscription = (new Stripe())->getSubscription($user->userSubscription->stripe_subscription_id);
 
@@ -46,9 +47,13 @@ class PaymentConfirmation extends Mailable
             }
             $membershipPrice = ($user->user_type == "vendor") ? $user->userSubscription->paid_amount :  ($subscription->plan->amount/100);
         }
+        $vendorDetails = VendorDetails::where('user_id','=',$user->user_id)->first();
+        if($user->packageId){
+            $package = VendorPackages::find($user->packageId);
+        }
         // return $this->view('view.name');
         return $this->from(config('mail.from.address'), 'Render')
             ->subject("Render: Payment Invoice")
-            ->markdown('email.subscription.payment-invoice', compact('user', 'subscription', 'subscriptionInvoice', 'membershipPrice'));
+            ->markdown('email.subscription.vender-payment-invoice', compact('user', 'subscription', 'subscriptionInvoice', 'membershipPrice', 'vendorDetails', 'package'));
     }
 }

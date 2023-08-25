@@ -1707,6 +1707,12 @@ button#registerVendor {
 .footer__brand>img{ width: 60%;}
 /**************** 16-05-2023 Ends *********************/
 
+/**************** 24-08-2023 Ends *********************/
+.d-flex{display: flex;flex-direction: column;}
+.checkbox .d-flex input{ order: 1; width: auto;}
+.checkbox .d-flex span{ order: 2;}
+.checkbox .d-flex label.error{order: 3;padding-left: 0px;}
+/**************** 24-08-2023 Ends *********************/
 
 @media(max-width:625px)
 {

@@ -13,6 +13,7 @@ use Mail;
 use App\Mail\PaymentConfirmation;
 use App\Mail\SubscriptionCancelled;
 use App\Mail\SubscriptionPaymentFailed;
+use App\Mail\VendorPaymentInvoice;
 
 class SubscriptionController extends Controller
 {
@@ -58,7 +59,10 @@ class SubscriptionController extends Controller
         // dd($user->userSubscription->plan_period_start);
 
         // Payment Invoice Email
-        $email = new PaymentConfirmation($user);
+        // $email = new PaymentConfirmation($user);
+        // Mail::to("amit@culture-red.com")->send($email);
+        
+        $email = new VendorPaymentInvoice($user);
         Mail::to("amit@culture-red.com")->send($email);
 
 

@@ -5,6 +5,7 @@ namespace API\Http\Controllers\Auth;
 use API\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use JWTAuth;
+use Auth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
@@ -23,4 +24,6 @@ class AuthController extends Controller
 
 		return response()->json(compact('token'));
 	}
+
+	
 }

@@ -79,30 +79,23 @@ class Stripe{
      */
     public function createSubscription($data = []){
         $errors = [];
-        if(!isset($data['stripe_customer_id']) || empty($data['stripe_customer_id'])){
+
+        if(!isset($data['customer']) || empty($data['customer'])){
             $errors["invalid_customer_id"] = "Invalid Customer Id";
         }
 
-        if(!isset($data['price_id']) || empty($data['price_id'])){
+        if(!isset($data['items']) || empty($data['items'])){
             $errors["invalid_price_id"] = "Invalid Price Details";
         }
 
         if(empty($errors)){
             try { 
-                $requestArray = [ 
-                    'customer' => $data['stripe_customer_id'], 
-                    'items' => [[ 
-                        'price' => $data['price_id'], 
-                    ]], 
+                $requestArray = array_merge($data, [
                     'collection_method' => 'charge_automatically', 
-                    // 'payment_behavior' => 'default_incomplete', 
                     'expand' => ['latest_invoice.payment_intent'], 
                     'proration_behavior' => 'none',
-                    // 'trial_end' => strtotime("+30 days"),
-                ];
-                if(isset($data['coupon']) && !empty($data['coupon'])){
-                    $requestArray["coupon"] = $data["coupon"];
-                }
+                    'currency' => 'usd',
+                ]);
                 return \Stripe\Subscription::create($requestArray);
             }catch(Exception $e) { 
                 $errors["api_error_message"] = $e->getMessage();
@@ -334,8 +327,10 @@ class Stripe{
      */
     public function createPricePlan($data = []){
         $errors = [];
-        if(!isset($data['unit_amount']) || empty($data['unit_amount'])){
-            $errors["invalid_unit_amount"] = "Amount is missing.";
+        if(!isset($data['billing_scheme']) || $data['billing_scheme'] != "tiered"){
+            if(!isset($data['unit_amount']) || empty($data['unit_amount'])){
+                $errors["invalid_unit_amount"] = "Amount is missing.";
+            }
         }
         
         if(!isset($data['recurring']) || empty($data['recurring'])){

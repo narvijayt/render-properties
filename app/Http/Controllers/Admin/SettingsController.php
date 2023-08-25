@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\RegistrationPlans;
+use App\VendorPackages;
 use App\Services\Stripe;
+use Auth;
 
 class SettingsController extends Controller
 {
@@ -14,7 +16,8 @@ class SettingsController extends Controller
 
     public function pricing(){
         $pricing = (new RegistrationPlans())->first();
-        return view("admin.settings.pricing", compact("pricing"));
+        $vendorPackages = VendorPackages::paginate(10);
+        return view("admin.settings.pricing", compact("pricing", "vendorPackages"));
     }
 
     public function storePricing(Request $request){
@@ -108,5 +111,108 @@ class SettingsController extends Controller
             }
 
         }   
+    }
+
+    public function createVendorPackage(){
+        $packageTypes = ['city', 'state', 'usa'];
+        return view("admin.settings.pricing.create", compact("packageTypes"));
+    }
+    
+    public function editVendorPackage($packageId){
+        $packageTypes = ['city', 'state', 'usa'];
+        $package = VendorPackages::find($packageId);
+        return view("admin.settings.pricing.edit", compact("packageTypes", "package"));
+    }
+    
+    public function storeVendorPackage(Request $request){
+        $input = $request->all();
+        $rules = array(
+            'title'    => 'required', 
+            'status'    => 'required', 
+        );
+        if($request->input('packageId') == false){
+            $rules['packageType']    = 'required'; 
+            $rules['basePrice']    = 'required'; 
+            // $rules['addOnPrice']    = 'required'; 
+        }
+
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+
+            $productId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_VENDOR_PRODUCT_ID') : env('STRIPE_TEST_VENDOR_PRODUCT_ID');
+            if($request->input('packageId') == false){
+                $vendorPrice = [
+                    "billing_scheme" =>  "tiered",
+                    "recurring" => [
+                        "usage_type" =>  "licensed",
+                        "interval" =>  "month",
+                        "interval_count" =>  "1",
+                        "trial_period_days" =>  "0"
+                    ],
+                    "tiers_mode" =>  "graduated",
+                    "tax_behavior" =>  "inclusive",
+                    "currency" =>  "usd",
+                    "tiers" => [
+                        "0" => [
+                            "up_to" =>  "1",
+                            "unit_amount_decimal" =>  is_float($request->basePrice) ? $request->basePrice : $request->basePrice * 100
+                        ],
+                        "1" => [
+                            "up_to" =>  "inf",
+                            "unit_amount_decimal" =>  is_float($request->addOnPrice) ? $request->addOnPrice : $request->addOnPrice * 100
+                        ]
+                    ],
+                    "product" =>  $productId,
+                    "expand" => [
+                        "tiers"
+                    ]
+                ];
+
+                $plan = (new Stripe())->createPricePlan($vendorPrice);
+                if($plan->error == true){
+                    return redirect()->back()->with("errors", $plan->message)->withInput();
+                }
+            }
+
+            if($request->input('status') != 0 ){
+                $statusQuery = VendorPackages::where([
+                    'status'    =>  1,
+                    'packageType'    =>  $request->input('packageType'),
+                ]);
+                if($request->input('packageId')){
+                    $statusQuery->where('id', '!=',  $request->input('packageId'));
+                }
+                $statusQuery->update(['status' => 0]);
+            }
+
+            if($request->input('packageId')){
+                $vendorPackage = VendorPackages::find($request->input('packageId'));
+            }else{
+                $vendorPackage = new VendorPackages();
+                $vendorPackage->userId = Auth::user()->user_id;
+                $vendorPackage->packageType = $request->input('packageType');
+                $vendorPackage->basePrice = $request->input('basePrice');
+                $vendorPackage->addOnPrice = $request->input('addOnPrice');
+                $vendorPackage->priceId = $plan->id;
+                $vendorPackage->productId = $productId;
+            }
+            $vendorPackage->title = $request->input('title');
+            $vendorPackage->status = $request->input('status');
+            
+
+            if($vendorPackage->save()){
+                $message = $request->input('packageId') ? "Vendor Package updated successfully. " : "Vendor Package addedd successfully. ";
+                if($existActive == true){
+                    $message .= "Another Package already active for the ".ucfirst($vendorPackage->packageType). " package type";
+                }
+                return redirect()->route("settings.pricing")->with("message", $message);
+            }else{
+                $message = $request->input('packageId') ? "Failed to update the Vendor Package." : "Failed to create the Vendor Package.";
+                return redirect()->back()->with("error", $message)->withInput();
+            }
+        }
     }
 }

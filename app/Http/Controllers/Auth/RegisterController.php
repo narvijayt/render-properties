@@ -29,7 +29,7 @@ use App\Services\Geo\GeolocationService;
 
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
-
+use App\VendorPackages;
 
 class RegisterController extends Controller
 {
@@ -377,8 +377,9 @@ class RegisterController extends Controller
     
     public function loadVendorRegLayout(Request $request)
     {
-           $selectedPackage = $request->has('package') ? $request->get('package') : '';
-           return view('auth.vendor',['selectedPackage'=>$selectedPackage]);
+        $data['vendorPackages'] = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
+        $data['selectedPackage'] = $request->has('package') ? $request->get('package') : '';
+        return view('auth.vendor', $data );
     }
     
     public function registerVendor(Request $request)
@@ -518,12 +519,12 @@ class RegisterController extends Controller
              {
                   $vendorDetails->vendor_service = $request->services;
              }
-             $vendorDetails->payment_status = 'Pending';
-             $vendorDetails->save();
-             $user->assign('user');
-             $user->assign($user['user_type']);
+            $vendorDetails->payment_status = 'Pending';
+            $vendorDetails->save();
+            $user->assign('user');
+            $user->assign($user['user_type']);
             $this->emailVerification($user);
-             $this->welcomeEmail($user);
+            $this->welcomeEmail($user);
              if($request->file_name !="")
                 {
                     $createBanner = new Banner();
@@ -552,24 +553,19 @@ class RegisterController extends Controller
      
      public function loadAllVendorPackages($id)
      {
-         $findVendor = User::where('user_id','=',$id)->where('user_type','=','vendor')->get();
-          if(count($findVendor) == 0)
-         {
-             return redirect('/vendor-register')->with('error','No vendor found with this details.');
-         }
-          $findCategory = Category::where('user_id','=',$id)->get();
-        if($findVendor->isNotEmpty() && $findCategory->isNotEmpty())
-         {
-             if($findCategory[0]->braintree_id =="")
-             {
-                 return view('auth.vendorPackages',['id'=>$id]);
-             }else{
-                 return redirect('/vendor-register')->with('message','You have already done payment for registeration.');
-             }
-         }else{
-             return view('auth.vendorPackages',['id'=>$id]);
-         }
-      }
+        
+        $findVendor = User::where('user_id','=',$id)->where('user_type','=','vendor')->first();
+        if(count($findVendor) == 0){
+            return redirect('/vendor-register')->with('error','No vendor found with this details.');
+        }
+        // $findCategory = Category::where('user_id','=',$id)->get();
+        if($findVendor->payment_status == 0){
+            $vendorPackages = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
+            return view('auth.vendorPackages', ['id' => $id, 'vendorPackages' => $vendorPackages]);
+        }else{
+            return redirect('/vendor-register')->with('message','You have already done payment for registeration.');
+        }
+    }
       
       
        public function loadPlatiniumVendor($id)
@@ -595,26 +591,29 @@ class RegisterController extends Controller
     
     public function loadPackagePayment(Request $request)
     {
-           $selectedPackage = $request->has('package') ? $request->get('package') : '';
-           $checkVendor = User::where('user_id','=',$request->id)->where('user_type','=','vendor')->get();
-           if(count($checkVendor) == 0)
-             {
-                 return redirect('/vendor-register')->with('error','No vendor found with this details.');
-             }
-            $checkCat = Category::where('user_id','=',$request->id)->get();
-            if($checkVendor->isNotEmpty() && $checkCat->isNotEmpty())
-             {
-             if($checkCat[0]->braintree_id =="")
-             {
-                 $userDetails = User::find($request->id);
-                return view('auth.packageSelection',['selectedPackage'=>$selectedPackage,'userDetails'=>$userDetails]);
-             }else{
-                 return redirect('/vendor-register')->with('message','You have already done payment for registeration.');
-             }
-          }else{
-                 $userDetails = User::find($request->id);
-              return view('auth.packageSelection',['selectedPackage'=>$selectedPackage,'userDetails'=>$userDetails]);
-          }
+        $selectedPackage = $request->has('package') ? $request->get('package') : '';
+        $checkVendor = User::where('user_id','=',$request->id)->where('user_type','=','vendor')->first();
+        if(count($checkVendor) == 0){
+            return redirect('/vendor-register')->with('error','No vendor found with this details.');
+        }
+
+        if($checkVendor->payment_status == 0){
+            $userDetails = User::with('userSubscription')->find($request->id);
+            $vendorPackage = VendorPackages::find($selectedPackage);
+            if($vendorPackage->status == 0){
+                $activeVendorPackage = VendorPackages::where(['status' => 1, 'packageType' => $vendorPackage->packageType])->first();
+                if(!is_null($activeVendorPackage)){
+                    $redirectRoute = route('package-payment').'?id='.$request->id.'&package='.$activeVendorPackage->id;
+                    return redirect($redirectRoute);
+                }else{
+                    return redirect()->route('loadVendorPackages', ['id' => $request->id]);
+                }
+            }
+            $vendorDetails = VendorDetails::where('user_id','=',$userDetails->user_id)->first();
+            return view('auth.packageSelection',['vendorPackage'=>$vendorPackage,'userDetails'=>$userDetails, 'vendorDetails' => $vendorDetails]);
+        }else{
+            return redirect('/vendor-register')->with('message','You have already done payment for registeration.');
+        }
     }
 }
 

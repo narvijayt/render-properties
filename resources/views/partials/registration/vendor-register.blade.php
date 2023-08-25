@@ -196,17 +196,17 @@ What Industry are you in?
 	</label>
 </div>
   <script src="https://www.google.com/recaptcha/api.js"></script>
- <div class="form-group row">
-    <div class="col-md-6 offset-md-4">
-        <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
-        <span class="msg-error error"></span>
-        @if ($errors->has('g-recaptcha-response'))
-            <span class="invalid-feedback" style="display: block;">
-                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-            </span>
-        @endif
-    </div>
-</div>
+ 	<div class="form-group row">
+		<div class="col-md-6 offset-md-4">
+			<div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+			<span class="msg-error error"></span>
+			@if ($errors->has('g-recaptcha-response'))
+				<span class="invalid-feedback" style="display: block;">
+					<strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+				</span>
+			@endif
+		</div>
+	</div>
 <div class="form-group">
 	<button type="submit" class="btn btn-warning btn-block btn-lg mt-0" id='registerVendor'>REGISTER & PAY</button>
 </div>

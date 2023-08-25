@@ -391,3 +391,13 @@ if(!function_exists('user_verified_badge')){
 		return $response;
 	}
 }
+
+if(!function_exists('get_decimal_value')){
+	function get_decimal_value($number){
+		if($number <= 0)
+			return $number;
+		
+		$whole = floor($number); // 1
+		return $number - $whole; // .25
+	}
+}

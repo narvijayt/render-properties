@@ -12,6 +12,7 @@ use App\Match;
 use App\MatchPurchase;
 use App\User;
 use Mail;
+use Auth;
 use App\Mail\MatchRequestEmail;
 use App\Mail\MatchLendorRequestEmail;
 use App\Mail\ConfirmMatchRequestEmail;
@@ -30,7 +31,7 @@ class MatchesController extends Controller
 	public function index()
 	{
 		/** @var User $user */
-		$user = auth()->user();
+		$user  = User::with('userSubscription')->find(Auth::user()->user_id);
 
 		$matches = Match::findForUser($user, true);
         $matches->load('renewal');

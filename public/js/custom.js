@@ -29,7 +29,7 @@ $(document).ready(function() {
       }
     });
 
-    initializeCreditCardJsForForm('vendor_register');
+    // initializeCreditCardJsForForm('vendor_register');
     $(function() {
         $("#contact-form").validate({
             rules: {
@@ -108,6 +108,9 @@ $(document).ready(function() {
                 },
                 zip:{
                     required:true 
+                },
+                accept_terms:{
+                    required:true 
                 }
             },
             messages: {
@@ -161,11 +164,19 @@ $(document).ready(function() {
                 },
                 zip:{
                     required: "Please enter zipcode.",
+                },
+                accept_terms:{
+                    required: "Please accept our Terms and Conditions to contiue.",
                 }
             },
             submitHandler: function(form) {
                 $("button#doPaymentButton").attr("disabled", true);
-                form.submit();
+                // form.submit();
+                handleSubscrSubmit();
+                // const vendorForm = document.querySelector("#vendor_register");
+
+                // // Attach an event handler to subscription form
+                // vendorForm.addEventListener("submit", handleSubscrSubmit);
             }
         });
         
@@ -370,13 +381,13 @@ password: {
  
  $( "#vendor_registers" ).submit(function( event ) {
   var $captcha = $('#recaptcha' );
-      response = grecaptcha.getResponse();
+  response = grecaptcha.getResponse();
   if (response.length === 0) {
     $( '.msg-error').text( "The captcha-response field is required." );
     if( !$captcha.hasClass( "error" ) ){
       $captcha.addClass( "error" );
     }
-     e.preventDefault();
+    e.preventDefault();
   } else {
     $( '.msg-error' ).empty();
     $captcha.removeClass( "error" );
@@ -385,8 +396,8 @@ password: {
 
                 
 $( '#registerVendor' ).click(function(event){
-     var $captcha = $('#recaptcha' );
-      response = grecaptcha.getResponse();
+    var $captcha = $('#recaptcha' );
+    response = grecaptcha.getResponse();
   if (response.length === 0) {
     $( '.msg-error').text( "The captcha-response field is required." );
     if( !$captcha.hasClass( "error" ) ){

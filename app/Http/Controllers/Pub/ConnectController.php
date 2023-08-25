@@ -510,7 +510,8 @@ class ConnectController extends Controller
     
     public function searchProfile(Request $request)
     {
-        $allCategory = Category::orWhereNotNull('braintree_id')->get();
+        // $allCategory = Category::orWhereNotNull('braintree_id')->get();
+        $allCategory = Category::get();
         foreach($allCategory as $category){
             $allVendorWithCategory[] = $category->category_id;
         }
@@ -570,21 +571,21 @@ class ConnectController extends Controller
     public function fetchVendorCategoryUsers($slug){
         $findCatBySlug = VendorCategories::where('slug', '=', $slug)->get();
         if(count($findCatBySlug) > 0){
-        $findCat =  VendorCategories::find($findCatBySlug[0]->id); 
-        $categoryId = $findCat->id;
-        $query = User::where('user_type','=','vendor')
-			->active()->inRandomOrder()
-			->with('reviews');
-	    $query->with('categories')
-            ->whereHas('categories', function ($q) use ($categoryId) {
-                $q->where('category_id', '=', $categoryId);
-                $q->orWhere('category_id', 'like', '%,'.$categoryId. ',%');  
-           });
-        $query->where('user_type','=','vendor')->whereNotNull('braintree_id');
-        $simpleUsers = $query->paginate(20);
-        $users = $simpleUsers;
-        $selectedCategory = VendorCategories::find($categoryId);
-       	return view('pub.connect.vendor', compact('users','selectedCategory')); 
+			$findCat =  VendorCategories::find($findCatBySlug[0]->id); 
+			$categoryId = $findCat->id;
+			$query = User::where('user_type','=','vendor')
+				->where("payment_status",1)->inRandomOrder()
+				->with('reviews');
+			$query->with('categories')
+				->whereHas('categories', function ($q) use ($categoryId) {
+					$q->where('category_id', '=', $categoryId);
+					$q->orWhere('category_id', 'like', '%,'.$categoryId. ',%');  
+			});
+			$query->where('user_type','=','vendor')->where('payment_status',1);
+			$simpleUsers = $query->paginate(20);
+			$users = $simpleUsers;
+			$selectedCategory = VendorCategories::find($categoryId);
+			return view('pub.connect.vendor', compact('users','selectedCategory')); 
         }else{
             return redirect()->route('pub.connect.searchVendorProfile')->with('error','No such category available.');
         }

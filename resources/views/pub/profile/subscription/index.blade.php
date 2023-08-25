@@ -11,7 +11,10 @@
             <li class="list-group-item clearfix">
                 <div class="pull-left">
                     @if(!empty($userDetails->userSubscription))
-                        <h4>Monthly Lender Membership For {{ number_format( ($subscription->plan->amount/100),2, '.', '') }} {{ strtoupper($subscription->plan->currency) }}</h4>
+                        @php
+                            $membershipPrice = ($userDetails->user_type == "vendor") ? $userDetails->userSubscription->paid_amount :  ($subscription->plan->amount/100);
+                        @endphp
+                        <h4>Monthly {{ ucfirst($userDetails->user_type) }} Membership For {{ number_format( $membershipPrice,2, '.', '') }} {{ strtoupper($subscription->plan->currency) }}</h4>
                         <ul>
                             <li>
                                 <strong>Price Paid:</strong> 

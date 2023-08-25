@@ -30,11 +30,11 @@ class DetailController extends Controller
 	   	$user = Auth::user();
     	 if(Auth::user()->user_type == 'vendor')
     		{
-    		   $checkPaymnet  = User::find(Auth::user()->user_id);
+    		   $user  = User::with('userSubscription')->find(Auth::user()->user_id);
     		   $checkSubscription = Subscribe::where('user_id','=',Auth::user()->user_id)->get();
     		  /* if(count($checkSubscription) > 0)
     		   {*/
-        		   if($checkPaymnet->braintree_id !="")
+        		   if($user->payment_status != 0)
         		   {
         		       $vendorDet = VendorDetails::where('user_id','=',Auth::user()->user_id)->get();
         		       $getCategory = Category::where('user_id','=',Auth()->user()->user_id)->get();
@@ -58,7 +58,7 @@ class DetailController extends Controller
         		   }else{
         		    $userid = Auth::user()->user_id;
         	        Auth::logout();
-        	        return redirect()->route('vendorPayment', [$userid]); 
+        	        return redirect()->route('loadVendorPackages', ['id' => $userid]); 
         		   }
         	   /* }else{
         	        $userid = Auth::user()->user_id;

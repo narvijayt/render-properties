@@ -54,7 +54,7 @@ class LoginController extends Controller
 
             
             if($usr['user_type'] == 'vendor'){
-                $checkCategory = Category::where('user_id','=',$usr['user_id'])->get();
+                /*$checkCategory = Category::where('user_id','=',$usr['user_id'])->get();
                 if($checkCategory->isNotEmpty()){
                     if($checkCategory[0]->braintree_id !=""){
                         $this->validateLogin($request);
@@ -75,6 +75,24 @@ class LoginController extends Controller
                     }
                 }else{
                     return redirect('vendor-packages/'.$usr['user_id'])->with('message','Please make payment for login');
+                }*/
+
+                if($usr['payment_status'] == 0){
+                    return redirect()->route('loadVendorPackages', ["id" => $usr['user_id']])->with('message','Please make payment for login');
+                }else{
+                    $this->validateLogin($request);
+                    if ($request->has('email')) {
+                        $request->offsetSet('email', strtolower($request->get('email')));
+                    }
+                    if ($this->hasTooManyLoginAttempts($request)) {
+                        $this->fireLockoutEvent($request);
+                        return $this->sendLockoutResponse($request);
+                    }
+                    if ($this->attemptLogin($request)) {
+                        return $this->sendLoginResponse($request);
+                    }
+                    $this->incrementLoginAttempts($request);
+                    return $this->sendFailedLoginResponse($request);
                 }
             }
             if($usr['active'] != true) {
@@ -304,7 +322,17 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/profile/matches';
+    // protected $redirectTo = '/profile/matches';
+
+    public function redirectTo(){
+		$user = Auth::user();
+		// dd($user);
+		if($user->user_type =='vendor'){
+			return route('pub.profile.detail.edit') ;
+		}else{
+			return route('pub.profile.matches.index') ;
+		}
+	}
 
     /**
      * Create a new controller instance.
