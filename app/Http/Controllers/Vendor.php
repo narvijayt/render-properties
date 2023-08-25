@@ -26,7 +26,7 @@ use net\authorize\api\controller as AnetController;
 use App\VendorPackages;
 use App\Services\Stripe;
 use App\UserSubscriptions;
-use App\Mail\PaymentConfirmation;
+use App\Mail\VendorPaymentInvoice;
 use Response;
 use Illuminate\Support\Facades\Log;
 use App\Mail\NewUserAdminNotification;
@@ -472,7 +472,7 @@ class Vendor extends Controller
 
             if($userSubscription->paid_amount > 0){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
-                $email = new PaymentConfirmation($user);
+                $email = new VendorPaymentInvoice($user);
                 Mail::to($user->email)->send($email);
             }
 
