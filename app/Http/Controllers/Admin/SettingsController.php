@@ -148,7 +148,7 @@ class SettingsController extends Controller
                     "billing_scheme" =>  "tiered",
                     "recurring" => [
                         "usage_type" =>  "licensed",
-                        "interval" =>  "month",
+                        "interval" =>  "day",
                         "interval_count" =>  "1",
                         "trial_period_days" =>  "0"
                     ],
