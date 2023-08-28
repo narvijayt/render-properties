@@ -125,6 +125,9 @@ class StripeWebhook extends Controller
                             $user = User::find($userSubscription->user_id);
                             $email = new SubscriptionCancelled($user);
                             Mail::to($user->email)->send($email);
+                            if($user->user_type == "vendor"){
+                                Category::where('user_id', $user->user_id)->update(['braintree_id' => null]);
+                            }
                         }
 
                         $subscriptionArray['status'] = $subscription->status;

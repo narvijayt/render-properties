@@ -437,7 +437,11 @@ class Vendor extends Controller
                 $vendorDetails->user_id = $user->user_id;
                 $vendorDetails->vendor_coverage_area = null;
             }
-            
+            $vendorDetails->package_selected_city = '';
+            $vendorDetails->package_selected_state = '';
+            $vendorDetails->additional_city = '';
+            $vendorDetails->additional_state = '';
+
             if($vendorPackage->packageType == "city"){
                 $vendorDetails->package_selected_city = $formdata[$vendorPackage->packageType.'_name'];
                 if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
@@ -542,7 +546,114 @@ class Vendor extends Controller
 
                     return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
                 }else{
+                    $subscriptionArray = [
+                        'customer' => $user->stripe_customer_id,
+                        "default_payment_method" => $paymentMethod['id'],
+                    ];
+                    if($vendorPackage->packageType == "usa"){
+                        $subscriptionArray["items"] = [
+                            [ "price" => $vendorPackage->priceId ]
+                        ];
+                    }else{
+                        $quantity = 1;
+                        if($vendorPackage->packageType == "city"){
+                            $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
+                        }else if($vendorPackage->packageType == "state"){
+                            $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
+                        }
+                        $subscriptionArray["items"] = [
+                            [ 
+                                "quantity" => $quantity,
+                                "price" => $vendorPackage->priceId
+                            ]
+                        ];
+                    }
+        
+                    // dd($subscriptionArray);
+                    $subscription = (new Stripe())->createSubscription($subscriptionArray);
+                    if(isset($subscription->id)){
 
+                        $created = date("Y-m-d H:i:s", $subscription->created); 
+                        $current_period_start = date("Y-m-d H:i:s", $subscription->current_period_start); 
+                        $current_period_end = date("Y-m-d H:i:s", $subscription->current_period_end); 
+                        $status = $subscription->status;        
+            
+                        if(isset($user->userSubscription) && $user->userSubscription->exists == true){
+                            $userSubscription = UserSubscriptions::find($user->userSubscription->id);
+                            $userSubscription->plan_interval_count = $userSubscription->plan_interval_count +1;
+                        }else{
+                            $userSubscription = new UserSubscriptions();
+                            $userSubscription->user_id = $user->user_id;
+                        }
+
+                        $userSubscription->plan_id = $vendorPackage->priceId;
+                        $userSubscription->payment_method = "Stripe";
+                        $userSubscription->stripe_subscription_id = $subscription->id;
+                        $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
+                        $userSubscription->customer_email = $user->email;
+                        // $userSubscription->couponId = $couponId;
+                        
+                        if(!is_object($subscription->latest_invoice)){
+                            $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
+                        }else{
+                            $subscriptionInvoice = $subscription->latest_invoice;
+                        }
+            
+                        $userSubscription->stripe_payment_intent_id = $paymentMethod['id'];
+                        $userSubscription->paid_amount = ($subscriptionInvoice->amount_paid/100);
+                        $userSubscription->currency = $subscriptionInvoice->currency;
+                        $userSubscription->plan_interval = $subscription->plan->interval;
+                        $userSubscription->plan_period_start = $current_period_start;
+                        $userSubscription->plan_period_end = $current_period_end;
+                        $userSubscription->attach_payment_status = 1;
+                        $userSubscription->status = $status;
+            
+                        $userSubscription->save();
+            
+                        if($userSubscription->status == "active" || $userSubscription->status == "trialing"){
+                            User::Where('user_id', $user->user_id)->update(['payment_status' => 1, 'packageId' => $vendorPackage->id]);
+                        }
+            
+                        $vendorDetails = VendorDetails::where('user_id','=',$user->user_id)->first();
+                        if(is_null($vendorDetails)){
+                            $vendorDetails = new VendorDetails();
+                            $vendorDetails->user_id = $user->user_id;
+                            $vendorDetails->vendor_coverage_area = null;
+                        }
+                        $vendorDetails->package_selected_city = '';
+                        $vendorDetails->package_selected_state = '';
+                        $vendorDetails->additional_city = '';
+                        $vendorDetails->additional_state = '';
+
+                        if($vendorPackage->packageType == "city"){
+                            $vendorDetails->package_selected_city = $formdata[$vendorPackage->packageType.'_name'];
+                            if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
+                                $vendorDetails->additional_city = json_encode($formdata['additional_'.$vendorPackage->packageType]);
+                            }
+                        }else if($vendorPackage->packageType == "state"){
+                            $vendorDetails->package_selected_state = $formdata[$vendorPackage->packageType.'_name'];
+                            if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
+                                $vendorDetails->additional_state = json_encode($formdata['additional_'.$vendorPackage->packageType]);
+                            }
+                        }
+                        $vendorDetails->payable_amount = $userSubscription->paid_amount;
+                        $vendorDetails->payment_status = 'Completed';
+                        $vendorDetails->save();
+            
+                        $vendorCategory = Category::where('user_id', $user->user_id)->first();
+                        if(!is_null($vendorCategory)){
+                            $vendorCategory->braintree_id = 1;
+                            $vendorCategory->save();
+                        }
+            
+                        if($userSubscription->paid_amount > 0){
+                            $user = User::with("userSubscription")->find($userSubscription->user_id);
+                            $email = new VendorPaymentInvoice($user);
+                            Mail::to($user->email)->send($email);
+                        }
+            
+                        return Response::json(['subscription' => $userSubscription], 200);
+                    }
                 }
             }
 
@@ -557,8 +668,11 @@ class Vendor extends Controller
         {
             $email = new NewUserAdminNotification($user);
             // Mail::to(config('mail.from.address'))->send($email);
-            Mail::to("amit@culture-red.com")->send($email);
-            // Mail::to("richardtocado@gmail.com")->send($email); 
+            if(APP_ENV =="production"){
+                Mail::to("richardtocado@gmail.com")->send($email); 
+            }else{
+                Mail::to("amit@culture-red.com")->send($email);
+            }
             return back();
         }
         catch(Exception $e)

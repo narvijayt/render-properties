@@ -758,7 +758,11 @@ class UsersController extends Controller
             }
         }else{
             flash("Subscription membership is missing.")->error();
-            return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+            if($user->user_type == "vendor"){
+                return redirect()->route("loadVendorPackages", ["id" => $user_id]);
+            }else{
+                return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
+            }
         }
 
     }

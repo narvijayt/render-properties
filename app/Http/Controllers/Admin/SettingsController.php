@@ -178,14 +178,17 @@ class SettingsController extends Controller
             }
 
             if($request->input('status') != 0 ){
-                $statusQuery = VendorPackages::where([
-                    'status'    =>  1,
-                    'packageType'    =>  $request->input('packageType'),
-                ]);
                 if($request->input('packageId')){
-                    $statusQuery->where('id', '!=',  $request->input('packageId'));
+                    VendorPackages::where([
+                        'status'    =>  1,
+                        'packageType'    =>  $request->input('packageType'),
+                    ])->where('id', '!=',  $request->input('packageId'))->update(['status' => 0]);
+                }else{
+                    VendorPackages::where([
+                        'status'    =>  1,
+                        'packageType'    =>  $request->input('packageType'),
+                    ])->update(['status' => 0]);
                 }
-                $statusQuery->update(['status' => 0]);
             }
 
             if($request->input('packageId')){
