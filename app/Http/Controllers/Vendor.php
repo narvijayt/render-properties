@@ -542,6 +542,12 @@ class Vendor extends Controller
                         $vendorDetails->payable_amount = ($subscriptionInvoice->amount_paid/100);
                         $vendorDetails->payment_status = 'Completed';
                         $vendorDetails->save();
+
+                        $vendorCategory = Category::where('user_id', $user->user_id)->first();
+                        if(!is_null($vendorCategory)){
+                            $vendorCategory->braintree_id = 1;
+                            $vendorCategory->save();
+                        }
                     }
 
                     return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
