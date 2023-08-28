@@ -15,7 +15,7 @@
         <tr>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">1</td>
             <td style="border:1px solid #c1c1c1; padding:5px 10px;">
-                Monthly {{ ucfirst($user->user_type)}} Membership For ${{ $package->packageType == "usa" ? strtoupper($package->packageType) : ucfirst($package->packageType) }}
+                Monthly {{ ucfirst($user->user_type)}} Membership For {{ $package->packageType == "usa" ? strtoupper($package->packageType) : ucfirst($package->packageType) }}
                 @if($package->packageType != "usa")
                     @if($package->packageType == "city")
                         <br/><i>Primary City: {{ $vendorDetails->package_selected_city}}</i>
