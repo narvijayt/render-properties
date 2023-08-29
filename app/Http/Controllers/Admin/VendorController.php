@@ -323,10 +323,15 @@ class VendorController extends Controller
      
      public function listAllVendor(Request $request)
      {
-         $page_title = 'Render | Admin |All Vendor';
-         $page_description = 'Render Dashboard';
-         $users = User::where('user_type','=','vendor')->with('categories')->with('payment_details')->with('vendor_details')->orderBy('user_id','desc')->paginate(10);
-         return view('admin.vendor.allVendor',['users'=>$users,'page_title'=>$page_title,'page_description'=>$page_description]);
+        $page_title = 'Render | Admin |All Vendor';
+        $page_description = 'Render Dashboard';
+        $query = User::where('user_type','=','vendor')->with('categories')->with('vendorPackage')->with('vendor_details')->with('userSubscription');
+        if($request->input('payment_status') && $request->input('payment_status') != "all"){
+            $payment_status = $request->input('payment_status') == "unpaid" ? 0 : 1;
+            $query->where('payment_status', $payment_status );
+        }
+        $users = $query->orderBy('user_id','desc')->paginate(20);
+        return view('admin.vendor.allVendor',['users'=>$users,'page_title'=>$page_title,'page_description'=>$page_description]);
      }
      
      public function loadEditVendor($id)
@@ -350,9 +355,8 @@ class VendorController extends Controller
             return view('admin.vendor.editVendor',['findBanner'=>$findBanner,'allCat'=>$allCat,'vendorDet'=>$vendorDet,'users'=>$users,'page_title'=>$page_title,'page_description'=>$page_description]);
         }else{
           return redirect()->back()->with('error','No access to update user other than vendor.');
-        }
-            
-        }
+        }        
+    }
     
     public function updateVenderDetails(Request $request)
     {
@@ -387,6 +391,10 @@ class VendorController extends Controller
         }
         if($request->zip !="" && $request->zip !="null"){
             $findUser->zip = $request->zip;
+        }
+        $findUser->payment_status = $request->payment_status;
+        if($request->payment_status == 1 && empty($findUser->billing_first_name)){
+            $findUser->billing_first_name = $findUser->first_name;
         }
         $findUser->update();
         if($request->vendor_coverage_units !=""){

@@ -184,6 +184,11 @@ class User extends Authenticatable implements ISecurable
 	    return $this->hasMany(Payment::class,'user_id');
 	}
 	
+	public function vendorPackage()
+	{
+	    return $this->hasOne(VendorPackages::class,'id','packageId');
+	}
+	
 	
 	/**
 	 * Fetch related UserSetting record

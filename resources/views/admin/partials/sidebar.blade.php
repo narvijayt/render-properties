@@ -24,12 +24,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li>
+                    {{--<li>
                         <a href="#">
                             <i class="fa fa-circle-o"></i> New User
                         </a>
                     </li>
-                    {{--<li>
+                    <li>
                         <a href="{{ route('admin.users.index') }}">
                             <i class="fa fa-circle-o"></i> All Users
                         </a>
@@ -41,6 +41,10 @@
                     </li><li>
                         <a href="{{ url('cpldashrbcs/brokers') }}">
                             <i class="fa fa-circle-o"></i> Lenders
+                        </a>
+                    </li><li>
+                        <a href="{{ url('cpldashrbcs/all-vendors') }}">
+                            <i class="fa fa-circle-o"></i> Vendors
                         </a>
                     </li>
                     {{--<li>

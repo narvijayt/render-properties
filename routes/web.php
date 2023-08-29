@@ -317,7 +317,7 @@ Route::group([
         Route::get('/packages/{id}','VendorController@loadAllPackages')->name('loadVendPackages');
         Route::get('/package-payment','VendorController@loadPaymentLayout')->name('paymnet-layout');
         Route::post('/package-payment', 'VendorController@makeVendorPackagePayment');
-        Route::get('/all-vendors','VendorController@listAllVendor');
+        Route::get('/all-vendors','VendorController@listAllVendor')->name('admin.vendors');
         Route::get('/edit-vendor/{id}','VendorController@loadEditVendor');
         Route::post('edit-vendor/{id}','VendorController@updateVenderDetails');
         Route::get('/add-industry','VendorController@loadAddIndustry');
