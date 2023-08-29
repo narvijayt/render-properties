@@ -14,23 +14,27 @@ use App\Mail\PaymentConfirmation;
 use App\Mail\SubscriptionCancelled;
 use App\Mail\SubscriptionPaymentFailed;
 use App\Mail\VendorPaymentInvoice;
+use App\VendorDetails;
 
 class SubscriptionController extends Controller
 {
     //
 
     public function index(){
-        $userDetails = User::with("userSubscription")->find(Auth::user()->user_id);
+        $data['userDetails'] = User::with("userSubscription")->with('vendorPackage')->find(Auth::user()->user_id);
         $subscription = [];
-        if($userDetails->userSubscription->exists == true){
-            $subscription = (new Stripe())->getSubscription($userDetails->userSubscription->stripe_subscription_id);
-            if(!is_object($subscription->latest_invoice)){
-                $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
+        if($data['userDetails']->userSubscription->exists == true){
+            $data['subscription'] = (new Stripe())->getSubscription($data['userDetails']->userSubscription->stripe_subscription_id);
+            if(!is_object($data['subscription']->latest_invoice)){
+                $data['subscriptionInvoice'] = (new Stripe())->getInvoice($data['subscription']->latest_invoice);
             }else{
-                $subscriptionInvoice = $subscription->latest_invoice;
+                $data['subscriptionInvoice'] = $data['subscription']->latest_invoice;
             }
         }
-        return view('pub.profile.subscription.index', compact('userDetails', 'subscription'));
+        if($data['userDetails']->user_type == "vendor"){
+            $data['vendorDetails'] = VendorDetails::where('user_id','=',$data['userDetails']->user_id)->first();
+        }
+        return view('pub.profile.subscription.index', $data);
     }
 
     public function attachPaymentMethod(Request $request){

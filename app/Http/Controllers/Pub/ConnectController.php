@@ -580,7 +580,8 @@ class ConnectController extends Controller
 					$q->where('category_id', '=', $categoryId);
 					$q->orWhere('category_id', 'like', '%,'.$categoryId. ',%');  
 			});
-			$query->where('user_type','=','vendor')->where('payment_status',1);
+			// $query->where('user_type','=','vendor')->where('payment_status',1);
+			// echo $query->toSql(); die;
 			$simpleUsers = $query->paginate(20);
 			$users = $simpleUsers;
 			$selectedCategory = VendorCategories::find($categoryId);

@@ -13,19 +13,24 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">All Vendors</h3>
+                    <div class="col-md-10">
+                        <h3 class="box-title">Vendors</h3>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <h4>Total: {{ $users->total() }}</h4>
+                    </div>
                 </div>
                 <div id="dlt-msg" class="alert alert-success" style="display:none;"></div>
-                <div class="box-body">
+                <div class="box-body px-2">
                     <form name="broker-form" action="{{ route('admin.vendors') }}" method="get">
-                        {{--<div class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>By Name/Email</label>
                                 <div class="form-input">
                                     <input type="text" name="search" class="form-control" value="{{ isset($_REQUEST['search']) ? $_REQUEST['search'] : '' }}" />
                                 </div>
                             </div>
-                        </div>--}}
+                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Payment Status</label>
@@ -46,22 +51,15 @@
                             </div>
                         </div>
                     </form>
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="realor_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Sr No.</th>
-                                <th>Photo</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <th>Company</th>
                                 <th>Registered</th>
-                                <th>Package</th>
-                                <th>State</th>
-                                <th>City</th>
-                                <th>Payment Status</th>
-                                <th>Paid Amount</th>
-                                <th>Status</th>
+                                <th>Billing</th>
                                 <th>Action</th>
 
                             </tr>
@@ -72,74 +70,15 @@
                             @foreach($users as $user)
                             <tr class="row_<?= $user['user_id']; ?>">
                                 <td>{{$i++}}</td>
-                                <td><img src="{{$user->avatarUrl()}}" width="100%" alt="{{ $user->full_name() }}" />
-                                </td>
-                                @if(count($user->vendor_details) > 0 )
-                                <td><a class="vendordetail" data-toggle="modal" data-target="#viewvendor"
-                                        data-firstname="{{ucfirst($user->first_name)}}"
-                                        data-last="{{ucfirst($user->last_name)}}" data-emailreal="{{$user->email}}"
-                                        data-realphone="{{$user->phone_number}}"
-                                        data-city="{{$user->vendor_details[0]->package_selected_city}}"
-                                        data-state="{{$user->vendor_details[0]->package_selected_state}}"
-                                        data-package-price="{{$user->vendor_details[0]->payable_amount}}"
-                                        data-package-additional-city="@if($user->vendor_details[0]->additional_city !="") {{implode(',',json_decode($users[0]->vendor_details[0]->additional_city))}} @endif"
-                                        data-additional-state="@if($user->vendor_details[0]->additional_state !=""){{implode(',',json_decode($users[0]->vendor_details[0]->additional_state))}} @endif"
-                                        data-additional-paymentstatus="{{$user->vendor_details[0]->payment_status}}"
-                                        data-vendorcoverage="{{$user->vendor_details[0]->vendor_coverage_area}}"
-                                        data-vendor-services="{{$user->vendor_details[0]->vendor_service}}"
-                                        data-package-id="{{$user->braintree_id}}"></a></td>
-                                @else
-
                                 <td>{{ucfirst($user['first_name'])}}</td>
-                                @endif
                                 <td>{{$user['email']}}</td>
                                 <td>{{str_replace('-', '', $user['phone_number'])}}</td>
-                                <td>{{ucwords(substr($user['firm_name'], 0, 50))}}</td>
                                 <td>{{date('d M, Y',strtotime($user['created_at']))}}</td>
-                                <td>@if($user->vendorPackage )
-                                    <span class="success">{{ $user->vendorPackage->title }}</span> 
-                                @endif
-                                {{-- 
-                                    @if($user->braintree_id == '8')<span class="success">For Each Additional City</span>
-                                    @endif
-                                    @if($user->braintree_id == '9')<span class="success">For One state</span>@endif
-                                    @if($user->braintree_id == '10')<span class="success">For Each Additional State
-                                    </span>@endif
-                                    @if($user->braintree_id == '11')<span class="success">United States</span>@endif
-                                    @if($user->braintree_id == '13')<span class="success">Cash</span>@endif
-                                    @if($user->braintree_id == '') <span class="error">N/A</span>@endif
-                                --}}
-                                </td>
-
-                                <td>
-                                    @if($user->state !="") {{$user->state}}@else<span class="error">N/A</span> @endif
-                                </td>
-                                <td>
-                                    @if($user->city !="") {{$user->city}}@else<span class="error">N/A</span> @endif
-                                </td>
                                 <td>
                                     @if($user->payment_status == 0)
-                                        <span class="error">Pending </span>
+                                        <span class="error">Unpaid </span>
                                     @elseif($user->payment_status == 1)
-                                        <span class="success">Completed</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($user->payment_status == 1)
-                                        @if($user->userSubscription->exists)
-                                            <span class="success">${{ number_format($user->userSubscription->paid_amount, 2, '.', '') }}</span>
-                                        @else
-                                            <span class="success">Manual Paid</span>
-                                        @endif
-                                    @else
-                                        <span class="error">Not Paid</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($user['active'] == 1)
-                                    <span class="success">Active</span>
-                                    @else
-                                    <span class="error">Inactive</span>
+                                        <span class="success">Paid {{ ($user->vendorPackage) ? '('.ucfirst($user->vendorPackage->packageType).' Plan)': ''}}</span>
                                     @endif
                                 </td>
                                 <td> <a href="javascript:void(0)" class="delete-icon" data-toggle="tooltip"
@@ -157,11 +96,11 @@
                             @endif
                         </tbody>
                     </table>
-                </div>
-                <div class="page-div">
-                    @if(isset($users) && !empty($users))
-                    {{ $users->links() }}
-                    @endif
+                    <div class="page-div">
+                        @if(isset($users) && !empty($users))
+                            {{ $users->appends($_GET)->links() }}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

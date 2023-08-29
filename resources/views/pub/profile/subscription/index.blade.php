@@ -23,6 +23,35 @@
                                     <span class="badge badge-warning">{{ ucfirst($userDetails->userSubscription->status)}}</span>
                                 @endif
                             </li>
+                            @if($userDetails->vendorPackage)
+                                <li>
+                                    <strong>Package Type:</strong> 
+                                    <span class=""> {{ ucfirst($userDetails->vendorPackage->packageType )}}</span>
+                                    @if(!is_null($vendorDetails) && $userDetails->vendorPackage->packageType != "usa")
+                                    @php 
+                                        $primaryLabel = 'package_selected_'.$userDetails->vendorPackage->packageType;
+                                        $additionalLabel = 'additional_'.$userDetails->vendorPackage->packageType;
+                                    @endphp
+                                        <ul>
+                                            <li>
+                                                Primary {{ ucfirst($userDetails->vendorPackage->packageType)}}: <i>{{ $vendorDetails->$primaryLabel }}</i>
+                                            </li>
+                                            @if(!empty($vendorDetails->$additionalLabel))
+                                                @php 
+                                                    $additionalItems = json_decode($vendorDetails->$additionalLabel);
+                                                @endphp
+                                                <li>
+                                                    Additional  {{ $package->packageType == "city" ? "Cities" : "States"}}:
+                                                    @foreach($additionalItems as $item)
+                                                        <br/><i> - {{$item}}</i>
+                                                    @endforeach
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    @endif
+                                </li>
+                            @endif
+
                             <li><strong>Registred Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->created_at)) }}</span></li>
                             <li><strong>Start Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_start)) }}</span></li>
                             <li><strong>End Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_end)) }}</span></li>

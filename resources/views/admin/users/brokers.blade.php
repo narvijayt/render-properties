@@ -20,7 +20,7 @@
                             <h4>Total: {{ $users->total() }}</h4>
                         </div>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body px-2">
                         <form name="broker-form" action="{{ route('admin.brockers') }}" method="get">
                             <div class="col-md-3">
                                 <div class="form-group">

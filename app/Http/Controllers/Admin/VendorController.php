@@ -326,6 +326,37 @@ class VendorController extends Controller
         $page_title = 'Render | Admin |All Vendor';
         $page_description = 'Render Dashboard';
         $query = User::where('user_type','=','vendor')->with('categories')->with('vendorPackage')->with('vendor_details')->with('userSubscription');
+
+        if($request->input('search')){
+            $search_string = strtolower(trim($request->input('search')));
+            if(strpos($search_string, "@") ){
+                $query->where(DB::raw('lower(email)'), 'like', '%'. $search_string. '%');
+            }else if(strpos($search_string, ' ')){
+                $name1 = substr($search_string, 0, strrpos($search_string, ' '));
+                $name2 = substr($search_string, strpos($search_string, ' ') + 1);
+                
+                $query->where(function ($childquery) use ($name1, $name2) {
+    			    $childquery->where(function ($subQuery) use ($name1, $name2) {
+                        $subQuery->where(DB::raw('lower(first_name)'), 'like', '%'. $name1. '%')
+                            ->where(DB::raw('lower(last_name)'), 'like', '%'. $name2. '%');
+                    })->orWhere(function ($subQuery) use ($name1, $name2) {
+                        $subQuery->where(DB::raw('lower(first_name)'), 'like', '%'. $name2. '%')
+                            ->where(DB::raw('lower(last_name)'), 'like', '%'. $name1. '%');
+                    });
+                });
+                
+            }else{
+                $query->where(function ($childquery) use ($search_string) {
+                    $childquery->where(function ($subQuery) use ($search_string) {
+                        $subQuery->where(DB::raw('lower(first_name)'), 'like', '%'. $search_string. '%')
+                        ->orWhere(DB::raw('lower(last_name)'), 'like', '%'. $search_string. '%');
+                    })->orWhere(function ($subQuery) use ($search_string) {
+                        $subQuery->where(DB::raw('lower(email)'), 'like', '%'. $search_string. '%');
+                    });
+                });
+            }
+        }
+        
         if($request->input('payment_status') && $request->input('payment_status') != "all"){
             $payment_status = $request->input('payment_status') == "unpaid" ? 0 : 1;
             $query->where('payment_status', $payment_status );
