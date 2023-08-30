@@ -7,10 +7,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-md-6">Your Subscription Details</div>
+            <div class="col-md-6">Your Subscription Details </div>
             @if(in_array($userDetails->userSubscription->status,['active', 'trialing']) && is_null($userDetails->userSubscription->cancelled_at))
                 <div class="col-md-6">
                     <a data-toggle="modal" data-target="#subscription-cancel-modal" class="text text-danger pull-right text-link">Cancel Subscription</a>
+                </div>
+            @elseif(!is_null($userDetails->userSubscription->cancelled_at))
+                <div class="col-md-6">
+                    <span class="badge badge-danger pull-right">Cancelled</a>
                 </div>
             @endif
         </div>
