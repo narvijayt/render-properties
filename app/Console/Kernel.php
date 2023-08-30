@@ -36,6 +36,7 @@ class Kernel extends ConsoleKernel
          \App\Console\Commands\ReportNewUsersListEveryFriday::class,
          \App\Console\Commands\LenderPatiniumMembership::class,
          \App\Console\Commands\VendorPlatiniumMembership::class,
+         \App\Console\Commands\SubscriptionStatus::class,
          
     ];
 
@@ -63,7 +64,11 @@ class Kernel extends ConsoleKernel
 			->daily()
 			->at('9:00')
 			->timezone('America/New_York');
-			
+		
+		$schedule->command('subscription:validate-payment')
+			->daily()
+			->at('6:00')
+			->timezone('America/New_York');
 			
 		/*	$schedule->command('lender-platinium:cron')
 			->tuesdays()

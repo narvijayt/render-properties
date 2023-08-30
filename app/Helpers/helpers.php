@@ -401,3 +401,19 @@ if(!function_exists('get_decimal_value')){
 		return $number - $whole; // .25
 	}
 }
+
+
+if(!function_exists('subscription_cancelation_reasons')){
+	function subscription_cancelation_reasons(){
+		return [
+			'too_expensive'	=>	'It’s too expensive',
+			'missing_features'	=>	'Some features are missing',
+			// 'switched_service'	=>	'I’m switching to a different service',
+			'unused'	=>	'I don’t use the service enough',
+			// 'customer_service'	=>	'Customer service was less than expected',
+			// 'too_complex'	=>	'Ease of use was less than expected',
+			// 'low_quality'	=>	'Quality was less than expected',
+			'other'	=>	'Other reason',
+		];
+	}
+}

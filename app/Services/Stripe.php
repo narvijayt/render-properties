@@ -158,6 +158,33 @@ class Stripe{
         }
         return ['status' => 400, 'error' => true, 'message' => $errors];
     }
+    
+    /**
+     * Cancel customer subscription
+     * 
+     * @accept $subscription_id
+     * 
+     * @return array or object  |   succsss or error
+     */
+    public function cancelSubscription($subscription_id = '', $args = []){
+
+        $errors = [];
+        if(empty($subscription_id)){
+            $errors["invalid_subscription_id"] = "Invalid Subscription ID";
+        }
+
+        if(empty($errors)){
+            try {
+                $secret_key = env('APP_ENV') == "production" ? env('STRIPE_LIVE_SECRET_KEY') : env('STRIPE_TEST_SECRET_KEY');
+                $stripe = new \Stripe\StripeClient($secret_key);
+                $subscription = $stripe->subscriptions->cancel($subscription_id, $args);
+                return $subscription;
+            }catch(Exception $e) {   
+                $errors['api_error_message'] = $e->getMessage();   
+            }
+        }
+        return ['status' => 400, 'error' => true, 'message' => $errors];
+    }
 
 
     /**

@@ -176,6 +176,7 @@ Route::group([
 		Route::get('/profile/subscriptions', 'Profile\SubscriptionController@index')->name('profile.subscription.index');
         Route::post('/profile/subscriptions/renew', 'Profile\SubscriptionController@renew')->name('profile.subscription.renew');
         Route::post('/profile/subscriptions/attach-payment-method', 'Profile\SubscriptionController@attachPaymentMethod')->name('profile.subsctiption.attachPaymentMethod');
+        Route::post('/profile/subscriptions/cancel', 'Profile\SubscriptionController@cancel')->name('profile.subsctiption.cancel');
 		Route::get('/profile/payment-invoice', 'Profile\SubscriptionController@paymentInvoice')->name('profile.subscription.paymentInvoice');
         
         // Payments
