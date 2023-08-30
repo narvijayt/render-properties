@@ -40,7 +40,7 @@
                             <li><strong>Start Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_start)) }}</span></li>
                             <li><strong>End Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->plan_period_end)) }}</span></li>
                             @if(!is_null($userDetails->userSubscription->cancelled_at))
-                            <li><strong>Cancelled Date:</strong> <span class="">{{ date("d-m-Y, h:i:s A", strtotime($userDetails->userSubscription->cancelled_at)) }}</span></li>
+                            <li><strong>Cancellation Date:</strong> <span class="">{{ date("d-m-Y", strtotime($userDetails->userSubscription->cancelled_at)) }}</span></li>
                             @endif
                         </ul>                        
                     @endif
