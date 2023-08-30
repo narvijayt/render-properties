@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Category;
 use Mail;
 use App\Services\Stripe;
 use App\UserSubscriptions;

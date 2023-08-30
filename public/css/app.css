@@ -1717,7 +1717,11 @@ button#registerVendor {
 
 /**************** 29-08-2023 Starts *********************/
 .px-2{ padding-left: 15px; padding-right: 15px;}
+.text-link{ cursor: pointer;}
 /**************** 29-08-2023 Ends *********************/
+/**************** 30-08-2023 Starts *********************/
+.badge-danger{ background: #a94442 !important;}
+/**************** 30-08-2023 Ends *********************/
 
 @media(max-width:625px)
 {

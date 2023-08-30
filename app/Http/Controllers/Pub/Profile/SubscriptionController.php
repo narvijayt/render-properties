@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use App\Category;
 use App\UserSubscriptions;
 use Response;
 use App\Services\Stripe;
@@ -15,6 +16,7 @@ use App\Mail\SubscriptionCancelled;
 use App\Mail\SubscriptionPaymentFailed;
 use App\Mail\VendorPaymentInvoice;
 use App\VendorDetails;
+use Illuminate\Support\Facades\Validator;
 
 class SubscriptionController extends Controller
 {
@@ -55,6 +57,48 @@ class SubscriptionController extends Controller
             }
 
             return Response::json(['customerPaymentMethod' => $customerPaymentMethod], 200);
+        }
+    }
+    
+    public function cancel(Request $request){
+        parse_str($request->input('formData'), $formdata);
+        $rules = array(
+            'reason'    => 'required', // make sure the reason is available
+        );
+
+        $validator = Validator::make($formdata, $rules);
+
+        if ($validator->fails()) {
+            return Response::json(['success' => false, "message" => $validator->messages()], 400);
+        }else{
+            $userSubscription = UserSubscriptions::where("user_id",Auth::user()->user_id)->first();
+            $cancelArray = [
+                'cancellation_details'  =>   [
+                    'comment'   =>  $formdata['comment'],
+                    'feedback'   =>  $formdata['reason']
+                ]
+            ];
+            $subscriptionData = (new Stripe())->cancelSubscription($userSubscription->stripe_subscription_id, $cancelArray);
+            if($subscriptionData->id){
+                $userSubscription->cancelled_at = date("Y-m-d H:i:s");
+                $userSubscription->save();
+
+                if($userSubscription->status == "trialing"){
+                    $user = User::find($userSubscription->user_id);
+                    if($user->payment_status == 1){
+                        $user->payment_status = 0;
+                        $user->save();
+                    }
+
+                    if($user->user_type == "vendor"){
+                        Category::where('user_id', $user->user_id)->update(['braintree_id' => null]);
+                    }
+                }
+                
+                return Response::json(['success' => true, "message" => "Cancelled successfully"], 200);
+            }else{
+                return Response::json(['success' => false, "message" => $subscriptionData->message], 400);
+            }
         }
     }
 
