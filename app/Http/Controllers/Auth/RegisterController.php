@@ -30,6 +30,7 @@ use App\Services\Geo\GeolocationService;
 use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
 use App\VendorPackages;
+use App\Testimonial;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,32 @@ class RegisterController extends Controller
 			return view('auth.register', compact('user', 'registerType', 'lenderRegPage', 'realtorRegPage'));
 		}
         return view('auth.register', compact('registerType', 'lenderRegPage', 'realtorRegPage'));
+	}
+	
+	public function showLenderRegistrationForm(Request $request)
+	{
+	    $registerType = 'lender';
+	    $lenderRegPage = Page::find(PageIdEnum::LENDERREGISTER);
+	    $testimonials = Testimonial::all();
+        if ($request->input('remember_token')) 
+        {
+			$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
+			return view('auth.lender-register', compact('user', 'registerType', 'lenderRegPage','testimonials'));
+		}
+        return view('auth.lender-register', compact('registerType', 'lenderRegPage','testimonials'));
+	}
+	
+	public function showRealtorRegistrationForm(Request $request)
+	{
+        $registerType = 'realtor';
+        $realtorRegPage = Page::find(PageIdEnum::REALTORREGISTER);
+        $testimonials = Testimonial::all();
+        if ($request->input('remember_token')) 
+        {
+    		$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
+    		return view('auth.realtor-register', compact('user', 'registerType', 'realtorRegPage','testimonials'));
+    	}
+        return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials'));
 	}
 
 	/**
@@ -379,6 +406,7 @@ class RegisterController extends Controller
     {
         $data['vendorPackages'] = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
         $data['selectedPackage'] = $request->has('package') ? $request->get('package') : '';
+        $data['testimonials'] = Testimonial::all();
         return view('auth.vendor', $data );
     }
     
@@ -555,6 +583,7 @@ class RegisterController extends Controller
      {
         
         $findVendor = User::where('user_id','=',$id)->where('user_type','=','vendor')->first();
+        $testimonials = Testimonial::all();
         if(count($findVendor) == 0){
             return redirect('/vendor-register')->with('error','No vendor found with this details.');
         }

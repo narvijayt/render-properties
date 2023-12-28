@@ -36,29 +36,36 @@
 @section("content")
     <div class="hero-banner ">
         <div class="home-banner-container">
-            <div class="home-banner-topbar">
+		{{-- <div class="home-banner-topbar">
                 <div class="container"><h1>Real Estate <span class="">+</span> Lending <span class="">=</span> Deals</h1></div>
-            </div>
+		</div> --}}
         
             <div class="banner-body-section">
                 <div class="container">
                     <div class="row ">
-                    <div class="col-sm-6 hero-intro">
+                    <div class="col-sm-5 hero-intro">
                         <!---<span>CONNECTING<br></span> Homes Buyers <span> to </span><br>Top Real Estate Agents<br><span>and</span> Loan Officers <br><span>in</span> YOUR LOCAL AREA-->
                         <!---Connecting <span>Home Buyers</span> and <span>Sellers</span> to  <span>Top Real Estate Agents,</span> <span>Trusted Mortgage Loan Officers</span> and <span>Reputable Home Service Providers</span> and <span>Vendors</span> -->
                         <div class="col-sm-5 hero-img-mobile">
     				        {{--<img src="{{url('/')}}/img/hero-mobile-image-01.png">--}}
-    				        <img src="{{url('/')}}/img/home-banner.png">
+    				        {{--<img src="{{url('/')}}/img/home-banner.png">--}}
     			        </div>
-    			        
-                        <div class="home-banner-heading">Render: the connecting<br>point like no other.</div>
-    					<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>
+    			        <h3 class="m-0 h3">The Real Estate Network</h3>
+                        <div class="home-banner-heading">Get Deals Sooner. <br> Close Deals Faster.</div>
+    					{{--<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>--}}
+						<p class="pr-4"><b>Realtors, Lenders, & Vendors.</b> <br> Connect with top-tier real estate pros that want to be contacted, grow your business, and expand your horizons.</p>
+						<p class="mt-1"><b>SEE SUBSCRIPTIONS FOR…</b></p>
     					
-                        <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button>
+                        {{-- <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button> --}}
+						<div class="d-flex-btn-group">
+                     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
+	               <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
+	            <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	             </div>
                     </div>
-                    <div class="col-sm-6 hero-img-rt">				 
+                    <div class="col-sm-7 hero-img-rt">				 
     				    {{--<img src="{{url('/')}}/img/home-rt-images-2.png">--}}
-    				    <img src="{{url('/')}}/img/home-banner.png">
+    				   {{-- <img src="{{url('/')}}/img/home-banner.png"> --}}
                        <!-- <iframe src="https://player.vimeo.com/video/317507913" width="100%" height="288" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
                         
                         <!--- <iframe src="https://player.vimeo.com/video/335478972" width="100%" height="288" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>-->
@@ -159,53 +166,44 @@
     {{--</div>--}}
     {{--</div>--}}
     {{--</div>--}}
-    <div class="member-spotlight c-pt-3" style="">
-        <div class="container" style="">
-		
-		     
-            <div class="row agents-outer">
-                <div class="col-md-12">
-					<p class="text-center mb-2">Connect with Trusted Mortgage Loan Officers & Top Real Estate Agents NOW!</p>
-                    <h1 class="text-center spotlight__section-title mb-3">Gain Access to Render’s Vetted, Exclusive Database</h1>
-                </div>
-            </div>
-            <div class="row">
-                
-                <?php /** @var \App\User $user */ ?>
-                @foreach($spotlightUsers as $user)
-                <div class=" col-lg-2 col-md-3 col-sm-4 col-xs-6 text-center mb-1 @if ($user->designation !="" && $user->designation !='null' ) standard-agent @endif">
-                      <div class="profile-box-inner">
-                  <div class="designation" style="display:none"><label>@if($user->designation !="" && $user->designation !='null'){{$user->designation}}@endif </label> <img src="{{ asset('img/ribben.png') }}"></div>
-         <img src="{{ $user->avatarUrl(\App\Enums\AvatarSizeEnum::MEDIUM) }}" class="search-result__avatar"> 
-                    <h4 class="mb-0 pb-0">
-                        <a href="{{ route('pub.user.show', $user->user_id) }}">{{ $user->first_name }} {!! user_verified_badge($user->user_id) !!}</a>
-                         <small class="spotlight__user-detail"><strong class="text-dark"> 
-                         @if($user->user_type == 'realtor'){{ucwords('real estate agent')}}@endif
-                         @if($user->user_type == 'broker'){{ucwords('lender')}}@endif
-                         @if($user->user_type == 'vendor'){{ucwords('vendor')}}@endif
-                         </strong></small>
-                        </h4>
-                        <p class="pt-2">
-            <i class="fa fa-map-marker"></i>  @if($user->state !="")@if($user->city !=""){{str_limit($user->city,10) }},@endif {{ $user->state }}@endif</p> <p>
-                                <a href="{{ route('pub.user.show', $user->user_id) }}" class="btn btn-warning search-result__profile-link">View Profile</a>
-                                </p>
-                                </div>
-                                </div>
-                                @endforeach
-                                
-                                
-               
-				  <div class="col-md-12 mb-2 d-inline-block">
-			<a data-toggle="modal" data-target="#myModal1" class="btn btn-warning util__mb--small border-btn text-uppercase btn-searcModal">Search Profiles</a>
-			</div>
-            </div>
-		
-			
-		</div>
-    </div>
+	<div class="render-network-section py-3">
+	<div class="container">
+	
+	<h2 class="text-center text-white h1  mb-1 mt-0">The Render Network</h2>
+	<p class="text-box-center text-left text-white"> Render is a social network exclusively for real estate professionals that want to connect with other real estate pros. We’re all working towards the same goals… get more deals, close more deals.</p>
+	<div class="row ">
+	<div class="col-md-12 center-box text-center mt-2">
+	<div class="col-md-4 px-4">
+	<img src="{{url('/')}}/img/connect-icon.png">
+	<h3 class="text-orange">Get Seen by people <br> that want to connect:</h3>
+	<p class="text-white">Render was designed to connect and match real estate pros that are open to new relationships. With Render, you can spread your name, build your reputation, scale your business, and do it all with professionals that are open and looking for your service. No more cold calling and talking to the wrong people.</p>
+	</div>
+	<div class="col-md-4 px-4">
+	<img src="{{url('/')}}/img/monitoring-icon-02.png">
+	<h3 class="text-orange">More Leads & Referrals:</h3>
+	<p class="text-white">Everyone knows that the more you refer, the more referrals you’ll get. That’s what the Render Network is all about. Getting qualified leads is as easy as making a connection. Together, we all grow faster.</p>
+	</div>
+	<div class="col-md-4 px-4">
+	<img src="{{url('/')}}/img/sale-icon-1.png">
+	<h3 class="text-orange">Speed to Sale:</h3>
+	<p class="text-white">It takes a whole crew to move a property. Realtors, Lenders, Inspectors, Contractors, Title Agents, Lawyers, Photographers, and maybe even a handful of dudes with a truck. And connecting with everyone you need to make that sale has never been easier with Render.</p>
+	</div>
+	</div>
+	<div class="col-md-12 center-box text-center mt-0 mb-3">
+	<h4 class="text-white text-center mb-0">SIGN UP FOR…</h4>
+	<div class="d-flex-btn-group justify-content-center">
+     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
+	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
+	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 	
 	<div class="testimonials">
         <div class="container">
+		  <h2 class="h1 mt-0 mb-1">Testimonials</h2>
             @if(!empty($testimonials))
                 <div id="testimoniial-slider" class="carousel slide" data-ride="carousel">
                 @php $flag = 0; @endphp
@@ -228,12 +226,12 @@
                         @else
                             <div class="item carousel-item">
                         @endif
-                         
+                          <p class="overview"><b>{{ucwords($testimonial['name'])}}</b></p>
                             <p class="testimonial">
                                 <i class="fa fa-quote-right fa-3x fa-fw"></i>
                                 @php echo ucfirst(html_entity_decode($testimonial['description'])); @endphp
                             </p>
-                            <p class="overview"><b>{{ucwords($testimonial['name'])}}</b></p>
+                           
                         </div>
                         @php $flag++; @endphp
                     @endforeach
@@ -247,117 +245,114 @@
             </div>
             @endif
         </div>
-    </div>
-
-    <div class="pitch pitch-outer">
-        <div class="container">
-            <div class="row">
-			<div class=" col-md-12">
-			<h2 class="text-center">Select to Connect</h2>
-			<p  class="text-center">Connect with Trusted Mortgage Loan Officers & Top Real Estate Agents NOW!</p>
-			</div>
-			<div class="col-md-8 col-md-offset-2 col-xs-offset-0 col-xs-12">
-                <div class="col-md-6 pitch__item">
-                        <div class="agent-btn">
-                            @if(isset($homePage) && !empty($homePage))
-                                @if($homePage->realtor_box_content != '')
-                                <a href="{{ route('register', [ 'type' => 'realtor' ]) }}" style="display: block;"  ><p>{{$homePage->realtor_box_content}}</p></a>
-                                @else
-                                    {{--<p>I'm a Real Estate Agent</p>
-                                    <a href="{{ route('register', [ 'type' => 'realtor' ]) }}" class="btn btn-warning text-uppercase btn-registerModal" >Register Now</a>--}}
-									 <a href="{{ route('register', [ 'type' => 'realtor' ]) }}" class="btn btn-warning text-uppercase btn-registerModal" >I AM A REAL ESTATE AGENT</a>
-                                @endif
-                            @else
-                                <p>I'm a Real Estate Agent</p>
-                                <a href="{{ route('register', [ 'type' => 'realtor' ]) }}" class="btn btn-sm btn-warning text-uppercase btn-registerModal" >Register Now</a>
-                            @endif
-                        </div>
-                    {{--<h3 class="text-center">Sign up to enjoy these benefits:</h3>--}}
-                    {{--<ul>--}}
-                    {{--<li>Build your referral/lead network with active real estate buyer agents / You keep 100% of the referral fee</li>--}}
-                    {{--<li>Marketing of your bio and personal website</li>--}}
-                    {{--<li>Receive 30 days real estate coaching from nationally renowned Bill "The Coach" Sparkman</li>--}}
-                    {{--<li>Online marketing presence for consumers searching for real estate professionals</li>--}}
-                    {{--<li>Receive Mortgage pre approved buyer leads from Lenders. 95% of the clients looking to get pre approved do not--}}
-                    {{--have a real estate agent and our lender partners refer them out to real estate agents on the site.</li>--}}
-                    {{--<li>Connect with a Lender that will be a benefit to your career</li>--}}
-                    {{--</ul>--}}
-
-                    {{--<div class="pitch__links hidden-md hidden-lg">--}}
-                    {{--<a href="{{ route('register') }}" class="btn btn-warning pitch__link">Sign Up</a>--}}
-                    {{--<a href="{{ route('register') }}" class="pitch__link">View Pricing, Terms &amp; Conditions</a>--}}
-                    {{--</div>--}}
-                </div>
-                <div class="col-md-6 pitch__item">
-                        <div class="lender-btn">
-                           @if(isset($homePage) && !empty($homePage))
-                                @if($homePage->lender_box_content != '')
-                                    <p>{{$homePage->lender_box_content}}</p>
-                                @else
-                                      {{--<p>I'm a Lender</p>
-                                    <a href="{{ route('register', [ 'type' => 'lender' ]) }}" class="btn btn-warning text-uppercase btn-registerModal" >Register Now</a>--}}
-									<a href="{{ route('register', [ 'type' => 'lender' ]) }}" class="btn btn-warning text-uppercase btn-registerModal" >I AM A LENDER</a>
-                                @endif
-                            @else
-                                <p>I'm a Lender</p>
-                                <a href="{{ route('register', [ 'type' => 'lender' ]) }}" class="btn btn-warning text-uppercase btn-registerModal" >Register Now</a>
-                            @endif
-                        </div>
-                    {{--<h3 class="text-center">Sign up to enjoy these benefits:</h3>--}}
-                    {{--<ul>--}}
-                    {{--<li>Connect with active, productive buyers real estate agents</li>--}}
-                    {{--<li>Build your real estate agent referral/lead network</li>--}}
-                    {{--<li>Search and find top producing buyer real estate agents in your area that want to be--}}
-                    {{--connected to a new lender--}}
-                    {{--</li>--}}
-                    {{--<li>Low cost mortgage pre-approval leads available</li>--}}
-                    {{--<li>Receive reviews from your connection</li>--}}
-                    {{--<li>Receive 30 days mortgage coaching from nationally renowned Bill "The Coach" Sparkman</li>--}}
-                    {{--<li>Online marketing presence for consumers searching mortgage professionals</li>--}}
-                    {{--</ul>--}}
-
-                    {{--<div class="pitch__links hidden-md hidden-lg">--}}
-                    {{--<a href="{{ route('register') }}" class="btn btn-warning pitch__link">Sign Up</a>--}}
-                    {{--<a href="{{ route('register') }}" class="pitch__link">View Pricing, Terms &amp; Conditions</a>--}}
-                    {{--</div>--}}
-                </div>
-
-                {{--
-                    <div class="col-md-4 pitch__item">
-                        <div class="consumer-btn">
-    						 <a href="{{ url('/vendor-register') }}" class="btn btn-warning text-uppercase btn-registerModal" >I AM A VENDOR</a>
-                        </div>                    
-                    </div>
-                --}}
-                
-            </div>
-            </div>
-
-            {{--<div class="row hidden-xs hidden-sm">--}}
-            {{--<div class="col-md-6 text-center">--}}
-            {{--<a href="{{ route('register') }}" class="btn btn-warning util__mb">Sign Up</a><br/>--}}
-            {{--<a href="{{ route('register') }}" class="util__mb">View Pricing, Terms &amp; Conditions</a>--}}
-            {{--</div>--}}
-            {{--<div class="col-md-6 text-center">--}}
-            {{--<a href="{{ route('register') }}" class="btn btn-warning util__mb">Sign Up</a><br/>--}}
-            {{--<a href="{{ route('register') }}" class="util__mb">View Pricing, Terms &amp; Conditions</a>--}}
-            {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="row">
-                <div class="col-md-6 text-center col-md-offset-3">
-                    <a style="display:none;" href="{{ route('register') }}" class="btn btn-warning util__mb">Register</a><br/>
-                    <a href="{{ route('pub.terms-and-conditions.index') }}"     class="util__mb">View Terms &amp; Conditions</a>
-                </div>
-            </div>--}}
-
-
-        </div>
+		<div class="col-md-12 center-box text-center mt-0 mb-3">
+	<h4 class="text-center mb-0">I WANT TO SEE MORE.</h4>
+	<div class="d-flex-btn-group justify-content-center">
+     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
+	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
+	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	</div>
+	</div>
     </div>
 	
-
-
-            <!-- Modal -->
-<div id="myModal" class="modal fade searching-popup" role="dialog">
+	<div class="works-section-outer py-3">
+        <div class="container">
+		<div class="row ">
+	<div class="col-md-12 center-box text-left mt-0">
+	<div class="col-md-6 pr-4">
+	<h2 class="text-left text-white h1  mb-1 mt-0">How It Works For…</h2>
+	<h4 class="text-left text-white m-0">Realtors:</h4>
+	<p class="text-left text-white">
+	 Whether you’re a seasoned real estate agent or just starting, Render Properties provides you with a platform to connect with the right lenders and vendors for your clients. Easily find mortgage experts, photographers, home stagers, and more to enhance your services and provide a comprehensive experience to your clients. 
+	</p>
+	<a class="sign-link text-orange" href="{{ route('register', [ 'type' => 'realtor' ]) }}">Free Sign Up For Realtors</a>
+	</div>
+	<div class="col-md-6 ">
+	<img src="{{url('/')}}/img/realtors-img-new.png">
+	</div>
+	</div>
+	
+	<div class="col-md-12 center-box text-left mt-3">
+	<div class="col-md-6 ">
+	<img src="{{url('/')}}/img/lenders-img-new.png">
+	</div>
+	<div class="col-md-6 pl-4">
+	<h4 class="text-left text-white m-0">Lenders:</h4>
+	<p class="text-left text-white">
+	For lenders, Render Properties offers a direct line to real estate professionals seeking financing solutions. Connect with realtors who are open to establishing new relationships and have clients in need of mortgage services, ensuring a seamless and efficient lending process. No more Cold Calling or meet and great. 
+	</p>
+	<a class=" sign-link text-orange" href="{{ route('register', [ 'type' => 'lender' ]) }}">Sign Me Up</a>
+	</div>
+	
+	</div>
+	
+	<div class="col-md-12 center-box text-left mt-3">
+	<div class="col-md-6 pr-4">
+	<h4 class="text-left text-white m-0">Vendors:</h4>
+	<p class="text-left text-white">
+	If you’re a vendor specializing in real estate services such as photography, staging, or property inspection, Render Properties is your gateway to a wider network of potential clients. Realtors on our platform are actively seeking new partnerships, allowing you to showcase your skills and offerings to those who need them. 
+	</p>
+	 <a class="sign-link text-orange" href="{{ url('vendor-register') }}">See My Subscription Options</a>
+	</div>
+	<div class="col-md-6 ">
+	<img src="{{url('/')}}/img/vendors-img-new.png">
+	</div>
+	</div>
+    </div>
+    </div>
+    </div>
+	<div class="profits-section-outer">
+        <div class="container pb-0">
+		<div class="row ">
+		<div class="col-md-12 center-box text-center mt-3">
+		<h2 class="text-center h1  mb-1 mt-0">All Profits Are Yours! <br> We Never Take A Cut.</h2>
+		<p class="text-primary">Unlike other online marketplaces, we never take a dime of <br> your proceeds. You only pay for your monthly subscription, <br> so you can do all the deals you want risk-free.</p>
+		<div class="col-md-12 center-box text-center mt-1 mb-3 ">
+	<h4 class="text-center text-primary mt-0 mb-0 ">CHECK IT OUT!</h4>
+	<div class="d-flex-btn-group justify-content-center">
+     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
+	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
+	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	</div>
+	</div>
+		</div>
+		</div>
+    </div>
+    </div>
+	
+	<div class="instant-access-outer">
+        <div class="container pb-0">
+		<div class="row ">
+		<div class="col-md-12 center-box text-left">
+		<div class="col-md-3">
+		<img src="{{url('/')}}/img/richard-image-home.png">
+		</div>
+		<div class="col-md-9 instant-text">
+		<h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br> Nationwide!</h2>
+		
+		<p class="text-primary">Render was created by The Carolinas leading mortgage and Real Estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
+		<p class="text-primary">No more cold-calling. </p>
+		<p class="text-primary">No more hours of searching for the pros.</p>
+		<p class="text-primary">No more incompetent real estate pros.</p>
+		<p class="text-primary">And you get access to talent nationwide.Sign up now and see what the Render network can do for you.</p>
+		
+		<div class="center-box text-left mt-1 mb-3 pt-1">
+	<h4 class="text-left text-primary mt-0 mb-0">SIGN ME UP!</h4>
+	<div class="d-flex-btn-group ">
+     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
+	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
+	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	</div>
+	</div>
+		</div>
+		</div>
+    </div>
+		
+    </div>
+    </div>
+	
+	
+	<div id="myModal" class="modal fade searching-popup" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -386,25 +381,22 @@
 
   </div>
 </div>
-
+ @if(isset($homePage) && !empty($homePage))
+	 @if($homePage->footer != '')
     <div class="map-grow">
-        <div class="container">
+        <div class="container p-0">
            <div class="row text-center">
 		   
 		     
 		      <div class="col-md-6 col-md-offset-3">
-                 @if(isset($homePage) && !empty($homePage))
-                        @if($homePage->footer != '')
-                            @php echo html_entity_decode($homePage->footer); @endphp
-                        @endif
-                    @endif
-					</div>
+                 @php echo html_entity_decode($homePage->footer); @endphp
+                  </div>
 					
-				
-					
-           </div>
+			</div>
         </div>
     </div>
+	 @endif
+	 @endif
     
     
 
@@ -433,52 +425,8 @@
             </div>
         </div>
     @endif
-<div class="container-fluid leading-industry-section">
-<div class="row">
-<div class="col-md-6 space-left">
-<h2>Get the inside <br> scoop from <br> leading industry <br> professionals.</h2>
-<button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button>
-</div>
-<div class="col-md-6 pr-0">
-<img src="{{url('/')}}/img/industry-img02.png">
-</div>
-</div>
-</div> 
-<div class="business-outer">
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-7 space-left">
-<div class="render-logo">
-<img src="{{url('/')}}/img/render-logo.png">
-</div>
-<h2>{!! get_application_name() !!} Makes Business <br>
-Better For Everyone.</h2>
-<div class="business-box">
-<h5>Realtors Join <span class="badge">FREE!</span></h5>
-<p>Reap the benefits of seamless connections <br> 
-with lenders, as well as home buyers and sellers, <br> 
-and watch your business thrive!</p>
-</div>
-<div class="business-box">
-<h5>Lenders only pay <span class="badge">$29/mo.</span></h5>
-<p>Engage with an exceptionally rich network of <br> 
-realtors. Team up and generate more loans than ever!</p>
-</div>
-{{--
-    <div class="business-box">
-        <h5>Vendors! Only <span class="badge">$35/mo.</span></h5>
-        <p>Get exclusive advertising and access to a stellar <br> 
-        network of professionals for just $35 a month.</p>
-    </div>
---}}
-<button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button>
-</div>
-<div class="col-md-5 business-img-box">
-<img src="{{url('/')}}/img/art-0333.png">
-</div>
-</div>
-</div>
-</div>
+
+
 <!-- Modal -->
     <div id="registerModal" class="modal fade searching-popup" role="dialog">
         <div class="modal-dialog">

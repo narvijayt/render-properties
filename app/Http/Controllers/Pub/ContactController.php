@@ -9,6 +9,9 @@ use App\Enums\PageIdEnum;
 use App\Page;
 use App\Meta;
 
+use Illuminate\Http\Request;
+use App\PartialRegistration;
+
 
 class ContactController extends Controller
 {
@@ -64,4 +67,16 @@ class ContactController extends Controller
 	    }
 		return view('pub.contact.registerToday', compact('regPage','regMeta'));
 	}
+	
+	 public function realtornew(Request $request){
+        $registerType = $request->has('type') ? $request->get('type') : '';
+	    $lenderRegPage = Page::find(PageIdEnum::LENDERREGISTER);
+	    $realtorRegPage = Page::find(PageIdEnum::REALTORREGISTER);
+        if ($request->input('remember_token')) 
+        {
+			$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
+			return view('auth.register', compact('user', 'registerType', 'lenderRegPage', 'realtorRegPage'));
+		}
+        return view('auth.register-new', compact('registerType', 'lenderRegPage', 'realtorRegPage'));
+    }
 }

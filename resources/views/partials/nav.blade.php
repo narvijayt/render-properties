@@ -1,6 +1,6 @@
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-fixed-top bg-primary">
     <div class="container">
-	<div class="top-header-section">
+	{{--	<div class="top-header-section">
 	<div class="header-contact">
 	<ul>
 	<li class="fb-join"> <a href="{{ config('app.social_links.joinfb') }}" target="_blank" class="header__social-link"><i aria-hidden="true" class="fa fa-facebook"></i><span>Join Group</span></a>
@@ -18,7 +18,7 @@
 	</ul>
 	<div class="header-number"><a href="tel:7045695072">704.569.5072</a></div>
 	</div>
-	</div>
+	</div>  --}}
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#realbroker-navbar-collapse" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -37,15 +37,33 @@
                 @endif
                 --}}
                 @if(request()->route()->getName() == 'home')
-                    <img src="{{url('/')}}/img/logo-full.png">
+                    <img src="{{url('/')}}/img/render-properties-logo-new.png">
                 @else
-                    <img class="inner-logo" src="{{url('/')}}/img/render-properties-logo.png">
+                    <img class="inner-logo" src="{{url('/')}}/img/render-properties-logo-new.png">
                 @endif
             </a>
 			
         </div>
         <div class="collapse navbar-collapse" id="realbroker-navbar-collapse">
+		
+		@guest
+				<ul class="login-button-nav">
+                    <li><a href="{{ url('/login') }}" class="navbar__button navbar__button--login" role="button">Login</a></li>
+                    {{--<li><a href="{{ route('register') }}" class="navbar__button navbar__button--register">Register</a></li>--}}
+                    <li class="dropdown">
+					 <a href="#" class="dropdown-toggle navbar__button navbar__button--register" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">Register <span class="caret"></span></a>
+					 <ul class="dropdown-menu">					     
+							<li><a href="{{ route('realtor-register') }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
+							<li><a href="{{ route('lender-register') }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
+							<li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>
+					    </ul>
+					    </li>
+						</ul>
+                @endguest
             <ul class="nav navbar-nav navbar-right">
+			  
+				<ul class="nav navbar-nav">
                 <li><a href="{{ route('home') }}" class="">Home</a></li>
                 <li><a href="javascript:void(0)" style="display: block;" data-toggle="modal" data-target="#myModal1" class="">Search Profiles</a></li>
                 <!----<li><a href="{{ route('pub.contact.advertise') }}"   class="">Advertise</a></li>-->
@@ -61,22 +79,10 @@
 			    </li>
 			    
                 <li><a href="{{ route('pub.contact.index') }}"   class="">Contact</a></li>
-                @guest
-                    <li><a href="{{ url('/login') }}" class="navbar__button navbar__button--login" role="button">Login</a></li>
-                    {{--<li><a href="{{ route('register') }}" class="navbar__button navbar__button--register">Register</a></li>--}}
-                    <li class="dropdown">
-					 <a href="#" class="dropdown-toggle navbar__button navbar__button--register" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false">Register <span class="caret"></span></a>
-					 <ul class="dropdown-menu">					     
-							<li><a href="{{ route('register', [ 'type' => 'realtor' ]) }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
-							<li><a href="{{ route('register', [ 'type' => 'lender' ]) }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
-							<li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>
-					    </ul>
-					    </li>
-                @endguest
+              </ul>
 
                 @auth
-                <li class="dropdown">
+                <li class="dropdown login-dropdown ">
                     <a href="#"
                        class="dropdown-toggle navbar__profile-dropdown"
                        data-toggle="dropdown"

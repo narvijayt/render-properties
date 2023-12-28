@@ -1,9 +1,9 @@
 @inject('states', 'App\Http\Utilities\Geo\USStates')
 
-<div class="vendor-reg-box">
+<div class="vendor-reg-box vendor-reg-box-01">
    <div class="box-title-box text-center">
-	    <h1 class="box-title line-center family-mont">Vendor Registration</h1>
-         <p>Fill out our simple registration form to get started.</p>
+	    <h2 class="text-center mt-0 mb-1"> GET STARTED </h2>
+         {{--<p>Fill out our simple registration form to get started.</p>--}}
 	 </div>
 <div class="row">		
 	<div class="col-md-6 form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
@@ -207,8 +207,8 @@ What Industry are you in?
 			@endif
 		</div>
 	</div>
-<div class="form-group">
-	<button type="submit" class="btn btn-warning btn-block btn-lg mt-0" id='registerVendor'>REGISTER & PAY</button>
+<div class="form-group justify-content-center">
+	<button type="submit" class="btn btn-warning btn-lg mt-0 btn-yellow" id='registerVendor'>REGISTER</button>
 </div>
 </div>
 <script type="text/javascript" src="{{ asset('js/jquery-2.2.4.min.js')}}"></script>

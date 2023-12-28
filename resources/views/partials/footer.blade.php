@@ -40,8 +40,8 @@
 					 <a href="#" class="dropdown-toggle navbar__button navbar__button--register" data-toggle="dropdown" role="button"
                        aria-haspopup="true" aria-expanded="false">Register <span class="caret"></span></a>
 					 <ul class="dropdown-menu">					     
-							<li><a href="{{ route('register', [ 'type' => 'realtor' ]) }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
-							<li><a href="{{ route('register', [ 'type' => 'lender' ]) }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
+							<li><a href="{{ route('realtor-register') }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
+							<li><a href="{{ route('lender-register') }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
 							{{--<li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>--}}
 					    </ul>
 					    </li>

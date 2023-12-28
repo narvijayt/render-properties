@@ -45,7 +45,7 @@
     <div class="alert alert-danger">{{session('error')}}</div>
 @endif
 
-<h4 class="text-center"> Fill out our simple registration form to get started: </h4>
+<h2 class="text-center mt-0 mb-1"> GET STARTED </h2>
 
 				<div class="row util__collapse">
 					<div class="col-md-6 form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
@@ -507,8 +507,8 @@
 </div> 
 --}}
 
-<div class="form-group">
-	<button type="submit" class="btn btn-warning btn-block" id='reg-btn'>
+<div class="form-group justify-content-center">
+	<button type="submit" class="btn btn-warning btn-yellow" id='reg-btn'>
 		@if(!empty($_GET))
 			@if(isset($_GET) && $_GET['type'] == 'realtor')
 				Register

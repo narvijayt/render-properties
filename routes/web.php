@@ -47,6 +47,7 @@ Route::middleware('auth')->post('/register/verify/re-send', 'Auth\VerifyEmailCon
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
+
 //Route::get('/register/realtor', 'Auth\RealtorRegisterController@showRegistrationForm')->name('register-realtor');
 //Route::post('/register/realtor', 'Auth\RealtorRegisterController@register')->name('register-realtor-process');
 //Route::middleware('auth')->get('/register/realtor-step-2', 'Auth\RealtorRegisterController@step2')->name('realtor-step-2');
@@ -82,6 +83,8 @@ Route::get('/search-vendor', 'Pub\ConnectController@searchProfile')->name('pub.c
 Route::match(['POST', 'GET'], '/check-vendor-category', 'Pub\ConnectController@fetchVendorCategory')->name('profile.connect.fetchCategoryBasedVendor');
 Route::get('/vendor-category/{slug}','Pub\ConnectController@fetchVendorCategoryUsers')->name('pub.connect.fetchCatUsers');
 
+Route::get('/realtor-register', 'Auth\RegisterController@showRealtorRegistrationForm')->name('realtor-register');
+Route::get('/lender-register', 'Auth\RegisterController@showLenderRegistrationForm')->name('lender-register');
 Route::get('/contact', 'Pub\ContactController@index')->name('pub.contact.index');
 Route::get('/advertise-on-real-broker-connection!', 'Pub\ContactController@advertise')->name('pub.contact.advertise');
 Route::get('/register-today!', 'Pub\ContactController@registerToday')->name('pub.contact.registerToday');
