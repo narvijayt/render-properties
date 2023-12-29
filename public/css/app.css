@@ -1324,7 +1324,7 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .top-inner-banner{background: url(/img/realtor-top-banner.png) no-repeat;background-size: cover;background-position: center center;padding: 5% 0px;}
 .top-inner-banner .container { padding: 0px;}
 .top-inner-banner h2{margin-bottom:10px;}
-.realtor-register_form_outer { background: #DEDEDE; border-radius: 24px; padding: 30px;position: absolute; right: 0px;top: 0px;}
+.realtor-register_form_outer { background: #DEDEDE; border-radius: 24px; padding: 30px;position: absolute; right: 0px;top: 0px;    z-index: 9999;}
 .realtor-register_form_outer .form-control{border-radius: 10px; border: 1px solid #DBDBDB;}
 .realtor-register_form_outer .error{display: block;}
 .realtor-register_form_outer .btn-yellow {letter-spacing: 2.3px; margin-right: 0px;text-transform: uppercase; padding: 4px 10px;}
