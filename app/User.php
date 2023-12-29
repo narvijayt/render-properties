@@ -16,6 +16,9 @@ use App\Category;
 use App\Payment;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 
+use App\RealtorDetail;
+use App\LenderDetail;
+
 class User extends Authenticatable implements ISecurable
 {
 	use Notifiable, HasRolesAndAbilities, Securable, Billable;
@@ -851,5 +854,19 @@ class User extends Authenticatable implements ISecurable
      */
     public function userSubscription(){
         return $this->hasOne(UserSubscriptions::Class, UserSubscriptions::USER_ID, self::PKEY);
+    }
+   
+	/**
+     * Get the subscription plan associated with the user.
+     */
+    public function realtorDetail(){
+        return $this->hasOne(RealtorDetail::Class, RealtorDetail::USER_ID, self::PKEY);
+    }
+	
+	/**
+     * Get the subscription plan associated with the user.
+     */
+    public function lenderDetail(){
+        return $this->hasOne(LenderDetail::Class, LenderDetail::USER_ID, self::PKEY);
     }
 }

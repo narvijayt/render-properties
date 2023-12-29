@@ -17,6 +17,9 @@ use App\User;
 use App\Subscribe;
 use Carbon\Carbon;
 
+use App\RealtorDetail;
+use App\LenderDetail;
+
 class DetailController extends Controller
 {
     /**
@@ -65,9 +68,14 @@ class DetailController extends Controller
         	        Auth::logout();
         	        return redirect()->route('vendorPayment', [$userid]);
         	    }*/
-    		}else{
-		return view('pub.profile.detail.index', compact('user'));
-		}
+        }else{
+            if($user->user_type == "realtor"){
+                $user  = User::with('realtorDetail')->find(Auth::user()->user_id);
+            }else if($user->user_type == "broker"){
+                $user  = User::with('lenderDetail')->find(Auth::user()->user_id);
+            }
+            return view('pub.profile.detail.index', compact('user'));
+        }
 	}
 
     /**
@@ -184,17 +192,37 @@ class DetailController extends Controller
         $userUpdate = $user->update($details);
         
         if($user->user_type == "realtor"){
-            $findUser = User::find($user->user_id);
-            
-            // $findUser->rbc_free_marketing = $request->rbc_free_marketing;
+            /*$findUser = User::find($user->user_id);            
             $findUser->lo_matching_acknowledged = $request->lo_matching_acknowledged;
             $findUser->open_to_lender_relations = $request->open_to_lender_relations;
             $findUser->co_market = isset($request->co_market) ? $request->co_market : 'No';
             $findUser->contact_me_for_match = isset($request->contact_me_for_match) ? $request->contact_me_for_match : null;
             $findUser->how_long_realtor = $request->how_long_realtor;
             $findUser->referral_fee_acknowledged = (isset($request->referral_fee_acknowledged)) ? $request->referral_fee_acknowledged : null;
+            $findUser->update();*/
             
-            $findUser->update();
+            $realtorDetail = RealtorDetail::where(['user_id' => $user->user_id])->first();
+            if(is_null($realtorDetail)){
+                $realtorDetail = new RealtorDetail();
+                $realtorDetail->user_id = $user->user_id;
+            }
+            $realtorDetail->require_financial_solution = $request->require_financial_solution == "Yes" ? 1 : 0;
+            $realtorDetail->require_professional_service = $request->require_professional_service == "Yes" ? 1 : 0;
+            $realtorDetail->partnership_with_lender = $request->partnership_with_lender == "Yes" ? 1 : 0;
+            $realtorDetail->partnership_with_vendor = $request->partnership_with_vendor == "Yes" ? 1 : 0;
+            $realtorDetail->can_realtor_contact = $request->can_realtor_contact == "Yes" ? 1 : 0;
+            $realtorDetail->save();
+        }else if($user->user_type == "broker"){
+            $lenderDetail = LenderDetail::where(['user_id' => $user->user_id])->first();
+            if(is_null($lenderDetail)){
+                $lenderDetail = new LenderDetail();
+                $lenderDetail->user_id = $user->user_id;
+            }
+            $lenderDetail->stay_updated =$request->stay_updated;
+            $lenderDetail->handle_challanges =$request->handle_challanges;
+            $lenderDetail->unique_experties =$request->unique_experties;
+            $lenderDetail->partnership_with_realtor =$request->partnership_with_realtor == "yes" ? 1 : 0;
+            $lenderDetail->save();
         }
 		if ($userUpdate === true) {
 			flash('Profile updated successfully')->success();

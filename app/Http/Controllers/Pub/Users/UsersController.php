@@ -46,6 +46,9 @@ use App\Mail\SubscriptionCancelled;
 use App\Mail\PaymentConfirmation;
 use App\RegistrationPlans;
 
+use App\LenderDetail;
+use DateTime;
+
 class UsersController extends Controller
 {
 
@@ -419,7 +422,7 @@ class UsersController extends Controller
         
         $paymentSchedule = new AnetAPI\PaymentScheduleType();
         $paymentSchedule->setInterval($interval);
-        $paymentSchedule->setStartDate(new \DateTime(date('Y-m-d')));
+        $paymentSchedule->setStartDate(new DateTime(date('Y-m-d')));
         $paymentSchedule->setTotalOccurrences(9999);
         
         $subscription->setPaymentSchedule($paymentSchedule);
@@ -605,14 +608,14 @@ class UsersController extends Controller
                 // After Payment and Subscription Updated Successfully
                 
             }else{
-                if($user->verified == false){
+                if($user->verified == false && env('APP_ENV') != "local"){
                     $this->newUserAdminNotification($user);
                     $this->welcomeEmail($user);
                     $this->emailVerification($user);
                 }
             }
 
-            if($userSubscription->paid_amount > 0){
+            if($userSubscription->paid_amount > 0 && env('APP_ENV') != "local"){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new PaymentConfirmation($user);
                 Mail::to($user->email)->send($email);
@@ -683,15 +686,17 @@ class UsersController extends Controller
                 // After Payment and Subscription Created Successfully
                 
             }else{
-                if($user->verified == false){
+                if($user->verified == false && env('APP_ENV') != "local"){
                     $this->newUserAdminNotification($user);
                     $this->welcomeEmail($user);
                     $this->emailVerification($user);
                 }
             }
 
-            $email = new PaymentConfirmation($user);
-            Mail::to($user->email)->send($email);
+            if(env('APP_ENV') != "local"){
+                $email = new PaymentConfirmation($user);
+                Mail::to($user->email)->send($email);
+            }
 
             return Response::json(['subscription' => $userSubscription], 200);
         }else{
@@ -803,10 +808,10 @@ class UsersController extends Controller
             }
             
             $emailPosted = $data['email'];
-        
-            $Checkemail = User::where('email','=',$emailPosted)->where('user_type','=','broker')->get();
+            
+            $Checkemail = User::where('email','=',$emailPosted)->get();
             if(count($Checkemail) > 0){
-                return redirect()->back()->withErrors(['error' => 'Email already exists.']);
+                return redirect()->back()->withErrors(['error' => 'Email already exists.'])->withInput();
             }
             
             if(strpos($data['zip'],",")){
@@ -826,7 +831,7 @@ class UsersController extends Controller
                 'state' 		=> $data['state'],
                 'zip' 			=> $data['zip'],
                 'postal_code_service' => $data['postal_code_service'],
-                'register_ts' 	=> new \DateTime(),
+                'register_ts' 	=> new DateTime(),
                 'verify_ts' 	=> null,
                 'years_of_exp'	=> null,
                 'specialties' => $data['specialties'],
@@ -862,6 +867,19 @@ class UsersController extends Controller
             }
             if (isset($data['provider']) && $data['provider'] !== null && isset($data['provider_id']) && $data['provider_id'] !== null){
                 $this->createUserProvider($data, $user);
+            }
+            // echo '<pre>'; print_r($data); echo '</pre>'; 
+            if($data['user_type'] =='broker'){
+                $lenderDetail = LenderDetail::where(['user_id' => $user->user_id])->first();
+                if(is_null($lenderDetail)){
+                    $lenderDetail = new LenderDetail();
+                    $lenderDetail->user_id = $user->user_id;
+                }
+                $lenderDetail->stay_updated = $data['stay_updated'];
+                $lenderDetail->handle_challanges = $data['handle_challanges'];
+                $lenderDetail->unique_experties = $data['unique_experties'];
+                $lenderDetail->partnership_with_realtor = $data['partnership_with_realtor'] == "yes" ? 1 : 0;
+                $lenderDetail->save();
             }
             
             /*$realUser= User::find($user->user_id);
@@ -1086,7 +1104,7 @@ class UsersController extends Controller
                 $interval->setUnit("days");
                 $paymentSchedule = new AnetAPI\PaymentScheduleType();
                 $paymentSchedule->setInterval($interval);
-                $paymentSchedule->setStartDate(new \DateTime(date('Y-m-d')));
+                $paymentSchedule->setStartDate(new DateTime(date('Y-m-d')));
                 $paymentSchedule->setTotalOccurrences(9999);
                 $subscription->setPaymentSchedule($paymentSchedule);
                 $subscription->setAmount($input['amount']);
@@ -1174,7 +1192,7 @@ class UsersController extends Controller
                 $interval->setUnit("days");
                 $paymentSchedule = new AnetAPI\PaymentScheduleType();
                 $paymentSchedule->setInterval($interval);
-                $paymentSchedule->setStartDate(new \DateTime(date('Y-m-d')));
+                $paymentSchedule->setStartDate(new DateTime(date('Y-m-d')));
                 $paymentSchedule->setTotalOccurrences(9999);
                 $subscription->setPaymentSchedule($paymentSchedule);
                 $subscription->setAmount($input['amount']);
@@ -1296,7 +1314,7 @@ class UsersController extends Controller
                 'city' 			=> $data['city'],
                 'state' 		=> $data['state'],
                 'zip' 			=> $data['zip'],
-                'register_ts' 	=> new \DateTime(),
+                'register_ts' 	=> new DateTime(),
                 'verify_ts' 	=> null,
                 'latitude'		=> $location->lat,
                 'longitude'		=> $location->long,

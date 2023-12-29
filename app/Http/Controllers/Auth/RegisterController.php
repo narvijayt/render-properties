@@ -31,6 +31,8 @@ use App\Services\MobileVerificationService;
 use App\Services\TwilioService;
 use App\VendorPackages;
 use App\Testimonial;
+use App\RealtorDetail;
+use App\LenderDetail;
 
 class RegisterController extends Controller
 {
@@ -99,7 +101,7 @@ class RegisterController extends Controller
         {
     		$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
     		return view('auth.realtor-register', compact('user', 'registerType', 'realtorRegPage','testimonials'));
-    	}
+    	}        
         return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials'));
 	}
 
@@ -131,13 +133,19 @@ class RegisterController extends Controller
 			'website'		=>	'nullable|string',
 			'receive_email'	=>	'nullable',
             'license' => 'required|string|max:255',
-            'volume_closed_monthly' =>	'nullable|string'
+            'volume_closed_monthly' =>	'nullable|string',
+			// 'require_financial_solution' => 'required',
+			// 'require_professional_service' => 'required',
+			// 'partnership_with_lender' => 'required',
+			// 'partnership_with_vendor' => 'required',
+			// 'can_realtor_contact' => 'required',
 		], [
 			'zip.required' => 'Zip field is required',
 			'postal_code_service.required' => 'Postal code of service area field is required',
 			'phone_number.required'	=>	'The phone number field is required',
 			'firm_name.string'	=>	'The company name must be a string',
 			'user_type.required' => 'You must select either real estate agent or lender',
+			// 'require_financial_solution.required' => 'You must select either real estate agent or lender',
 		]);
 	    }else{
 		return Validator::make($data, [
@@ -158,7 +166,7 @@ class RegisterController extends Controller
 			'phone_ext'		=>	'nullable|alpha_dash',
 			'firm_name'		=>	'nullable|string',
 			'website'		=>	'nullable|string',
-			'receive_email'	=>	'nullable',
+			// 'receive_email'	=>	'nullable',
             'license' => 'required|string|max:255',
             'volume_closed_monthly' =>	'nullable|string'
 		], [
@@ -280,15 +288,28 @@ class RegisterController extends Controller
         $findUser->promote_profile = $data['provide_content'];
         if($data['user_type'] =='realtor'){
             // $findUser->rbc_free_marketing = $data['rbc_free_marketing'];
-            $findUser->lo_matching_acknowledged = $data['lo_matching_acknowledged'];
+            /*$findUser->lo_matching_acknowledged = $data['lo_matching_acknowledged'];
             $findUser->open_to_lender_relations = $data['open_to_lender_relations'];
             $findUser->co_market = isset($data['co_market']) ? $data['co_market'] : "No";
             $findUser->contact_me_for_match = isset($data['contact_me_for_match']) ? $data['contact_me_for_match'] : null;
-            $findUser->how_long_realtor = $data['how_long_realtor'];
             $findUser->contact_term = (isset($data['enable_emails'])) ? $data['enable_emails'] : 0;
-            $findUser->referral_fee_acknowledged = isset($data['referral_fee_acknowledged']) ? $data['referral_fee_acknowledged'] : null;
+            $findUser->referral_fee_acknowledged = isset($data['referral_fee_acknowledged']) ? $data['referral_fee_acknowledged'] : null;*/
+            $findUser->how_long_realtor = $data['how_long_realtor'];
         }
         $findUser->update();
+        if($data['user_type'] =='realtor'){
+            $realtorDetail = RealtorDetail::where(['user_id' => $user->user_id])->first();
+            if(is_null($realtorDetail)){
+                $realtorDetail = new RealtorDetail();
+                $realtorDetail->user_id = $user->user_id;
+            }
+            $realtorDetail->require_financial_solution = $data['require_financial_solution'] == "yes" ? 1 : 0;
+            $realtorDetail->require_professional_service = $data['require_professional_service'] == "yes" ? 1 : 0;
+            $realtorDetail->partnership_with_lender = $data['partnership_with_lender'] == "yes" ? 1 : 0;
+            $realtorDetail->partnership_with_vendor = $data['partnership_with_vendor'] == "yes" ? 1 : 0;
+            $realtorDetail->can_realtor_contact = $data['can_realtor_contact'] == "yes" ? 1 : 0;
+            $realtorDetail->save();
+        }
         $user->assign('user');
         $user->assign($user['user_type']);
         if(!isset($user['receive_email'])) 
@@ -304,9 +325,11 @@ class RegisterController extends Controller
 		) {
 			$this->createUserProvider($data, $user);
 		}
-        $this->notifyAdmin($user);
-        $this->emailVerification($user);
-        $this->welcomeEmail($user);
+        if(env('APP_ENV') != "local"){
+            $this->notifyAdmin($user);
+            $this->emailVerification($user);
+            $this->welcomeEmail($user);
+        }
         if ($user->user_type === UserAccountType::BROKER) 
         {
 			MatchPurchase::create([
