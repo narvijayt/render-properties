@@ -76,11 +76,7 @@ html {
   scroll-behavior: smooth;
 }
 body{overflow-x: hidden;}
-@media screen and (min-width:1600px) {
-.render-network-section{background-position: center center;}
-.render-network-section .text-box-center{width: 57%;}
-.render-network-section .px-4 { padding: 0px 2%;}
-}
+
 
 /*********************************21-02-2022-Css*************************************/
 .navbar-brand { width: 478px;  margin: 0px 11px 0 0px!important; position: absolute; bottom: 29px;}
@@ -1401,7 +1397,11 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
 /*********************************21-12-2023-Css-End*************************************/
 
 /* ============================= Responsive CSS================================= */
-
+@media screen and (min-width:1600px) {
+.render-network-section{background-position: center center;}
+.render-network-section .text-box-center{width: 57%;}
+.render-network-section .px-4 { padding: 0px 2%;}
+}
 
 @media(min-width:1400px)
 {
