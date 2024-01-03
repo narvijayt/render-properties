@@ -609,14 +609,14 @@ class UsersController extends Controller
                 // After Payment and Subscription Updated Successfully
                 
             }else{
-                if($user->verified == false && env('APP_ENV') != "local"){
+                if($user->verified == false && !in_array(env('APP_ENV'),['local','staging'])){
                     $this->newUserAdminNotification($user);
                     $this->welcomeEmail($user);
                     $this->emailVerification($user);
                 }
             }
 
-            if($userSubscription->paid_amount > 0 && env('APP_ENV') != "local"){
+            if($userSubscription->paid_amount > 0 && !in_array(env('APP_ENV'),['local','staging'])){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new PaymentConfirmation($user);
                 Mail::to($user->email)->send($email);
@@ -687,14 +687,14 @@ class UsersController extends Controller
                 // After Payment and Subscription Created Successfully
                 
             }else{
-                if($user->verified == false && env('APP_ENV') != "local"){
+                if($user->verified == false && !in_array(env('APP_ENV'),['local','staging'])){
                     $this->newUserAdminNotification($user);
                     $this->welcomeEmail($user);
                     $this->emailVerification($user);
                 }
             }
 
-            if(env('APP_ENV') != "local"){
+            if(!in_array(env('APP_ENV'),['local','staging'])){
                 $email = new PaymentConfirmation($user);
                 Mail::to($user->email)->send($email);
             }

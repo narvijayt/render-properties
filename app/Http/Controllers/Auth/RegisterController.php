@@ -328,7 +328,7 @@ class RegisterController extends Controller
 		) {
 			$this->createUserProvider($data, $user);
 		}
-        if(env('APP_ENV') != "local"){
+        if(!in_array(env('APP_ENV'),['local','staging'])){
             $this->notifyAdmin($user);
             $this->emailVerification($user);
             $this->welcomeEmail($user);

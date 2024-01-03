@@ -460,14 +460,14 @@ class Vendor extends Controller
                 // After Payment and Subscription Created Successfully
                 
             }else{
-                if($user->verified == false && env('APP_ENV') != "local"){
+                if($user->verified == false && !in_array(env('APP_ENV'),['local','staging'])){
                     $this->newUserAdminNotification($user);
                     // $this->welcomeEmail($user);
                     // $this->emailVerification($user);
                 }
             }
 
-            if($userSubscription->paid_amount > 0 && env('APP_ENV') != "local"){
+            if($userSubscription->paid_amount > 0 && !in_array(env('APP_ENV'),['local','staging'])){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new VendorPaymentInvoice($user);
                 Mail::to($user->email)->send($email);
@@ -497,7 +497,7 @@ class Vendor extends Controller
             // }
             $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($customer_id, $paymentMethod['id']);
             if($customerPaymentMethod->id){
-                
+
                 $userSubscription = UserSubscriptions::where("user_id",$user->user_id)->first();
 
                 $subscriptionData = (new Stripe())->updateSubscription($userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
