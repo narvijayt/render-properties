@@ -1401,7 +1401,7 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
 /* ============================= Responsive CSS================================= */
 
 
-@media(min-width:1400px)
+@media(min-width:1366px)
 {
 body .business-outer .business-img-box img{height: 102%;}	
 .leading-industry-section h2{line-height: 94px;}
