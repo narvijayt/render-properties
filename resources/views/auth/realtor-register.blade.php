@@ -44,9 +44,9 @@ $description = 'Register for Render'
         </div>
     </div>
 </div>
-<div class="streamlined-outer">
+<div id="streamlined-outer-scroll" class="streamlined-outer">
     <div class="container">
-        <div class="row">
+        <div class="row realtor-row">
             {{-- <div class="col-md-12 " data-info-type="realtor">
             @include('partials.registration.realtor-overview')
 	</div> --}}
@@ -92,7 +92,7 @@ $description = 'Register for Render'
                     </div>
                 </div>
                 <div class="sign-up-link">
-                    <a class="text-orange" href="#">SIGN UP FOR FREE <i class="fa fa-arrow-right"
+                    <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right"
                             aria-hidden="true"></i></a>
                 </div>
             </div>
@@ -173,7 +173,7 @@ $description = 'Register for Render'
                     </div>
                 @endif
                 <div class="sign-up-link">
-                    <a class="text-orange" href="#">SIGN UP FOR FREE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                    <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
             </div>
 
@@ -193,7 +193,7 @@ $description = 'Register for Render'
                     <div class="col-md-4 text-center">
                         <img src="/img/sign-up-icon-2.png">
                         <h3 class="text-orange mb-0">1.</h3>
-                        <p class="text-white"><b>Sign Up <br> For Free</b></p>
+                        <p class="text-white"><b>Sign Up</b></p>
                     </div>
                     <div class="col-md-4 text-center">
                         <img src="/img/close-deal-icon-03.png">
@@ -206,7 +206,7 @@ $description = 'Register for Render'
                         <p class="text-white"><b>See your <br> deals close at <br> light speed</b></p>
                     </div>
                     <div class="sign-up-link text-center">
-                        <a class="text-orange" href="#">SIGN UP NOW <i class="fa fa-arrow-right"
+                        <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right"
                                 aria-hidden="true"></i></a>
                     </div>
                 </div>
@@ -220,7 +220,7 @@ $description = 'Register for Render'
 <div class="instant-access-outer">
     <div class="container pb-0">
         <div class="row ">
-            <div class="col-md-12 center-box text-left">
+            <div class="center-box text-left">
                 <div class="col-md-3">
                     <img src="{{url('/')}}/img/richard-image-home.png">
                 </div>
@@ -238,7 +238,7 @@ $description = 'Register for Render'
                     <p class="text-primary">And you get access to talent nationwide.Sign up now and see what the Render
                         network can do for you.</p>
                     <div class="sign-up-link text-left mt-1">
-                        <a class="text-primary" href="#">SIGN UP FOR FREE <i class="fa fa-arrow-right"
+                        <a class="text-primary" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right"
                                 aria-hidden="true"></i></a>
                     </div>
 

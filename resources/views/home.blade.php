@@ -43,27 +43,24 @@
             <div class="banner-body-section">
                 <div class="container">
                     <div class="row ">
-                    <div class="col-sm-5 hero-intro">
+                    <div class="col-lg-5 col-sm-9 hero-intro">
                         <!---<span>CONNECTING<br></span> Homes Buyers <span> to </span><br>Top Real Estate Agents<br><span>and</span> Loan Officers <br><span>in</span> YOUR LOCAL AREA-->
                         <!---Connecting <span>Home Buyers</span> and <span>Sellers</span> to  <span>Top Real Estate Agents,</span> <span>Trusted Mortgage Loan Officers</span> and <span>Reputable Home Service Providers</span> and <span>Vendors</span> -->
-                        <div class="col-sm-5 hero-img-mobile">
-    				        {{--<img src="{{url('/')}}/img/hero-mobile-image-01.png">--}}
-    				        {{--<img src="{{url('/')}}/img/home-banner.png">--}}
-    			        </div>
-    			        <h3 class="m-0 h3">The Real Estate Network</h3>
-                        <div class="home-banner-heading">Get Deals Sooner. <br> Close Deals Faster.</div>
+                       
+    			        <h1 class="m-0">The Real Estate Network</h1>
+                        <div class="home-banner-heading"><h2>Get Deals Sooner. <br> Close Deals Faster.</h2></div>
     					{{--<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>--}}
 						<p class="pr-4"><b>Realtors, Lenders, & Vendors.</b> <br> Connect with top-tier real estate pros that want to be contacted, grow your business, and expand your horizons.</p>
 						<p class="mt-1"><b>SEE SUBSCRIPTIONS FOR…</b></p>
     					
                         {{-- <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button> --}}
 						<div class="d-flex-btn-group">
-                     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
-	               <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
+                     <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>
+	               <a class="btn btn-primary btn-yellow " href="{{ url('lender-register') }}">LENDERS</a>
 	            <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
 	             </div>
                     </div>
-                    <div class="col-sm-7 hero-img-rt">				 
+                    <div class="col-lg-7 col-sm-3 hero-img-rt">				 
     				    {{--<img src="{{url('/')}}/img/home-rt-images-2.png">--}}
     				   {{-- <img src="{{url('/')}}/img/home-banner.png"> --}}
                        <!-- <iframe src="https://player.vimeo.com/video/317507913" width="100%" height="288" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
@@ -192,10 +189,11 @@
 	<div class="col-md-12 center-box text-center mt-0 mb-3">
 	<h4 class="text-white text-center mb-0">SIGN UP FOR…</h4>
 	<div class="d-flex-btn-group justify-content-center">
-     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
-	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
-	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
-	</div>
+      <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('lender-register') }}">LENDERS</a>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	    </div>
+	
 	</div>
 	</div>
 	</div>
@@ -248,10 +246,10 @@
 		<div class="col-md-12 center-box text-center mt-0 mb-3">
 	<h4 class="text-center mb-0">I WANT TO SEE MORE.</h4>
 	<div class="d-flex-btn-group justify-content-center">
-     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
-	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
-	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
-	</div>
+      <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('lender-register') }}">LENDERS</a>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	    </div>
 	</div>
     </div>
 	
@@ -261,13 +259,14 @@
 	<div class="col-md-12 center-box text-left mt-0">
 	<div class="col-md-6 pr-4">
 	<h2 class="text-left text-white h1  mb-1 mt-0">How It Works For…</h2>
+	<div class="mobile-image"> <img src="{{url('/')}}/img/realtors-img-new.png"></div>
 	<h4 class="text-left text-white m-0">Realtors:</h4>
 	<p class="text-left text-white">
 	 Whether you’re a seasoned real estate agent or just starting, Render Properties provides you with a platform to connect with the right lenders and vendors for your clients. Easily find mortgage experts, photographers, home stagers, and more to enhance your services and provide a comprehensive experience to your clients. 
 	</p>
-	<a class="sign-link text-orange" href="{{ route('register', [ 'type' => 'realtor' ]) }}">Free Sign Up For Realtors</a>
+	<a class="sign-link text-orange" href="{{ url('realtor-register') }}">Free Sign Up For Realtors</a>
 	</div>
-	<div class="col-md-6 ">
+	<div class="col-md-6 desktop-image">
 	<img src="{{url('/')}}/img/realtors-img-new.png">
 	</div>
 	</div>
@@ -281,20 +280,20 @@
 	<p class="text-left text-white">
 	For lenders, Render Properties offers a direct line to real estate professionals seeking financing solutions. Connect with realtors who are open to establishing new relationships and have clients in need of mortgage services, ensuring a seamless and efficient lending process. No more Cold Calling or meet and great. 
 	</p>
-	<a class=" sign-link text-orange" href="{{ route('register', [ 'type' => 'lender' ]) }}">Sign Me Up</a>
+	<a class=" sign-link text-orange" href="{{ url('lender-register') }}">Sign Me Up</a>
 	</div>
 	
 	</div>
 	
-	<div class="col-md-12 center-box text-left mt-3">
-	<div class="col-md-6 pr-4">
+	<div class="col-md-12 center-box text-left mt-3 flex-box-section">
+	<div class="col-md-6 pr-4 box-order-1">
 	<h4 class="text-left text-white m-0">Vendors:</h4>
 	<p class="text-left text-white">
 	If you’re a vendor specializing in real estate services such as photography, staging, or property inspection, Render Properties is your gateway to a wider network of potential clients. Realtors on our platform are actively seeking new partnerships, allowing you to showcase your skills and offerings to those who need them. 
 	</p>
 	 <a class="sign-link text-orange" href="{{ url('vendor-register') }}">See My Subscription Options</a>
 	</div>
-	<div class="col-md-6 ">
+	<div class="col-md-6  box-order-2">
 	<img src="{{url('/')}}/img/vendors-img-new.png">
 	</div>
 	</div>
@@ -304,16 +303,16 @@
 	<div class="profits-section-outer">
         <div class="container pb-0">
 		<div class="row ">
-		<div class="col-md-12 center-box text-center mt-3">
+		<div class="col-md-12 center-box text-center mt-3 mobile-center-box">
 		<h2 class="text-center h1  mb-1 mt-0">All Profits Are Yours! <br> We Never Take A Cut.</h2>
 		<p class="text-primary">Unlike other online marketplaces, we never take a dime of <br> your proceeds. You only pay for your monthly subscription, <br> so you can do all the deals you want risk-free.</p>
 		<div class="col-md-12 center-box text-center mt-1 mb-3 ">
 	<h4 class="text-center text-primary mt-0 mb-0 ">CHECK IT OUT!</h4>
 	<div class="d-flex-btn-group justify-content-center">
-     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
-	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
-	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
-	</div>
+      <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('lender-register') }}">LENDERS</a>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	    </div>
 	</div>
 		</div>
 		</div>
@@ -338,11 +337,11 @@
 		
 		<div class="center-box text-left mt-1 mb-3 pt-1">
 	<h4 class="text-left text-primary mt-0 mb-0">SIGN ME UP!</h4>
-	<div class="d-flex-btn-group ">
-     <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'realtor' ]) }}">REALTORS - FREE</button>
-	 <a class="btn btn-primary btn-yellow " href="{{ route('register', [ 'type' => 'lender' ]) }}">LENDERS</a>
-	 <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
-	</div>
+	<div class="d-flex-btn-group">
+      <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('lender-register') }}">LENDERS</a>
+	   <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
+	    </div>
 	</div>
 		</div>
 		</div>

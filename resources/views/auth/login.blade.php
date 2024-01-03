@@ -48,8 +48,8 @@
 
                         <h4>Not a member yet?</h4>
                         <ul class="list-unstyled">
-                             <li><a href="{{ route('register', [ 'type' => 'realtor' ]) }}" class="btn btn-warning" style="margin-bottom:10px">Real Estate Agents</a></li>
-                    <li><a href="{{ route('register', [ 'type' => 'lender' ]) }}" class="btn-warning btn">Loan Officers</a></li>
+                             <li><a href="{{ url('realtor-register') }}" class="btn btn-warning" style="margin-bottom:10px">Real Estate Agents</a></li>
+                    <li><a href="{{ url('lender-register') }}" class="btn-warning btn">Loan Officers</a></li>
                         </ul>
                     </div>
                     <div class="col-md-6 col-md-pull-6">

@@ -69,8 +69,13 @@ opacity: 1;border-radius: 0px;height: 45px;}
 .pr-0{padding-right:0 !important;}
 .mt-0{margin-top:0 !important;}
 p:empty, span.help-block:empty{margin:0 !important}
+
 @media(min-width:768px){.pl-md-0{padding-left:0 !important}}
 
+html {
+  scroll-behavior: smooth;
+}
+body{overflow-x: hidden;}
 /*********************************21-02-2022-Css*************************************/
 .navbar-brand { width: 478px;  margin: 0px 11px 0 0px!important; position: absolute; bottom: 29px;}
 .top-header-section {width: 623px; float: right;margin-right: -11px;}
@@ -91,7 +96,7 @@ div#realbroker-navbar-collapse { width: 100%;float: right; background: transpare
 .header-contact li .header__social-link img{width: 39px;}
 .top-header-section li:first-child {margin: 0px;}
 .header-contact li .header__social-link:hover img { opacity: 0.9;}
-.hero-banner h1 { color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700;font-size: 45px; letter-spacing: 2px; line-height: 57px;}
+/* .hero-banner h1 { color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700;font-size: 45px; letter-spacing: 2px; line-height: 57px;} */
 body .hero-banner .hero-intro {padding-top: 15px ; padding-bottom: 23px;}
 
 body .hero-banner .btn.btn-warning { font-family: 'Montserrat', sans-serif;   font-weight: 700;  font-size: 17px; letter-spacing: 1px;  color: #fff ! important; padding: 8px 55px;  margin-top: 13px;}
@@ -680,7 +685,6 @@ ul.footer__nav {
 	.editorpage h6{ font-size:41px;}
 }
 @media screen and (max-width:767px) {
-	.hero-banner{text-align:center}
 	.banner{ font-size:25px;}
 	.editorpage h4{ font-size:20px; }
 	.team {padding: 18px 15px;}
@@ -1268,23 +1272,23 @@ body .business-outer .business-img-box img {position: absolute;height: 110%;top:
 
 /*********************************21-12-2023-Css*************************************/
 nav li a {color: #fff;font-weight: 500; letter-spacing: 1px;}
-.login-button-nav{width: 100%;display: flex; align-items: end; justify-content: end;}
-.nav>li>a{margin: 0px 4px;    font-size: 14px;font-weight: 600;}
+.login-button-nav{width: 100%;display: flex; align-items: end; justify-content: end;margin-bottom: 1.4%;}
+.nav>li>a{margin: 0px 4px;    font-size: 1.1vw;font-weight: 600;}
 .navbar-right{margin-right: -7px; margin-top: 2px !important;}
 .login-button-nav li {list-style: none;}
-.login-button-nav li .navbar__button--login { background: transparent;border-radius: 9px; border: 2px solid #FFFFFF; padding: 5px 13px;text-decoration: none;font-weight: 600;}
-.login-button-nav li .navbar__button--register{ background: #F79A2C;border-radius: 9px; border: 2px solid #F79A2C; padding: 5px 13px;margin-left: 12px;text-decoration: none;font-weight: 600;}
+.login-button-nav li .navbar__button--login { background: transparent;border-radius: 9px; border: 2px solid #FFFFFF; padding: 5px 13px;text-decoration: none;font-weight: 600;font-size: 1.1vw;}
+.login-button-nav li .navbar__button--register{ background: #F79A2C;border-radius: 9px; border: 2px solid #F79A2C; padding: 5px 13px;margin-left: 12px;text-decoration: none;font-weight: 600;font-size: 1.1vw;}
 .login-button-nav li .navbar__button--register:hover{border: 2px solid #fabb69;}
 .nav>li>a{padding: 0px 8px !important;}
 .navbar{ padding: 15px 0px  !important;}
-a.navbar-brand { position: absolute; top: 14px;  width: 200px;}
+a.navbar-brand { position: absolute; top: 11%;width: 18%;}
 .navbar .container { padding-bottom: 0px;}
-.login-button-nav .dropdown-menu{left: -109px;}
+.login-button-nav .dropdown-menu{left: -144px;}
 .hero-banner{background: url(/img/home-hero-banner-1.png) no-repeat;background-size: cover;}
 .btn-yellow {background: #F79A2C; border: 2px solid #fff; border-radius: 9px; color: #184586;font-weight: bold; font-size: 15px; margin-right:13px; letter-spacing: 0.1px; float: left;}
 .btn-yellow:hover{background: #184586 !important; border: 2px solid #184586;color: #fff;}
 .d-flex-btn-group { margin-top: 0px;}
-.render-network-section{background: url(/img/lady-with-phone.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center top;}
+.render-network-section{background: url(/img/lady-with-phone.png) no-repeat;background-size: cover;  background-position: center center;}
 p{font-size: 16px; letter-spacing: 0.1px; line-height: 24px;}
 .render-network-section .text-box-center {width: 499px; margin: 0 auto;}
 .text-orange{color: #F79A2C;}
@@ -1300,7 +1304,7 @@ a.carousel-control.left.carousel-control-prev{bottom: 0; left: 121px;display: bl
 a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: block; width: auto; height: auto;background-color: transparent  ! important;top: 33%;left: inherit;}
 #testimoniial-slider i.fa.fa-angle-left, #testimoniial-slider i.fa.fa-angle-right{right: 0;font-size: 121px;font-weight: normal; color: #184586;}
 #testimoniial-slider.carousel .overview b{color:#184586;}
-.works-section-outer{background: url(/img/works-section-bg-02.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center top; width: 100%; float: left;padding-top: 55px;padding-bottom: 55px;}
+.works-section-outer{background: url(/img/works-section-bg-06.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center center; width: 100%; float: left;padding-top: 55px;padding-bottom: 55px;}
 .works-section-outer a.sign-link {font-weight: bold;  font-size: 18px; text-decoration: underline;}
 .works-section-outer a.sign-link:hover{ color: #fff !important;}
 .profits-section-outer .container{background: url(/img/town-bg.png) no-repeat;background-size: 93%; padding-bottom: 145px; background-position: center bottom;}
@@ -1308,12 +1312,14 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .hero-banner .d-flex-btn-group {margin-top: 10px;}
 .render-network-section .d-flex-btn-group, .testimonials .d-flex-btn-group {margin-top: 5px;}
 .instant-access-outer{background: url(/img/instant-access-bg.png) no-repeat;background-size: cover;background-position: center top; width: 100%; float: left;padding-top: 50px;padding-bottom: 55px;}
+.instant-access-outer.instant-access-outer-02 { padding-top: 40px}
+.instant-access-outer.instant-access-outer-02 .container {width: 1170px;}
 .instant-access-outer .container { width: 972px;}
 .instant-access-outer .instant-text{ padding-left: 3% ! important; padding-right: 14% ! important;}
 .pr-4{padding-right:3% ! important;}
 .pl-4{padding-left:3% ! important;}
 .pl-5{padding-right: 17% ! important;}
-.hero-banner p.pr-4 { padding-right: 14% ! important;}
+.hero-banner p.pr-4 { padding-right: 13% ! important;}
 .hero-banner h3 { padding-bottom: 8px;}
 .d-flex-btn-group a:last-child {margin-right: 0px;}
 .profits-section-outer .d-flex-btn-group, .instant-access-outer .d-flex-btn-group, .render-network-section .d-flex-btn-group {margin-top: 6px;}
@@ -1324,11 +1330,11 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .top-inner-banner{background: url(/img/realtor-top-banner.png) no-repeat;background-size: cover;background-position: center center;padding: 5% 0px;}
 .top-inner-banner .container { padding: 0px;}
 .top-inner-banner h2{margin-bottom:10px;}
-.realtor-register_form_outer { background: #DEDEDE; border-radius: 24px; padding: 30px;position: absolute; right: 0px;top: 0px;    z-index: 9999;}
+.realtor-register_form_outer { background: #DEDEDE; border-radius: 24px; padding: 30px;position: absolute; right: 0px;top: 0px;    z-index: 999;}
 .realtor-register_form_outer .form-control{border-radius: 10px; border: 1px solid #DBDBDB;}
-.realtor-register_form_outer .error{display: block;}
+.realtor-register_form_outer .error{display: block;line-height: 100%;}
 .realtor-register_form_outer .btn-yellow {letter-spacing: 2.3px; margin-right: 0px;text-transform: uppercase; padding: 4px 10px;}
-.streamlined-outer{background: url(/img/works-section-bg-02.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center bottom; width: 100%; float: left;padding-top: 55px;padding-bottom: 55px;}
+.streamlined-outer{background: url(/img/works-section-bg-06.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center bottom; width: 100%; float: left;padding-top: 55px;padding-bottom: 55px;}
 .streamlined-outer .container {position: relative;}
 .number-list-box { display: flex;align-items: start;padding-bottom: 8px;}
 .number-box h3 {font-weight: 700; font-size: 39px;background: #F79A2C;border-radius: 4px; margin-right: 22px;height: 54px; width: 54px; text-align: center;line-height: 54px;}
@@ -1343,7 +1349,7 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .testimonials-outer a.carousel-control.right.carousel-control-next{top: inherit;left: 17% !important;bottom: 25px;right: inherit;z-index: 9999;}
 .testimonials-outer .testimonials-left { padding-right: 10%;} 
 .testimonials-outer .sign-up-link { width: 100%;float: left; margin-top: 30px;}
-.start-deals-outer{background: url(/img/works-section-bg-02.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center bottom; width: 100%; float: left;padding-top: 58px;padding-bottom: 60px;}
+.start-deals-outer{background: url(/img/works-section-bg-06.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center center; width: 100%; float: left;padding-top: 58px;padding-bottom: 60px;}
 .start-deals-box { padding: 18px 53px 0px 53px;}
 .start-deals-box p { margin-bottom: 0px;line-height: 20px;}
 .start-deals-box .sign-up-link {width: 100%; float: left; margin-top: 20px;}
@@ -1362,8 +1368,29 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .vendors-serve-box .vendors-serve-text-box p{line-height: 28px;}
 .vendors-up-link { padding-left: 14%;margin-top: 2%;}
 .start-deals-box h3 { margin-bottom: 3px;}
-.navbar {height: 99px;display: flex; align-items: center;}
+.navbar {height: 8vw;display: flex; align-items: center;}
 body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;}
+.realtor-register_form_outer hr.style1 { border-top: 2px solid #C4C4C4;}
+.works-section-outer .mobile-image {display: none;}
+
+.home-banner-container{ position:relative;}
+.home-banner-topbar{ background:#f7991e; width:100%; display:inline-block; padding:10px 0;}
+.banner-body-section p, .banner-body-section .home-banner-heading{ color:#184586;}
+.member-spotlight{background-color: #f1f1f3;}
+.home-banner-topbar h1{ color:#ffffff; margin:0;}
+.home-banner-topbar span{ color:#184586;}
+
+.hero-banner p{font-size: 19px;line-height: 24px;letter-spacing: 1px; font-weight:500; padding-bottom: 0px; margin-bottom: 0px; padding-top: 9px;}
+.home-banner-heading h2{font-weight: 700;font-size: 40px;letter-spacing: 1px;line-height: 45px; margin-top:0px; margin-bottom:8px;}
+.hero-banner h3{font-size: 22px !important;}
+
+.hero-img-rt img {position: absolute;right: 0;}
+.hero-img-rt img {position: absolute;right: -83px;top: -45px;width: 120%;max-width: initial;}
+.c-pt-3{ padding-top:3rem;}
+.agents-outer p{ margin-bottom:0;}
+.spotlight__section-title{ margin-top:10px;}
+.dropdown-menu>li>a{font-size: 1.1vw;}
+.hero-banner  h1{padding-bottom: 6px;font-size: 22px;}
 /*********************************21-12-2023-Css-End*************************************/
 
 /* ============================= Responsive CSS================================= */
@@ -1410,6 +1437,8 @@ body .footer.footer-light{padding-top: 27px;padding-bottom: 17px;}
  body .single-blog .related-articles-container h4{font-size: 18px;line-height: 22px;}
  body .single-blog .blog-details h2{font-size: 21px;}
  .single-blog h1 {font-size: 29px;}
+ .navbar-nav{float: right;}
+ .navbar .navbar-brand{width: 190px;top: 0;}
 }
 @media(max-width:1130px)
 {
@@ -1418,6 +1447,11 @@ body .footer.footer-light{padding-top: 27px;padding-bottom: 17px;}
 body .business-outer .business-img-box img{ height: auto;width: 147%;}
 body .business-outer .business-img-box {min-height: 100%;}
 .business-outer { padding-bottom: 40px;}
+.number-list-box-left { padding-right: 8%;}
+
+.testimonials-outer .testimonials-left { padding-right: 5%;}
+.testimonials-outer .testimonials-left .carousel .item{min-height: 317px;}
+
 }
 @media(max-width:1015px)
 {
@@ -1452,7 +1486,7 @@ body .pitch.pitch-outer p{font-size: 17px;margin-bottom: 14px;}
 .container.stats.counting-section span {font-size: 17px;}
 .container.stats.counting-section h2{ margin-bottom: 0px;}
 .testimonials{padding-bottom: 100px;}
-.navbar .navbar-brand {width: 238px;}
+.navbar .navbar-brand {width: 173px;}
 .spotlight__section-title{font-size: 32px;}
 .pitch.pitch-outer h2.text-center{font-size: 32px;}
 .container-fluid.leading-industry-section { padding-top: 40px; padding-bottom: 60px;}
@@ -1476,7 +1510,72 @@ body .business-outer .business-img-box img{height: auto;width: 135%;right: -6px;
 .business-outer .space-left {padding-left: 26px;}
 body .business-outer .business-box p { font-size: 1.5vw;line-height: 22px;}
  .leading-industry-section .col-xl-6.col-md-12{ text-align:center;}
+ .navbar-nav{float: right;}
+ .nav > li > a{margin: 2px 2px;}
+ a.navbar-brand{top: 0px;}
+ a.carousel-control.left.carousel-control-prev{left: 5%;}
+ .testimonials .carousel .item{padding: 0% 10%;}
+ a.carousel-control.right.carousel-control-next{right: 0px;}
+ .testimonials {padding-bottom: 50px;}
+ .works-section-outer img {width: 100%;}
+ .instant-access-outer .container{width: 100%;}
+ .testimonials { padding-bottom: 15px;}
+.works-section-outer .mobile-image {display: block;}
+.works-section-outer .desktop-image {display: none;}
+.flex-box-section { display: flex;  flex-direction: column;}
+.flex-box-section .box-order-1 {order: 2;}
+.works-section-outer img{margin-bottom: 25px;}
+.instant-access-outer .center-box{text-align: center;}
+.instant-access-outer .center-box  h2, .instant-access-outer .center-box  h4{text-align: center;}
+.instant-access-outer .instant-text {padding-left: 15px ! important;padding-right: 15px ! important;}
+.instant-access-outer .d-flex-btn-group {justify-content: center; display: flex;}
+.instant-access-outer{padding-bottom: 15px;}
+.instant-access-outer .center-box h2{margin-top: 10px ! important;}
+.footer__brand>img { width: 200px;}
+.render-network-section .text-box-center { width: 100%;text-align: center; margin-bottom: 0px;}
+.home-banner-heading{line-height: 44px;}
+.hero-banner {background-position: -115px; }
+.render-network-section img{margin-top: 30px;}
+.profits-section-outer .container{padding-bottom: 63px;}
+.footer__brand > img {width: 200px;}
 
+.top-inner-banner{padding: 5% 13px; overflow: hidden;}
+.top-inner-banner h1 {font-size: 23px;}
+.top-inner-banner h2 {margin-bottom: 8px;font-size: 20px !important;margin-top: 10px !important;}
+.top-inner-banner p {font-size: 15px !important; line-height: 19px; padding-right: 60% !important;}
+.streamlined-outer .row.realtor-row {display: flex;flex-direction: column;padding: 0px 15px;}
+.streamlined-outer .number-list-box-left{order: 2;}
+.streamlined-outer .row .realtor-register_form_outer .row { padding: 0px;}
+.realtor-register_form_outer{padding: 30px 25px;margin-bottom: 35px;position: inherit;}
+.number-list-box-left {padding: 0px 5px;}
+.streamlined-outer{padding-top: 39px;padding-bottom: 32px;}
+.number-list-box-left p br { display: none;}
+.number-box h3{height: 41px;width: 41px;margin-right: 13px;font-size: 26px;line-height: 41px;}
+.number-list-box{padding-bottom: 0px;}
+.testimonials-outer { padding-top: 29px;}
+.testimonials-outer { padding-top: 29px; padding-bottom: 30px;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{left: 24% !important;}
+.instant-access-outer .sign-up-link {display: flex; justify-content: center; margin-bottom: 30px;}
+.testimonials-outer .carousel .item { text-align: center;}
+.testimonials-outer .testimonials-left { padding-right: 15px;}
+.testimonials-outer .testimonials-left h2 { text-align: center;}
+.testimonials-outer .carousel .carousel-indicators{left: 0;width: 100%;display: block;}
+.testimonials-outer a.carousel-control.left.carousel-control-prev{left:42% ! important; bottom: 29px;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{left: 54% !important;bottom: 29px;}
+.testimonials-outer .sign-up-link{display: flex;justify-content: center;}
+.number-list-box-left {padding: 0px 5px; padding-top: 15px;}
+.testimonials-outer .carousel .item { min-height: 220px;}
+#testimoniial-slider p{font-size: 14px;}
+.start-deals-box img {width: 64px;}
+.start-deals-box h3{margin-top: 13px;}
+.start-deals-box p br {display: block;}
+.start-deals-box p{font-size: 16px;line-height: 24px;}
+.start-deals-box { padding: 16px 0px;display: flex;justify-content: center;flex-wrap: wrap;}
+.start-deals-box .col-md-4{padding: 0px 9px;flex: 1;min-width: 33%;}
+.start-deals-outer{padding-top: 38px; padding-bottom: 24px;}
+.instant-access-outer.instant-access-outer-02 .container { width: 100%;text-align: center;}
+.instant-access-outer.instant-access-outer-02 h2 {text-align: center;}
+.instant-access-outer.instant-access-outer-02{padding-top: 33px;}
 }
 @media(max-width:988px)
 {
@@ -1526,7 +1625,8 @@ body .business-outer .business-box p { font-size: 1.5vw;line-height: 22px;}
 #realbroker-navbar-collapse .navbar-right.navbar-nav > li{float: none;display: block;}
 body .navbar .header-contact { width: 363px; float: right;}
 body .navbar .navbar-toggle{padding: 9px 0px;}
-#realbroker-navbar-collapse { margin-right: 0px !important;padding-left: 5px;}
+#realbroker-navbar-collapse { margin-right: 0px !important;padding-left: 5px;padding-right: 5px !important;}
+
 body .navbar .header-contact { width: 330px; float: right;}
 .header-contact li .header__social-link img {width: 30px;}
 .top-header-section { width: 100%;}
@@ -1623,7 +1723,69 @@ body .single-blog .blog-details h2{font-size: 18px;}
 .hero-img-mobile{ display:block;margin-bottom: 14px;padding: 7px;}
 .hero-img-rt {display: none;}
 .top-header-section .header__social-link i{font-size: 18px;}
+.navbar-brand {width: 131px !important;}
+.navbar-toggle .icon-bar{background-color: #fff;width: 31px;}
+.navbar-nav{ margin:0px;}
+.nav > li > a{padding-bottom: 8px !important; padding-top: 10px ! important; padding-left: 0px ! important;}
+#realbroker-navbar-collapse .navbar-right{text-align: left !important;width: 100%;}
+.login-button-nav{width: 100%; display: block;float: left;padding: 0px; margin-top: 16px;}
+.login-button-nav li{float: left;width: 100%;}
+.login-button-nav li .navbar__button--login{width: 100%; float: left;border-radius: 0px;}
+.login-button-nav li .navbar__button--register{width: 100%; float: left;border-radius: 0px;margin-left: 0px;margin-top: 10px;}
+.navbar-nav {float: left; width: 100%;}
+.login-button-nav .dropdown-menu { left: 0; padding: 0px 12px;border-radius: 0px;}
+.login-button-nav .dropdown-menu li a {margin: 4px 0px;padding: 8px ! important;}
+.login-button-nav .dropdown-menu{padding: 6px 12px;}
+ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu {background-color: #fff;border-radius: 0px;}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{background-color: transparent; border-color: #fff;}
+ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu li  a{border-bottom: 1px solid #005597;padding: 4px 7px!important;margin: 0px 9px;}
+ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu li:last-child a{border-bottom:0px;}
+.hero-banner h3 {font-size: 19px !important;}
+.home-banner-heading{font-size: 25px; line-height: 23px; margin-top: 0px;margin-bottom: 0px;}
+.hero-banner p br{display: block;}
+.hero-banner p {line-height: 19px;font-size: 15px;}
+.btn-yellow{font-size: 12px;margin-right: 8px;padding: 4px 8px;}
+body .hero-banner .hero-intro{padding: 22px 0px 28px 0px;}
+h2.h1 { font-size: 25px;}
+.container { padding: 10px 15px;}
+.render-network-section .px-4:first-child img {width: 87px;margin-top: 0px;}
+.render-network-section h3{font-size: 18px;margin-top: 10px;margin-bottom: 4px;line-height: 23px;}
+.render-network-section img { width: 63px;margin-top: 15px;}
+.render-network-section{background-position: -346px;}
+.render-network-section h4 { font-size: 16px; margin-top: 24px;}
+#testimoniial-slider i.fa.fa-angle-left, #testimoniial-slider i.fa.fa-angle-right{font-size: 64px;}
+a.carousel-control.left.carousel-control-prev {left: 19px;}
+#testimoniial-slider p{font-size: 15px;margin-bottom: 1px;}
+.testimonials {padding-bottom: 0px; padding-top: 29px;}
+.works-section-outer img{margin-bottom: 19px;}
+.works-section-outer{padding-top: 40px; padding-bottom: 40px;}
+.profits-section-outer .container{padding-bottom: 0px;}
+.profits-section-outer  p br { display: none;}
+.profits-section-outer  .mobile-center-box { margin-top: 28px ! important;}
+.profits-section-outer .center-box{margin-bottom: 15px;}
+.profits-section-outer h2.h1{margin-bottom: 7px;}
+.instant-access-outer {padding-bottom: 0px;padding-top: 41px;}
+.instant-access-outer img {width: 174px;}
+.instant-access-outer .center-box h2 br {display: none;}
+a.carousel-control.left.carousel-control-prev, a.carousel-control.right.carousel-control-next{top: 50%;}
+.footer .nav > li > a{padding-left: 10px ! important;}
+body .footer.footer-light .collapse{padding-bottom: 10px ! important;}
+body .footer ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu li a{margin-bottom: 6px;border-bottom: none;}
+.instant-access-outer p{margin-bottom: 7px;line-height: 22px;}
+.render-network-section h2 { margin-bottom: 5px;}
+.render-network-section{padding-top: 38px;}
+.hero-banner { background-position: center left;}
+.hero-banner .d-flex-btn-group { margin-top: 5px;}
+.navbar .navbar-brand{left: 9px;}
+.hero-banner p.pr-4 { padding-right: 20% ! important;}
+.navbar.navbar-fixed-top #realbroker-navbar-collapse{top: 68px;position: absolute;background: #184586 !important;}
+.footer #realbroker-navbar-collapse{padding-right: 15px !important; padding-left: 15px !important;}
+.footer .nav .open > a, .footer .nav .open > a:focus, .footer .nav .open > a:hover{background-color: #fabb69 !important;}
+.lender-inner-banner h1 {font-size: 23px;}
+.lender-inner-banner h2 { font-size: 20px;  margin-top: 7px ! important;}
+.lender-inner-banner p br { display: none;}
 }
+
 h4.premium-user-logo.line-left {
     position: relative;
     font-size: 25px;
@@ -1641,22 +1803,7 @@ button#registerVendor {
 
 /**************** 08-02-2023 Starts *********************/
 /* .hero-banner{ background: #fff; padding:0;} */
-.home-banner-container{ position:relative;}
-.home-banner-topbar{ background:#f7991e; width:100%; display:inline-block; padding:10px 0;}
-.banner-body-section p, .banner-body-section .home-banner-heading{ color:#184586;}
-.member-spotlight{background-color: #f1f1f3;}
-.home-banner-topbar h1{ color:#ffffff; margin:0;}
-.home-banner-topbar span{ color:#184586;}
 
-.hero-banner p{font-size: 19px;line-height: 27px;letter-spacing: 1px; font-weight:400; padding-bottom: 0px; margin-bottom: 0px; padding-top: 9px;}
-.home-banner-heading{font-weight: 700;font-size: 40px;letter-spacing: 1px;line-height: 45px; margin-top:0px; margin-bottom:8px;}
-.hero-banner h3{font-size: 22px !important;}
-
-.hero-img-rt img {position: absolute;right: 0;}
-.hero-img-rt img {position: absolute;right: -83px;top: -45px;width: 120%;max-width: initial;}
-.c-pt-3{ padding-top:3rem;}
-.agents-outer p{ margin-bottom:0;}
-.spotlight__section-title{ margin-top:10px;}
 
 /*
 .details-list-icons li{ margin-bottom:10px; font-size:15px; cursor:pointer;}
@@ -1668,24 +1815,8 @@ button#registerVendor {
 .details-list-icons li:before {content: "\F00C";font-family: 'FontAwesome';position: absolute;left:0;width: 26px;background: #f7991f;border-radius: 3px;color: #fff;text-align: center;line-height: 26px;}
 
 
-@media(max-width:1280px){
-    .hero-img-rt img {right: -50px;}
-}
-@media(max-width:1024px){
-    .hero-img-rt img {position: absolute;right: -23px;top: 0;width: 100%;max-width: initial;}
-    .home-banner-heading{font-size: 29px;line-height: 35px;}
-    .hero-banner p{font-size: 20px;line-height: 28px;}
-}
-@media(max-width:992px){
-    .hero-img-rt img {right:0px;}
-    .home-banner-heading{font-size: 24px;line-height: 32px;}
-    .home-banner-container .container{ width:100%; padding-left:20px !important;}
-}
-@media(max-width:767px)
-{
-    .home-banner-heading{font-size: 25px;line-height: 36px;margin-top: 12px;margin-bottom: 12px;}
-    .home-banner-container .container{ padding-left:10px !important;}
-}
+
+
 /**************** 08-02-2023 Ends *********************/
 
 /**************** 21-03-2023 Starts *********************/
@@ -1821,11 +1952,11 @@ hr.style1{
 {
 body .navbar .header-contact { width: 100%; float: right;}
 .header-contact li .header__social-link img {width: 30px;}
-#testimoniial-slider p{font-size: 15px;margin-bottom: 23px;}
+#testimoniial-slider p{font-size: 15px;margin-bottom: 1px;}
 #testimoniial-slider.carousel .overview b{font-size: 18px ! important;}
-.testimonials{padding-bottom: 67px;}
-a.carousel-control.left.carousel-control-prev{bottom: -45px;}
-a.carousel-control.right.carousel-control-next{bottom: -45px;}
+.testimonials{padding-bottom: 0px;}
+/* a.carousel-control.left.carousel-control-prev{bottom: -45px;} */
+/* a.carousel-control.right.carousel-control-next{bottom: -45px;} */
 .testimonials .carousel .item {min-height: 278px;}
 body .member-spotlight .btn.border-btn{margin-top: 15px;font-size: 16px;}
 .navbar{height: auto ! important;}
@@ -1834,21 +1965,68 @@ body .member-spotlight .btn.border-btn{margin-top: 15px;font-size: 16px;}
 body .pitch.pitch-outer p{ padding-bottom:0px;}
 .leading-industry-section img{margin-top: 0px;}
 .leading-industry-section h2 br{ display:none;}
+
+}
+@media(max-width:592px)
+{
+.hero-banner{text-align:center}
+.hero-banner p.pr-4 { padding-right: 0% ! important;}
+.hero-banner .d-flex-btn-group{display: flex;justify-content: center;}
+.navbar.navbar-fixed-top #realbroker-navbar-collapse{top: 0px;position: inherit;}
+.top-inner-banner{background-position: -125px;padding: 5% 13px;}
+.top-inner-banner h1 {font-size: 23px;}
+.top-inner-banner h2 {margin-bottom: 8px;font-size: 20px !important;margin-top: 10px !important;}
+.top-inner-banner p {font-size: 15px !important; line-height: 19px; padding-right: 23% !important;}
+.streamlined-outer .row.realtor-row {display: flex;flex-direction: column;padding: 0px 15px;}
+.streamlined-outer .number-list-box-left{order: 2;}
+.streamlined-outer .row .realtor-register_form_outer .row { padding: 0px;}
+.realtor-register_form_outer{padding: 30px 25px;margin-bottom: 35px;position: inherit;}
+.number-list-box-left {padding: 0px 5px;}
+.streamlined-outer{padding-top: 39px;padding-bottom: 32px;}
+.number-list-box-left p br { display: none;}
+.number-box h3{height: 41px;width: 41px;margin-right: 13px;font-size: 26px;line-height: 41px;}
+.number-list-box{padding-bottom: 0px;}
+.testimonials-outer { padding-top: 29px;}
+.testimonials-outer { padding-top: 29px; padding-bottom: 30px;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{left: 24% !important;}
+.instant-access-outer .sign-up-link {display: flex; justify-content: center; margin-bottom: 30px;}
+.testimonials-outer .carousel .item { text-align: center;}
+.testimonials-outer .testimonials-left { padding-right: 15px;}
+.testimonials-outer .testimonials-left h2 { text-align: center;}
+.testimonials-outer .carousel .carousel-indicators{left: 0;width: 100%;display: block;}
+.testimonials-outer a.carousel-control.left.carousel-control-prev{left: 35% ! important; bottom: 29px;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{left: 56% !important;bottom: 29px;}
+.testimonials-outer .sign-up-link{display: flex;justify-content: center;}
+.number-list-box-left {padding: 0px 5px; padding-top: 15px;}
+.testimonials-outer .carousel .item{min-height: 335px;}
+#testimoniial-slider p{font-size: 14px;}
+.start-deals-box img {width: 64px;}
+.start-deals-box h3{margin-top: 13px;}
+.start-deals-box p br {display: none;}
+.start-deals-box p{font-size: 14px;line-height: 18px;}
+.start-deals-box { padding: 16px 0px;display: flex;justify-content: center;flex-wrap: wrap;}
+.start-deals-box .col-md-4{padding: 0px 9px;flex: 1;min-width: 33%;}
+.start-deals-outer{padding-top: 31px; padding-bottom: 15px;}
+.instant-access-outer.instant-access-outer-02 .container { width: 100%;text-align: center;}
+.instant-access-outer.instant-access-outer-02 h2 {text-align: center;}
+.instant-access-outer.instant-access-outer-02{padding-top: 33px;}
+.lender-inner-banner{background-position: -78px;}
+.lender-inner-banner p {line-height: 18px; margin-top: 3px;padding-right: 34% ! important;}
 }
 @media(max-width:480px)
 {
 .top-header-section li:first-child { margin-left: 0px;}
-.navbar-brand{width: 208px !important;}
+/* .navbar-brand{width: 208px !important;} */
 .navbar-header {padding: 0px 12px;}
-.nav > li > a {padding-top: 8px; margin-bottom: 0; padding-bottom: 8px !important;}
+/* .nav > li > a {padding-top: 8px; margin-bottom: 0; padding-bottom: 8px !important;} */
 /* .header-number a {font-size: 18px;} */
 .leading-industry-section h2{font-size: 22px;text-align: center;}
 body .leading-industry-section .btn.btn-warning{margin: 0 auto;display: table;}
 body .navbar .header-contact{width:100%;}
 /* .top-header-section .call-text{padding: 1px 6px;} */
 .container.stats.counting-section span{font-size: 15px;}
-a.carousel-control.right.carousel-control-next{left: 37%;}
-a.carousel-control.left.carousel-control-prev{left: 36%;}
+/* a.carousel-control.right.carousel-control-next{left: 37%;} */
+/* a.carousel-control.left.carousel-control-prev{left: 36%;} */
 .footer.footer-light .container{padding: 0px;}
 .vendor-reg-box button#registerVendor {margin-top: 46px !important;}
 .vendor-reg-box { margin-top: 20px;}
@@ -1862,6 +2040,7 @@ body .business-outer .business-box p br{display: none;}
 .business-outer .render-logo{width: 196px;}
 .container.stats.counting-section h2{line-height: 17px;}
 .counting-outer .container.stats.counting-section{padding-bottom: 3px;}
+.hero-banner {background-position: -261px;}
 }
 
 
@@ -1875,13 +2054,14 @@ body .navbar .header-contact{width: 100%;}
 /* .header-number a {font-size: 17px;} */
 /* .top-header-section .call-text:after{bottom: 4px;z-index: -1;right: -11px;} */
 .top-header-section .fb_link a i {font-size: 19px;}
-.hero-banner p{font-size: 18px;}
+/* .hero-banner p{font-size: 18px;} */
 
 }
 @media(max-width:380px)
 {
 /* .header-number a {font-size: 15px;} */
 .top-header-section li{margin: 0px 4px;}
+ .testimonials-outer .carousel .item {min-height: 353px;}
 }
 @media (min-width:768px) and (max-width:1199px) {
 .navbar-brand img {margin: auto;}

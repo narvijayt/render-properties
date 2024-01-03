@@ -43,9 +43,9 @@ $description = 'Register for Render'
  </div>
 </div>
 </div>
-<div class="streamlined-outer">
+<div id="streamlined-outer-scroll" class="streamlined-outer">
 <div class="container">
-<div class="row">
+<div class="row realtor-row">
 {{--<div class="col-md-12 register-info-heading" data-info-type="lender">
             @include('partials.registration.lender-overview')
 </div>--}}
@@ -87,7 +87,7 @@ $description = 'Register for Render'
 		 <h3 class="text-white mt-0">$XX.00 PER MONTH</h3>
 		 </div>
 		 <div class="sign-up-link">
-		 <a class="text-orange" href="#">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+		 <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 		 </div>
          </div>
 		 {{--<div class="col-md-6">
@@ -169,7 +169,7 @@ $description = 'Register for Render'
             </div>
             @endif
 			<div class="sign-up-link">
-		 <a class="text-orange" href="#">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+		 <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 		 </div>
         </div>
 		
@@ -203,7 +203,7 @@ $description = 'Register for Render'
 <p class="text-white"><b>See the <br> deals come <br> to you</b></p>
 </div>
 <div class="sign-up-link text-center">
- <a class="text-orange" href="#">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+ <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 </div>
 </div>
 </div>
@@ -213,14 +213,10 @@ $description = 'Register for Render'
 </div>
 </div>
 
-<div class="instant-access-outer">
+<div class="instant-access-outer instant-access-outer-02">
         <div class="container pb-0">
-		<div class="row ">
-		<div class="col-md-12 center-box text-left">
-		<div class="col-md-3">
-		<img src="{{url('/')}}/img/richard-image-home.png">
-		</div>
-		<div class="col-md-9 instant-text">
+		<div class="row">
+		<div class="col-md-6 ">
 		<h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br> Nationwide!</h2>
 		
 		<p class="text-primary">Render was created by The Carolinas leading mortgage and Real Estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
@@ -229,11 +225,14 @@ $description = 'Register for Render'
 		<p class="text-primary">No more incompetent real estate pros.</p>
 		<p class="text-primary">And you get access to talent nationwide.Sign up now and see what the Render network can do for you.</p>
 		<div class="sign-up-link text-left mt-1">
- <a class="text-primary" href="#">SIGN UP FOR FREE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+ <a class="text-primary" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 </div>
 
 		</div>
+		<div class="col-md-6">
+
 		</div>
+		
     </div>
 		
     </div>
