@@ -118,8 +118,7 @@
         </div>
 
         <div class="col-md-6 form-group {{ $errors->has('zip') ? ' has-error' : '' }}">
-            <input id="zip" type="text" class="form-control" name="zip" placeholder="Zip" value="{{ old('zip') }}"
-                data-bv-zipcode-country="true" required>
+            <input id="zip" type="text" class="form-control" name="zip" placeholder="Zip" value="{{ old('zip') }}" data-bv-zipcode-country="true" required>
         </div>
 
 
@@ -130,22 +129,21 @@
     </div>
 
 	<hr class="style1">
-		<link rel="stylesheet" type="text/css" href="{{ asset('multicss/example-styles.css')}}">
-		<div class="form-group">
-			<span>What Industry are you in?</span>
-			<select name="select_category[]"
-				class="form-control {{ $errors->has('select_category[]') ? ' has-error' : '' }}" multiple id="langOpt"
-				required>
-				@foreach($allcat as $categoryVendor)
-				<option value="{{$categoryVendor->id}}">{{$categoryVendor->name}}</option>
-				@endforeach
-			</select>
-			@if ($errors->has('select_category[]'))
-			<span class="help-block">
-				<strong>{{ $errors->first('select_category[]') }}</strong>
-			</span>
-			@endif
-		</div>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('multicss/example-styles.css')}}">
+    <div class="form-group">
+        <span>What Industry are you in?</span>
+        <select name="select_category[]" class="form-control {{ $errors->has('select_category[]') ? ' has-error' : '' }}" multiple id="langOpt" >
+            @foreach($allcat as $categoryVendor)
+            <option value="{{$categoryVendor->id}}">{{$categoryVendor->name}}</option>
+            @endforeach
+        </select>
+        @if ($errors->has('select_category[]'))
+        <span class="help-block">
+            <strong>{{ $errors->first('select_category[]') }}</strong>
+        </span>
+        @endif
+    </div>
 
 	<div class="form-group {{ $errors->has('experties') ? ' has-error' : '' }}">
 		<span>Can you describe your area of expertise and the specific services you offer to real estate professionals?</span>
@@ -185,10 +183,10 @@
 			<span>Are you open to collaborating with real estate professionals on an ongoing basis, and do you have experience working as part of a real estate team?</span>
 			<div class="input-radio-group">
 				<label class="radio-inline">
-					<input id="connect_realtor_yes" class="form-control" type="radio" name="connect_realtor" value="yes" @if ($connect_realtor=="yes" ) checked="checked" @endif required /> <span>Yes</span>
+					<input id="connect_realtor_yes" class="form-control" type="radio" name="connect_realtor" value="yes" @if ($connect_realtor=="yes") checked="checked" @endif /> <span>Yes</span>
 				</label>
 				<label class="radio-inline">
-					<input id="connect_realtor_no" class="form-control" type="radio" name="connect_realtor" value="no" @if ($connect_realtor=="no" ) checked="checked" @endif required /><span>No</span>
+					<input id="connect_realtor_no" class="form-control" type="radio" name="connect_realtor" value="no" @if ($connect_realtor=="no") checked="checked" @endif /><span>No</span>
 				</label>
 			</div>
 		</div>
@@ -202,10 +200,10 @@
 			<span>Are you open to collaborating with real estate professionals on an ongoing basis, and do you have experience working as part of a real estate team?</span>
 			<div class="input-radio-group">
 				<label class="radio-inline">
-					<input id="connect_memebrs_yes" class="form-control" type="radio" name="connect_memebrs" value="yes" @if ($connect_memebrs=="yes" ) checked="checked" @endif required /> <span>Yes</span>
+					<input id="connect_memebrs_yes" class="form-control" type="radio" name="connect_memebrs" value="yes" @if ($connect_memebrs=="yes" ) checked="checked" @endif /> <span>Yes</span>
 				</label>
 				<label class="radio-inline">
-					<input id="connect_memebrs_no" class="form-control" type="radio" name="connect_memebrs" value="no" @if ($connect_memebrs=="no" ) checked="checked" @endif required /><span>No</span>
+					<input id="connect_memebrs_no" class="form-control" type="radio" name="connect_memebrs" value="no" @if ($connect_memebrs=="no" ) checked="checked" @endif /><span>No</span>
 				</label>
 			</div>
 		</div>
@@ -213,26 +211,27 @@
 
 
     <input type="text" name="honey_pot" value="" style="display:none;">
+
 	<hr class="style1">
 	@if(env('APP_ENV') != 'local')
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    <div class="form-group row">
-        <div class="col-md-6 offset-md-4">
-            <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
-            <span class="msg-error error"></span>
-            @if ($errors->has('g-recaptcha-response'))
-            <span class="invalid-feedback" style="display: block;">
-                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-            </span>
-            @endif
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <div class="form-group row">
+            <div class="col-md-6 offset-md-4">
+                <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                <span class="msg-error error"></span>
+                @if ($errors->has('g-recaptcha-response'))
+                <span class="invalid-feedback" style="display: block;">
+                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                </span>
+                @endif
+            </div>
         </div>
-    </div>
 	@endif
     <div class="form-group justify-content-center">
         <button type="submit" class="btn btn-warning btn-lg mt-0 btn-yellow" id='registerVendor'>REGISTER</button>
     </div>
 
-    <script type="text/javascript" src="{{ asset('js/jquery-2.2.4.min.js')}}"></script>
+    <!-- <script type="text/javascript" src="{{ asset('js/jquery-2.2.4.min.js')}}"></script> -->
     <script type="text/javascript" src="{{ asset('js/jquery.multi-select.js')}}"></script>
     <script type="text/javascript">
     $('#langOpt').multiSelect();
