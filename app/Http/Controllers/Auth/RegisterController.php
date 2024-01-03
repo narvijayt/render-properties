@@ -584,7 +584,7 @@ class RegisterController extends Controller
 
                     $user->assign('user');
                     $user->assign($user['user_type']);
-                    if(env('APP_ENV') != 'local'){
+                    if(!in_array(env('APP_ENV'),['local','staging'])){
                         $this->emailVerification($user);
                         $this->welcomeEmail($user);
                     }
