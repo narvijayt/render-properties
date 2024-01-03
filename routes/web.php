@@ -387,6 +387,7 @@ Route::get('/azure-without-size-large','AzureImages@fetchLargeWithoutSize');
 
 Route::get('/vendor-register','Auth\RegisterController@loadVendorRegLayout')->name('pick-package');
 Route::post('/vendor-register','Auth\RegisterController@registerVendor')->name('register-vendor');
+
 Route::get('/vendor-packages/{id}','Auth\RegisterController@loadAllVendorPackages')->name('loadVendorPackages');
 Route::get('/vendor-platinum-membership-packages/{id}','Auth\RegisterController@loadPlatiniumVendor')->name('loadPlatiniumVendor');
 Route::get('/vendor-package-payment','Auth\RegisterController@loadPackagePayment')->name('package-payment');

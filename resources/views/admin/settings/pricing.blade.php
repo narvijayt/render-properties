@@ -35,7 +35,7 @@
                             <div class="form-group d-block w-100 mb-1">
                                 <label class="col-md-3">Regular Price ($)</label>
                                 <div class="form-input col-md-9">
-                                    <input type="text" class="form-control" name="regular_price" id="regular_price" placeholder="59.00" value="{{ old('regular_price') ? old('regular_price') : $pricing->regular_price }}" />
+                                    <input type="text" class="form-control" name="regular_price" id="regular_price" placeholder="59.00" value="{{ old('regular_price') ? old('regular_price') : $lenderPackage->regular_price }}" />
                                     @if ($errors->has('regular_price'))
                                         <div class="invalid-feedback" role="alert"> 
                                             <strong>{{ $errors->first('regular_price') }}</strong>
@@ -49,13 +49,13 @@
                             <div class="form-group d-block w-100 mb-1">
                                 <label class="col-md-3">Sale Price ($)</label>
                                 <div class="form-input col-md-9">
-                                    <input type="text" class="form-control" name="sale_price" id="sale_price" placeholder="40.00" value="{{ old('sale_price') ? old('sale_price') : $pricing->sale_price }}" />
+                                    <input type="text" class="form-control" name="sale_price" id="sale_price" placeholder="40.00" value="{{ old('sale_price') ? old('sale_price') : $lenderPackage->sale_price }}" />
                                 </div>
                             </div>
                             <div class="form-group d-block w-100 mb-1">
                                 <label class="col-md-3">Sale Period (In Months: 1 or 2)</label>
                                 <div class="form-input col-md-9">
-                                    <input type="number" class="form-control" name="sale_period" id="sale_period" placeholder="1" value="{{ old('sale_period') ? old('sale_period') : $pricing->sale_period }}" />
+                                    <input type="number" class="form-control" name="sale_period" id="sale_period" placeholder="1" value="{{ old('sale_period') ? old('sale_period') : $lenderPackage->sale_period }}" />
                                 </div>
                             </div>
                         
@@ -64,11 +64,59 @@
                         <div class="box-footer">
                             <div class="form-input text-right pull-right">
                                 <button type="submit" class="btn btn-success" name="savePricing" id="savePricing">Save</button>
+                                <input type="hidden" name="packageType" value="lender" />
                             </div>
                         </div>
                     </form>
                 </div>
 
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Vendor Registration Price</h3>
+                    </div>
+                    
+                    <form name="pricing-form" id="pricing-form" method="post" action="{{ route('settings.storepricing') }}">
+                        <div class="box-body">
+
+                            <div class="form-group d-block w-100 mb-1">
+                                <label class="col-md-3">Regular Price ($)</label>
+                                <div class="form-input col-md-9">
+                                    <input type="text" class="form-control" name="regular_price" id="regular_price" placeholder="59.00" value="{{ old('regular_price') ? old('regular_price') : $vendorPackage->regular_price }}" />
+                                    @if ($errors->has('regular_price'))
+                                        <div class="invalid-feedback" role="alert"> 
+                                            <strong>{{ $errors->first('regular_price') }}</strong>
+                                        </div> 
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group d-block w-100 mb-1">
+                                <label class="col-md-12">Want to add Discount?</label>
+                            </div>
+                            <div class="form-group d-block w-100 mb-1">
+                                <label class="col-md-3">Sale Price ($)</label>
+                                <div class="form-input col-md-9">
+                                    <input type="text" class="form-control" name="sale_price" id="sale_price" placeholder="40.00" value="{{ old('sale_price') ? old('sale_price') : $vendorPackage->sale_price }}" />
+                                </div>
+                            </div>
+                            <div class="form-group d-block w-100 mb-1">
+                                <label class="col-md-3">Sale Period (In Months: 1 or 2)</label>
+                                <div class="form-input col-md-9">
+                                    <input type="number" class="form-control" name="sale_period" id="sale_period" placeholder="1" value="{{ old('sale_period') ? old('sale_period') : $vendorPackage->sale_period }}" />
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="box-footer">
+                            <div class="form-input text-right pull-right">
+                                <button type="submit" class="btn btn-success" name="savePricing" id="savePricing">Save</button>
+                                <input type="hidden" name="packageType" value="vendor" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                {{-- 
                 <div class="box mt-5">
                     <div class="box-header">
                         <h3 class="box-title">Vendor Registration Plans</h3>
@@ -114,6 +162,7 @@
                     </div>
 
                 </div>
+                --}}
             </div>
         </div>
     </section>

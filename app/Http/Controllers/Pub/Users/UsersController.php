@@ -366,7 +366,7 @@ class UsersController extends Controller
         
         $optionLabel = "Monthly - $59.00";
         $registrationPrice = "59.00";
-        $pricing = (new RegistrationPlans())->first();
+        $pricing = RegistrationPlans::where(['packageType' => 'lender'])->first();
         if(!is_null($pricing)){
             $optionLabel = "Monthly - $".$pricing->regular_price;
             $registrationPrice = $pricing->regular_price;
@@ -535,7 +535,7 @@ class UsersController extends Controller
         $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($user->stripe_customer_id, $paymentMethod['id']);
         
         $couponId = '';
-        $pricing = (new RegistrationPlans())->first();
+        $pricing = RegistrationPlans::where(['packageType' => 'lender'])->first();
         if(!is_null($pricing)){
             $couponId = $pricing->couponId;
         }
@@ -544,7 +544,8 @@ class UsersController extends Controller
             $subscriptionArray = [
                 'customer' => $user->stripe_customer_id,
                 "default_payment_method" => $paymentMethod['id'],
-                'items' => [[ "price" => $pricing->planId]]
+                'items' => [[ "price" => $pricing->planId]],
+                'description'   =>  "Lender Subscription"
             ];
 
             if(!empty($couponId)){
@@ -631,7 +632,7 @@ class UsersController extends Controller
         $payment_intent = $request->input('payment_intent'); 
         $subscription_id = $request->input('subscription_id');
         $customer_id = $request->input('customer_id');
-        $pricing = (new RegistrationPlans())->first();      
+        $pricing = RegistrationPlans::where(['packageType' => 'lender'])->first();      
 
         $customer = (new Stripe())->getCustomer($customer_id);
         $user = User::with('userSubscription')->find($request->input('user_id'));
@@ -718,7 +719,8 @@ class UsersController extends Controller
         }else{
             flash("Subscription membership is missing.")->error();
             if($user->user_type == "vendor"){
-                return redirect()->route("loadVendorPackages", ["id" => $user_id]);
+                // return redirect()->route("loadVendorPackages", ["id" => $user_id]);
+                return redirect()->route("package-payment", ["id" => $user_id]);
             }else{
                 return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
             }
@@ -764,7 +766,8 @@ class UsersController extends Controller
         }else{
             flash("Subscription membership is missing.")->error();
             if($user->user_type == "vendor"){
-                return redirect()->route("loadVendorPackages", ["id" => $user_id]);
+                // return redirect()->route("loadVendorPackages", ["id" => $user_id]);
+                return redirect()->route("package-payment", ["id" => $user_id]);
             }else{
                 return redirect()->route("lenderBillingDetails", ["id" => $user_id]);
             }

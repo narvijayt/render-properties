@@ -78,7 +78,8 @@ class LoginController extends Controller
                 }*/
 
                 if($usr['payment_status'] == 0){
-                    return redirect()->route('loadVendorPackages', ["id" => $usr['user_id']])->with('message','Please make payment for login');
+                    // return redirect()->route('loadVendorPackages', ["id" => $usr['user_id']])->with('message','Please make payment for login');
+                    return redirect()->route('package-payment', ["id" => $usr['user_id']])->with('message','Please make payment for login');
                 }else{
                     $this->validateLogin($request);
                     if ($request->has('email')) {

@@ -10,86 +10,201 @@
     @endif
 </div>
 
-@if(auth()->user()->user_type == 'vendor')
-@if(count($vendorDet) != 0)
-@foreach($vendorDet as $vendorDetails)
-<input type="hidden" name="vendor_id" value="{{$vendorDetails->user_id}}">
-<div class="form-group {{ $errors->has('vendor_coverage_units') ? 'has-error' : '' }}">
-    <label class="control-label" for="vendor_coverage_units">
-        @if($errors->has('vendor_coverage_units'))<i class="fa fa-times-circle-o"></i>@endif Do you cover a City,
-        County, State or the entire USA?
-    </label>
-    <textarea type="text" class="form-control" placeholder="Do you cover a City, County, State or the entire USA?"
-        name="vendor_coverage_units" rows=2
-        required>{{ old('bio', (isset($vendorDetails->vendor_coverage_area) ? $vendorDetails->vendor_coverage_area : '')) }}</textarea>
-    @if($errors->has('vendor_coverage_units'))
-    <span class="help-block">{{ $errors->first('vendor_coverage_units') }}</span>
-    @endif
-</div>
 
-
-<div class="form-group {{ $errors->has('services') ? 'has-error' : '' }}">
-    <label class="control-label" for="services">
-        @if($errors->has('services'))<i class="fa fa-times-circle-o"></i>@endif What services do you offer?
-    </label>
-    <textarea type="text" class="form-control" placeholder="What services do you offer? " name="services" rows=2
-        required>{{ old('bio', (isset($vendorDetails->vendor_service) ? $vendorDetails->vendor_service : '')) }}</textarea>
-    @if($errors->has('services'))
-    <span class="help-block">{{ $errors->first('services') }}</span>
-    @endif
-</div>
-@endforeach
-@if(count($category)>0)
-<div class="form-group {{ $errors->has('selectcategory[]') ? 'has-error' : '' }}">
-    <label class="control-label" for="selectcat">
-        @if($errors->has('selectcategory[]'))<i class="fa fa-times-circle-o"></i>@endif What Industry are you in?
-    </label>
-    <select name="selectcategory[]" class="form-control {{ $errors->has('selectcategory[]') ? ' has-error' : '' }}"
-        multiple required>
-        @foreach($allcat as $categoryVendor)
-        <option value="{{$categoryVendor->id}}" @if(in_array($categoryVendor->id, $category['category']))selected
-            @endif>{{$categoryVendor->name}}</option>
+<div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
+    <label for="state" class="control-label">State</label>
+    <select id="editProfileState" class="form-control" name="state" required>
+        <option value="">Choose a state</option>
+        @foreach($states::all() as $abbr => $stateName)
+        <option value="{{ $abbr }}" {{
+                        collect(old('state', (isset($user->state) ? $user->state : null)))->contains($abbr) ? 'selected' : ''
+                    }}>{{ $stateName }}</option>
         @endforeach
     </select>
-    @if ($errors->has('selectcategory[]'))
+    @if ($errors->has('state'))
     <span class="help-block">
-        <strong>{{ $errors->first('selectcategory[]') }}</strong>
+        <strong>{{ $errors->first('state') }}</strong>
     </span>
     @endif
 </div>
-@endif
-@endif
-@endif
+
+<div class="row">
+    <input type="hidden" name="profile_city" id="previous_city" value="{{ old('city', (isset($user->city) ? $user->city : '')) }}">
+    <div class="col-md-7">
+        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+            <label class="control-label" for="city">
+                @if($errors->has('city'))<i class="fa fa-times-circle-o"></i>@endif City
+            </label>
+            <input type="text" name="city" class="form-control" id="newProfileCity" value="{{ old('city', (isset($user->city) ? $user->city : '')) }}" placeholder="Enter City" required>
+            @if ($errors->has('city'))
+            <span class="help-block">
+                <strong>{{ $errors->first('city') }}</strong>
+            </span>
+            @endif
+        </div>
+        <div class="form-group" id="another-city">
+            <input type="hidden" name="anotherCity" placeholder="Add another city" class="form-control" />
+        </div>
+    </div>
+
+    <!---End Previous State Drop Down-->
+    <div class="col-md-5">
+        <div class="form-group {{ $errors->has('zip') ? 'has-error' : '' }}">
+            <label class="control-label" for="zip">
+                @if($errors->has('zip'))<i class="fa fa-times-circle-o"></i>@endif Zip
+            </label>
+            <input type="text" class="form-control" placeholder="Enter Zip Code" name="zip" value="{{ old('zip', (isset($user->zip) ? $user->zip : '')) }}" /> @if($errors->has('zip'))
+            <span class="help-block">{{ $errors->first('zip') }}</span>
+            @endif
+        </div>
+    </div>
+</div>
 
 @if(auth()->user()->user_type == 'vendor')
-@if(count($category)>0)
-@if(in_array('19', $category['category']))
-@if($category['description'] !="" && $category['description'] !="NULL")
-<div class="form-group {{ $errors->has('other_description') ? 'has-error' : '' }}" id="firstDesc">
-    <label class="control-label" for="bio">
-        @if($errors->has('other_description'))<i class="fa fa-times-circle-o"></i>@endif Other Industry Description
-    </label>
-    <input type="text" class="form-control" name="other_description" value="{{$category['description']}}"
-        id="desc_first" required>
-    @if($errors->has('other_description'))
-    <span class="help-block">{{ $errors->first('other_description') }}</span>
+    @if(count($category)>0)
+        <div class="form-group {{ $errors->has('selectcategory[]') ? 'has-error' : '' }}">
+            <label class="control-label" for="selectcat">
+                @if($errors->has('selectcategory[]'))<i class="fa fa-times-circle-o"></i>@endif What Industry are you in?
+            </label>
+            <select name="selectcategory[]" class="form-control {{ $errors->has('selectcategory[]') ? ' has-error' : '' }}" multiple required>
+                @foreach($allcat as $categoryVendor)
+                    <option value="{{$categoryVendor->id}}" @if(in_array($categoryVendor->id, $category['category'])) selected @endif>{{$categoryVendor->name}}</option>
+                @endforeach
+            </select>
+            @if ($errors->has('selectcategory[]'))
+            <span class="help-block">
+                <strong>{{ $errors->first('selectcategory[]') }}</strong>
+            </span>
+            @endif
+        </div>
     @endif
-</div>
-@endif
-@endif
-<div class="form-group {{ $errors->has('other_description') ? 'has-error' : '' }}" id="OtherDescription"
-    style="display:none">
-    <label class="control-label" for="bio">
-        @if($errors->has('other_description'))<i class="fa fa-times-circle-o"></i>@endif Other Industry Description
-    </label>
-    <input type="text" class="form-control" name="other_description_optional" Placeholder="Other Industry Description"
-        id="otherIndustryDesc">
-    @if($errors->has('other_description'))
-    <span class="help-block">{{ $errors->first('other_description') }}</span>
-    @endif
-</div>
-@endif
 
+    <div class="form-group {{ $errors->has('experties') ? 'has-error' : '' }}">
+        <label class="control-label" for="experties">
+            @if($errors->has('experties'))<i class="fa fa-times-circle-o"></i>@endif Can you describe your area of expertise and the specific services you offer to real estate professionals?
+        </label>
+        <input type="text" class="form-control" placeholder="experties" name="experties" value="{{ $user->vendorMeta->experties }}">
+        @if($errors->has('experties'))
+            <span class="help-block">{{ $errors->first('experties') }}</span>
+        @endif
+    </div>
+    
+    <div class="form-group {{ $errors->has('special_services') ? 'has-error' : '' }}">
+        <label class="control-label" for="special_services">
+            @if($errors->has('special_services'))<i class="fa fa-times-circle-o"></i>@endif What distinguishes your services from competitors in the industry, and can you provide examples of successful projects you’ve worked on?
+        </label>
+        <input type="text" class="form-control" placeholder="special_services" name="special_services" value="{{ $user->vendorMeta->special_services }}">
+        @if($errors->has('special_services'))
+            <span class="help-block">{{ $errors->first('special_services') }}</span>
+        @endif
+    </div>
+    
+    <div class="form-group {{ $errors->has('service_precautions') ? 'has-error' : '' }}">
+        <label class="control-label" for="service_precautions">
+            @if($errors->has('service_precautions'))<i class="fa fa-times-circle-o"></i>@endif How do you ensure your services align with the needs and preferences of realtors and their clients?
+        </label>
+        <input type="text" class="form-control" placeholder="service_precautions" name="service_precautions" value="{{ $user->vendorMeta->service_precautions }}">
+        @if($errors->has('service_precautions'))
+            <span class="help-block">{{ $errors->first('service_precautions') }}</span>
+        @endif
+    </div>
+
+    <div class="form-group-row">
+        <label class="control-label">
+            @if($errors->has('connect_realtor'))<i class="fa fa-times-circle-o"></i>@endif
+            Are you open to collaborating with real estate professionals on an ongoing basis, and do you have experience working as part of a real estate team?
+        </label>
+        <div class="radio fancy_radio">
+            <div class="input-radio-group">
+                <label class="radio-inline">
+                    <input id="connect_realtor_yes" class="form-control" type="radio"
+                        name="connect_realtor" value="yes" @if (isset($user->vendorMeta->connect_realtor) &&
+                    $user->vendorMeta->connect_realtor == "1") checked="checked" @endif > <span>Yes</span>
+                </label>
+                <label class="radio-inline">
+                    <input id="connect_realtor_no" class="form-control" type="radio"
+                        name="connect_realtor" value="no" @if (isset($user->vendorMeta->connect_realtor) &&
+                    $user->vendorMeta->connect_realtor == "0") checked="checked" @endif ><span>No</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group-row">
+        <label class="control-label">
+            @if($errors->has('connect_memebrs'))<i class="fa fa-times-circle-o"></i>@endif
+            Are you open to collaborating with real estate professionals on an ongoing basis, and do you have experience working as part of a real estate team?
+        </label>
+        <div class="radio fancy_radio">
+            <div class="input-radio-group">
+                <label class="radio-inline">
+                    <input id="connect_memebrs_yes" class="form-control" type="radio"
+                        name="connect_memebrs" value="yes" @if (isset($user->vendorMeta->connect_memebrs) &&
+                    $user->vendorMeta->connect_memebrs == "1") checked="checked" @endif > <span>Yes</span>
+                </label>
+                <label class="radio-inline">
+                    <input id="connect_memebrs_no" class="form-control" type="radio"
+                        name="connect_memebrs" value="no" @if (isset($user->vendorMeta->connect_memebrs) &&
+                    $user->vendorMeta->connect_memebrs == "0") checked="checked" @endif ><span>No</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    {{--
+    @if(count($vendorDet) != 0)
+        @foreach($vendorDet as $vendorDetails)
+            <input type="hidden" name="vendor_id" value="{{$vendorDetails->user_id}}">
+            <div class="form-group {{ $errors->has('vendor_coverage_units') ? 'has-error' : '' }}">
+                <label class="control-label" for="vendor_coverage_units">
+                    @if($errors->has('vendor_coverage_units'))<i class="fa fa-times-circle-o"></i>@endif Do you cover a City, County, State or the entire USA?
+                </label>
+                <textarea type="text" class="form-control" placeholder="Do you cover a City, County, State or the entire USA?" name="vendor_coverage_units" rows=2 required>{{ old('bio', (isset($vendorDetails->vendor_coverage_area) ? $vendorDetails->vendor_coverage_area : '')) }}</textarea>
+                @if($errors->has('vendor_coverage_units'))
+                    <span class="help-block">{{ $errors->first('vendor_coverage_units') }}</span>
+                @endif
+            </div>
+
+
+            <div class="form-group {{ $errors->has('services') ? 'has-error' : '' }}">
+                <label class="control-label" for="services">
+                    @if($errors->has('services'))<i class="fa fa-times-circle-o"></i>@endif What services do you offer?
+                </label>
+                <textarea type="text" class="form-control" placeholder="What services do you offer? " name="services" rows=2 required>{{ old('bio', (isset($vendorDetails->vendor_service) ? $vendorDetails->vendor_service : '')) }}</textarea>
+                @if($errors->has('services'))
+                    <span class="help-block">{{ $errors->first('services') }}</span>
+                @endif
+            </div>
+        @endforeach
+    @endif
+    
+
+    @if(count($category)>0)
+        @if(in_array('19', $category['category']))
+            @if($category['description'] !="" && $category['description'] !="NULL")
+            <div class="form-group {{ $errors->has('other_description') ? 'has-error' : '' }}" id="firstDesc">
+                <label class="control-label" for="bio">
+                    @if($errors->has('other_description'))<i class="fa fa-times-circle-o"></i>@endif Other Industry Description
+                </label>
+                <input type="text" class="form-control" name="other_description" value="{{$category['description']}}"
+                    id="desc_first" required>
+                @if($errors->has('other_description'))
+                    <span class="help-block">{{ $errors->first('other_description') }}</span>
+                @endif
+            </div>
+            @endif
+        @endif
+        <div class="form-group {{ $errors->has('other_description') ? 'has-error' : '' }}" id="OtherDescription" style="display:none">
+            <label class="control-label" for="bio">
+                @if($errors->has('other_description'))<i class="fa fa-times-circle-o"></i>@endif Other Industry Description
+            </label>
+            <input type="text" class="form-control" name="other_description_optional" Placeholder="Other Industry Description" id="otherIndustryDesc">
+            @if($errors->has('other_description'))
+                <span class="help-block">{{ $errors->first('other_description') }}</span>
+            @endif
+        </div>
+    @endif
+    --}}
 @endif
 
 @if(auth()->user()->user_type != 'vendor')
@@ -174,144 +289,85 @@
 @endif
 
 @if(auth()->user()->user_type != null)
-@if(auth()->user()->user_type != 'broker' && auth()->user()->user_type != 'realtor' && auth()->user()->user_type !=
-'vendor')
-<div class="form-group{{ $errors->has('units_closed_monthly') ? ' has-error' : '' }}">
-    <label class="control-label" for="units_closed_monthly">
-        @if($errors->has('units_closed_monthly'))<i class="fa fa-times-circle-o"></i>@endif Number of Units Closed
-        Monthly
-    </label>
-    <select class="form-control" name="units_closed_monthly" id="units_closed_monthly">
-        @php
-        $selected = '';
-        $selected1 = '';
-        $selected2 = '';
-        @endphp
-        @if($user->units_closed_monthly === '0-5')
-        @php $selected = 'selected'; @endphp
-        @elseif($user->units_closed_monthly === "6-10")
-        @php $selected1 = 'selected'; @endphp
-        @elseif($user->units_closed_monthly === '20+')
-        @php $selected2 = 'selected'; @endphp
-        @endif
-        <option value="">Select Unit Closed Monthly</option>
-        <option value="0-5" {{$selected}}>0 - 5</option>
-        <option value="6-10" {{$selected1}}>6 - 10</option>
-        <option value="20+" {{$selected2}}>20+</option>
-    </select>
-    @if ($errors->has('units_closed_monthly'))
-    <span class="help-block">
-        <strong>{{ $errors->first('units_closed_monthly ') }}</strong>
-    </span>
-    @endif
-</div>
-@else
-<input type="hidden" name="units_closed_monthly" />
-@endif
-@if(auth()->user()->user_type != 'vendor' && auth()->user()->user_type != 'broker')
-
-{{--
-    <div class="form-group{{ $errors->has('volume_closed_monthly') ? ' has-error' : '' }}">
-        <label class="control-label" for="volume_closed_monthly">
-            @if($errors->has('volume_closed_monthly'))<i class="fa fa-times-circle-o"></i>@endif Buyer Side Transactions closed
-            in the last 12 months
-        </label>
-        <select class="form-control" name="volume_closed_monthly" id="volume_closed_monthly">
-            @if(!isset($user->volume_closed_monthly))
-            <option value="">Select Buyer Side Transcttion</option>
-            @endif
-            <option value="0-5"
-                {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '0-5' ? 'selected' : ''}}>0-5
-                Transactions</option>
-            <option value="6-12"
-                {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '6-12' ? 'selected' : ''}}>6-12
-                Transactions </option>
-            <option value="12-20"
-                {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '12-20' ? 'selected' : ''}}>12-20
-                Transactions</option>
-            <option value="20+"
-                {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '20+' ? 'selected' : ''}}>20+
-                Transactions</option>
-        </select>
-        @if ($errors->has('volume_closed_monthly'))
-        <span class="help-block">
-            <strong>{{ $errors->first('volume_closed_monthly') }}</strong>
-        </span>
-        @endif
-    </div>
---}}
-
-<div class="form-group{{ $errors->has('how_long_realtor') ? ' has-error' : '' }}">
-    <label class="control-label" for="how_long_realtor">
-        @if($errors->has('how_long_realtor'))<i class="fa fa-times-circle-o"></i>@endif How long have you been a
-        Realtor?
-    </label>
-    <input type="text" class="form-control" placeholder="How long have you been a Realtor?" name="how_long_realtor" value="{{ $user->how_long_realtor }}">
-</div>
-@endif
-@endif
-<!---Previous City Text Input----->
-<!----<div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
-    <label class="control-label" for="city">
-        @if($errors->has('city'))<i class="fa fa-times-circle-o"></i>@endif City
-    </label>
-    <input type="text" class="form-control" placeholder="Enter City" name="city" value="{{ old('city', (isset($user->city) ? $user->city : '')) }}">
-    @if($errors->has('city'))
-        <span class="help-block">{{ $errors->first('city') }}</span>
-    @endif
-</div>-->
-<!---End Previous City Text Input Section--->
-
-<!----Latest City Drop Down------->
-
-<div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
-    <label for="state" class="control-label">State</label>
-    <select id="editProfileState" class="form-control" name="state" required>
-        <option value="">Choose a state</option>
-        @foreach($states::all() as $abbr => $stateName)
-        <option value="{{ $abbr }}" {{
-                        collect(old('state', (isset($user->state) ? $user->state : null)))->contains($abbr) ? 'selected' : ''
-                    }}>{{ $stateName }}</option>
-        @endforeach
-    </select>
-    @if ($errors->has('state'))
-    <span class="help-block">
-        <strong>{{ $errors->first('state') }}</strong>
-    </span>
-    @endif
-</div>
-
-<div class="row">
-    <input type="hidden" name="profile_city" id="previous_city" value="{{ old('city', (isset($user->city) ? $user->city : '')) }}">
-    <div class="col-md-7">
-        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-            <label class="control-label" for="city">
-                @if($errors->has('city'))<i class="fa fa-times-circle-o"></i>@endif City
+    @if(auth()->user()->user_type != 'broker' && auth()->user()->user_type != 'realtor' && auth()->user()->user_type !='vendor')
+        <div class="form-group{{ $errors->has('units_closed_monthly') ? ' has-error' : '' }}">
+            <label class="control-label" for="units_closed_monthly">
+                @if($errors->has('units_closed_monthly'))<i class="fa fa-times-circle-o"></i>@endif Number of Units Closed
+                Monthly
             </label>
-            <input type="text" name="city" class="form-control" id="newProfileCity" value="{{ old('city', (isset($user->city) ? $user->city : '')) }}" placeholder="Enter City" required>
-            @if ($errors->has('city'))
+            <select class="form-control" name="units_closed_monthly" id="units_closed_monthly">
+                @php
+                $selected = '';
+                $selected1 = '';
+                $selected2 = '';
+                @endphp
+                @if($user->units_closed_monthly === '0-5')
+                @php $selected = 'selected'; @endphp
+                @elseif($user->units_closed_monthly === "6-10")
+                @php $selected1 = 'selected'; @endphp
+                @elseif($user->units_closed_monthly === '20+')
+                @php $selected2 = 'selected'; @endphp
+                @endif
+                <option value="">Select Unit Closed Monthly</option>
+                <option value="0-5" {{$selected}}>0 - 5</option>
+                <option value="6-10" {{$selected1}}>6 - 10</option>
+                <option value="20+" {{$selected2}}>20+</option>
+            </select>
+            @if ($errors->has('units_closed_monthly'))
             <span class="help-block">
-                <strong>{{ $errors->first('city') }}</strong>
+                <strong>{{ $errors->first('units_closed_monthly ') }}</strong>
             </span>
             @endif
         </div>
-        <div class="form-group" id="another-city">
-            <input type="hidden" name="anotherCity" placeholder="Add another city" class="form-control" />
-        </div>
-    </div>
+    @else
+        <input type="hidden" name="units_closed_monthly" />
+    @endif
 
-    <!---End Previous State Drop Down-->
-    <div class="col-md-5">
-        <div class="form-group {{ $errors->has('zip') ? 'has-error' : '' }}">
-            <label class="control-label" for="zip">
-                @if($errors->has('zip'))<i class="fa fa-times-circle-o"></i>@endif Zip
+    @if(auth()->user()->user_type != 'vendor' && auth()->user()->user_type != 'broker')
+        {{--
+            <div class="form-group{{ $errors->has('volume_closed_monthly') ? ' has-error' : '' }}">
+                <label class="control-label" for="volume_closed_monthly">
+                    @if($errors->has('volume_closed_monthly'))<i class="fa fa-times-circle-o"></i>@endif Buyer Side Transactions closed
+                    in the last 12 months
+                </label>
+                <select class="form-control" name="volume_closed_monthly" id="volume_closed_monthly">
+                    @if(!isset($user->volume_closed_monthly))
+                    <option value="">Select Buyer Side Transcttion</option>
+                    @endif
+                    <option value="0-5"
+                        {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '0-5' ? 'selected' : ''}}>0-5
+                        Transactions</option>
+                    <option value="6-12"
+                        {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '6-12' ? 'selected' : ''}}>6-12
+                        Transactions </option>
+                    <option value="12-20"
+                        {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '12-20' ? 'selected' : ''}}>12-20
+                        Transactions</option>
+                    <option value="20+"
+                        {{(isset($user->volume_closed_monthly)) && $user->volume_closed_monthly == '20+' ? 'selected' : ''}}>20+
+                        Transactions</option>
+                </select>
+                @if ($errors->has('volume_closed_monthly'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('volume_closed_monthly') }}</strong>
+                </span>
+                @endif
+            </div>
+        --}}
+
+        <div class="form-group{{ $errors->has('how_long_realtor') ? ' has-error' : '' }}">
+            <label class="control-label" for="how_long_realtor">
+                @if($errors->has('how_long_realtor'))<i class="fa fa-times-circle-o"></i>@endif How long have you been a
+                Realtor?
             </label>
-            <input type="text" class="form-control" placeholder="Enter Zip Code" name="zip" value="{{ old('zip', (isset($user->zip) ? $user->zip : '')) }}" /> @if($errors->has('zip'))
-            <span class="help-block">{{ $errors->first('zip') }}</span>
-            @endif
+            <input type="text" class="form-control" placeholder="How long have you been a Realtor?" name="how_long_realtor" value="{{ $user->how_long_realtor }}">
         </div>
-    </div>
+    @endif
+@endif
 
+<!----Latest City Drop Down------->
+
+<div class="row">
     @if(auth()->user()->user_type == 'realtor')
         <div class="col-md-12">
             @if(isset($user->realtorDetail))

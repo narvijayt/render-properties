@@ -31,6 +31,8 @@ use Response;
 use Illuminate\Support\Facades\Log;
 use App\Mail\NewUserAdminNotification;
 
+use App\RegistrationPlans;
+
 class Vendor extends Controller
 {
 	
@@ -354,30 +356,21 @@ class Vendor extends Controller
         
         $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($user->stripe_customer_id, $paymentMethod['id']);
         
-        $vendorPackage = VendorPackages::find($formdata['packageId']);
-        // echo '<pre>'; print_r($vendorPackage); echo '</pre>';
+        $couponId = '';
+        $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
+        if(!is_null($vendorPackage)){
+            $couponId = $vendorPackage->couponId;
+        }
         if($user->userSubscription->exists == false){
             $subscriptionArray = [
                 'customer' => $user->stripe_customer_id,
                 "default_payment_method" => $paymentMethod['id'],
+                'items' => [[ "price" => $vendorPackage->planId]],
+                'description'   =>  "Vendor Subscription"
             ];
-            if($vendorPackage->packageType == "usa"){
-                $subscriptionArray["items"] = [
-                    [ "price" => $vendorPackage->priceId ]
-                ];
-            }else{
-                $quantity = 1;
-                if($vendorPackage->packageType == "city"){
-                    $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
-                }else if($vendorPackage->packageType == "state"){
-                    $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
-                }
-                $subscriptionArray["items"] = [
-                    [ 
-                        "quantity" => $quantity,
-                        "price" => $vendorPackage->priceId
-                    ]
-                ];
+
+            if(!empty($couponId)){
+                $subscriptionArray['coupon'] = $couponId;
             }
 
             // dd($subscriptionArray);
@@ -402,7 +395,7 @@ class Vendor extends Controller
             }else{
                 $userSubscription = new UserSubscriptions();
                 $userSubscription->user_id = $user->user_id;
-                $userSubscription->plan_id = $vendorPackage->priceId;
+                $userSubscription->plan_id = $vendorPackage->planId;
                 $userSubscription->payment_method = "Stripe";
                 $userSubscription->stripe_subscription_id = $subscription->id;
                 $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
@@ -428,7 +421,7 @@ class Vendor extends Controller
             $userSubscription->save();
 
             if($userSubscription->status == "active" || $userSubscription->status == "trialing"){
-                User::Where('user_id', $user->user_id)->update(['payment_status' => 1, 'packageId' => $vendorPackage->id]);
+                User::Where('user_id', $user->user_id)->update(['payment_status' => 1]);
             }
 
             $vendorDetails = VendorDetails::where('user_id','=',$user->user_id)->first();
@@ -442,7 +435,7 @@ class Vendor extends Controller
             $vendorDetails->additional_city = '';
             $vendorDetails->additional_state = '';
 
-            if($vendorPackage->packageType == "city"){
+            /*if($vendorPackage->packageType == "city"){
                 $vendorDetails->package_selected_city = $formdata[$vendorPackage->packageType.'_name'];
                 if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
                     $vendorDetails->additional_city = json_encode($formdata['additional_'.$vendorPackage->packageType]);
@@ -452,7 +445,7 @@ class Vendor extends Controller
                 if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
                     $vendorDetails->additional_state = json_encode($formdata['additional_'.$vendorPackage->packageType]);
                 }
-            }
+            }*/
             $vendorDetails->payable_amount = $userSubscription->paid_amount;
             $vendorDetails->payment_status = 'Completed';
             $vendorDetails->save();
@@ -467,14 +460,14 @@ class Vendor extends Controller
                 // After Payment and Subscription Created Successfully
                 
             }else{
-                if($user->verified == false){
+                if($user->verified == false && env('APP_ENV') != "local"){
                     $this->newUserAdminNotification($user);
                     // $this->welcomeEmail($user);
                     // $this->emailVerification($user);
                 }
             }
 
-            if($userSubscription->paid_amount > 0){
+            if($userSubscription->paid_amount > 0 && env('APP_ENV') != "local"){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new VendorPaymentInvoice($user);
                 Mail::to($user->email)->send($email);
@@ -493,174 +486,43 @@ class Vendor extends Controller
         $paymentMethod = $request->input('paymentMethod');
         if(!empty($customer_id)){
             $vendorDetails = VendorDetails::where('user_id','=',$user->user_id)->first();
-            $vendorPackage = VendorPackages::find($formdata['packageId']);
-            if(isset($formdata['oldPackageId'])){
-                $vendorOldPackage = VendorPackages::find($formdata['oldPackageId']);
+            // $vendorPackage = VendorPackages::find($formdata['packageId']);
+            $couponId = '';
+            $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
+            if(!is_null($vendorPackage)){
+                $couponId = $vendorPackage->couponId;
             }
+            // if(isset($formdata['oldPackageId'])){
+            //     $vendorOldPackage = VendorPackages::find($formdata['oldPackageId']);
+            // }
             $customerPaymentMethod = (new Stripe())->attachPaymentMethodToCustomer($customer_id, $paymentMethod['id']);
             if($customerPaymentMethod->id){
-                if(isset($formdata["oldPackageId"]) && $formdata["oldPackageId"] == $formdata["packageId"]){
-                    $userSubscription = UserSubscriptions::where("user_id",$user->user_id)->first();
-                    $subscriptionUpdateArray = [
-                        'default_payment_method' => $paymentMethod['id'], 
-                        'billing_cycle_anchor' => 'now'
-                    ];
-                    if($vendorPackage->packageType != "usa"){
-                        $quantity = 1;
-                        $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
+                
+                $userSubscription = UserSubscriptions::where("user_id",$user->user_id)->first();
 
-                        $subscriptionArray["items"] = [
-                            [ 
-                                "quantity" => $quantity,
-                            ]
-                        ];
-                    }
-                    $subscriptionData = (new Stripe())->updateSubscription($userSubscription->stripe_subscription_id, $subscriptionUpdateArray);
-                    if($subscriptionData->id){
-                        UserSubscriptions::Where('user_id', $userSubscription->user_id)->update(['attach_payment_status' => 1]);
-                        
-                        $subscription = (new Stripe())->getSubscription($userSubscription->stripe_subscription_id);
-                        if(!is_object($subscription->latest_invoice)){
-                            $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
-                        }else{
-                            $subscriptionInvoice = $subscription->latest_invoice;
-                        }
-
-                        $vendorDetails->package_selected_city = '';
-                        $vendorDetails->package_selected_state = '';
-                        $vendorDetails->additional_city = '';
-                        $vendorDetails->additional_state = '';
-                        if($vendorPackage->packageType != "usa"){
-                            $package_selected_label = 'package_selected_'.$vendorPackage->packageType;
-                            $additional_label = 'additional_'.$vendorPackage->packageType;
-                            $vendorDetails->$package_selected_label = $formdata[$vendorPackage->packageType.'_name'];
-                            if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
-                                $vendorDetails->$additional_label = json_encode($formdata['additional_'.$vendorPackage->packageType]);
-                            }
-                        }
-
-                        $vendorDetails->payable_amount = ($subscriptionInvoice->amount_paid/100);
-                        $vendorDetails->payment_status = 'Completed';
-                        $vendorDetails->save();
-
-                        $vendorCategory = Category::where('user_id', $user->user_id)->first();
-                        if(!is_null($vendorCategory)){
-                            $vendorCategory->braintree_id = 1;
-                            $vendorCategory->save();
-                        }
-                    }
-
-                    return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
-                }else{
-                    $subscriptionArray = [
-                        'customer' => $user->stripe_customer_id,
-                        "default_payment_method" => $paymentMethod['id'],
-                    ];
-                    if($vendorPackage->packageType == "usa"){
-                        $subscriptionArray["items"] = [
-                            [ "price" => $vendorPackage->priceId ]
-                        ];
+                $subscriptionData = (new Stripe())->updateSubscription($userSubscription->stripe_subscription_id, ['default_payment_method' => $paymentMethod['id'], 'billing_cycle_anchor' => 'now']);
+                if($subscriptionData->id){
+                    UserSubscriptions::Where('user_id', $userSubscription->user_id)->update(['attach_payment_status' => 1]);
+                    
+                    $subscription = (new Stripe())->getSubscription($userSubscription->stripe_subscription_id);
+                    if(!is_object($subscription->latest_invoice)){
+                        $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
                     }else{
-                        $quantity = 1;
-                        if($vendorPackage->packageType == "city"){
-                            $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
-                        }else if($vendorPackage->packageType == "state"){
-                            $quantity += count($formdata['additional_'.$vendorPackage->packageType]);
-                        }
-                        $subscriptionArray["items"] = [
-                            [ 
-                                "quantity" => $quantity,
-                                "price" => $vendorPackage->priceId
-                            ]
-                        ];
+                        $subscriptionInvoice = $subscription->latest_invoice;
                     }
-        
-                    // dd($subscriptionArray);
-                    $subscription = (new Stripe())->createSubscription($subscriptionArray);
-                    if(isset($subscription->id)){
 
-                        $created = date("Y-m-d H:i:s", $subscription->created); 
-                        $current_period_start = date("Y-m-d H:i:s", $subscription->current_period_start); 
-                        $current_period_end = date("Y-m-d H:i:s", $subscription->current_period_end); 
-                        $status = $subscription->status;        
-            
-                        if(isset($user->userSubscription) && $user->userSubscription->exists == true){
-                            $userSubscription = UserSubscriptions::find($user->userSubscription->id);
-                            $userSubscription->plan_interval_count = $userSubscription->plan_interval_count +1;
-                        }else{
-                            $userSubscription = new UserSubscriptions();
-                            $userSubscription->user_id = $user->user_id;
-                        }
+                    $vendorDetails->payable_amount = ($subscriptionInvoice->amount_paid/100);
+                    $vendorDetails->payment_status = 'Completed';
+                    $vendorDetails->save();
 
-                        $userSubscription->plan_id = $vendorPackage->priceId;
-                        $userSubscription->payment_method = "Stripe";
-                        $userSubscription->stripe_subscription_id = $subscription->id;
-                        $userSubscription->customer_name = $user->first_name.' '.$user->last_name;
-                        $userSubscription->customer_email = $user->email;
-                        // $userSubscription->couponId = $couponId;
-                        
-                        if(!is_object($subscription->latest_invoice)){
-                            $subscriptionInvoice = (new Stripe())->getInvoice($subscription->latest_invoice);
-                        }else{
-                            $subscriptionInvoice = $subscription->latest_invoice;
-                        }
-            
-                        $userSubscription->stripe_payment_intent_id = $paymentMethod['id'];
-                        $userSubscription->paid_amount = ($subscriptionInvoice->amount_paid/100);
-                        $userSubscription->currency = $subscriptionInvoice->currency;
-                        $userSubscription->plan_interval = $subscription->plan->interval;
-                        $userSubscription->plan_period_start = $current_period_start;
-                        $userSubscription->plan_period_end = $current_period_end;
-                        $userSubscription->attach_payment_status = 1;
-                        $userSubscription->status = $status;
-            
-                        $userSubscription->save();
-            
-                        if($userSubscription->status == "active" || $userSubscription->status == "trialing"){
-                            User::Where('user_id', $user->user_id)->update(['payment_status' => 1, 'packageId' => $vendorPackage->id]);
-                        }
-            
-                        $vendorDetails = VendorDetails::where('user_id','=',$user->user_id)->first();
-                        if(is_null($vendorDetails)){
-                            $vendorDetails = new VendorDetails();
-                            $vendorDetails->user_id = $user->user_id;
-                            $vendorDetails->vendor_coverage_area = null;
-                        }
-                        $vendorDetails->package_selected_city = '';
-                        $vendorDetails->package_selected_state = '';
-                        $vendorDetails->additional_city = '';
-                        $vendorDetails->additional_state = '';
-
-                        if($vendorPackage->packageType == "city"){
-                            $vendorDetails->package_selected_city = $formdata[$vendorPackage->packageType.'_name'];
-                            if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
-                                $vendorDetails->additional_city = json_encode($formdata['additional_'.$vendorPackage->packageType]);
-                            }
-                        }else if($vendorPackage->packageType == "state"){
-                            $vendorDetails->package_selected_state = $formdata[$vendorPackage->packageType.'_name'];
-                            if( count($formdata['additional_'.$vendorPackage->packageType]) > 0){
-                                $vendorDetails->additional_state = json_encode($formdata['additional_'.$vendorPackage->packageType]);
-                            }
-                        }
-                        $vendorDetails->payable_amount = $userSubscription->paid_amount;
-                        $vendorDetails->payment_status = 'Completed';
-                        $vendorDetails->save();
-            
-                        $vendorCategory = Category::where('user_id', $user->user_id)->first();
-                        if(!is_null($vendorCategory)){
-                            $vendorCategory->braintree_id = 1;
-                            $vendorCategory->save();
-                        }
-            
-                        if($userSubscription->paid_amount > 0){
-                            $user = User::with("userSubscription")->find($userSubscription->user_id);
-                            $email = new VendorPaymentInvoice($user);
-                            Mail::to($user->email)->send($email);
-                        }
-            
-                        return Response::json(['subscription' => $userSubscription], 200);
+                    $vendorCategory = Category::where('user_id', $user->user_id)->first();
+                    if(!is_null($vendorCategory)){
+                        $vendorCategory->braintree_id = 1;
+                        $vendorCategory->save();
                     }
                 }
+
+                return Response::json(['customerPaymentMethod' => $customerPaymentMethod, 'subscription' => $subscriptionData], 200);
             }
 
             return Response::json(['customerPaymentMethod' => $customerPaymentMethod], 200);

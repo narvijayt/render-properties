@@ -33,6 +33,9 @@ use App\VendorPackages;
 use App\Testimonial;
 use App\RealtorDetail;
 use App\LenderDetail;
+use App\RegistrationPlans;
+use App\VendorMeta;
+use DateTime;
 
 class RegisterController extends Controller
 {
@@ -236,7 +239,7 @@ class RegisterController extends Controller
                 'city' 			=> $c,
                 'state' 		=> $data['state'],
                 'zip' 			=> $data['zip'],
-                'register_ts' 	=> new \DateTime(),
+                'register_ts' 	=> new DateTime(),
                 'verify_ts' 	=> null,
                 'years_of_exp'	=> null,
                 // 'specialties' => $data['specialties'],
@@ -266,7 +269,7 @@ class RegisterController extends Controller
                 'state' 		=> $data['state'],
                 'zip' 			=> $data['zip'],
                 'postal_code_service' => $data['postal_code_service'],
-                'register_ts' 	=> new \DateTime(),
+                'register_ts' 	=> new DateTime(),
                 'verify_ts' 	=> null,
                 'years_of_exp'	=> null,
                 'specialties' => $data['specialties'],
@@ -427,20 +430,22 @@ class RegisterController extends Controller
     
     public function loadVendorRegLayout(Request $request)
     {
-        $data['vendorPackages'] = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
-        $data['selectedPackage'] = $request->has('package') ? $request->get('package') : '';
+        // $data['vendorPackages'] = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
+        $data['vendorPackage'] = RegistrationPlans::where(['packageType' => 'vendor'])->first();
+        // $data['selectedPackage'] = $request->has('package') ? $request->get('package') : '';
         $data['testimonials'] = Testimonial::all();
         return view('auth.vendor', $data );
     }
     
     public function registerVendor(Request $request)
     {
-           return $this->registerUserWithPackage($request);
+        return $this->registerUserWithPackage($request);
     }
    
    
-     public function registerUserWithPackage($request)
+    public function registerUserWithPackage($request)
     {
+        // dd($request->input());
          Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
 
         return $value == '';
@@ -455,19 +460,19 @@ class RegisterController extends Controller
 			'password' 		=> 'required|same:cpassword',
 			'cpassword' 		=> 'required',
 			'city' 			=> 'nullable|string',
-			'short_description' => 'required|string',
-			'services' => 'required|string',
+			// 'short_description' => 'required|string',
+			// 'services' => 'required|string',
 			'honey_pot' => 'honey_pot',
-			'vendor_coverage_units' => 'required|string',
+			// 'vendor_coverage_units' => 'required|string',
 			'company_name' => 'required|string',
 			'state' 		=> 'required|string|min:2|max:2',
 			'zip' 			=> 'required',
 			'phone_no'	=>	'required|alpha_dash',
-			'firm_name'		=>	'nullable|string',
-			'select_category' => 'required',
-			'billing_address_1' => 'required',
-			'billing_address_2' => 'required',
-			'agree'	=>	'required',
+			// 'firm_name'		=>	'nullable|string',
+			// 'select_category' => 'required',
+			// 'billing_address_1' => 'required',
+			// 'billing_address_2' => 'required',
+			// 'agree'	=>	'required',
             'zip.required' => 'Zip field is required',
 			'phone_number.required'	=>	'The phone number field is required',
 			'company_name.string'	=>	'The company name must be a string'
@@ -479,126 +484,132 @@ class RegisterController extends Controller
         $validation = Validator::make(Input::all(), $rules, $messages);
         
         if ($validation->fails()) {
-            return redirect('vendor-register')
-                        ->withErrors($validation)
-                        ->withInput();
+            return redirect('vendor-register')->withErrors($validation)->withInput();
         }else{
-        if($request->cpassword =="")
-        {
-            return redirect()->back()->with('error','Please Confirm Password.');
-        }
-        if($request->password =="")
-        {
-            return redirect()->back()->with('error','Please Enter Password.');
-        }
-        if($request->first_name ==""){
-             return redirect()->back()->with('error','Please Enter First Name.');
-        }
-        if($request->last_name ==""){
-            return redirect()->back()->with('error','Please Enter Last Name.');
-        }
-        if($request->email ==""){
-            return redirect()->back()->with('error','Please Enter Email Address.');
-        }
-        if($request->phone_no ==""){
-            return redirect()->back()->with('error','Please Enter Phone No.');
-        }
-         if($request->company_name ==""){
-            return redirect()->back()->with('error','Please Enter Company Name.');
-        }
-        if($request->password != $request->cpassword){
-            	return redirect()->back()->with('error','Enter Confirm Password Same as Password.');
-        }else{
-        if($request->select_category !="")
-        {
-        $selPackageId = $request->selected_us;
-        if($request->website =="" || $request->website == 'null'){
-            $request->website = 'null';
-        }
-        if($request->short_description =="" || $request->short_description =="null"){
-            $request->short_description = 'null';
-        }
-        if($request->state ==""){
-            return redirect()->back()->with('error','Please Select State.');
-        }
-        $geolocationService = new GeolocationService();
-        $vendorlocation = $geolocationService->cityStateZip($request->city,$request->state,$request->zip);
-        if($request->city === "Select City" || $request->city  == '0' || $request->city === "Other") {
-            $c = $request->anotherCity; 
-        } else {
-            $c= $request->city;  
-        }
-        if(empty($request->billing_address_1)){
-            $request->billing_address_1 = null;
-        }
-        if(empty($request->billing_address_2)){
-            $request->billing_address_2 = null;
-        }
-        $user = User::create([
-            'first_name' 	=> $request->first_name,
-            'last_name' 	=> $request->last_name,
-            'email' 		=>strtolower($request->email),
-            'password' 		=> bcrypt($request->password),
-            'email_token'	=> Uuid::uuid4()->toString(),
-            'verified' 		=> false,
-            'register_ts' 	=> new \DateTime(),
-            'user_type'     => UserAccountType::VENDOR,
-            'phone_number'	=> $request->phone_no,
-            'firm_name'		=> $request->company_name,
-            'uid'			=> Uuid::uuid4(),
-            'bio'           => $request->short_description,
-            'contact_term' => $request->agree,
-            'website'  =>$request->website,
-             'city' 			=> $c,
-            'state' 		=> $request->state,
-            'zip' 			=> $request->zip,
-            'latitude'		=> $vendorlocation->lat,
-            'longitude'		=> $vendorlocation->long,
-            'billing_address_1' => $request->billing_address_1,
-            'billing_address_2'=> $request->billing_address_2
-         ]);
-             $vendorDetails = new VendorDetails();
-             if($user->user_id !="")
-             {
-                $vendorDetails->user_id = $user->user_id;
-             }
-             if($request->vendor_coverage_units !="")
-             {
-                $vendorDetails->vendor_coverage_area = $request->vendor_coverage_units;
-             }
-             if($request->services !="")
-             {
-                  $vendorDetails->vendor_service = $request->services;
-             }
-            $vendorDetails->payment_status = 'Pending';
-            $vendorDetails->save();
-            $user->assign('user');
-            $user->assign($user['user_type']);
-            $this->emailVerification($user);
-            $this->welcomeEmail($user);
-             if($request->file_name !="")
-                {
-                    $createBanner = new Banner();
-                    $createBanner->user_id = $user->user_id;
-                    $createBanner->banner_image = $request->file_name;
-                    $advBanner = $createBanner->save();
-                }
-                if(count($request->select_category) > 0)
-                {
-                    $createCategory = new Category();
-                    $createCategory->user_id = $user->user_id;
-                    $createCategory->category_id  = ",".implode(',',$request->select_category).",";
-                    
-                    if($request->other_description !=""){
-                        $createCategory->other_description = $request->other_description;
+            if($request->cpassword ==""){
+                return redirect()->back()->with('error','Please Confirm Password.');
+            }
+            if($request->password ==""){
+                return redirect()->back()->with('error','Please Enter Password.');
+            }
+            if($request->first_name ==""){
+                return redirect()->back()->with('error','Please Enter First Name.');
+            }
+            if($request->last_name ==""){
+                return redirect()->back()->with('error','Please Enter Last Name.');
+            }
+            if($request->email ==""){
+                return redirect()->back()->with('error','Please Enter Email Address.');
+            }
+            if($request->phone_no ==""){
+                return redirect()->back()->with('error','Please Enter Phone No.');
+            }
+            if($request->company_name ==""){
+                return redirect()->back()->with('error','Please Enter Company Name.');
+            }
+            if($request->password != $request->cpassword){
+                redirect()->back()->with('error','Enter Confirm Password Same as Password.');
+            }else{
+                if($request->select_category !=""){
+                    $selPackageId = $request->selected_us;
+                    if($request->website =="" || $request->website == 'null'){
+                        $request->website = 'null';
                     }
-                    $createCategory->save();
+                    if($request->short_description =="" || $request->short_description =="null"){
+                        $request->short_description = 'null';
+                    }
+                    if($request->state ==""){
+                        return redirect()->back()->with('error','Please Select State.');
+                    }
+                    $geolocationService = new GeolocationService();
+                    $vendorlocation = $geolocationService->cityStateZip($request->city,$request->state,$request->zip);
+                    if($request->city === "Select City" || $request->city  == '0' || $request->city === "Other") {
+                        $c = $request->anotherCity; 
+                    } else {
+                        $c= $request->city;  
+                    }
+                    if(empty($request->billing_address_1)){
+                        $request->billing_address_1 = null;
+                    }
+                    if(empty($request->billing_address_2)){
+                        $request->billing_address_2 = null;
+                    }
+                    $user = User::create([
+                        'first_name' 	=> $request->first_name,
+                        'last_name' 	=> $request->last_name,
+                        'email' 		=>strtolower($request->email),
+                        'password' 		=> bcrypt($request->password),
+                        'email_token'	=> Uuid::uuid4()->toString(),
+                        'verified' 		=> false,
+                        'register_ts' 	=> new DateTime(),
+                        'user_type'     => UserAccountType::VENDOR,
+                        'phone_number'	=> $request->phone_no,
+                        'firm_name'		=> $request->company_name,
+                        'uid'			=> Uuid::uuid4(),
+                        'bio'           => ($request->short_description) ? $request->short_description : null,
+                        'contact_term' => $request->agree,
+                        'website'  =>$request->website,
+                        'city' 			=> $c,
+                        'state' 		=> $request->state,
+                        'zip' 			=> $request->zip,
+                        'latitude'		=> $vendorlocation->lat,
+                        'longitude'		=> $vendorlocation->long,
+                        'billing_address_1' => ($request->billing_address_1) ? $request->billing_address_1 : null,
+                        'billing_address_2'=> ($request->billing_address_2) ? $request->billing_address_2 : null
+                    ]);
+                    $vendorDetails = new VendorDetails();
+                    if($user->user_id !=""){
+                    $vendorDetails->user_id = $user->user_id;
+                    }
+                    if($request->vendor_coverage_units !=""){
+                    $vendorDetails->vendor_coverage_area = $request->vendor_coverage_units;
+                    }
+                    if($request->services !=""){
+                        $vendorDetails->vendor_service = $request->services;
+                    }
+                    $vendorDetails->payment_status = 'Pending';
+                    $vendorDetails->save();
+                    
+                    $VendorMeta = VendorMeta::where(['userId' => $user->user_id])->first();
+                    if(is_null($VendorMeta)){
+                        $VendorMeta = new VendorMeta();
+                        $VendorMeta->userId = $user->user_id;
+                    }
+                    $VendorMeta->experties = $request->experties;
+                    $VendorMeta->special_services = $request->special_services;
+                    $VendorMeta->service_precautions = $request->service_precautions;
+                    $VendorMeta->connect_realtor = $request->connect_realtor == "yes" ? 1 : 0;
+                    $VendorMeta->connect_memebrs = $request->connect_memebrs == "yes" ? 1 : 0;
+                    $VendorMeta->save();
+
+                    $user->assign('user');
+                    $user->assign($user['user_type']);
+                    if(env('APP_ENV') != 'local'){
+                        $this->emailVerification($user);
+                        $this->welcomeEmail($user);
+                    }
+                    if($request->file_name !=""){
+                        $createBanner = new Banner();
+                        $createBanner->user_id = $user->user_id;
+                        $createBanner->banner_image = $request->file_name;
+                        $advBanner = $createBanner->save();
+                    }
+                    if(count($request->select_category) > 0){
+                        $createCategory = new Category();
+                        $createCategory->user_id = $user->user_id;
+                        $createCategory->category_id  = ",".implode(',',$request->select_category).",";
+                        
+                        if($request->other_description !=""){
+                            $createCategory->other_description = $request->other_description;
+                        }
+                        $createCategory->save();
+                    }
+                    // return Redirect::route('loadVendorPackages', array('id' => $user->user_id));
+                    return Redirect::route('package-payment', array('id' => $user->user_id));
+                }else{
+                    return redirect()->back()->with('error','Please Select one of given category.');
                 }
-                return Redirect::route('loadVendorPackages', array('id' => $user->user_id));
-          }else{
-        	return redirect()->back()->with('error','Please Select one of given category.');
-        }
-       }
+            }
         }
      }
      
@@ -643,7 +654,8 @@ class RegisterController extends Controller
     
     public function loadPackagePayment(Request $request)
     {
-        $selectedPackage = $request->has('package') ? $request->get('package') : '';
+        // $selectedPackage = $request->has('package') ? $request->get('package') : '';
+        $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
         $checkVendor = User::where('user_id','=',$request->id)->where('user_type','=','vendor')->first();
         if(count($checkVendor) == 0){
             return redirect('/vendor-register')->with('error','No vendor found with this details.');
@@ -651,18 +663,20 @@ class RegisterController extends Controller
 
         if($checkVendor->payment_status == 0){
             $userDetails = User::with('userSubscription')->find($request->id);
-            $vendorPackage = VendorPackages::find($selectedPackage);
-            if($vendorPackage->status == 0){
-                $activeVendorPackage = VendorPackages::where(['status' => 1, 'packageType' => $vendorPackage->packageType])->first();
-                if(!is_null($activeVendorPackage)){
-                    $redirectRoute = route('package-payment').'?id='.$request->id.'&package='.$activeVendorPackage->id;
-                    return redirect($redirectRoute);
-                }else{
-                    return redirect()->route('loadVendorPackages', ['id' => $request->id]);
+            if(!is_null($vendorPackage)){
+                $optionLabel = "Monthly - $".$vendorPackage->regular_price;
+                $registrationPrice = $vendorPackage->regular_price;
+                if($vendorPackage->sale_price > 0 && !empty($vendorPackage->couponId)){
+                    if($vendorPackage->sale_period > 1){
+                        $optionLabel = "$".$vendorPackage->sale_price."/month for first ".$vendorPackage->sale_period." months and $".$vendorPackage->regular_price."/month afterward";
+                    }else{
+                        $optionLabel = "$".$vendorPackage->sale_price."/month for first month and $".$vendorPackage->regular_price."/month afterward";
+                    }
+                    $registrationPrice = $vendorPackage->sale_price;
                 }
             }
             $vendorDetails = VendorDetails::where('user_id','=',$userDetails->user_id)->first();
-            return view('auth.packageSelection',['vendorPackage'=>$vendorPackage,'userDetails'=>$userDetails, 'vendorDetails' => $vendorDetails]);
+            return view('auth.packageSelection',['vendorPackage'=>$vendorPackage,'userDetails'=>$userDetails, 'vendorDetails' => $vendorDetails, 'registrationPrice' => $registrationPrice, 'optionLabel' => $optionLabel]);
         }else{
             return redirect('/vendor-register')->with('message','You have already done payment for registeration.');
         }

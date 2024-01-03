@@ -161,20 +161,25 @@ $(document).ready(function() {
                 }
             },
             submitHandler: function(form) {
-                 var $captcha = $('#recaptcha' );
-                  response = grecaptcha.getResponse();
-              if (response.length === 0) {
-                $( '.msg-error').text( "reCAPTCHA is mandatory" );
-                if( !$captcha.hasClass( "error" ) ){
-                  $captcha.addClass( "error" );
+                if($('#recaptcha').length){
+                    var $captcha = $('#recaptcha' );
+                    response = grecaptcha.getResponse();
+                    if (response.length === 0) {
+                        $( '.msg-error').text( "reCAPTCHA is mandatory" );
+                        if( !$captcha.hasClass( "error" ) ){
+                            $captcha.addClass( "error" );
+                        }  
+                    } else {
+                        $( '.msg-error' ).empty();
+                        $captcha.removeClass( "error" );
+                        form.submit();
+                    }
+                    //form.submit();
+                }else{
+                    $( '.msg-error' ).empty();
+                    $captcha.removeClass( "error" );
+                    form.submit();
                 }
-                
-              } else {
-                $( '.msg-error' ).empty();
-                $captcha.removeClass( "error" );
-                form.submit();
-              }
-                //form.submit();
             }
         });
 

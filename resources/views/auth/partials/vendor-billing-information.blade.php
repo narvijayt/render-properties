@@ -27,7 +27,7 @@
     {{ googlePlus('image', config('seo.image')) }}
 @endsection
 @section('content')
-    @component('pub.components.banner', ['banner_class' => 'lender'])
+    @component('pub.components.banner', ['banner_class' => 'vendor'])
         Payment Package
     @endcomponent
   
@@ -45,7 +45,7 @@
                     <div class="alert alert-danger">{{session('error')}}</div>
                 @endif
              
-                <form class="lender-ragistration" id="lender-ragistration" method="post" enctype="multipart/form-data">
+                <form class="vendor-ragistration" id="vendor-ragistration" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="col-md-6 p-0 vendor-billingInfo">
                         <div class="vendor-reg-box">
@@ -166,7 +166,7 @@
 
                             <div class="form-group mt-2">
                                 <button type="submit" class="btn btn-lg btn-success btn-min-width" id="doPaymentButton">Continue</button>
-                                <input type="hidden" name="userType" value="lender" />
+                                <input type="hidden" name="userType" value="vendor" />
                             </div>
 
                             
@@ -209,10 +209,10 @@ cardElement.on('change', function (event) {
 
 
 // Select subscription form element
-const lenderForm = document.querySelector("#lender-ragistration");
+const vendorForm = document.querySelector("#vendor-ragistration");
 
 // Attach an event handler to subscription form
-lenderForm.addEventListener("submit", handleSubscrSubmit);
+vendorForm.addEventListener("submit", handleSubscrSubmit);
 
 
 async function handleSubscrSubmit(e) {

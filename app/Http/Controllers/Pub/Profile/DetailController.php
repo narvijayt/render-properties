@@ -19,6 +19,7 @@ use Carbon\Carbon;
 
 use App\RealtorDetail;
 use App\LenderDetail;
+use App\VendorMeta;
 
 class DetailController extends Controller
 {
@@ -33,7 +34,7 @@ class DetailController extends Controller
 	   	$user = Auth::user();
     	 if(Auth::user()->user_type == 'vendor')
     		{
-    		   $user  = User::with('userSubscription')->find(Auth::user()->user_id);
+    		   $user  = User::with('userSubscription','vendorMeta')->find(Auth::user()->user_id);
     		   $checkSubscription = Subscribe::where('user_id','=',Auth::user()->user_id)->get();
     		  /* if(count($checkSubscription) > 0)
     		   {*/
@@ -61,7 +62,8 @@ class DetailController extends Controller
         		   }else{
         		    $userid = Auth::user()->user_id;
         	        Auth::logout();
-        	        return redirect()->route('loadVendorPackages', ['id' => $userid]); 
+        	        // return redirect()->route('loadVendorPackages', ['id' => $userid]); 
+        	        return redirect()->route('package-payment', ['id' => $userid]); 
         		   }
         	   /* }else{
         	        $userid = Auth::user()->user_id;
@@ -191,16 +193,7 @@ class DetailController extends Controller
 		$user->email = strtolower($user->email);
         $userUpdate = $user->update($details);
         
-        if($user->user_type == "realtor"){
-            /*$findUser = User::find($user->user_id);            
-            $findUser->lo_matching_acknowledged = $request->lo_matching_acknowledged;
-            $findUser->open_to_lender_relations = $request->open_to_lender_relations;
-            $findUser->co_market = isset($request->co_market) ? $request->co_market : 'No';
-            $findUser->contact_me_for_match = isset($request->contact_me_for_match) ? $request->contact_me_for_match : null;
-            $findUser->how_long_realtor = $request->how_long_realtor;
-            $findUser->referral_fee_acknowledged = (isset($request->referral_fee_acknowledged)) ? $request->referral_fee_acknowledged : null;
-            $findUser->update();*/
-            
+        if($user->user_type == "realtor"){            
             $realtorDetail = RealtorDetail::where(['user_id' => $user->user_id])->first();
             if(is_null($realtorDetail)){
                 $realtorDetail = new RealtorDetail();
@@ -223,6 +216,18 @@ class DetailController extends Controller
             $lenderDetail->unique_experties =$request->unique_experties;
             $lenderDetail->partnership_with_realtor =$request->partnership_with_realtor == "yes" ? 1 : 0;
             $lenderDetail->save();
+        }else if($user->user_type == "vendor"){
+            $vendorMeta = VendorMeta::where(['userId' => $user->user_id])->first();
+            if(is_null($vendorMeta)){
+                $vendorMeta = new VendorMeta();
+                $vendorMeta->userId = $user->user_id;
+            }
+            $vendorMeta->experties = $request->experties;
+            $vendorMeta->special_services = $request->special_services;
+            $vendorMeta->service_precautions = $request->service_precautions;
+            $vendorMeta->connect_realtor = $request->connect_realtor == "yes" ? 1 : 0;
+            $vendorMeta->connect_memebrs = $request->connect_memebrs == "yes" ? 1 : 0;
+            $vendorMeta->save();
         }
 		if ($userUpdate === true) {
 			flash('Profile updated successfully')->success();

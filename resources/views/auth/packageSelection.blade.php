@@ -84,6 +84,7 @@ Payment Package
                                 value="{{$userDetails->firm_name}}" />
                         </div>
                         <div class="clearfix"></div>
+                        {{--
                         <div class="form-group">
                             <label for="address1">Billing Address1</label>
                             <input type="text" id="address1" class="form-control" name="address"
@@ -94,7 +95,7 @@ Payment Package
                             <label for="address2">Billing Address2</label>
                             <input type="text" id="address2" class="form-control" name="address2"
                                 placeholder="Billing Address 2" value="{{$userDetails->billing_address_2}}" />
-                        </div>
+                        </div> --}}
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="billing_locality">City</label>
@@ -151,61 +152,6 @@ Payment Package
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                {{-- 
-                <div class="col-md-12">
-                    <div class="card-form package-infobox">
-                        <div class="box-title-box">
-                            <h1 class="box-title line-left family-mont">Payment Details</h1>
-                            <p>Please enter your payment details</p>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="card-wrapper"></div>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="form-group">
-                                    <div class="radio fancy_radio">
-                                        <label><input name="namehere" type="radio"><span>Credit Card</span></label>
-                                    </div>
-                                    <div class="pull-right">
-                                        <img src="img/credit-cards.png" class="img-responsive center-block"
-                                            style="width: 50%;float: right;margin-top: -45px;" />
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div><br>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input required type="text" class="form-control form-control-lg card-number" name="number" id="card-number" maxlength="19" placeholder="Card Number" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control card-expiry form-control-lg date-formatter" name="expiry" id="date-format" placeholder="MM/YYYY" required autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <input required type="text" class="form-control card-cvc form-control-lg" name="cvc" id="card-cvc" maxlength="16" placeholder="CVC" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!------  ROW--->
-                                <div class="form-group ">
-                                    <input required type="text" class="form-control card-name form-control-lg" name="name" id="card-name" placeholder="Card Holder Name" autocomplete="off">
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-lg btn-success btn-min-width" id="doPaymentButton">Continue</button>
-                                </div>
-                            </div>
-                            <!------  Col-md-6---->
-                        </div>
-                        <!------ ROW--->
-                    </div>
-                </div>
-                <!----- Col-md-12--->
-                --}}
             </form>
             <div class="loader-overlay loader-outer form-loader hidden"><div class="loader">Please wait...<div class="loader-inner"></div></div></div>
             @else
@@ -226,44 +172,6 @@ Payment Package
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 /*********State Package Option ****************************/
-var itemCounter = $("#additionalItemsField").find("tr").length;
-console.log(itemCounter);
-const itemType = $("#addAdditionalItem").data("type");
-const basePrice = $("#addAdditionalItem").data("baseprice");
-const addOnPrice = $("#addAdditionalItem").data("addonprice");
-calculateTotalPrice();
-
-$('#vendor_register').on('click', '#addAdditionalItem', function() {
-
-    $("#additionalItemsField").append(`<tr id="row">
-        <td>
-            <div class="odd gradeX">
-                <input type="text" id="add_additional${itemType}" name="additional_${itemType}[]" placeholder="Enter Additional ${toCamelCase(itemType)}" class="form-control required" />
-            </div>
-        </td>
-        <td>
-            <button type="button" name="remove" class="btn btn-warning removeAdditionalItem">
-                <i class="fa fa-close"></i>
-            </button>
-        </td>
-    </tr>`);
-
-    calculateTotalPrice();
-});
-
-function calculateTotalPrice(){
-    itemCounter = $("#additionalItemsField").find("tr").length;
-    const totalPrice = parseInt(basePrice) + parseInt( addOnPrice * (parseInt(itemCounter)) );
-    $("#totalPrice").html(`$${totalPrice}`);
-    ++itemCounter;
-}
-
-$(document).on('click', '.removeAdditionalItem', function() {
-    if (confirm(`Are you sure you want to delete this Additional ${toCamelCase(itemType)} Name?`)) {
-        $(this).closest("tr#row").remove();
-        calculateTotalPrice();
-    }
-});
 
 function toCamelCase(str) {
     return str.replace(/(?:^|\s)\w/g, function(match) {

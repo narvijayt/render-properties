@@ -15,9 +15,10 @@ class SettingsController extends Controller
     //
 
     public function pricing(){
-        $pricing = (new RegistrationPlans())->first();
-        $vendorPackages = VendorPackages::paginate(10);
-        return view("admin.settings.pricing", compact("pricing", "vendorPackages"));
+        $lenderPackage = RegistrationPlans::where(['packageType' => 'lender'])->first();
+        $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
+        // $vendorPackages = VendorPackages::paginate(10);
+        return view("admin.settings.pricing", compact("lenderPackage", "vendorPackage"));
     }
 
     public function storePricing(Request $request){
@@ -28,19 +29,20 @@ class SettingsController extends Controller
 
         $validator = Validator::make($input, $rules);
 
+        $packageType = ucfirst($request->input('packageType'));
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
             if($request->input('sale_price')){
                 if($request->input('sale_price') >= $request->input('regular_price')){
-                    return redirect()->back()->with("error", "Sale Price must be less than the Regular Price.")->withInput();
+                    return redirect()->back()->with("error", $packageType." Sale Price must be less than the Regular Price.")->withInput();
                 }
                 if($request->input('sale_period') == ""){
-                    return redirect()->back()->with("error", "Sale Period is required with Sale Price.")->withInput();
+                    return redirect()->back()->with("error", $packageType." Sale Period is required with Sale Price.")->withInput();
                 }
             }
 
-            $pricing = (new RegistrationPlans())->first();
+            $pricing = RegistrationPlans::where(['packageType' => $request->input('packageType')])->first();
             
             $createPlan = $createCoupon = false;
             if(!empty($pricing)){
@@ -62,13 +64,17 @@ class SettingsController extends Controller
 
             }
             
+            $product_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRODUCT_ID') : env('STRIPE_TEST_PRODUCT_ID');
+            if($request->input('packageType') == "vendor"){
+                $product_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_VENDOR_PRODUCT_ID') : env('STRIPE_TEST_VENDOR_PRODUCT_ID');
+            }
             
             if($createPlan == true){
                 $priceData = [
                     "currency" => "usd",
                     "unit_amount" => ($request->input('regular_price')*100),
                     'recurring' => ['interval' => 'month'],
-                    'product' => env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRODUCT_ID') : env('STRIPE_TEST_PRODUCT_ID'),
+                    'product' => $product_id,
                 ];
                 $plan = (new Stripe())->createPricePlan($priceData);
                 if($plan->error == true){
@@ -92,22 +98,25 @@ class SettingsController extends Controller
 
             
             $planId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
-            $pricing = (new RegistrationPlans())->first();
+            $couponId = $createCoupon == true ? $coupon->id : null;
+            $pricing = RegistrationPlans::where(['packageType' => $request->input('packageType')])->first();
             if(is_null($pricing) || $pricing->exists === false){
                 $pricing = new RegistrationPlans();
             }else{
                 $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
+                $couponId = $createCoupon == true ? $coupon->id : $pricing->couponId;
             }
 
             $pricing->regular_price = $request->input('regular_price');
             $pricing->sale_price = $request->input('sale_price');
             $pricing->sale_period = $request->input('sale_period');
-            $pricing->couponId = $createCoupon == true? $coupon->id : null;
+            $pricing->packageType = $request->input('packageType');
+            $pricing->couponId = $couponId;
             $pricing->planId = $createPlan == true? $plan->id : $planId;
             if($pricing->save()){
-                return redirect()->route("settings.pricing")->with("message", "Price updated successfully.");
+                return redirect()->route("settings.pricing")->with("message", $packageType." Price updated successfully.");
             }else{
-                return redirect()->back()->with("error", "Failed to update the Price. Please try again later.")->withInput();
+                return redirect()->back()->with("error", "Failed to update the Price for ".$packageType.". Please try again later.")->withInput();
             }
 
         }   

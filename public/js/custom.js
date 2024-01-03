@@ -379,35 +379,39 @@ password: {
                 });
  
  
- $( "#vendor_registers" ).submit(function( event ) {
-  var $captcha = $('#recaptcha' );
-  response = grecaptcha.getResponse();
-  if (response.length === 0) {
-    $( '.msg-error').text( "The captcha-response field is required." );
-    if( !$captcha.hasClass( "error" ) ){
-      $captcha.addClass( "error" );
+ $( "#vendor_registers" ).on("submit",function( event ) {
+  if($('#recaptcha' ).length){
+    var $captcha = $('#recaptcha' );
+    response = grecaptcha.getResponse();
+    if (response.length === 0) {
+      $( '.msg-error').text( "The captcha-response field is required." );
+      if( !$captcha.hasClass( "error" ) ){
+        $captcha.addClass( "error" );
+      }
+      e.preventDefault();
+    } else {
+      $( '.msg-error' ).empty();
+      $captcha.removeClass( "error" );
     }
-    e.preventDefault();
-  } else {
-    $( '.msg-error' ).empty();
-    $captcha.removeClass( "error" );
   }
 });
 
                 
-$( '#registerVendor' ).click(function(event){
+$( '#registerVendor' ).on("click",function(event){
+  if($('#recaptcha' ).length){
     var $captcha = $('#recaptcha' );
     response = grecaptcha.getResponse();
-  if (response.length === 0) {
-    $( '.msg-error').text( "The captcha-response field is required." );
-    if( !$captcha.hasClass( "error" ) ){
-      $captcha.addClass( "error" );
+    if (response.length === 0) {
+      $( '.msg-error').text( "The captcha-response field is required." );
+      if( !$captcha.hasClass( "error" ) ){
+        $captcha.addClass( "error" );
+      }
+      e.preventDefault();
+    } else {
+      $( '.msg-error' ).empty();
+      $captcha.removeClass( "error" );
     }
-     e.preventDefault();
-  } else {
-    $( '.msg-error' ).empty();
-    $captcha.removeClass( "error" );
-   }
+  }
 });
 
 

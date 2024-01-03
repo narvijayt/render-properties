@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 
 use App\RealtorDetail;
 use App\LenderDetail;
+use App\VendorMeta;
 
 class User extends Authenticatable implements ISecurable
 {
@@ -868,5 +869,12 @@ class User extends Authenticatable implements ISecurable
      */
     public function lenderDetail(){
         return $this->hasOne(LenderDetail::Class, LenderDetail::USER_ID, self::PKEY);
+    }
+	
+	/**
+     * Get the subscription plan associated with the user.
+     */
+    public function vendorMeta(){
+        return $this->hasOne(VendorMeta::Class, VendorMeta::USER_ID, self::PKEY);
     }
 }
