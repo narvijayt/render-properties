@@ -329,13 +329,13 @@
 		<div class="col-md-9 instant-text">
 		<h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br> Nationwide!</h2>
 		
-		<p class="text-primary">Render was created by The Carolinas leading mortgage and Real Estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
+		<p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
 		<p class="text-primary">No more cold-calling. </p>
 		<p class="text-primary">No more hours of searching for the pros.</p>
 		<p class="text-primary">No more incompetent real estate pros.</p>
 		<p class="text-primary">And you get access to talent nationwide.Sign up now and see what the Render network can do for you.</p>
 		
-		<div class="center-box text-left mt-1 mb-3 pt-1">
+		<div class="center-box text-left mt-1 mb-3 pt-3">
 	<h4 class="text-left text-primary mt-0 mb-0">SIGN ME UP!</h4>
 	<div class="d-flex-btn-group">
       <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>

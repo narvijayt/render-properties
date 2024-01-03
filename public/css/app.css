@@ -1301,14 +1301,14 @@ p{font-size: 1.2vw; letter-spacing: 0.4px; line-height: 138%;}
 .render-network-section{padding-bottom: 0px !important;}
 .justify-content-center{display: flex;justify-content: center;}
 #testimoniial-slider p {font-family: 'Montserrat', sans-serif;  font-weight: 400;font-size: 1.2vw;  line-height: 1.5; margin-bottom: 0px;color: #184586 ! important;}
-#testimoniial-slider.carousel .overview b{font-size: 1.2vw;}
+#testimoniial-slider.carousel .overview b{font-size: 1.2vw ! important;}
 .testimonials .carousel .item{padding: 0% 15%;}
 a.carousel-control.left.carousel-control-prev{bottom: 0; left: 121px;display: block; width: auto; height: auto;background-color: transparent  ! important;top: 33%;}
 a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: block; width: auto; height: auto;background-color: transparent  ! important;top: 33%;left: inherit;}
 #testimoniial-slider i.fa.fa-angle-left, #testimoniial-slider i.fa.fa-angle-right{right: 0;font-size: 121px;font-weight: normal; color: #184586;}
 #testimoniial-slider.carousel .overview b{color:#184586;}
 .works-section-outer{background: url(/img/works-section-bg-06.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center center; width: 100%; float: left;padding-top: 55px;padding-bottom: 55px;}
-.works-section-outer a.sign-link {font-weight: bold;  font-size: 18px; text-decoration: underline;}
+.works-section-outer a.sign-link {font-weight: bold;  font-size: 1.3vw; text-decoration: underline;}
 .works-section-outer a.sign-link:hover{ color: #fff !important;}
 .profits-section-outer .container{background: url(/img/town-bg.png) no-repeat;background-size: 93%; padding-bottom: 145px; background-position: center bottom;}
 .profits-section-outer { background:#F1F1F3; width: 100%; float: left;padding-bottom: 35px;}
@@ -1394,19 +1394,20 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
 .spotlight__section-title{ margin-top:10px;}
 .dropdown-menu>li>a{font-size: 1.1vw;}
 .hero-banner  h1{padding-bottom: 6px;font-size: 22px;}
+.works-section-outer h4 { font-size: 1.4vw;}
+.works-section-outer a.sign-link{}
 /*********************************21-12-2023-Css-End*************************************/
 
 /* ============================= Responsive CSS================================= */
-@media screen and (min-width:1600px) {
-.render-network-section{background-position: center center;}
-.render-network-section .text-box-center{width: 57%;}
-.render-network-section .px-4 { padding: 0px 2%;}
-}
+
 
 @media(min-width:1400px)
 {
 body .business-outer .business-img-box img{height: 102%;}	
 .leading-industry-section h2{line-height: 94px;}
+.render-network-section{background-position: center center;}
+.render-network-section .text-box-center{width: 57%;}
+.render-network-section{padding-top: 4%;}
 }
 
 @media(max-width:1290px)
