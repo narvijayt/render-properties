@@ -278,7 +278,7 @@
 	<div class="col-md-6 pl-4">
 	<h4 class="text-left text-white m-0">Lenders:</h4>
 	<p class="text-left text-white">
-	For lenders, Render Properties offers a direct line to real estate professionals seeking financing solutions. Connect with realtors who are open to establishing new relationships and have clients in need of mortgage services, ensuring a seamless and efficient lending process. No more Cold Calling or meet and great. 
+	For lenders, Render Properties offers a direct line to real estate professionals seeking financing solutions. Connect with realtors who are open to establishing new relationships and have clients in need of mortgage services, ensuring a seamless and efficient lending process. No more Cold Calling or meet and greets. 
 	</p>
 	<a class=" sign-link text-orange" href="{{ url('lender-register') }}">Sign Me Up</a>
 	</div>

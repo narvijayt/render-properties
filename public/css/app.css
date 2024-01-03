@@ -76,6 +76,12 @@ html {
   scroll-behavior: smooth;
 }
 body{overflow-x: hidden;}
+@media screen and (min-width:1600px) {
+.render-network-section{background-position: center center;}
+.render-network-section .text-box-center{width: 57%;}
+.render-network-section .px-4 { padding: 0px 2%;}
+}
+
 /*********************************21-02-2022-Css*************************************/
 .navbar-brand { width: 478px;  margin: 0px 11px 0 0px!important; position: absolute; bottom: 29px;}
 .top-header-section {width: 623px; float: right;margin-right: -11px;}
@@ -1288,17 +1294,18 @@ a.navbar-brand { position: absolute; top: 11%;width: 18%;}
 .btn-yellow {background: #F79A2C; border: 2px solid #fff; border-radius: 9px; color: #184586;font-weight: bold; font-size: 15px; margin-right:13px; letter-spacing: 0.1px; float: left;}
 .btn-yellow:hover{background: #184586 !important; border: 2px solid #184586;color: #fff;}
 .d-flex-btn-group { margin-top: 0px;}
-.render-network-section{background: url(/img/lady-with-phone.png) no-repeat;background-size: cover;  background-position: center center;}
-p{font-size: 16px; letter-spacing: 0.1px; line-height: 24px;}
-.render-network-section .text-box-center {width: 499px; margin: 0 auto;}
+.render-network-section{background: url(/img/lady-with-phone.png) no-repeat;background-size: cover;  background-position: center right;}
+p{font-size: 1.2vw; letter-spacing: 0.4px; line-height: 138%;}
+.render-network-section .text-box-center {width: 44%; margin: 0 auto;}
 .text-orange{color: #F79A2C;}
 .render-network-section img {  width: 96px;}
 .render-network-section .px-4 { padding: 0px 3%;}
 .render-network-section .px-4:first-child img {width: 121px;}
-.render-network-section h3 {font-size: 19px; line-height: 25px;}
+.render-network-section h3 {font-size: 1.5vw;line-height: 119%;}
 .render-network-section{padding-bottom: 0px !important;}
 .justify-content-center{display: flex;justify-content: center;}
-#testimoniial-slider p {font-family: 'Montserrat', sans-serif;  font-weight: 400;font-size: 17px;  line-height: 1.5; margin-bottom: 0px;color: #184586 ! important;}
+#testimoniial-slider p {font-family: 'Montserrat', sans-serif;  font-weight: 400;font-size: 1.2vw;  line-height: 1.5; margin-bottom: 0px;color: #184586 ! important;}
+#testimoniial-slider.carousel .overview b{font-size: 1.2vw;}
 .testimonials .carousel .item{padding: 0% 15%;}
 a.carousel-control.left.carousel-control-prev{bottom: 0; left: 121px;display: block; width: auto; height: auto;background-color: transparent  ! important;top: 33%;}
 a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: block; width: auto; height: auto;background-color: transparent  ! important;top: 33%;left: inherit;}
