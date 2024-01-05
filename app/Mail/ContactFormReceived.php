@@ -35,7 +35,7 @@ class ContactFormReceived extends Mailable
         
    return $this->from(config('mail.from.address'), config('mail.from.name'))
 			->to([config('app.support_email')])
-			->cc('richard@realbrokerconnections.com','james@realbrokerconnections.com','richardtocado@gmail.com','nv@culture-red.com')
+			->cc(env('MAIL_FROM_ADDRESS'),'richardtocado@gmail.com','nv@culture-red.com')
             ->bcc('nv@culture-red.com')
             ->subject('Contact Form Submission: '.$this->message->subject)
 			->markdown('email.contact-form.received', [

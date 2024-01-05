@@ -60,7 +60,8 @@ class LenderPatiniumMembership extends Command
           try{
            // \Mail::to('priya.negi60degreedigital@gmail.com')->bcc(['jacksmithjs1431@gmail.com'])->send($mail);
              
-            \Mail::to($findLender[0]->email)->bcc(['james@realbrokerconnections.com'])->send($mail);
+            // \Mail::to($findLender[0]->email)->bcc(['james@realbrokerconnections.com'])->send($mail);
+            \Mail::to($findLender[0]->email)->send($mail);
              sleep(3);
                 //\Mail::to('nv@culture-red.com')->cc(['narvijay.thakur@gmail.com'])->send($mail);
                 $this->output = new ConsoleOutput;

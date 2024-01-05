@@ -49,7 +49,7 @@ class SetPasswordController extends Controller
         );
 
         Mail::send('auth.custom.verify',['token' => $token], function($message) use ($request) {
-            $message->from('richard@realbrokerconnections.com','Render');
+            $message->from(env('MAIL_FROM_ADDRESS'),'Render');
             $message->to($request->email);
             $message->subject('Set Account Password');
         });

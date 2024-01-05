@@ -59,7 +59,8 @@ class VendorPlatiniumMembership extends Command
           try{
                 //\Mail::to('priya.negi60degreedigital@gmail.com')->bcc(['jacksmithjs1431@gmail.com'])->send($mail);
                 //\Mail::to('nv@culture-red.com')->cc(['narvijay.thakur@gmail.com'])->send($mail);
-                \Mail::to($vendordata[0]->email)->cc(['james@realbrokerconnections.com'])->send($mail);
+                // \Mail::to($vendordata[0]->email)->cc(['james@realbrokerconnections.com'])->send($mail);
+                \Mail::to($vendordata[0]->email)->send($mail);
                  sleep(3);
                 $this->output = new ConsoleOutput;
                 $this->info("$i) Report Generated and sent to:".$vendordata[0]->email);
@@ -78,7 +79,8 @@ class VendorPlatiniumMembership extends Command
           try{
                 //\Mail::to('priya.negi60degreedigital@gmail.com')->bcc(['jacksmithjs1431@gmail.com'])->send($mail);
                 //\Mail::to('nv@culture-red.com')->cc(['narvijay.thakur@gmail.com'])->send($mail);
-                \Mail::to($vendordata[0]->email)->cc(['james@realbrokerconnections.com'])->send($mail);
+                // \Mail::to($vendordata[0]->email)->cc(['james@realbrokerconnections.com'])->send($mail);
+                \Mail::to($vendordata[0]->email)->send($mail);
                 sleep(3);
                 $this->output = new ConsoleOutput;
                 $this->info("$i) Report Generated and sent to:".$vendordata[0]->email);
