@@ -18,7 +18,7 @@
 
 <h2 class="text-center mt-0 mb-1"> GET STARTED </h2>
 
-<div class="row util__collapse">
+<div class="row util__collapse d-grid-group">
     <div class="col-md-6 form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
         <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First Name" value="{{ old('first_name', isset($user) && isset($user->first_name) ? $user->first_name : '' ) }}" required autofocus>
     </div>
@@ -113,7 +113,7 @@
 
 <hr class="style1">
 
-<div class="row">
+<div class="row d-grid-group util__collapse">
 	<div class="col-md-6 form-group{{ $errors->has('password') ? ' has-error' : '' }}  pr-0">
 		<input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
 		@if ($errors->has('password'))
@@ -171,7 +171,7 @@
 	@endif
 </div>
 
-<div class="row">
+<div class="row d-grid-group util__collapse">
 	<div class="col-md-6 pr-0 form-group col-xs-6">
 		<input class="form-control" type="text" name="city" id="newcity" value="{{ old('city') }}" placeholder="Enter City">
 	</div>
@@ -347,8 +347,8 @@
 <hr class="style1">
 @if(env('APP_ENV') != 'local')
 	<script src="https://www.google.com/recaptcha/api.js"></script>
-	<div class="form-group row">
-		<div class="col-md-6 offset-md-4">
+	<div class="form-group row recaptcha-row">
+		<div class="col-md-6 offset-md-4 recaptcha-row-inner">
 			<div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
 			<span class="msg-error error"></span>
 			@if ($errors->has('g-recaptcha-response'))
@@ -360,7 +360,7 @@
 	</div>
 @endif
 
-<div class="form-group justify-content-center">
+<div class="form-group justify-content-center form-btn-group">
 	<button type="submit" class="btn btn-warning btn-yellow" id='reg-btn'>
 		@if(!empty($_GET))
 		@if(isset($_GET) && $registerType == 'realtor')

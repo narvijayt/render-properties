@@ -33,12 +33,12 @@ $description = 'Register for Render'
 <div class="lender-inner-banner">
 <div class="container">
  <div class="row">
- <div class="col-md-5">
+ <div class="col-lg-6 col-md-5">
  <h1 class="m-0 text-orange">LENDER SIGN UP</h1>
  <h2 class="mt-1 h1 mb-0 pb-1">They Bring You <br> The Deals!</h2>
  <p class="text-primary mb-0 pl-5"><b>Get access to our network of realtors <br> ready to bring you their next deal.</b></p>
  </div>
- <div class="col-md-7 ">
+ <div class="col-lg-6 col-md-7 ">
  </div>
  </div>
 </div>
@@ -84,7 +84,7 @@ $description = 'Register for Render'
 		 </div>
 		 </div>
 		 <div class="per-month-price">
-		 <h3 class="text-white mt-0">$XX.00 PER MONTH</h3>
+		    <h3 class="text-white mt-0 text-uppercase">{{ $optionLabel }}</h3>
 		 </div>
 		 <div class="sign-up-link">
 		 <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
@@ -104,7 +104,7 @@ $description = 'Register for Render'
             </div>
 		 </div>--}}
 
-        <div class="col-md-5 realtor-register_form_outer ">
+        <div class="col-md-5 realtor-register_form_outer lener-register_form_outer ">
             @if ($errors->has('error'))
             <div class="alert alert-danger">{{ $errors->first('error') }}</div>
             @endif
@@ -135,6 +135,18 @@ $description = 'Register for Render'
                         @endif
                         @php $flag++; @endphp
                     @endforeach
+					
+					<div class="carousel-control-box">
+					<a class="carousel-control left carousel-control-prev" href="#testimoniial-slider"
+                            data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+
+                        <a class="carousel-control right carousel-control-next" href="#testimoniial-slider"
+                            data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+					</div>
                 </ol>
                 <!-- Wrapper for carousel items -->
                 <div class="carousel-inner">
@@ -147,7 +159,6 @@ $description = 'Register for Render'
                         @endif
                           <p class="overview"><b>{{ucwords($testimonial['name'])}}</b></p>
                             <p class="testimonial">
-                                <i class="fa fa-quote-right fa-3x fa-fw"></i>
                                 @php echo ucfirst(html_entity_decode($testimonial['description'])); @endphp
                             </p>
                            
@@ -155,16 +166,6 @@ $description = 'Register for Render'
                         @php $flag++; @endphp
                     @endforeach
                 </div>
-				
-                <a class="carousel-control left carousel-control-prev" href="#testimoniial-slider" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-				
-                <a class="carousel-control right carousel-control-next" href="#testimoniial-slider" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-				
-				
 				
             </div>
             @endif
@@ -219,13 +220,13 @@ $description = 'Register for Render'
 		<div class="col-md-6 ">
 		<h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br> Nationwide!</h2>
 		
-		<p class="text-primary">Render was created by The Carolinas leading mortgage and Real Estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
+		<p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
 		<p class="text-primary">No more cold-calling. </p>
 		<p class="text-primary">No more hours of searching for the pros.</p>
 		<p class="text-primary">No more incompetent real estate pros.</p>
-		<p class="text-primary">And you get access to talent nationwide.Sign up now and see what the Render network can do for you.</p>
+		<p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render network can do for you.</p>
 		<div class="sign-up-link text-left mt-1">
- <a class="text-primary" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+ <a class="text-primary" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 </div>
 
 		</div>

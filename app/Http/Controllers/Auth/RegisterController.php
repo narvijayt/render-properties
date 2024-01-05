@@ -86,13 +86,25 @@ class RegisterController extends Controller
 	{
 	    $registerType = 'lender';
 	    $lenderRegPage = Page::find(PageIdEnum::LENDERREGISTER);
+	    $lenderPackage = RegistrationPlans::where(['packageType' => 'lender'])->first();
+	    $optionLabel = '';
+	    if(!is_null($lenderPackage)){
+            $optionLabel = "Monthly - $".$lenderPackage->regular_price;
+            if($lenderPackage->sale_price > 0 && !empty($lenderPackage->couponId)){
+                if($lenderPackage->sale_period > 1){
+                    $optionLabel = "$".number_format($lenderPackage->sale_price,2,'.','')."/month for first ".$lenderPackage->sale_period." months and $".number_format($lenderPackage->regular_price,2,'.','')."/month afterward";
+                }else{
+                    $optionLabel = "$".number_format($lenderPackage->sale_price,2,'.','')."/month for first month and $".number_format($lenderPackage->regular_price,2,'.','')."/month afterward";
+                }
+            }
+        }
 	    $testimonials = Testimonial::all();
         if ($request->input('remember_token')) 
         {
 			$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
-			return view('auth.lender-register', compact('user', 'registerType', 'lenderRegPage','testimonials'));
+			return view('auth.lender-register', compact('user', 'registerType', 'lenderRegPage','testimonials', 'optionLabel'));
 		}
-        return view('auth.lender-register', compact('registerType', 'lenderRegPage','testimonials'));
+        return view('auth.lender-register', compact('registerType', 'lenderRegPage','testimonials', 'optionLabel'));
 	}
 	
 	public function showRealtorRegistrationForm(Request $request)
@@ -431,7 +443,19 @@ class RegisterController extends Controller
     public function loadVendorRegLayout(Request $request)
     {
         // $data['vendorPackages'] = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
-        $data['vendorPackage'] = RegistrationPlans::where(['packageType' => 'vendor'])->first();
+        $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
+        $data['optionLabel'] = '';
+	    if(!is_null($vendorPackage)){
+            $data['optionLabel'] = "$".$vendorPackage->regular_price." Per Month";
+            if($vendorPackage->sale_price > 0 && !empty($vendorPackage->couponId)){
+                if($vendorPackage->sale_period > 1){
+                    $data['optionLabel'] = "$".number_format($vendorPackage->sale_price,2,'.','')."/month for first ".$vendorPackage->sale_period." months and $".number_format($vendorPackage->regular_price,2,'.','')."/month afterward";
+                }else{
+                    $data['optionLabel'] = "$".number_format($vendorPackage->sale_price,2,'.','')."/month for first month and $".number_format($vendorPackage->regular_price,2,'.','')."/month afterward";
+                }
+            }
+        }
+        $data['vendorPackage'] = $vendorPackage;
         // $data['selectedPackage'] = $request->has('package') ? $request->get('package') : '';
         $data['testimonials'] = Testimonial::all();
         return view('auth.vendor', $data );
@@ -664,7 +688,7 @@ class RegisterController extends Controller
         if($checkVendor->payment_status == 0){
             $userDetails = User::with('userSubscription')->find($request->id);
             if(!is_null($vendorPackage)){
-                $optionLabel = "Monthly - $".$vendorPackage->regular_price;
+                $optionLabel = "$".$vendorPackage->regular_price." Per Month"; 
                 $registrationPrice = $vendorPackage->regular_price;
                 if($vendorPackage->sale_price > 0 && !empty($vendorPackage->couponId)){
                     if($vendorPackage->sale_period > 1){

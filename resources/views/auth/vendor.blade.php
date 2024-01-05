@@ -33,13 +33,13 @@ $description = 'Register for Render'
 <div class="vendor-top-banner">
     <div class="container">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-6">
                 <h1 class="m-0 text-orange">VENDOR SIGN UP</h1>
                 <h2 class="mt-1 h1 mb-1 text-white">Your Expertise, <br> Their Needs – <br> Perfect Match</h2>
                 <p class="text-primary mb-0 pl-5 text-white"><b>Gain unrivaled access to a growing marketplace of
                         realtors, lenders, and real estate pros looking for your services.</b></p>
             </div>
-            <div class="col-md-7 ">
+            <div class="col-md-7  col-sm-6">
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@ $description = 'Register for Render'
 		 <div class="col-md-6 alert alert-success">During this time of crisis. Render stands with our members. Until further notice all membership monthly payments will be waived at this time.</div>
 		 	 <div class="col-md-3"></div>---->
 
-        <div class="row">
+        <div class="row realtor-row ">
             @if(session()->has('message'))
             <div class="alert alert-success">
                 {{ session()->get('message') }}
@@ -64,7 +64,7 @@ $description = 'Register for Render'
             @endif
             <form id="vendor_registers" class="" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
-
+               <div class=" row realtor-row">
                 <div class="col-md-7 number-list-box-left">
                     <h2 class="text-left text-white h2  pb-1 mt-0">How Render Gets You <br> More Jobs</h2>
 
@@ -105,16 +105,16 @@ $description = 'Register for Render'
                         </div>
                     </div>
                     <div class="per-month-price">
-                        <h3 class="text-white mt-0">${{ number_format($vendorPackage->regular_price,2,'.','') }} PER MONTH</h3>
+                        <h3 class="text-white mt-0 text-uppercase">{{ $optionLabel }}</h3>
                     </div>
                     <div class="sign-up-link">
                         <a class="text-orange" href="javascript:;">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </div>
-                <div class="col-md-5 realtor-register_form_outer">
+                <div class="col-md-5 realtor-register_form_outer vendor-register_form_outer">
                     @include('partials.registration.vendor-register')
                 </div>
-
+            </div>
             </form>
         </div>
     </div>
@@ -137,6 +137,18 @@ $description = 'Register for Render'
                         @endif
                         @php $flag++; @endphp
                         @endforeach
+						
+					<div class="carousel-control-box">
+					<a class="carousel-control left carousel-control-prev" href="#testimoniial-slider"
+                            data-slide="prev">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+
+                        <a class="carousel-control right carousel-control-next" href="#testimoniial-slider"
+                            data-slide="next">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+					</div>
                     </ol>
                     <!-- Wrapper for carousel items -->
                     <div class="carousel-inner">
@@ -149,7 +161,6 @@ $description = 'Register for Render'
                                 @endif
                                 <p class="overview"><b>{{ucwords($testimonial['name'])}}</b></p>
                                 <p class="testimonial">
-                                    <i class="fa fa-quote-right fa-3x fa-fw"></i>
                                     @php echo ucfirst(html_entity_decode($testimonial['description'])); @endphp
                                 </p>
 
@@ -157,23 +168,10 @@ $description = 'Register for Render'
                             @php $flag++; @endphp
                             @endforeach
                         </div>
-
-                        <a class="carousel-control left carousel-control-prev" href="#testimoniial-slider"
-                            data-slide="prev">
-                            <i class="fa fa-angle-left"></i>
-                        </a>
-
-                        <a class="carousel-control right carousel-control-next" href="#testimoniial-slider"
-                            data-slide="next">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-
-
-
-                    </div>
+                 </div>
                     @endif
                     <div class="sign-up-link">
-                        <a class="text-orange" href="#">SIGN UP FOR FREE <i class="fa fa-arrow-right"
+                        <a class="text-orange" href="#">SIGN UP NOW <i class="fa fa-arrow-right"
                                 aria-hidden="true"></i></a>
                     </div>
                 </div>
@@ -280,7 +278,7 @@ $description = 'Register for Render'
                     <h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br>
                         Nationwide!</h2>
 
-                    <p class="text-primary">Render was created by The Carolinas leading mortgage and Real Estate broker
+                    <p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker
                         Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up
                         creating the largest network of realtors and lenders in the country. Now, they’re bringing this
                         powerful network to you. </p>
@@ -290,7 +288,7 @@ $description = 'Register for Render'
                     <p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render
                         network can do for you.</p>
                     <div class="sign-up-link text-left mt-1">
-                        <a class="text-primary" href="#">SIGN UP FOR FREE <i class="fa fa-arrow-right"
+                        <a class="text-primary" href="#">SIGN UP NOW <i class="fa fa-arrow-right"
                                 aria-hidden="true"></i></a>
                     </div>
 

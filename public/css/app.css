@@ -110,8 +110,8 @@ body .btn.border-btn { background: #fff; color: #184586; text-transform: upperca
   body .btn.border-btn:hover{ background: #f7981f ! important;color:#fff;}
   .profile-box-inner p{font-weight: 500;}
   .testimonials{padding: 55px 15px;}
-  #testimoniial-slider .testimonial{ display:none ! important;}
-  .testimonials .carousel .item{min-height: 210px;}
+  /* #testimoniial-slider .testimonial{ display:none ! important;} */
+  /* .testimonials .carousel .item{min-height: 210px;} */
   .testimonials:after{display:none;}
   .pitch.pitch-outer { background-color: #fff;padding: 30px 15px;padding-bottom: 65px;}
   .pitch.pitch-outer h2.text-center {font-size: 39px;color: #005596;margin-bottom: 0px;}
@@ -255,7 +255,7 @@ color: #e89a09;
     font-size: 14px;
     text-align: center;
     overflow: hidden;
-    min-height: 290px;
+    /* min-height: 290px; */
 }
 .carousel .item .img-box {
     width: 135px;
@@ -271,9 +271,9 @@ color: #e89a09;
     display: block;
     border-radius: 50%;
 }
-.carousel .testimonial {
-    padding: 30px 0 10px;
-}
+/* .carousel .testimonial { */
+    /* padding: 30px 0 10px; */
+/* } */
 .carousel .overview {
     font-style: italic;
 }
@@ -319,16 +319,16 @@ color: #e89a09;
     margin: 0px auto; 
     padding: 0px; 
 }
-#testimoniial-slider .testimonial {
-    background-color: hsla(0,0%,100%,.21);
-    border-radius: 100%;
-    display: inline-block;
-    height: 70px;
-    padding: 15px 9px 9px;
-    width: 70px;
-    margin-bottom:14px;
-	margin-top: 20px;
-}
+/* #testimoniial-slider .testimonial { */
+    /* background-color: hsla(0,0%,100%,.21); */
+    /* border-radius: 100%; */
+    /* display: inline-block; */
+    /* height: 70px; */
+    /* padding: 15px 9px 9px; */
+    /* width: 70px; */
+    /* margin-bottom:14px; */
+	/* margin-top: 20px; */
+/* } */
 #testimoniial-slider .fa-3x {
     font-size: 2em;
 }
@@ -901,11 +901,11 @@ margin: 15px;
   }
 }
 
-select#langOpt {
-   display: block !important;
-    margin-top: -82px;
-    visibility: hidden !important;
-}
+/* select#langOpt { */
+   /* display: block !important; */
+    /* margin-top: -82px; */
+    /* visibility: hidden !important; */
+/* } */
 /* =========================== Pricing ========================= */
 .text-white{color:#fff}
 .family-mont{font-family: "Montserrat",sans-serif;}
@@ -1285,7 +1285,7 @@ nav li a {color: #fff;font-weight: 500; letter-spacing: 1px;}
 .navbar{ padding: 15px 0px  !important;}
 a.navbar-brand { position: absolute; top: 11%;width: 18%;}
 .navbar .container { padding-bottom: 0px;}
-.login-button-nav .dropdown-menu{left: -144px;}
+.login-button-nav .dropdown-menu{left: -135px;}
 .hero-banner{background: url(/img/home-hero-banner-1.png) no-repeat;background-size: cover;}
 .btn-yellow {background: #F79A2C; border: 2px solid #fff; border-radius: 9px; color: #184586;font-weight: bold; font-size: 15px; margin-right:13px; letter-spacing: 0.1px; float: left;}
 .btn-yellow:hover{background: #184586 !important; border: 2px solid #184586;color: #fff;}
@@ -1297,7 +1297,7 @@ p{font-size: 1.2vw; letter-spacing: 0.4px; line-height: 138%;}
 .render-network-section img {  width: 96px;}
 .render-network-section .px-4 { padding: 0px 3%;}
 .render-network-section .px-4:first-child img {width: 121px;}
-.render-network-section h3 {font-size: 1.5vw;line-height: 119%;}
+.render-network-section h3 {font-size: 1.4vw;line-height: 119%;}
 .render-network-section{padding-bottom: 0px !important;}
 .justify-content-center{display: flex;justify-content: center;}
 #testimoniial-slider p {font-family: 'Montserrat', sans-serif;  font-weight: 400;font-size: 1.2vw;  line-height: 1.5; margin-bottom: 0px;color: #184586 ! important;}
@@ -1336,34 +1336,34 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .realtor-register_form_outer { background: #DEDEDE; border-radius: 24px; padding: 30px;position: absolute; right: 0px;top: 0px;    z-index: 999;}
 .realtor-register_form_outer .form-control{border-radius: 10px; border: 1px solid #DBDBDB;}
 .realtor-register_form_outer .error{display: block;line-height: 100%;}
-.realtor-register_form_outer .btn-yellow {letter-spacing: 2.3px; margin-right: 0px;text-transform: uppercase; padding: 4px 10px;}
+.realtor-register_form_outer .btn-yellow {letter-spacing: 2.5px; margin-right: 0px;text-transform: uppercase; padding: 7px 18px;font-size: 1.2vw;}
 .streamlined-outer{background: url(/img/works-section-bg-06.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center bottom; width: 100%; float: left;padding-top: 55px;padding-bottom: 55px;}
 .streamlined-outer .container {position: relative;}
 .number-list-box { display: flex;align-items: start;padding-bottom: 8px;}
 .number-box h3 {font-weight: 700; font-size: 39px;background: #F79A2C;border-radius: 4px; margin-right: 22px;height: 54px; width: 54px; text-align: center;line-height: 54px;}
 .streamlined-text h4{line-height: 100%;padding-bottom: 8px;}
 .number-list-box-left{ padding-right: 11%;}
-.sign-up-link a {font-weight: 700;font-size: 17px;letter-spacing: 1px;text-decoration: none;}
+.sign-up-link a {font-weight: 700;font-size: 1.244333vw;letter-spacing: 1px;text-decoration: none;}
 .light-gray-bg{background:#F1F1F3;}
 .testimonials-outer { width: 100%; float: left;}
 .testimonials-outer .carousel .item{text-align: left;}
 .testimonials-outer #testimoniial-slider i.fa.fa-angle-left, .testimonials-outer #testimoniial-slider i.fa.fa-angle-right{    font-size: 42px;}
-.testimonials-outer a.carousel-control.left.carousel-control-prev{left: 4% ! important;top: inherit;bottom: 25px;z-index: 9999;}
-.testimonials-outer a.carousel-control.right.carousel-control-next{top: inherit;left: 17% !important;bottom: 25px;right: inherit;z-index: 9999;}
+.testimonials-outer a.carousel-control.left.carousel-control-prev{left: 0% ! important;top: inherit;bottom:35px;z-index: 9999;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{top: inherit;left:2% !important;bottom: 35px;right: -16px;z-index: 9999;}
 .testimonials-outer .testimonials-left { padding-right: 10%;} 
 .testimonials-outer .sign-up-link { width: 100%;float: left; margin-top: 30px;}
 .start-deals-outer{background: url(/img/works-section-bg-06.png) no-repeat;background-size: cover; background-attachment: fixed; background-position: center center; width: 100%; float: left;padding-top: 58px;padding-bottom: 60px;}
 .start-deals-box { padding: 18px 53px 0px 53px;}
-.start-deals-box p { margin-bottom: 0px;line-height: 20px;}
+.start-deals-box p { margin-bottom: 0px;line-height: 127%;}
 .start-deals-box .sign-up-link {width: 100%; float: left; margin-top: 20px;}
 .testimonials-outer .carousel .carousel-indicators {display: block;}
-.testimonials-outer .carousel .carousel-indicators{ bottom: -16px;left: 5%;margin-left: 0; display: flex;}
+.testimonials-outer .carousel .carousel-indicators{ bottom: -14px;left: 2%;margin-left: 0; display: flex;display: -webkit-box;width: auto;}
 .testimonials-outer .carousel-indicators li{background: #184586;}
 .testimonials-outer .carousel-indicators li.active {background: #fff;box-shadow: none;border: 2px solid #ddd;}
 .testimonials-outer  .carousel-indicators li.active {background: #fff;box-shadow: none;border: 2px solid #ddd;}
 .testimonials-outer .carousel-indicators li, .testimonials-outer .carousel-indicators li.active{width: 13px; height: 13px;  margin: 1px 5px;}
-.lender-inner-banner{background: url(/img/lender-signup-bg.png) no-repeat ;background-size: cover;background-position: center center;padding: 5% 0px;}
-.vendor-top-banner{background: url(/img/vendor-top-banner-bg.png) no-repeat ;background-size: cover;background-position: center right;padding: 5% 0px;}
+.lender-inner-banner{background: url(/img/lender-signup-bg.png) no-repeat ;background-size: cover;background-position:center bottom;padding: 5% 0% 6% 0%;}
+.vendor-top-banner{background: url(/img/vendor-top-banner-bg.png) no-repeat ;background-size: cover;background-position: center right;padding: 4% 0px;}
 .estate-jobs{background: url(/img/estate-jobs-bg.png) no-repeat ;background-size: cover;background-position: center center;padding: 5% 0px;}
 .vendor-reg-box.vendor-reg-box-01 {padding: 0px;background: transparent;}
 .vendors-serve-box { display: flex;}
@@ -1383,7 +1383,7 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
 .home-banner-topbar h1{ color:#ffffff; margin:0;}
 .home-banner-topbar span{ color:#184586;}
 
-.hero-banner p{font-size: 19px;line-height: 24px;letter-spacing: 1px; font-weight:500; padding-bottom: 0px; margin-bottom: 0px; padding-top: 9px;}
+.hero-banner p{font-size: 1.4vw;line-height: 117%;letter-spacing: 1px; font-weight:500; padding-bottom: 0px; margin-bottom: 0px; padding-top: 9px;}
 .home-banner-heading h2{font-weight: 700;font-size: 40px;letter-spacing: 1px;line-height: 45px; margin-top:0px; margin-bottom:8px;}
 .hero-banner h3{font-size: 22px !important;}
 
@@ -1395,19 +1395,86 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
 .dropdown-menu>li>a{font-size: 1.1vw;}
 .hero-banner  h1{padding-bottom: 6px;font-size: 22px;}
 .works-section-outer h4 { font-size: 1.4vw;}
-.works-section-outer a.sign-link{}
+.realtor-register_form_outer .form-control{min-height: 43px;border: 2px solid #DBDBDB ! important;font-weight: 500; font-size:17px;    color: #A3A3A3;}
+.realtor-register_form_outer input::placeholder {color:#A3A3A3;}
+.form-control:focus{box-shadow: none;opacity: 1;}
+.realtor-register_form_outer .row.d-grid-group:after, .realtor-register_form_outer .row.d-grid-group:before{display:none;}
+.realtor-register_form_outer .d-grid-group {display: grid;grid-template-columns: auto auto; grid-gap: 14px;width: 100%;}
+.realtor-register_form_outer .d-grid-group .form-group { width: 100%;padding: 0px}
+.realtor-register_form_outer .form-group {margin-bottom: 17px;width: 100%; float: left;}
+.realtor-register_form_outer hr.style1{margin: 17px 0px;width: 100%; float: left; margin-top: 3px;}
+.realtor-register_form_outer .form-group .radio.fancy_radio span {color: #848484;font-weight: 500 ! important; font-size: 1.2vw;
+ line-height: 130% ! important;float: left;margin-bottom: 1%;width: 100%;}
+ .realtor-register_form_outer .fancy_radio input[type="radio"]+span:before{font-weight: 600;}
+ .realtor-register_form_outer .form-group .radio.fancy_radio .radio-inline span{font-weight: 700 ! important;}
+ .realtor-register_form_outer .radio.fancy_radio { color: #848484; font-weight: 500; font-size: 1.2vw;}
+ .instant-access-outer p{font-weight: 500;font-size:1.3vw;}
+ .testimonials-outer .testimonials-left .item.carousel-item {min-height: 290px;}
+  .realtor-register_form_outer.vendor-register_form_outer .form-group span{color: #848484;font-weight: 500 ! important; font-size: 1.2vw;
+ line-height: 130% ! important;float: left;margin-bottom: 2%;width: 100%;margin-top: 2%;}
+ .realtor-register_form_outer .form-group span {color: #848484;font-weight: 500 ! important; font-size: 1.2vw;
+ line-height: 130% ! important;float: left;margin-bottom: 2%;width: 100%;margin-top: 2%;}
+ .realtor-register_form_outer  p{color: #848484;font-weight: 500 ! important; font-size: 1.2vw;
+ line-height: 130% ! important;float: left;width: 100%;margin-top: 3%;}
+ .realtor-register_form_outer .checkbox.fancy_checkbox span{color: #848484;font-weight: 500 ! important; font-size: 1.2vw;
+ line-height: 130% ! important;}
+ .realtor-register_form_outer .fancy_checkbox label{padding-left: 0;}
+ .realtor-register_form_outer .form-group span.error{color: #FF0000 ! important;font-weight: normal; font-size: 14px; margin-top: 0px;}
+.realtor-register_form_outer .form-group .radio.fancy_radio span.error {color: #FF0000 ! important;font-weight: normal; font-size: 14px; margin-top: 0px;}  
+ .realtor-register_form_outer div#another-city { display: none;}
+ .realtor-register_form_outer .recaptcha-row-inner {width: 100%;  float: left;}
+ .realtor-register_form_outer .form-btn-group{margin-bottom: 0px;}
+.vendor-reg-box.vendor-reg-box-01 .box-title-box{margin-bottom:0px;}
+.realtor-register_form_outer.vendor-register_form_outer .has-error .form-control-feedback{display: none ! important;}
+.realtor-register_form_outer.vendor-register_form_outer .has-feedback .form-control {padding-right: 12px;}
+.realtor-register_form_outer.vendor-register_form_outer .has-error small {color: #FF0000 ! important;font-weight: 500 ! important;font-size: 14px;  margin-top: 0px; margin-bottom: 2%;}
+.realtor-register_form_outer.vendor-register_form_outer .has-error .form-control:focus{box-shadow:none;}
+.realtor-register_form_outer.vendor-register_form_outer .has-success .form-control-feedback{display: none ! important;}
+.realtor-register_form_outer.vendor-register_form_outer .has-success .form-control:focus{box-shadow:none;}
+.realtor-register_form_outer.vendor-register_form_outer span.multi-select-button { margin: 0px ! important;}
+.realtor-register_form_outer.vendor-register_form_outer span.multi-select-button { margin: 0px ! important; border-radius: 10px ! important;box-shadow: none; border: 2px solid #DBDBDB ! important; height: 43px;padding-top: 9px ! important;color: #A3A3A3;}
+.realtor-register_form_outer.vendor-register_form_outer .form-group.form-group-industry{ margin-bottom: 10px;}
+.realtor-register_form_outer.vendor-register_form_outer .multi-select-container .multi-select-button::after{top: 20px;}
+.realtor-register_form_outer.vendor-register_form_outer .city-grid-group {padding: 0px 15px;}
+.realtor-register_form_outer textarea {resize: none;}
+.realtor-register_form_outer.vendor-register_form_outer .multi-select-menuitem{color: #848484;font-weight: 500 ! important; font-size: 1.2vw; margin-bottom: 0px;line-height: 108%;}
+.realtor-register_form_outer.vendor-register_form_outer .multi-select-menuitem input{width: 16px;height: 16px;margin-top: 1px; margin-left: -20px;}
+.realtor-register_form_outer .radio.fancy_radio{margin:0px ! important;}
+.realtor-register_form_outer.realtor-register_form-box .radio.fancy_radio .mt-1{ width: 100%; float: left;margin-top: 9px ! important;}
+.realtor-register_form_outer.realtor-register_form-box .form-group .radio.fancy_radio span{margin-bottom: 0px;}
+.testimonials-outer .testimonials-left .carousel-control-box {position: relative; width: 100%;float: left;}
+body .footer ul li a.navbar__button.navbar__button--login{padding: 4px 14px ! important;}
+body .footer a.dropdown-toggle.navbar__button.navbar__button--register {padding: 4px 14px ! important;}
+body .footer .navbar-nav{display: flex;align-items: center;}
+body .footer .navbar-right{margin-right: -16px;}
+.realtor-register_form_outer .checkbox.fancy_checkbox{width: 100%;float: left; margin-top: 0px ! important;}
 /*********************************21-12-2023-Css-End*************************************/
 
 /* ============================= Responsive CSS================================= */
 
 
-@media(min-width:1366px)
+@media(min-width:1390px)
 {
 body .business-outer .business-img-box img{height: 102%;}	
 .leading-industry-section h2{line-height: 94px;}
 .render-network-section{background-position: center center;}
 .render-network-section .text-box-center{width: 57%;}
 .render-network-section{padding-top: 4%;}
+.hero-banner p.pr-4 {padding-right: 0% ! important;}
+.start-deals-box {padding: 18px 48px 0px 48px;}
+.number-list-box-left p br {display: none;}
+.streamlined-text h4 {font-size: 1.3vw;letter-spacing: 0.1px;}
+.testimonials-outer .testimonials-left { padding-right: 4%;}
+.testimonials-outer .testimonials-left .item.carousel-item { min-height: 433px ! important;}
+.realtor-register_form_outer .form-control{font-size: 19px;}
+.lender-inner-banner p br { display: none;}
+.lender-inner-banner p { padding-right: 24% ! important;}
+.lender-inner-banner{padding: 5% 0% 8% 0%;}
+.lender-inner-banner h1 {font-size: 43px;}
+.lender-inner-banner h2 { font-size: 43px;line-height: 52px;}
+body .footer ul li a.navbar__button.navbar__button--login{padding: 7% 14px ! important;}
+body .footer a.dropdown-toggle.navbar__button.navbar__button--register {padding: 5% 14px ! important;}
+.btn-yellow{font-size: 17px;}
 }
 
 @media(max-width:1290px)
@@ -1417,6 +1484,8 @@ body .business-outer .business-img-box img{height: 87%;}
 body .business-outer .business-img-box{min-height: 100vh;}
 .business-outer h2{font-size: 3vw;}
 .business-outer{padding-bottom: 0px;}
+.hero-banner p{font-size: 20px;}
+.render-network-section h3{font-size:18px;}
 }
 @media(max-width:1199px)
 {
@@ -1447,6 +1516,25 @@ body .footer.footer-light{padding-top: 27px;padding-bottom: 17px;}
  .single-blog h1 {font-size: 29px;}
  .navbar-nav{float: right;}
  .navbar .navbar-brand{width: 190px;top: 0;}
+ .realtor-register_form_outer .btn-yellow{font-size: 17px;margin-top: 0px;}
+ .realtor-register_form_outer .form-control{font-size: 15px;}
+ .realtor-register_form_outer .form-group .radio.fancy_radio span, .realtor-register_form_outer .radio.fancy_radio{font-size: 15px;}
+ .sign-up-link a{font-size: 17px;}
+ .instant-access-outer p{ font-size: 16px; letter-spacing: 0.4px;line-height: 22px;}
+ p { font-size: 16px; letter-spacing: 0.4px;line-height: 22px;}
+ #testimoniial-slider p{ font-size: 16px;line-height: 22px;}
+ #testimoniial-slider.carousel .overview b{font-size: 16px !important;}
+ .realtor-register_form_outer.lener-register_form_outer .form-group span, .realtor-register_form_outer .checkbox.fancy_checkbox span, .realtor-register_form_outer p{font-size: 15px;}
+ .per-month-price h3 {font-size: 17px;line-height: 25px;}
+ /* .lender-inner-banner p br { display: none;} */
+.lender-inner-banner p{padding-right: 10% !important;}
+.login-button-nav li .navbar__button--login, .login-button-nav li .navbar__button--register{font-size: 14px;}
+  .navbar-nav > li > a {font-size: 14px; }
+  .dropdown-menu > li > a{font-size: 14px;}
+  .navbar{height: auto;}
+  .realtor-register_form_outer.vendor-register_form_outer .form-group span{font-size: 15px;}
+  .realtor-register_form_outer.vendor-register_form_outer .multi-select-menuitem{font-size: 15px;}
+  .vendor-top-banner{background-position: -211px;}
 }
 @media(max-width:1130px)
 {
@@ -1456,10 +1544,12 @@ body .business-outer .business-img-box img{ height: auto;width: 147%;}
 body .business-outer .business-img-box {min-height: 100%;}
 .business-outer { padding-bottom: 40px;}
 .number-list-box-left { padding-right: 8%;}
-
+.works-section-outer h4 { font-size: 18px;}
+.works-section-outer a.sign-link{font-size: 16px;}
+ .realtor-register_form_outer .form-btn-group{margin-bottom: 0px;}
 .testimonials-outer .testimonials-left { padding-right: 5%;}
 .testimonials-outer .testimonials-left .carousel .item{min-height: 317px;}
-
+.testimonials-outer a.carousel-control.right.carousel-control-next { top: inherit;  left: 0% !important; bottom: 35px; right: -16px; z-index: 9999;}
 }
 @media(max-width:1015px)
 {
@@ -1476,7 +1566,7 @@ body .navbar .container {width: 97% !important;padding: 0px 10px !important;}
 .hero-banner h1 {font-size: 26px; line-height: 31px;margin-top: 0px;}
 .hero-banner h1 br{ display:none;}
 .navbar .navbar-brand {width: 149px;}
-.navbar-nav > li > a {font-size: 12px;}
+.navbar-nav > li > a {font-size: 14px;}
 .nav > li > a{margin: 15px 2px;}
 .profile-box-inner img{margin: 0 auto;}
  .pitch.pitch-outer .pitch__item:first-of-type{margin-bottom: 0px;}
@@ -1567,9 +1657,9 @@ body .business-outer .business-box p { font-size: 1.5vw;line-height: 22px;}
 .testimonials-outer .carousel .item { text-align: center;}
 .testimonials-outer .testimonials-left { padding-right: 15px;}
 .testimonials-outer .testimonials-left h2 { text-align: center;}
-.testimonials-outer .carousel .carousel-indicators{left: 0;width: 100%;display: block;}
-.testimonials-outer a.carousel-control.left.carousel-control-prev{left:42% ! important; bottom: 29px;}
-.testimonials-outer a.carousel-control.right.carousel-control-next{left: 54% !important;bottom: 29px;}
+.testimonials-outer .carousel .carousel-indicators{    left: 0; width: auto; display: table; margin: 0 auto;right: 0;}
+.testimonials-outer a.carousel-control.left.carousel-control-prev{left:0% ! important; bottom: 35px;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{right: -10% !important;bottom: 35px;}
 .testimonials-outer .sign-up-link{display: flex;justify-content: center;}
 .number-list-box-left {padding: 0px 5px; padding-top: 15px;}
 .testimonials-outer .carousel .item { min-height: 220px;}
@@ -1584,6 +1674,7 @@ body .business-outer .business-box p { font-size: 1.5vw;line-height: 22px;}
 .instant-access-outer.instant-access-outer-02 .container { width: 100%;text-align: center;}
 .instant-access-outer.instant-access-outer-02 h2 {text-align: center;}
 .instant-access-outer.instant-access-outer-02{padding-top: 33px;}
+.testimonials-outer .testimonials-left .carousel .item {min-height: 190px;}
 }
 @media(max-width:988px)
 {
@@ -1617,7 +1708,7 @@ body .business-outer .business-box p { font-size: 1.5vw;line-height: 22px;}
 .navbar-header{width: auto;text-align: left;padding-bottom: 11px !important;}
 .call-us{display: block;font-size: 16px;text-align: center;width: 100%;padding: 7px 0;background:#f7991f;color:#fff;margin: 10px 0 0;float: left;}
 .call-us a{color:#fff}
-.form-group.pr-0{padding-right:15px !important;}	
+/* .form-group.pr-0{padding-right:15px !important;}	 */
 .hero-intro{padding-top:20px;}	
 .banner h1{font-size: 20px;}	
 .banner h3{font-size: 16px;line-height: 23px;}
@@ -1641,7 +1732,7 @@ body .navbar .header-contact { width: 330px; float: right;}
 .hero-banner .row { display: flex; flex-direction: column;}
 body .hero-banner .hero-intro { order: 1;}
 body .hero-banner .hero-img-rt{ order:1;}
-.hero-banner h1{font-size: 29px;line-height: 32px;margin-top: 15px;margin-bottom: 8px;}
+/* .hero-banner h1{font-size: 29px;line-height: 32px;margin-top: 15px;margin-bottom: 8px;} */
 .hero-banner h1 br{ display:none;}
 .hero-img-rt { padding-top: 25px; padding-bottom: 0px;}
 .hero-banner{padding: 0 9px;}
@@ -1738,8 +1829,11 @@ body .single-blog .blog-details h2{font-size: 18px;}
 #realbroker-navbar-collapse .navbar-right{text-align: left !important;width: 100%;}
 .login-button-nav{width: 100%; display: block;float: left;padding: 0px; margin-top: 16px;}
 .login-button-nav li{float: left;width: 100%;}
-.login-button-nav li .navbar__button--login{width: 100%; float: left;border-radius: 0px;}
-.login-button-nav li .navbar__button--register{width: 100%; float: left;border-radius: 0px;margin-left: 0px;margin-top: 10px;}
+.login-button-nav li .navbar__button--login{width: 100%; float: left;border-radius: 0px;font-size: 15px;}
+.login-button-nav li .navbar__button--register{width: 100%; float: left;border-radius: 0px;margin-left: 0px;margin-top: 10px;font-size: 15px;}
+.navbar-nav > li > a { font-size: 15px;}
+.dropdown-menu>li>a{font-size: 15px;}
+.hero-banner h1{padding-bottom: 0;}
 .navbar-nav {float: left; width: 100%;}
 .login-button-nav .dropdown-menu { left: 0; padding: 0px 12px;border-radius: 0px;}
 .login-button-nav .dropdown-menu li a {margin: 4px 0px;padding: 8px ! important;}
@@ -1748,8 +1842,8 @@ ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu {background-color: #fff;bord
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover{background-color: transparent; border-color: #fff;}
 ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu li  a{border-bottom: 1px solid #005597;padding: 4px 7px!important;margin: 0px 9px;}
 ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu li:last-child a{border-bottom:0px;}
-.hero-banner h3 {font-size: 19px !important;}
-.home-banner-heading{font-size: 25px; line-height: 23px; margin-top: 0px;margin-bottom: 0px;}
+.hero-banner h1 {font-size: 19px !important;}
+.home-banner-heading h2{font-size: 25px; line-height: 23px; margin-top: 0px;margin-bottom: 0px;}
 .hero-banner p br{display: block;}
 .hero-banner p {line-height: 19px;font-size: 15px;}
 .btn-yellow{font-size: 12px;margin-right: 8px;padding: 4px 8px;}
@@ -1791,7 +1885,11 @@ body .footer ul.nav.navbar-nav li.dropdown.open ul.dropdown-menu li a{margin-bot
 .footer .nav .open > a, .footer .nav .open > a:focus, .footer .nav .open > a:hover{background-color: #fabb69 !important;}
 .lender-inner-banner h1 {font-size: 23px;}
 .lender-inner-banner h2 { font-size: 20px;  margin-top: 7px ! important;}
-.lender-inner-banner p br { display: none;}
+.realtor-register_form_outer.vendor-register_form_outer  .radio.fancy_radio{margin:0px !important;}
+.vendors-serve-image-box {margin-right: 14px;}
+.vendors-serve-image-box img {width: 42px;}
+.vendors-serve-box .vendors-serve-text-box p {line-height: 23px;}
+body .footer .navbar-nav{display:block;}
 }
 
 h4.premium-user-logo.line-left {
@@ -1973,7 +2071,9 @@ body .member-spotlight .btn.border-btn{margin-top: 15px;font-size: 16px;}
 body .pitch.pitch-outer p{ padding-bottom:0px;}
 .leading-industry-section img{margin-top: 0px;}
 .leading-industry-section h2 br{ display:none;}
-
+.realtor-register_form_outer .d-grid-group{grid-template-columns: auto;grid-gap: 0px;}
+.realtor-register_form_outer .form-control{font-size: 15px;}
+.form-group.pr-0 { padding-right: 0px !important;}
 }
 @media(max-width:592px)
 {
@@ -2001,13 +2101,10 @@ body .pitch.pitch-outer p{ padding-bottom:0px;}
 .testimonials-outer .carousel .item { text-align: center;}
 .testimonials-outer .testimonials-left { padding-right: 15px;}
 .testimonials-outer .testimonials-left h2 { text-align: center;}
-.testimonials-outer .carousel .carousel-indicators{left: 0;width: 100%;display: block;}
-.testimonials-outer a.carousel-control.left.carousel-control-prev{left: 35% ! important; bottom: 29px;}
-.testimonials-outer a.carousel-control.right.carousel-control-next{left: 56% !important;bottom: 29px;}
 .testimonials-outer .sign-up-link{display: flex;justify-content: center;}
 .number-list-box-left {padding: 0px 5px; padding-top: 15px;}
 .testimonials-outer .carousel .item{min-height: 335px;}
-#testimoniial-slider p{font-size: 14px;}
+#testimoniial-slider p{font-size: 16px; line-height:22px;}
 .start-deals-box img {width: 64px;}
 .start-deals-box h3{margin-top: 13px;}
 .start-deals-box p br {display: none;}
@@ -2020,6 +2117,12 @@ body .pitch.pitch-outer p{ padding-bottom:0px;}
 .instant-access-outer.instant-access-outer-02{padding-top: 33px;}
 .lender-inner-banner{background-position: -78px;}
 .lender-inner-banner p {line-height: 18px; margin-top: 3px;padding-right: 34% ! important;}
+.testimonials-outer .testimonials-left .carousel .item { min-height: 379px;}
+.lender-inner-banner p br { display: none;}
+.estate-jobs{background-position: -156px;}
+.vendor-top-banner h1 {font-size: 23px;}
+.vendor-top-banner h2 {font-size: 20px; margin-top: 10px ! important; margin-bottom: 10px ! important;}
+.vendor-top-banner{background-position: -98px}
 }
 @media(max-width:480px)
 {
@@ -2036,10 +2139,10 @@ body .navbar .header-contact{width:100%;}
 /* a.carousel-control.right.carousel-control-next{left: 37%;} */
 /* a.carousel-control.left.carousel-control-prev{left: 36%;} */
 .footer.footer-light .container{padding: 0px;}
-.vendor-reg-box button#registerVendor {margin-top: 46px !important;}
-.vendor-reg-box { margin-top: 20px;}
+/* .vendor-reg-box button#registerVendor {margin-top: 46px !important;} */
+/* .vendor-reg-box { margin-top: 20px;} */
 .Availability-form .col-md-8.form-group{ margin-bottom:0px;}
-.hero-banner h1{font-size: 29px;line-height: 32px;margin-top: 10px;margin-bottom: 8px;}
+/* .hero-banner h1{font-size: 29px;line-height: 32px;margin-top: 10px;margin-bottom: 8px;} */
 .business-outer h2 {font-size: 23px;}
 .business-outer h2 br{display: none;}
 body .business-outer .business-box p br{display: none;}
@@ -2074,6 +2177,11 @@ body .navbar .header-contact{width: 100%;}
 @media (min-width:768px) and (max-width:1199px) {
 .navbar-brand img {margin: auto;}
 }
+@media(max-width:360px){
+.testimonials-outer .testimonials-left .carousel .item {
+    min-height: 405px;
+}	
+{
 
 /* @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){ */
 /* .hero-banner {margin-top: 20px;} */

@@ -203,7 +203,7 @@
         <div class="container">
 		  <h2 class="h1 mt-0 mb-1">Testimonials</h2>
             @if(!empty($testimonials))
-                <div id="testimoniial-slider" class="carousel slide" data-ride="carousel">
+                <div id="testimoniial-slider" class="carousel slide carousel-fade" data-ride="carousel">
                 @php $flag = 0; @endphp
                 <ol class="carousel-indicators">
                     @foreach($testimonials as $testimonial)
@@ -226,7 +226,7 @@
                         @endif
                           <p class="overview"><b>{{ucwords($testimonial['name'])}}</b></p>
                             <p class="testimonial">
-                                <i class="fa fa-quote-right fa-3x fa-fw"></i>
+                               
                                 @php echo ucfirst(html_entity_decode($testimonial['description'])); @endphp
                             </p>
                            
@@ -333,9 +333,9 @@
 		<p class="text-primary">No more cold-calling. </p>
 		<p class="text-primary">No more hours of searching for the pros.</p>
 		<p class="text-primary">No more incompetent real estate pros.</p>
-		<p class="text-primary">And you get access to talent nationwide.Sign up now and see what the Render network can do for you.</p>
+		<p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render network can do for you.</p>
 		
-		<div class="center-box text-left mt-1 mb-3 pt-3">
+		<div class="center-box text-left mt-1 mb-3 pt-2">
 	<h4 class="text-left text-primary mt-0 mb-0">SIGN ME UP!</h4>
 	<div class="d-flex-btn-group">
       <a class="btn btn-primary btn-yellow " href="{{ url('realtor-register') }}">REALTORS - FREE</button>

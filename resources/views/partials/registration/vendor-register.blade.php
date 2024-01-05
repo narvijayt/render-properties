@@ -5,7 +5,7 @@
         <h2 class="text-center mt-0 mb-1"> GET STARTED </h2>
         {{--<p>Fill out our simple registration form to get started.</p>--}}
     </div>
-    <div class="row">
+    <div class="row util__collapse d-grid-group">
         <div class="col-md-6 form-group {{ $errors->has('first_name') ? ' has-error' : '' }}">
             <input id="fname" type="text" class="form-control" name="first_name" placeholder="First Name"
                 value="{{ old('first_name') }}" required>
@@ -77,7 +77,7 @@
 
 	<hr class="style1">
 	
-	<div class="row">
+	<div class="row util__collapse d-grid-group">
         <div class="col-md-6 form-group {{ $errors->has('password') ? ' has-error' : '' }}">
             <input id="password" type="password" class="form-control" name="password" placeholder="Password" value=""
                 required>
@@ -112,7 +112,7 @@
             </span>
             @endif
         </div>
-
+       <div class=" util__collapse d-grid-group city-grid-group">
         <div class="col-md-6 form-group">
             <input class="form-control" type="text" name="city" id="newcity" value="" placeholder="Enter City">
         </div>
@@ -120,6 +120,7 @@
         <div class="col-md-6 form-group {{ $errors->has('zip') ? ' has-error' : '' }}">
             <input id="zip" type="text" class="form-control" name="zip" placeholder="Zip" value="{{ old('zip') }}" data-bv-zipcode-country="true" required>
         </div>
+		</div>
 
 
         <div class="form-group" id="another-city">
@@ -131,7 +132,7 @@
 	<hr class="style1">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('multicss/example-styles.css')}}">
-    <div class="form-group">
+    <div class="form-group form-group-industry ">
         <span>What Industry are you in?</span>
         <select name="select_category[]" class="form-control {{ $errors->has('select_category[]') ? ' has-error' : '' }}" multiple id="langOpt" >
             @foreach($allcat as $categoryVendor)
@@ -215,7 +216,7 @@
 	<hr class="style1">
 	@if(env('APP_ENV') != 'local')
         <script src="https://www.google.com/recaptcha/api.js"></script>
-        <div class="form-group row">
+        <div class="form-group row recaptcha-row">
             <div class="col-md-6 offset-md-4">
                 <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
                 <span class="msg-error error"></span>
@@ -227,8 +228,8 @@
             </div>
         </div>
 	@endif
-    <div class="form-group justify-content-center">
-        <button type="submit" class="btn btn-warning btn-lg mt-0 btn-yellow" id='registerVendor'>REGISTER</button>
+    <div class="form-group justify-content-center form-btn-group">
+        <button type="submit" class="btn btn-warning mt-0 btn-yellow" id='registerVendor'>REGISTER</button>
     </div>
 
     <!-- <script type="text/javascript" src="{{ asset('js/jquery-2.2.4.min.js')}}"></script> -->
