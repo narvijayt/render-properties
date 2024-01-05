@@ -61,7 +61,7 @@ class SettingsController extends Controller
                 if($request->input('sale_price') != ""){
                     $createCoupon = true;
                 }
-
+                $createPlan = true;
             }
             
             $product_id = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRODUCT_ID') : env('STRIPE_TEST_PRODUCT_ID');
@@ -97,20 +97,13 @@ class SettingsController extends Controller
             }
 
             
-            if($createPlan == true){
-                $planId     = $plan->id;
-            }else{
-                $planId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
-            }
-            
+            $planId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
             $couponId = $createCoupon == true ? $coupon->id : null;
             $pricing = RegistrationPlans::where(['packageType' => $request->input('packageType')])->first();
             if(is_null($pricing) || $pricing->exists === false){
                 $pricing = new RegistrationPlans();
             }else{
-                if($createPlan == false){
-                    $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
-                }
+                $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
                 $couponId = $createCoupon == true ? $coupon->id : $pricing->couponId;
             }
 
@@ -120,6 +113,7 @@ class SettingsController extends Controller
             $pricing->packageType = $request->input('packageType');
             $pricing->couponId = $couponId;
             $pricing->planId = $createPlan == true? $plan->id : $planId;
+            
             if($pricing->save()){
                 return redirect()->route("settings.pricing")->with("message", $packageType." Price updated successfully.");
             }else{
