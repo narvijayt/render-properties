@@ -19,10 +19,10 @@
 <h2 class="text-center mt-0 mb-1"> GET STARTED </h2>
 
 <div class="row util__collapse d-grid-group">
-    <div class="col-md-6 form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+    <div class="col-md-6 form-group form-group-half{{ $errors->has('first_name') ? ' has-error' : '' }}">
         <input id="first_name" type="text" class="form-control" name="first_name" placeholder="First Name" value="{{ old('first_name', isset($user) && isset($user->first_name) ? $user->first_name : '' ) }}" required autofocus>
     </div>
-    <div class="col-md-6 form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+    <div class="col-md-6 form-group form-group-half{{ $errors->has('last_name') ? ' has-error' : '' }}">
         <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Last Name" value="{{ old('last_name', isset($user) && isset($user->last_name) ? $user->last_name : '' ) }}" required>
     </div>
     @if ($errors->has('first_name') || $errors->has('last_name') || $errors->has('title'))
@@ -114,7 +114,7 @@
 <hr class="style1">
 
 <div class="row d-grid-group util__collapse">
-	<div class="col-md-6 form-group{{ $errors->has('password') ? ' has-error' : '' }}  pr-0">
+	<div class="col-md-6 form-group form-group-half{{ $errors->has('password') ? ' has-error' : '' }}  pr-0">
 		<input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
 		@if ($errors->has('password'))
 		<span class="help-block">
@@ -122,7 +122,7 @@
 		</span>
 		@endif
 	</div>
-	<div class="col-md-6 form-group">
+	<div class="col-md-6 form-group form-group-half">
 		<input id="password-confirm" type="password" class="form-control" name="password_confirmation"
 			placeholder="Confirm Password" required>
 	</div>
@@ -172,10 +172,10 @@
 </div>
 
 <div class="row d-grid-group util__collapse">
-	<div class="col-md-6 pr-0 form-group col-xs-6">
+	<div class="col-md-6 pr-0 form-group form-group-half col-xs-6">
 		<input class="form-control" type="text" name="city" id="newcity" value="{{ old('city') }}" placeholder="Enter City">
 	</div>
-	<div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }} col-md-6 col-xs-6">
+	<div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }} col-md-6 col-xs-6 form-group-half">
 		<input id="zip" type="text" class="form-control" name="zip" placeholder="Zip Code" value="{{ old('zip') }}" required>
 	</div>
 	<div class="form-group" id="another-city">

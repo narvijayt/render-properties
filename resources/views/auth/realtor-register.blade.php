@@ -96,7 +96,7 @@ $description = 'Register for Render'
                             aria-hidden="true"></i></a>
                 </div>
             </div>
-            <div class="col-md-5 ">
+            <div class="col-md-5 hidden ">
                 <!----  <div class="alert alert-success">During this time of crisis. Render stands with our members. Until further notice all membership monthly payments will be waived at this time.</div>-->
                 <div class="register-info" data-info-type="realtor">
                     @if(isset($realtorRegPage) && !empty($realtorRegPage))

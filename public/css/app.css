@@ -1419,8 +1419,8 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
  .realtor-register_form_outer .checkbox.fancy_checkbox span{color: #848484;font-weight: 500 ! important; font-size: 1.2vw;
  line-height: 130% ! important;}
  .realtor-register_form_outer .fancy_checkbox label{padding-left: 0;}
- .realtor-register_form_outer .form-group span.error{color: #FF0000 ! important;font-weight: normal; font-size: 14px; margin-top: 0px;}
-.realtor-register_form_outer .form-group .radio.fancy_radio span.error {color: #FF0000 ! important;font-weight: normal; font-size: 14px; margin-top: 0px;}  
+.realtor-register_form_outer .form-group span.error, .realtor-register_form_outer .error {color: #FF0000 ! important;font-weight: normal; font-size: 14px; margin-top: 0px;margin-bottom: 0px;}
+.realtor-register_form_outer .form-group .radio.fancy_radio span.error, .realtor-register_form_outer  .checkbox.fancy_checkbox span.error {color: #FF0000 ! important;font-weight: normal; font-size: 14px; margin-top: 0px;margin-bottom: 0px;}  
  .realtor-register_form_outer div#another-city { display: none;}
  .realtor-register_form_outer .recaptcha-row-inner {width: 100%;  float: left;}
  .realtor-register_form_outer .form-btn-group{margin-bottom: 0px;}
@@ -1442,12 +1442,14 @@ body .login-dropdown .navbar__profile-dropdown {  padding-right: 40px!important;
 .realtor-register_form_outer .radio.fancy_radio{margin:0px ! important;}
 .realtor-register_form_outer.realtor-register_form-box .radio.fancy_radio .mt-1{ width: 100%; float: left;margin-top: 9px ! important;}
 .realtor-register_form_outer.realtor-register_form-box .form-group .radio.fancy_radio span{margin-bottom: 0px;}
-.testimonials-outer .testimonials-left .carousel-control-box {position: relative; width: 100%;float: left;}
+.testimonials-outer .testimonials-left .carousel-control-box {position: absolute; width: 100%;float: left;}
 body .footer ul li a.navbar__button.navbar__button--login{padding: 4px 14px ! important;}
 body .footer a.dropdown-toggle.navbar__button.navbar__button--register {padding: 4px 14px ! important;}
 body .footer .navbar-nav{display: flex;align-items: center;}
 body .footer .navbar-right{margin-right: -16px;}
 .realtor-register_form_outer .checkbox.fancy_checkbox{width: 100%;float: left; margin-top: 0px ! important;}
+.realtor-register_form_outer textarea {height: 70px ! important;}
+.realtor-register_form_outer .form-group-half { min-width: 50%;}
 /*********************************21-12-2023-Css-End*************************************/
 
 /* ============================= Responsive CSS================================= */

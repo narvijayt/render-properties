@@ -6,7 +6,7 @@
         {{--<p>Fill out our simple registration form to get started.</p>--}}
     </div>
     <div class="row util__collapse d-grid-group">
-        <div class="col-md-6 form-group {{ $errors->has('first_name') ? ' has-error' : '' }}">
+        <div class="col-md-6 form-group form-group-half {{ $errors->has('first_name') ? ' has-error' : '' }}">
             <input id="fname" type="text" class="form-control" name="first_name" placeholder="First Name"
                 value="{{ old('first_name') }}" required>
 
@@ -17,7 +17,7 @@
             @endif
 
         </div>
-        <div class="col-md-6 pl-md-0 form-group {{ $errors->has('last_name') ? ' has-error' : '' }}">
+        <div class="col-md-6 pl-md-0 form-group form-group-half {{ $errors->has('last_name') ? ' has-error' : '' }}">
             <input id="lname" type="text" class="form-control" name="last_name" placeholder="Last Name"
                 value="{{ old('last_name') }}" required>
             @if ($errors->has('last_name'))
@@ -78,7 +78,7 @@
 	<hr class="style1">
 	
 	<div class="row util__collapse d-grid-group">
-        <div class="col-md-6 form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+        <div class="col-md-6 form-group form-group-half {{ $errors->has('password') ? ' has-error' : '' }}">
             <input id="password" type="password" class="form-control" name="password" placeholder="Password" value=""
                 required>
             @if ($errors->has('password'))
@@ -88,7 +88,7 @@
             @endif
         </div>
 
-        <div class="col-md-6 pl-md-0 form-group {{ $errors->has('cpassword') ? ' has-error' : '' }}">
+        <div class="col-md-6 pl-md-0 form-group form-group-half {{ $errors->has('cpassword') ? ' has-error' : '' }}">
             <input id="cpassword" type="password" class="form-control" name="cpassword" placeholder="Confirm Password"
                 value="" required>
         </div>
@@ -113,11 +113,11 @@
             @endif
         </div>
        <div class=" util__collapse d-grid-group city-grid-group">
-        <div class="col-md-6 form-group">
+        <div class="col-md-6 form-group form-group-half">
             <input class="form-control" type="text" name="city" id="newcity" value="" placeholder="Enter City">
         </div>
 
-        <div class="col-md-6 form-group {{ $errors->has('zip') ? ' has-error' : '' }}">
+        <div class="col-md-6 form-group form-group-half {{ $errors->has('zip') ? ' has-error' : '' }}">
             <input id="zip" type="text" class="form-control" name="zip" placeholder="Zip" value="{{ old('zip') }}" data-bv-zipcode-country="true" required>
         </div>
 		</div>

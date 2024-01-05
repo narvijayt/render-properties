@@ -31,7 +31,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'log'),
+    'driver' => env('MAIL_DRIVER', 'ses'),
 
     /*
     |--------------------------------------------------------------------------
@@ -119,6 +119,10 @@ return [
             'transport' => 'office365mail',
         ],
         'sendmail' => '/usr/sbin/sendmail -bs',
+        
+        'ses' => [
+            'transport' => 'ses',
+        ],
     ],
 
     /*
