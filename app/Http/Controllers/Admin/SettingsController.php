@@ -97,13 +97,20 @@ class SettingsController extends Controller
             }
 
             
-            $planId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+            if($createPlan == true){
+                $planId     = $plan->id;
+            }else{
+                $planId = env('APP_ENV') == "production" ? env('STRIPE_LIVE_PRICE_ID') : env('STRIPE_TEST_PRICE_ID');
+            }
+            
             $couponId = $createCoupon == true ? $coupon->id : null;
             $pricing = RegistrationPlans::where(['packageType' => $request->input('packageType')])->first();
             if(is_null($pricing) || $pricing->exists === false){
                 $pricing = new RegistrationPlans();
             }else{
-                $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
+                if($createPlan == false){
+                    $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
+                }
                 $couponId = $createCoupon == true ? $coupon->id : $pricing->couponId;
             }
 
