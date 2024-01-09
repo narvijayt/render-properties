@@ -291,7 +291,7 @@
 	<p class="text-left text-white">
 	If you’re a vendor specializing in real estate services such as photography, staging, or property inspection, Render Properties is your gateway to a wider network of potential clients. Realtors on our platform are actively seeking new partnerships, allowing you to showcase your skills and offerings to those who need them. 
 	</p>
-	 <a class="sign-link text-orange" href="{{ url('vendor-register') }}">See My Subscription Options</a>
+	 <a class="sign-link text-orange" href="{{ url('vendor-register') }}">Sign Me Up</a>
 	</div>
 	<div class="col-md-6  box-order-2">
 	<img src="{{url('/')}}/img/vendors-img-new.png">

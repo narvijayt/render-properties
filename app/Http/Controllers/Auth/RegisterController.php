@@ -446,7 +446,8 @@ class RegisterController extends Controller
         $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
         $data['optionLabel'] = '';
 	    if(!is_null($vendorPackage)){
-            $data['optionLabel'] = "$".$vendorPackage->regular_price." Per Month";
+            // $data['optionLabel'] = "$".$vendorPackage->regular_price." Per Month";
+            $data['optionLabel'] = "LIMITED TIME OFFER: LOCK IN $".$vendorPackage->regular_price."/MONTH FOREVER!";
             if($vendorPackage->sale_price > 0 && !empty($vendorPackage->couponId)){
                 if($vendorPackage->sale_period > 1){
                     $data['optionLabel'] = "$".number_format($vendorPackage->sale_price,2,'.','')."/month for first ".$vendorPackage->sale_period." months and $".number_format($vendorPackage->regular_price,2,'.','')."/month afterward";
@@ -688,7 +689,8 @@ class RegisterController extends Controller
         if($checkVendor->payment_status == 0){
             $userDetails = User::with('userSubscription')->find($request->id);
             if(!is_null($vendorPackage)){
-                $optionLabel = "$".$vendorPackage->regular_price." Per Month"; 
+                // $optionLabel = "$".$vendorPackage->regular_price." Per Month"; 
+                $optionLabel = "LIMITED TIME OFFER: LOCK IN $".$vendorPackage->regular_price."/MONTH FOREVER!";
                 $registrationPrice = $vendorPackage->regular_price;
                 if($vendorPackage->sale_price > 0 && !empty($vendorPackage->couponId)){
                     if($vendorPackage->sale_period > 1){
