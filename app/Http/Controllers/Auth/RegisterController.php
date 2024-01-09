@@ -89,7 +89,8 @@ class RegisterController extends Controller
 	    $lenderPackage = RegistrationPlans::where(['packageType' => 'lender'])->first();
 	    $optionLabel = '';
 	    if(!is_null($lenderPackage)){
-            $optionLabel = "Monthly - $".$lenderPackage->regular_price;
+            // $optionLabel = "Monthly - $".$lenderPackage->regular_price;
+            $optionLabel = "LIMITED TIME OFFER: LOCK IN $".$lenderPackage->regular_price."/MONTH FOREVER!";
             if($lenderPackage->sale_price > 0 && !empty($lenderPackage->couponId)){
                 if($lenderPackage->sale_period > 1){
                     $optionLabel = "$".number_format($lenderPackage->sale_price,2,'.','')."/month for first ".$lenderPackage->sale_period." months and $".number_format($lenderPackage->regular_price,2,'.','')."/month afterward";
