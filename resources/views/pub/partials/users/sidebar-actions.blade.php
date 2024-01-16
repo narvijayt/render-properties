@@ -7,7 +7,7 @@
 				</a>
 			@else
 				<a href="{{ real_url($user->website) }}" target="_blank">
-					<button class="btn btn-warning btn-block">Get Pre-Approved</button>
+					<button class="btn btn-warning btn-block">Open Website</button>
 				</a>
 			@endif
 	@endif
