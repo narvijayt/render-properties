@@ -13,6 +13,8 @@ $viewDetails = false;
 
         if( $match || $authUser->user_type == 'broker'){
             $viewDetails = true;
+        }elseif( $authUser->user_type == 'vendor' && $authUser->payment_status == 1){
+            $viewDetails = true;
         }
     @endphp
 @endif
