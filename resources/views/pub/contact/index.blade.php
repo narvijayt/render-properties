@@ -144,7 +144,7 @@
                     </div>
                     </br>
                 
-                      <button type="submit" class="btn btn-warning btn-block">Send</button>
+                      <button type="submit" class="btn btn-warning btn-block contact-submit-btn">Send</button>
                 </form>
             </div>
 			

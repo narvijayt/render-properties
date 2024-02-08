@@ -379,7 +379,7 @@ password: {
                 });
  
  
- $( "#vendor_registers" ).on("submit",function( event ) {
+ $( "#vendor_registers, .contact-submit-btn").on("submit",function( event ) {
   if($('#recaptcha' ).length){
     var $captcha = $('#recaptcha' );
     response = grecaptcha.getResponse();
