@@ -29,6 +29,9 @@ class ContactController extends Controller
 
 	public function send(ContactRequest $request)
 	{
+		if($request->input('company_name') !=''){
+			return redirect()->back()->withInput()->with('error', 'Invalid Request. Please try again.');
+		}
 	  	$message = (object) $request->only([
 			'name',
 			'phone',

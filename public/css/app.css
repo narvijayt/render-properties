@@ -2056,6 +2056,11 @@ hr.style1{
 }
 /**************** 29-12-2023 Ends *********************/
 
+
+/**************** 09-02-2024 Starts *********************/
+.contact-company-name {display: none;}
+/**************** 09-02-2024 Ends *********************/
+
 @media(max-width:625px)
 {
 body .navbar .header-contact { width: 100%; float: right;}

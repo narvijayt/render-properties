@@ -60,6 +60,10 @@
                     <p class="alert alert-success">
                         <strong>Thank you</strong> for submitting a contact request
                     </p>
+                @elseif (Session::has('error'))
+                    <p class="alert alert-danger">
+                        <strong>Error:</strong> {{ Session::get('error') }}
+                    </p>
                 @endif
                 <form role="form" action="{{ route('pub.contact.send') }}" method="POST" id="contact-form">
                     {{ csrf_field() }}
@@ -67,12 +71,7 @@
                         <div class="row">
 
                             <div class="col-md-6 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="name"
-                                    value="{{old('name')}}"
-                                    placeholder="Name">
+                                <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Name">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -90,6 +89,15 @@
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="col-md-12 form-group contact-company-name {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <input type="text" class="form-control" name="company_name" value="{{old('company_name')}}" placeholder="Company Name">
+                                @if ($errors->has('company_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('company_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
