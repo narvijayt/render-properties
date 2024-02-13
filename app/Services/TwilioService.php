@@ -68,7 +68,8 @@ class TwilioService{
                 // env('APP_ENV') != 'production' ? env('TWILIO_TO_NUMBER') : '+17048395599',
                 env('APP_ENV') == 'local' ? env('TWILIO_TO_NUMBER') : $to,
                 [
-                    'from' => env('TWILIO_NUMBER'),
+                    // 'from' => env('TWILIO_NUMBER'),
+                    "messagingServiceSid" => env('TWILIO_SERVICE_SID'),
                     'body' => $body
                 ]
             );
