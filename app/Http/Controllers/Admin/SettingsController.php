@@ -104,7 +104,11 @@ class SettingsController extends Controller
                 $pricing = new RegistrationPlans();
             }else{
                 $planId = ($pricing->planId != "") ? $pricing->planId : $planId;
-                // $couponId = $createCoupon == true ? $coupon->id : $pricing->couponId;
+                if($request->input('sale_price') == ""){
+                    $couponId = "";
+                }else{
+                    $couponId = isset($coupon) ? $coupon->id : $pricing->couponId;
+                }
             }
 
             $pricing->regular_price = $request->input('regular_price');
