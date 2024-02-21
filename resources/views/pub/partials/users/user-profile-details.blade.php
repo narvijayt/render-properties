@@ -105,6 +105,18 @@ $viewDetails = false;
 
                 <div class="icons-box">
                     <div class="form-group mb-2 user-contact-info">
+                        @if( ($match && $match->isAccepted() ) && Auth::user())
+                            @if($user->user_id != Auth::user()->user_id)    
+                                <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
+                            @endif
+                        @elseif($viewDetails)
+                            <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
+                        @else
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;"><i class="fa fa-wechat"></i></a>
+                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;">Chat</a>
+                        @endif
+                    </div>
+                    <div class="form-group mb-2 user-contact-info">
                         @if($match || $viewDetails)
                             <a class="text-dark text-uppercase" href="tel:{{ $user->phone_number }}"><i class="fa fa-phone"></i></a> 
                             <a class="text-dark text-uppercase" href="tel:{{ $user->phone_number }}">Call</a>
@@ -123,18 +135,7 @@ $viewDetails = false;
                         @endif
                     </div>
 
-                    <div class="form-group mb-2 user-contact-info">
-                        @if( ($match && $match->isAccepted() ) && Auth::user())
-                            @if($user->user_id != Auth::user()->user_id)    
-                                <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
-                            @endif
-                        @elseif($viewDetails)
-                            <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
-                        @else
-                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;"><i class="fa fa-wechat"></i></a>
-                            <a class="text-dark text-uppercase disbaled-contact-link" href="javascript:;">Chat</a>
-                        @endif
-                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -1452,6 +1452,10 @@ body .footer .navbar-right{margin-right: -16px;}
 .realtor-register_form_outer .form-group-half { min-width: 50%;}
 /*********************************21-12-2023-Css-End*************************************/
 
+/*********************************21-02-2024-Css-Starts*************************************/
+.icons-box .user-contact-info i.fa.fa-wechat { border: 2px solid#184586;line-height: 26px;}
+/*********************************21-02-2024-Css-End*************************************/
+
 /* ============================= Responsive CSS================================= */
 
 
