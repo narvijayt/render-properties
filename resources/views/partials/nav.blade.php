@@ -96,9 +96,9 @@
                     <ul class="dropdown-menu">
 
                         <li><a href="{{ route('pub.profile.index') }}"  >Profile</a></li>
-                         @if(auth()->user()->user_type != 'vendor')
-                        <li><a href="{{ route('pub.profile.matches.index') }}">Manage Matches <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->pendingMatchCount() > 0 ){{ auth()->user()->pendingMatchCount() }} @endif</span></a></li>
-                        @endif
+                        {{-- @if(auth()->user()->user_type != 'vendor') --}}
+                            <li><a href="{{ route('pub.profile.matches.index') }}">Manage Matches <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->pendingMatchCount() > 0 ){{ auth()->user()->pendingMatchCount() }} @endif</span></a></li>
+                        {{-- @endif --}}
                         <li><a href="{{ route('pub.message-center.index') }}">Message Center <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->unread_message_count() > 0 ){{ auth()->user()->unread_message_count() }} @endif</span></a></li>
                         
                         @can('manage-payment', \App\User::class)

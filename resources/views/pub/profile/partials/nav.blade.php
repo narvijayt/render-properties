@@ -3,10 +3,13 @@
     {{--<li><a href="{{ route('pub.profile.index') }}">Home</a></li>--}}
     <li><a href="{{ route('pub.profile.detail.edit') }}">Edit Profile</a></li>
     <li><a href="{{ route('pub.profile.password.edit') }}">Change Password</a></li>
+    {{--
     @if(auth()->user()->user_type != 'vendor')
       <li><a href="{{ route('pub.profile.matches.index') }}">Manage Matches <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->pendingMatchCount() > 0){{ auth()->user()->pendingMatchCount() }} @endif</span></a></li>
-     @endif
-     
+    @endif
+    --}}
+    <li><a href="{{ route('pub.profile.matches.index') }}">Manage Matches <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->pendingMatchCount() > 0){{ auth()->user()->pendingMatchCount() }} @endif</span></a></li>
+
     <li><a href="{{ route('pub.message-center.index') }}">Message Center <span class="badge badge-brand" style="background-color:red;">@if(auth()->user()->unread_message_count() > 0){{ auth()->user()->unread_message_count() }}@endif</span></a></li>
    
    

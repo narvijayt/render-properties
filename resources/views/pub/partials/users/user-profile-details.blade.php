@@ -1,6 +1,15 @@
 @php 
 $match = (!isset($match)) ? false : $match;
 $viewDetails = false;
+$sub_title = $title = '';
+if($user->user_type === 'broker'){
+    $sub_title = $title = 'lender';
+}else if($user->user_type === 'vendor'){
+    $sub_title = $title = 'vendor';
+}else{
+    $title = 'real estate agent';
+    $sub_title = "agent";
+}
 @endphp
 
 
@@ -24,7 +33,7 @@ $viewDetails = false;
         <div class="user-basic-info-section">
             <h3 class="text-primary">{{ $user->first_name }} {{ ($match || Auth::user()) ? $user->last_name : '' }} {!! user_verified_badge($user->user_id, true) !!}</h3>
             
-            <h3 class="text-warning text-uppercase mt-0">{{ title_case($user->user_type === 'broker' ? 'lender' : 'real estate agent') }}</h3>
+            <h3 class="text-warning text-uppercase mt-0">{{ title_case($title) }}</h3>
 
             <!-- <div class="text-uppercase d-flex">
                 <div class="col">Render Rating: </div>
@@ -36,32 +45,32 @@ $viewDetails = false;
             @if($match)
                 @if($match->isAccepted())
                     <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! You and {{ ucfirst($user->first_name) }} are now connected.</h4>
-                    <p class="text-center text-dark font-weight-bold mb-1">Now you can send text to this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} by clicking "Send a Text" button below:</p>
+                    <p class="text-center text-dark font-weight-bold mb-1">Now you can send text to this {{ ucfirst($sub_title) }} by clicking "Send a Text" button below:</p>
                 @else
                     @if(Auth::user() && Auth::user()->user_id == $match->user_id1)
                         <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
-                        <!-- <p>To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p> -->
+                        <!-- <p>To connect with this {{ ucfirst($sub_title) }}, click below:</p> -->
                     @else
                         <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! You are requested by {{ ucfirst($user->first_name) }} to connect.</h4>
-                        <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click below:</p>
+                        <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ ucfirst($sub_title) }}, click below:</p>
                     @endif
                 @endif
             @else
                 <h4 class="text-primary text-center match-info-heading mt-0">
-                    @if(!Auth::user())Join Render's lead program.@endif Match with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}} today!
+                    @if(!Auth::user())Join Render's lead program.@endif Match with this {{ ucfirst($sub_title) }} today!
                 </h4>
             @endif
             
             @if(!$match && Auth::user())
-                @if($user->user_type !="vendor" && auth()->user()->user_type != 'vendor' && !$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
-                    <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}, click to match:</p>
+                @if(!$authUser->isMatchedWith($user) && $user->user_type != auth()->user()->user_type )
+                    <p class="text-center text-dark font-weight-bold mb-1">To connect with this {{ ucfirst($sub_title) }}, click to match:</p>
                     <form action="{{ route('pub.matches.request-match', $user) }}" method="POST">
                         {{ csrf_field() }}
                         <button type="submit" class="text-uppercase btn btn-warning btn-lg shadow mb-3 btn-block">Match Now</button>
                     </form> 
                 @endif
             @elseif(!$match && !Auth::user())
-                <p class="text-center text-dark font-weight-bold mb-1">Please login to connect with this {{ $user->user_type == 'broker' ? 'Lender' : 'Agent'}}.</p>
+                <p class="text-center text-dark font-weight-bold mb-1">Please login to connect with this {{ ucfirst($sub_title) }}.</p>
             @elseif(($match && $match->isAccepted() == false) && (Auth::user()->user_id != $match->user_id1) )
                 <form method="post" action="{{ route('create.automatch', ['authUserId' => $authUser->user_id, 'userId' => $user->user_id]) }}">
                     {{ csrf_field() }}

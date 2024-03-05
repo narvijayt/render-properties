@@ -16,7 +16,8 @@ class AddMatchingTables extends Migration
 		DB::statement('
 			CREATE TYPE "user_account_type" AS ENUM (
 				\'realtor\',
-				\'broker\'
+				\'broker\',
+				\'vendor\'
 			)
 		');
 		DB::statement('

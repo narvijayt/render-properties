@@ -93,6 +93,14 @@ class UsersController extends Controller
         {
             $user->add_profile_view($this->auth->user());
         }
+        $match = false;
+        if(Auth::user()){
+            $authUser = auth()->user();
+            if($authUser->isMatchedWith($user)){
+                $match = Match::findForUsers($authUser, $user, true);
+            }
+        }
+
         $findUser = User::find($user_id);
         if($findUser->user_type =="vendor"){
             $fetchOverallData = User::where('user_id',$user_id)->with('categories')->with('vendor_details')->get();
@@ -109,18 +117,12 @@ class UsersController extends Controller
                 if($findUser->braintree_id !="" && $findUser->billing_first_name !="")
                 {
                     $findBanner = Banner::where('user_id',$user->user_id)->get();
-                    return view('pub.users.premium', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
+                    return view('pub.users.premium', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews', 'match'));
+                    // return view('pub.users.show', compact('user','findBanner','categoryName','fetchOverallData','userSocialReviews'));
                 }else{
-                    return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));
+                    // return view('pub.users.show', compact('user','categoryName','fetchOverallData','userSocialReviews'));
+                    return view('pub.users.user-details', compact('user','categoryName','fetchOverallData','userSocialReviews', 'match'));
                 }
-            }
-        }
-
-        $match = false;
-        if(Auth::user()){
-            $authUser = auth()->user();
-            if($authUser->isMatchedWith($user)){
-                $match = Match::findForUsers($authUser, $user, true);
             }
         }
 
