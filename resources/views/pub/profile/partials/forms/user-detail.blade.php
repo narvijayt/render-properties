@@ -365,108 +365,106 @@
 <div class="row">
     @if(auth()->user()->user_type == 'realtor')
         <div class="col-md-12">
-            @if(isset($user->realtorDetail))
-                <div class="form-group-row">
-                    <label class="control-label">
-                        @if($errors->has('require_financial_solution'))<i class="fa fa-times-circle-o"></i>@endif
-                        Are you actively seeking financing solutions for your clients?
-                    </label>
-                    <div class="radio fancy_radio">
-                        <div class="input-radio-group">
-                            <label class="radio-inline">
-                                <input id="require_financial_solution_yes" class="form-control" type="radio"
-                                    name="require_financial_solution" value="Yes" @if (isset($user->realtorDetail->require_financial_solution) &&
-                                $user->realtorDetail->require_financial_solution == "1") checked="checked" @endif > <span>Yes</span>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="require_financial_solution_no" class="form-control" type="radio"
-                                    name="require_financial_solution" value="No" @if (isset($user->realtorDetail->require_financial_solution) &&
-                                $user->realtorDetail->require_financial_solution == "0") checked="checked" @endif ><span>No</span>
-                            </label>
-                        </div>
+            <div class="form-group-row">
+                <label class="control-label">
+                    @if($errors->has('require_financial_solution'))<i class="fa fa-times-circle-o"></i>@endif
+                    Are you actively seeking financing solutions for your clients?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="require_financial_solution_yes" class="form-control" type="radio"
+                                name="require_financial_solution" value="Yes" @if (isset($user->realtorDetail->require_financial_solution) &&
+                            $user->realtorDetail->require_financial_solution == "1") checked="checked" @endif > <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="require_financial_solution_no" class="form-control" type="radio"
+                                name="require_financial_solution" value="No" @if (isset($user->realtorDetail->require_financial_solution) &&
+                            $user->realtorDetail->require_financial_solution == "0") checked="checked" @endif ><span>No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group-row">
+                <label class="control-label">
+                    @if($errors->has('require_professional_service'))<i class="fa fa-times-circle-o"></i>@endif
+                    Do you require professional services such as photography, home staging, or property inspection for your property listings?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="require_professional_service_yes" class="form-control" type="radio"
+                                name="require_professional_service" value="Yes" @if (isset($user->realtorDetail->require_professional_service) &&
+                            $user->realtorDetail->require_professional_service == "1") checked="checked" @endif > <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="require_professional_service_no" class="form-control" type="radio"
+                                name="require_professional_service" value="No" @if (isset($user->realtorDetail->require_professional_service) &&
+                            $user->realtorDetail->require_professional_service == "0") checked="checked" @endif ><span>No</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group-row">
+                <label class="control-label">
+                    @if($errors->has('partnership_with_lender') || $errors->has('partnership_with_vendor'))<i class="fa fa-times-circle-o"></i>@endif
+                    Are you interested in forming partnerships with reputable lenders and vendors in your area to enhance your real estate services?
+                </label>
+                <div>Lender</div>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="partnership_with_lender_yes" class="form-control" type="radio"
+                                name="partnership_with_lender" value="Yes" @if (isset($user->realtorDetail->partnership_with_lender) &&
+                            $user->realtorDetail->partnership_with_lender == "1") checked="checked" @endif > <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="partnership_with_lender_no" class="form-control" type="radio"
+                                name="partnership_with_lender" value="No" @if (isset($user->realtorDetail->partnership_with_lender) &&
+                            $user->realtorDetail->partnership_with_lender == "0") checked="checked" @endif ><span>No</span>
+                        </label>
                     </div>
                 </div>
                 
-                <div class="form-group-row">
-                    <label class="control-label">
-                        @if($errors->has('require_professional_service'))<i class="fa fa-times-circle-o"></i>@endif
-                        Do you require professional services such as photography, home staging, or property inspection for your property listings?
-                    </label>
-                    <div class="radio fancy_radio">
-                        <div class="input-radio-group">
-                            <label class="radio-inline">
-                                <input id="require_professional_service_yes" class="form-control" type="radio"
-                                    name="require_professional_service" value="Yes" @if (isset($user->realtorDetail->require_professional_service) &&
-                                $user->realtorDetail->require_professional_service == "1") checked="checked" @endif > <span>Yes</span>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="require_professional_service_no" class="form-control" type="radio"
-                                    name="require_professional_service" value="No" @if (isset($user->realtorDetail->require_professional_service) &&
-                                $user->realtorDetail->require_professional_service == "0") checked="checked" @endif ><span>No</span>
-                            </label>
-                        </div>
+                <div class="mt-1">Vendor</div>
+                <div class="radio fancy_radio mb-1">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="partnership_with_vendor_yes" class="form-control" type="radio"
+                                name="partnership_with_vendor" value="Yes" @if (isset($user->realtorDetail->partnership_with_vendor) &&
+                            $user->realtorDetail->partnership_with_vendor == "1") checked="checked" @endif > <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="partnership_with_vendor_no" class="form-control" type="radio"
+                                name="partnership_with_vendor" value="No" @if (isset($user->realtorDetail->partnership_with_vendor) &&
+                            $user->realtorDetail->partnership_with_vendor == "0") checked="checked" @endif ><span>No</span>
+                        </label>
                     </div>
                 </div>
-                
-                <div class="form-group-row">
-                    <label class="control-label">
-                        @if($errors->has('partnership_with_lender') || $errors->has('partnership_with_vendor'))<i class="fa fa-times-circle-o"></i>@endif
-                        Are you interested in forming partnerships with reputable lenders and vendors in your area to enhance your real estate services?
-                    </label>
-                    <div>Lender</div>
-                    <div class="radio fancy_radio">
-                        <div class="input-radio-group">
-                            <label class="radio-inline">
-                                <input id="partnership_with_lender_yes" class="form-control" type="radio"
-                                    name="partnership_with_lender" value="Yes" @if (isset($user->realtorDetail->partnership_with_lender) &&
-                                $user->realtorDetail->partnership_with_lender == "1") checked="checked" @endif > <span>Yes</span>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="partnership_with_lender_no" class="form-control" type="radio"
-                                    name="partnership_with_lender" value="No" @if (isset($user->realtorDetail->partnership_with_lender) &&
-                                $user->realtorDetail->partnership_with_lender == "0") checked="checked" @endif ><span>No</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-1">Vendor</div>
-                    <div class="radio fancy_radio mb-1">
-                        <div class="input-radio-group">
-                            <label class="radio-inline">
-                                <input id="partnership_with_vendor_yes" class="form-control" type="radio"
-                                    name="partnership_with_vendor" value="Yes" @if (isset($user->realtorDetail->partnership_with_vendor) &&
-                                $user->realtorDetail->partnership_with_vendor == "1") checked="checked" @endif > <span>Yes</span>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="partnership_with_vendor_no" class="form-control" type="radio"
-                                    name="partnership_with_vendor" value="No" @if (isset($user->realtorDetail->partnership_with_vendor) &&
-                                $user->realtorDetail->partnership_with_vendor == "0") checked="checked" @endif ><span>No</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+            </div>
 
-                <div class="form-group-row">
-                    <label class="control-label">
-                        @if($errors->has('can_realtor_contact'))<i class="fa fa-times-circle-o"></i>@endif
-                        Can other Realtors contact you with Referrals?
-                    </label>
-                    <div class="radio fancy_radio">
-                        <div class="input-radio-group">
-                            <label class="radio-inline">
-                                <input id="can_realtor_contact_yes" class="form-control" type="radio"
-                                    name="can_realtor_contact" value="Yes" @if (isset($user->realtorDetail->can_realtor_contact) &&
-                                $user->realtorDetail->can_realtor_contact == "1") checked="checked" @endif > <span>Yes</span>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="can_realtor_contact_no" class="form-control" type="radio"
-                                    name="can_realtor_contact" value="No" @if (isset($user->realtorDetail->can_realtor_contact) &&
-                                $user->realtorDetail->can_realtor_contact == "0") checked="checked" @endif ><span>No</span>
-                            </label>
-                        </div>
+            <div class="form-group-row">
+                <label class="control-label">
+                    @if($errors->has('can_realtor_contact'))<i class="fa fa-times-circle-o"></i>@endif
+                    Can other Realtors contact you with Referrals?
+                </label>
+                <div class="radio fancy_radio">
+                    <div class="input-radio-group">
+                        <label class="radio-inline">
+                            <input id="can_realtor_contact_yes" class="form-control" type="radio"
+                                name="can_realtor_contact" value="Yes" @if (isset($user->realtorDetail->can_realtor_contact) &&
+                            $user->realtorDetail->can_realtor_contact == "1") checked="checked" @endif > <span>Yes</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input id="can_realtor_contact_no" class="form-control" type="radio"
+                                name="can_realtor_contact" value="No" @if (isset($user->realtorDetail->can_realtor_contact) &&
+                            $user->realtorDetail->can_realtor_contact == "0") checked="checked" @endif ><span>No</span>
+                        </label>
                     </div>
                 </div>
-            @endif
+            </div>
         </div>
     @endif
 </div>
