@@ -48,6 +48,7 @@ use App\RegistrationPlans;
 
 use App\LenderDetail;
 use DateTime;
+use App\VendorMeta;
 
 class UsersController extends Controller
 {
@@ -103,6 +104,7 @@ class UsersController extends Controller
 
         $findUser = User::find($user_id);
         if($findUser->user_type =="vendor"){
+            $user  = User::with('vendorMeta')->find($user_id);
             $fetchOverallData = User::where('user_id',$user_id)->with('categories')->with('vendor_details')->get();
             if(($findUser !="") && ($findUser->user_type =="vendor") && (!empty($fetchOverallData) && $fetchOverallData[0]->categories->isNotEmpty()))
             {
@@ -112,7 +114,7 @@ class UsersController extends Controller
                 {
                 $fetchAllCategory = VendorCategories::find($cat);
                 if($fetchAllCategory !="")
-                $categoryName[] = $fetchAllCategory->name;
+                    $categoryName[] = $fetchAllCategory->name;
                 }
                 if($findUser->braintree_id !="" && $findUser->billing_first_name !="")
                 {
@@ -124,6 +126,8 @@ class UsersController extends Controller
                     return view('pub.users.user-details', compact('user','categoryName','fetchOverallData','userSocialReviews', 'match'));
                 }
             }
+        }else if($findUser->user_type =="broker"){
+            $user  = User::with('lenderDetail')->find($user_id);
         }
 
         /*if(($findUser !="") && ($findUser->user_type =="broker"))

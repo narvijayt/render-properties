@@ -197,10 +197,42 @@ if($user->user_type === 'broker'){
 
         @if($user->specialties)
             <div class="form-group">
-                <strong class="text-uppercase">Specialization</strong>
+                <strong class="text-uppercase">Specialization:</strong>
                 <div class="">{{ $user->specialties }}</div>
             </div>
         @endif
-    </div>
+        
+        @if($user->user_type == "vendor")
+            @if(!empty($categoryName))
+                <div class="form-group">
+                    <strong class="text-uppercase">Industry:</strong>
+                    <div class="">
+                        @foreach($categoryName as $index=>$label)
+                            {{ $label }}
+                            @if( ($index+1) < count($categoryName) )
+                                {{ ", " }}
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            @endif
 
+            @if(isset($user->vendorMeta))
+                @if($user->vendorMeta->experties)
+                    <div class="form-group">
+                        <strong class="text-uppercase">Area of Expertise:</strong>
+                        <div class="">{{ $user->vendorMeta->experties }}</div>
+                    </div>
+                @endif
+
+                @if($user->vendorMeta->special_services)
+                    <div class="form-group">
+                        <strong class="text-uppercase">Distinguishes from Competitors:</strong>
+                        <div class="">{{ $user->vendorMeta->special_services }}</div>
+                    </div>
+                @endif
+            @endif
+        @endif        
+
+    </div>
 </div>

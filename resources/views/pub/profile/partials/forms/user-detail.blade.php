@@ -83,7 +83,7 @@
         <label class="control-label" for="experties">
             @if($errors->has('experties'))<i class="fa fa-times-circle-o"></i>@endif Can you describe your area of expertise and the specific services you offer to real estate professionals?
         </label>
-        <input type="text" class="form-control" placeholder="experties" name="experties" value="{{ $user->vendorMeta->experties }}">
+        <input type="text" class="form-control" placeholder="" name="experties" value="{{ $user->vendorMeta->experties }}">
         @if($errors->has('experties'))
             <span class="help-block">{{ $errors->first('experties') }}</span>
         @endif
@@ -93,7 +93,7 @@
         <label class="control-label" for="special_services">
             @if($errors->has('special_services'))<i class="fa fa-times-circle-o"></i>@endif What distinguishes your services from competitors in the industry, and can you provide examples of successful projects you’ve worked on?
         </label>
-        <input type="text" class="form-control" placeholder="special_services" name="special_services" value="{{ $user->vendorMeta->special_services }}">
+        <input type="text" class="form-control" placeholder="" name="special_services" value="{{ $user->vendorMeta->special_services }}">
         @if($errors->has('special_services'))
             <span class="help-block">{{ $errors->first('special_services') }}</span>
         @endif
@@ -103,7 +103,7 @@
         <label class="control-label" for="service_precautions">
             @if($errors->has('service_precautions'))<i class="fa fa-times-circle-o"></i>@endif How do you ensure your services align with the needs and preferences of realtors and their clients?
         </label>
-        <input type="text" class="form-control" placeholder="service_precautions" name="service_precautions" value="{{ $user->vendorMeta->service_precautions }}">
+        <input type="text" class="form-control" placeholder="" name="service_precautions" value="{{ $user->vendorMeta->service_precautions }}">
         @if($errors->has('service_precautions'))
             <span class="help-block">{{ $errors->first('service_precautions') }}</span>
         @endif
@@ -207,85 +207,80 @@
     --}}
 @endif
 
-@if(auth()->user()->user_type != 'vendor')
-    @if(auth()->user()->user_type == 'realtor')
+@php echo "User Role Type: ". auth()->user()->user_type; @endphp
+@if(auth()->user()->user_type == 'broker')
+    <div class="form-group {{ $errors->has('specialties') ? 'has-error' : '' }}">
+        <label class="control-label" for="specialties">
+            @if($errors->has('specialties'))<i class="fa fa-times-circle-o"></i>@endif Specialties
+        </label>
+        <input type="text" class="form-control" placeholder="Specialties" name="specialties"
+            value="{{ $user->specialties }}">
+        @if($errors->has('specialties'))
+        <span class="help-block">{{ $errors->first('specialties') }}</span>
+        @endif
+    </div>
 
-    @elseif(auth()->user()->user_type == 'broker')
-        <div class="form-group {{ $errors->has('specialties') ? 'has-error' : '' }}">
-            <label class="control-label" for="specialties">
-                @if($errors->has('specialties'))<i class="fa fa-times-circle-o"></i>@endif Specialties
-            </label>
-            <input type="text" class="form-control" placeholder="Specialties" name="specialties"
-                value="{{ $user->specialties }}">
-            @if($errors->has('specialties'))
-            <span class="help-block">{{ $errors->first('specialties') }}</span>
-            @endif
-        </div>
+    
+    <div class="form-group {{ $errors->has('stay_updated') ? 'has-error' : '' }}">
+        <label class="control-label" for="stay_updated">
+            @if($errors->has('stay_updated'))<i class="fa fa-times-circle-o"></i>@endif
+            How do you stay updated on changes in the mortgage industry, and what steps do you take to ensure you can offer
+            the best financing solutions to your clients?
+        </label>
+        <input type="text" class="form-control" placeholder="" name="stay_updated"
+            value="{{ $user->lenderDetail->stay_updated }}">
+        @if($errors->has('stay_updated'))
+        <span class="help-block">{{ $errors->first('stay_updated') }}</span>
+        @endif
+    </div>
 
-        @if(isset($user->lenderDetail))
-        <div class="form-group {{ $errors->has('stay_updated') ? 'has-error' : '' }}">
-            <label class="control-label" for="stay_updated">
-                @if($errors->has('stay_updated'))<i class="fa fa-times-circle-o"></i>@endif
-                How do you stay updated on changes in the mortgage industry, and what steps do you take to ensure you can offer
-                the best financing solutions to your clients?
-            </label>
-            <input type="text" class="form-control" placeholder="stay_updated" name="stay_updated"
-                value="{{ $user->lenderDetail->stay_updated }}">
-            @if($errors->has('stay_updated'))
-            <span class="help-block">{{ $errors->first('stay_updated') }}</span>
-            @endif
-        </div>
+    <div class="form-group {{ $errors->has('handle_challanges') ? 'has-error' : '' }}">
+        <label class="control-label" for="handle_challanges">
+            @if($errors->has('handle_challanges'))<i class="fa fa-times-circle-o"></i>@endif
+            How do you handle challenging or unique financing situations, such as clients with low credit scores or
+            non-traditional income sources?
+        </label>
+        <input type="text" class="form-control" placeholder="" name="handle_challanges"
+            value="{{ $user->lenderDetail->handle_challanges }}">
+        @if($errors->has('handle_challanges'))
+        <span class="help-block">{{ $errors->first('handle_challanges') }}</span>
+        @endif
+    </div>
 
-        <div class="form-group {{ $errors->has('handle_challanges') ? 'has-error' : '' }}">
-            <label class="control-label" for="handle_challanges">
-                @if($errors->has('handle_challanges'))<i class="fa fa-times-circle-o"></i>@endif
-                How do you handle challenging or unique financing situations, such as clients with low credit scores or
-                non-traditional income sources?
-            </label>
-            <input type="text" class="form-control" placeholder="handle_challanges" name="handle_challanges"
-                value="{{ $user->lenderDetail->handle_challanges }}">
-            @if($errors->has('handle_challanges'))
-            <span class="help-block">{{ $errors->first('handle_challanges') }}</span>
-            @endif
-        </div>
+    <div class="form-group {{ $errors->has('unique_experties') ? 'has-error' : '' }}">
+        <label class="control-label" for="unique_experties">
+            @if($errors->has('unique_experties'))<i class="fa fa-times-circle-o"></i>@endif
+            What sets you apart from other loan officers in terms of the level of service and expertise you provide to your
+            clients, and how do you ensure a smooth and efficient mortgage application process?
+        </label>
+        <input type="text" class="form-control" placeholder="" name="unique_experties"
+            value="{{ $user->lenderDetail->unique_experties }}">
+        @if($errors->has('unique_experties'))
+        <span class="help-block">{{ $errors->first('unique_experties') }}</span>
+        @endif
+    </div>
 
-        <div class="form-group {{ $errors->has('unique_experties') ? 'has-error' : '' }}">
-            <label class="control-label" for="unique_experties">
-                @if($errors->has('unique_experties'))<i class="fa fa-times-circle-o"></i>@endif
-                What sets you apart from other loan officers in terms of the level of service and expertise you provide to your
-                clients, and how do you ensure a smooth and efficient mortgage application process?
-            </label>
-            <input type="text" class="form-control" placeholder="unique_experties" name="unique_experties"
-                value="{{ $user->lenderDetail->unique_experties }}">
-            @if($errors->has('unique_experties'))
-            <span class="help-block">{{ $errors->first('unique_experties') }}</span>
-            @endif
-        </div>
-
-        <div class="form-group-row">
-            <label class="control-label">
-                @if($errors->has('partnership_with_realtor'))<i class="fa fa-times-circle-o"></i>@endif
-                Are you open to forming partnerships with real estate professionals to receive referrals, and can other members
-                of the Render community contact you for collaboration opportunities?
-            </label>
-            <div class="radio fancy_radio">
-                <div class="input-radio-group">
-                    <label class="radio-inline">
-                        <input id="partnership_with_realtor_yes" class="form-control" type="radio"
-                            name="partnership_with_realtor" value="Yes" @if (isset($user->lenderDetail->partnership_with_realtor) &&
-                        $user->lenderDetail->partnership_with_realtor == "1") checked="checked" @endif > <span>Yes</span>
-                    </label>
-                    <label class="radio-inline">
-                        <input id="partnership_with_realtor_no" class="form-control" type="radio"
-                            name="partnership_with_realtor" value="No" @if (isset($user->lenderDetail->partnership_with_realtor) &&
-                        $user->lenderDetail->partnership_with_realtor == "0") checked="checked" @endif ><span>No</span>
-                    </label>
-                </div>
+    <div class="form-group-row">
+        <label class="control-label">
+            @if($errors->has('partnership_with_realtor'))<i class="fa fa-times-circle-o"></i>@endif
+            Are you open to forming partnerships with real estate professionals to receive referrals, and can other members
+            of the Render community contact you for collaboration opportunities?
+        </label>
+        <div class="radio fancy_radio">
+            <div class="input-radio-group">
+                <label class="radio-inline">
+                    <input id="partnership_with_realtor_yes" class="form-control" type="radio"
+                        name="partnership_with_realtor" value="Yes" @if (isset($user->lenderDetail->partnership_with_realtor) &&
+                    $user->lenderDetail->partnership_with_realtor == "1") checked="checked" @endif > <span>Yes</span>
+                </label>
+                <label class="radio-inline">
+                    <input id="partnership_with_realtor_no" class="form-control" type="radio"
+                        name="partnership_with_realtor" value="No" @if (isset($user->lenderDetail->partnership_with_realtor) &&
+                    $user->lenderDetail->partnership_with_realtor == "0") checked="checked" @endif ><span>No</span>
+                </label>
             </div>
         </div>
-        @endif
-    @endif
-
+    </div>
 @endif
 
 @if(auth()->user()->user_type != null)
