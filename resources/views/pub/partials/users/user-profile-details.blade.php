@@ -188,7 +188,7 @@ if($user->user_type === 'broker'){
     </div>
     
     <div class="col-md-6">
-        @if($user->bio)
+        @if($user->bio && $user->bio != 'null')
             <div class="form-group">
                 <strong class="text-uppercase">About:</strong>
                 <div class="">{{ $user->bio }}</div>
