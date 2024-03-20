@@ -58,6 +58,6 @@ class NotifyUsersNewRegistration extends Mailable
         }
         return $this->from(config('mail.from.address'))
             ->subject("New Member Alert - Connect with More Home Buyers and Sellers!")
-            ->markdown('email.matching.new-user-register-notification');
+            ->markdown('email.matching.new-user-register-notification', compact('usertype', 'memberType'));
     }
 }
