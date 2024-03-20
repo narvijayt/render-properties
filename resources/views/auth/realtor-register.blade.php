@@ -33,11 +33,10 @@ $description = 'Register for Render'
 <div class="top-inner-banner">
     <div class="container">
         <div class="row">
-            <div class="col-md-5">
-                <h1 class="m-0">REALTOR SIGN UP</h1>
+            <div class=" col-lg-6 col-md-5">
+                <h1 class="m-0 bg-bule text-white">REALTOR SIGN UP</h1>
                 <h2 class="mt-1 h1 mb-0">Close Fast & <br> Scale Your Business</h2>
-                <p class="text-primary mb-0 pl-5"><b>Closing deals is now easier than ever with our free network of
-                        lenders and vendors. Elevate your real estate game today.</b></p>
+                <p class="text-primary mb-0">Join our network for free and get connected <br> to home buyers and sellers looking for your <br> expertise. With Render, closing deals is <br> easier than ever, thanks to our <br>  network of lenders and vendors. <br> Elevate your real estate game today.</p>
             </div>
             <div class="col-md-7 ">
             </div>
@@ -60,10 +59,8 @@ $description = 'Register for Render'
                         <h3 class="m-0">1</h3>
                     </div>
                     <div class="streamlined-text">
-                        <h4 class="text-orange m-0">Speed to Sale:</h4>
-                        <p class="text-white">Don’t waste any more time searching for Lenders and Vendors. Get
-                            immediate connections to people like, home inspectors, appraisers, and legal pros; people
-                            who Render has vetted and checked out to make sure there the best</p>
+                        <h4 class="text-orange m-0">Connect and Match with Home Buyers on Render:</h4>
+                        <p class="text-white">Render allows Realtors to connect and match with home buyers. Our platform provides a seamless experience for Realtors to find and connect with motivated home buyers. Join Render today to start building meaningful connections and closing deals with ease.</p>
                     </div>
                 </div>
 
@@ -85,15 +82,17 @@ $description = 'Register for Render'
                         <h3 class="m-0">3</h3>
                     </div>
                     <div class="streamlined-text">
-                        <h4 class="text-orange m-0">Free Marketing:</h4>
-                        <p class="text-white">Besides the referrals you’ll get from your Render network, we also market
-                            your services for free. We advertise your profile page on all major social media platforms.
+                        <h4 class="text-orange m-0">Render Offers a Variety of Vendors to Choose From:</h4>
+                        <p class="text-white">Render provides access to a range of vendors for your real estate needs. From home inspectors to appraisers and legal professionals, Render has vetted and verified vendors to ensure you're working with the best. Choose from our list of trusted vendors to streamline your real estate transactions and close deals faster.
                         </p>
                     </div>
                 </div>
                 <div class="sign-up-link">
-                    <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right"
-                            aria-hidden="true"></i></a>
+				<div class="d-flex-btn-group justify-content-start">
+				<a href="#streamlined-outer-scroll" class="btn btn-primary btn-yellow ">SIGN UP FOR FREE </a>
+	             </div>
+                    <!---- <a class="text-orange" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right"
+                            aria-hidden="true"></i></a>-->
                 </div>
             </div>
             <div class="col-md-5 hidden ">

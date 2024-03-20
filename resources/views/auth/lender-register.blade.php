@@ -33,10 +33,10 @@ $description = 'Register for Render'
 <div class="lender-inner-banner">
 <div class="container">
  <div class="row">
- <div class="col-lg-6 col-md-5">
- <h1 class="m-0 text-orange">LENDER SIGN UP</h1>
- <h2 class="mt-1 h1 mb-0 pb-1">They Bring You <br> The Deals!</h2>
- <p class="text-primary mb-0 pl-5"><b>Get access to our network of realtors <br> ready to bring you their next deal.</b></p>
+ <div class="col-lg-7 col-md-5">
+ <h1 class="m-0 text-white orange-bg">LENDER SIGN UP</h1>
+ <h2 class="mt-1 h1 mb-2 pb-1">Match with Home Buyers <br> & Sellers on Render</h2>
+ <p class="text-primary mb-0 pl-5">Gain access to our network of realtors ready to bring you their next deal. Join our platform today to connect with motivated home buyers and sellers, and collaborate with real estate professionals to grow your business.</p>
  </div>
  <div class="col-lg-6 col-md-7 ">
  </div>

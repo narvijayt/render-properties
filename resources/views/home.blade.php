@@ -43,15 +43,15 @@
             <div class="banner-body-section">
                 <div class="container">
                     <div class="row ">
-                    <div class="col-lg-5 col-sm-9 hero-intro">
+                    <div class="col-lg-7 col-sm-9 hero-intro">
                         <!---<span>CONNECTING<br></span> Homes Buyers <span> to </span><br>Top Real Estate Agents<br><span>and</span> Loan Officers <br><span>in</span> YOUR LOCAL AREA-->
                         <!---Connecting <span>Home Buyers</span> and <span>Sellers</span> to  <span>Top Real Estate Agents,</span> <span>Trusted Mortgage Loan Officers</span> and <span>Reputable Home Service Providers</span> and <span>Vendors</span> -->
                        
-    			        <h1 class="m-0">The Real Estate Network</h1>
-                        <div class="home-banner-heading"><h2>Get Deals Sooner. <br> Close Deals Faster.</h2></div>
+    			        <h1 class="m-0">Welcome to Render The Real Estate Connection</h1>
+                        <div class="home-banner-heading"><h2>We Connect Home <br> Buyers & Sellers With <br> Top-tier Real Estate Agents, <br> Loan Officers & Vendors.</h2></div>
     					{{--<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>--}}
-						<p class="pr-4"><b>Realtors, Lenders, & Vendors.</b> <br> Connect with top-tier real estate pros that want to be contacted, grow your business, and expand your horizons.</p>
-						<p class="mt-1"><b>SEE SUBSCRIPTIONS FOR…</b></p>
+						<p class="pr-4">Our platform empowers users to browse <br> and match with the best in the industry, <br> ensuring a seamless and successful <br> real estate experience.</p>
+						{{--<<p class="mt-1"><b>SEE SUBSCRIPTIONS FOR…</b></p>--}}
     					
                         {{-- <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button> --}}
 						<div class="d-flex-btn-group">
@@ -60,7 +60,7 @@
 	            <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a>
 	             </div>
                     </div>
-                    <div class="col-lg-7 col-sm-3 hero-img-rt">				 
+                    <div class="col-lg-5 col-sm-3 hero-img-rt">				 
     				    {{--<img src="{{url('/')}}/img/home-rt-images-2.png">--}}
     				   {{-- <img src="{{url('/')}}/img/home-banner.png"> --}}
                        <!-- <iframe src="https://player.vimeo.com/video/317507913" width="100%" height="288" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
@@ -163,11 +163,28 @@
     {{--</div>--}}
     {{--</div>--}}
     {{--</div>--}}
+	
+	<div class="join-render-section py-3">
+	<div class="container">
+	<h2 class="text-center h1  mb-1 mt-0">Join Render Today!</h2>
+	<p class="text-center text-primary">Whether you're buying your dream home or selling a property, Render™ is here to help you every step of the way. Our curated network of Real Estate Pros is comprised of experienced and reputable individuals who are dedicated to providing exceptional service and guidance throughout your transaction.</p>
+	<p class="text-center text-primary">With Render, you can browse profiles, read reviews, and connect with professionals who align with your needs and preferences. Our platform streamlines the process of finding the right realtor, loan officer, or vendor, saving you time and effort.</p>
+	<p class="text-center text-primary">Join Render today and experience the difference. Let us connect you with the best in real estate, so you can focus on finding your perfect home or closing the deal on your property.</p>
+	<div class="col-md-12 center-box text-center mt-0 mb-0">
+	<h4 class="text-center mb-0 text-primary">SIGN ME UP!</h4> 
+	<div class="d-flex-btn-group justify-content-center"><a href="https://staging.render.properties/realtor-register" class="btn btn-primary btn-yellow ">REALTORS - FREE
+	   </a>
+	   <a href="https://staging.render.properties/lender-register" class="btn btn-primary btn-yellow ">LENDERS</a> 
+	   <a href="https://staging.render.properties/vendor-register" class="btn btn-primary btn-yellow ">VENDORS</a>
+	   </div>
+	   </div>
+	</div>
+	</div>
 	<div class="render-network-section py-3">
 	<div class="container">
 	
-	<h2 class="text-center text-white h1  mb-1 mt-0">The Render Network</h2>
-	<p class="text-box-center text-left text-white"> Render is a social network exclusively for real estate professionals that want to connect with other real estate pros. We’re all working towards the same goals… get more deals, close more deals.</p>
+	<h2 class="text-center text-white h1  mb-1 mt-0 text-center">Get Seen By Home Buyers & Sellers</h2>
+	<p class="text-box-center text-center text-white"> Render is a social network exclusively for real estate professionals that want to connect with other real estate pros. We’re all working towards the same goals… get more deals, close more deals.</p>
 	<div class="row ">
 	<div class="col-md-12 center-box text-center mt-2">
 	<div class="col-md-4 px-4">
