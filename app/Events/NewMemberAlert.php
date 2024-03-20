@@ -44,10 +44,7 @@ class NewMemberAlert
             $user_types = ['realtor','broker'];
         }
         
-        $this->registeredMembers = User::whereIn('user_type', $user_types)->where(['zip' => $this->user->zip])->get();
-
-        \Log::info($this->registeredMembers);
-        
+        $this->registeredMembers = User::whereIn('user_type', $user_types)->where(['zip' => $this->user->zip])->get();        
     }
 
     /**
