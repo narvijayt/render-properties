@@ -58,6 +58,22 @@ class TwilioService{
     public function sendMatchAcceptedNotification($authUser, $user){
         $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Congratulations, '.$authUser->first_name.' has accpeted your match request. Click on the link below to check the details '. route('matchdetails.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
     }
+    
+    
+    /**
+     * Send SMS Notification to Other user types when new member registers
+     * 
+     */
+    public function sendNewMemberNotification($user, $member){
+        if($user->user_type == "vendor"){
+            $usertype = 'Vendor';
+        }elseif($user->user_type == "broker"){
+            $usertype = 'Loan Officer';
+        }elseif($user->user_type == "realtor"){
+            $usertype = 'Realtor';
+        }
+        $this->sendSMS( $member->phone_number, 'Hey '.$member->first_name.' a new '.$usertype.' has just joined in your area. Click on the link below to match with a member and get connected to more home buyers and sellers who need your services. '. route('pub.user.show', ['user_id' => $user->user_id]) );
+    }
 
     public function sendSMS($to, $body){
         $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));

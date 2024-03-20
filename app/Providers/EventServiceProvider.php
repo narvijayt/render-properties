@@ -53,6 +53,12 @@ class EventServiceProvider extends ServiceProvider
 		'App\Events\Subscriptions\ChangedSubscription' => [
 			'App\Listeners\Subscriptions\ChangedSubscriptionNotification'
 		],
+		
+		
+		// Registration Alert
+		'App\Events\NewMemberAlert' => [
+			'App\Listeners\SendNewMemberAlert'
+		],
     ];
 
     /**

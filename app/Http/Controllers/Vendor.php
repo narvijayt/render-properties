@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Log;
 use App\Mail\NewUserAdminNotification;
 
 use App\RegistrationPlans;
+use App\Events\NewMemberAlert;
 
 class Vendor extends Controller
 {
@@ -319,6 +320,9 @@ class Vendor extends Controller
             $user= User::find($userId);
             $this->emailVerification($user);
             $this->welcomeEmail($user);
+            // Trigger the event
+            event(new NewMemberAlert($user));
+
             Auth::login($user);
             return redirect('/profile/detail')->with('message', 'Thanks '.$firstname.'. Your payment has successfully completed.');                       
         }else{
@@ -460,14 +464,14 @@ class Vendor extends Controller
                 // After Payment and Subscription Created Successfully
                 
             }else{
-                if($user->verified == false && !in_array(env('APP_ENV'),['local','staging'])){
+                if($user->verified == false && !in_array(env('APP_ENV'),['local'])){
                     $this->newUserAdminNotification($user);
                     // $this->welcomeEmail($user);
                     // $this->emailVerification($user);
                 }
             }
 
-            if($userSubscription->paid_amount > 0 && !in_array(env('APP_ENV'),['local','staging'])){
+            if($userSubscription->paid_amount > 0 && !in_array(env('APP_ENV'),['local'])){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new VendorPaymentInvoice($user);
                 Mail::to($user->email)->send($email);

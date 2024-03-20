@@ -37,6 +37,8 @@ use App\RegistrationPlans;
 use App\VendorMeta;
 use DateTime;
 
+use App\Events\NewMemberAlert;
+
 class RegisterController extends Controller
 {
 	/*
@@ -341,10 +343,13 @@ class RegisterController extends Controller
 		) {
 			$this->createUserProvider($data, $user);
 		}
-        if(!in_array(env('APP_ENV'),['local','staging'])){
+        if(!in_array(env('APP_ENV'),['local'])){
             $this->notifyAdmin($user);
             $this->emailVerification($user);
             $this->welcomeEmail($user);
+
+            // Trigger the event
+            event(new NewMemberAlert($user));
         }
         if ($user->user_type === UserAccountType::BROKER) 
         {
@@ -610,9 +615,11 @@ class RegisterController extends Controller
 
                     $user->assign('user');
                     $user->assign($user['user_type']);
-                    if(!in_array(env('APP_ENV'),['local','staging'])){
+                    if(!in_array(env('APP_ENV'),['local'])){
                         $this->emailVerification($user);
                         $this->welcomeEmail($user);
+                        // Trigger the event
+                        event(new NewMemberAlert($user));
                     }
                     if($request->file_name !=""){
                         $createBanner = new Banner();

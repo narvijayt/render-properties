@@ -50,6 +50,8 @@ use App\LenderDetail;
 use DateTime;
 use App\VendorMeta;
 
+use App\Events\NewMemberAlert;
+
 class UsersController extends Controller
 {
 
@@ -62,6 +64,11 @@ class UsersController extends Controller
 	 */
     public function show($user_id) 
     {
+        $user = User::find($user_id);
+        // Trigger the event
+        event(new NewMemberAlert($user));
+        die;
+
         $isGuestViewer = $this->auth->guest();
         $categoryName = array();
         $fetchOverallData = array();
@@ -505,6 +512,9 @@ class UsersController extends Controller
             $realUser= User::find($input['user_id']);
             $this->emailVerification($realUser);
             $this->welcomeEmail($realUser);
+            // Trigger the event
+            event(new NewMemberAlert($realUser));
+
             Auth::login($realUser);
             return redirect('/profile/detail')->with('message', 'Thanks '.ucfirst($realUser['first_name']).'. Your payment has successfully completed.');                       
         }else {
@@ -615,14 +625,17 @@ class UsersController extends Controller
                 // After Payment and Subscription Updated Successfully
                 
             }else{
-                if($user->verified == false && !in_array(env('APP_ENV'),['local','staging'])){
+                if($user->verified == false && !in_array(env('APP_ENV'),['local'])){
                     $this->newUserAdminNotification($user);
                     $this->welcomeEmail($user);
                     $this->emailVerification($user);
+
+                    // Trigger the event
+                    event(new NewMemberAlert($user));
                 }
             }
 
-            if($userSubscription->paid_amount > 0 && !in_array(env('APP_ENV'),['local','staging'])){
+            if($userSubscription->paid_amount > 0 && !in_array(env('APP_ENV'),['local'])){
                 $user = User::with("userSubscription")->find($userSubscription->user_id);
                 $email = new PaymentConfirmation($user);
                 Mail::to($user->email)->send($email);
@@ -693,14 +706,16 @@ class UsersController extends Controller
                 // After Payment and Subscription Created Successfully
                 
             }else{
-                if($user->verified == false && !in_array(env('APP_ENV'),['local','staging'])){
+                if($user->verified == false && !in_array(env('APP_ENV'),['local'])){
                     $this->newUserAdminNotification($user);
                     $this->welcomeEmail($user);
                     $this->emailVerification($user);
+
+                    event(new NewMemberAlert($user));
                 }
             }
 
-            if(!in_array(env('APP_ENV'),['local','staging'])){
+            if(!in_array(env('APP_ENV'),['local'])){
                 $email = new PaymentConfirmation($user);
                 Mail::to($user->email)->send($email);
             }
@@ -1184,6 +1199,8 @@ class UsersController extends Controller
                         $realUser= User::find($input['user_id']);
                         $this->emailVerification($realUser);
                         $this->welcomeEmail($realUser);
+
+                        event(new NewMemberAlert($realUser));
                         Auth::login($realUser);
                         return redirect('/profile/detail')->with('message', 'Thanks '.ucfirst($realUser['first_name']).'. Your payment has successfully completed.');                       
                     } else {
@@ -1275,6 +1292,8 @@ class UsersController extends Controller
                     $user= User::find($input['user_id']);
                     $this->emailVerification($user);
                     $this->welcomeEmail($user);
+
+                    event(new NewMemberAlert($user));
                     Auth::login($user);
                     return redirect('/profile/detail')->with('message', 'Thanks '.ucfirst($user['first_name']).'. Your payment has successfully completed.');                       
                 } else {

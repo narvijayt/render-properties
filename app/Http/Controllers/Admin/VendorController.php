@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use File;
 
+use App\Events\NewMemberAlert;
 
 class VendorController extends Controller
 {
@@ -123,6 +124,8 @@ class VendorController extends Controller
         $user->assign($user['user_type']);
         $this->emailVerification($user);
         $this->welcomeEmail($user);
+        // Trigger the event
+        event(new NewMemberAlert($user));
             
                 if($request->file_name !="")
                 {
@@ -317,6 +320,9 @@ class VendorController extends Controller
                 $user= User::find($userId);
                 $this->emailVerification($user);
                 $this->welcomeEmail($user);
+                // Trigger the event
+                event(new NewMemberAlert($user));
+
                 return redirect('/cpldashrbcs/all-vendors')->with('message', 'Succesfully made payment for vendor registration.');
             }
      }
