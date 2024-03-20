@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Mail\NotifyUsersNewRegistration;
 use Mail;
+use App\Services\TwilioService;
 
 class SendNewMemberAlert
 {
@@ -34,7 +35,7 @@ class SendNewMemberAlert
         $registeredMembers = $event->registeredMembers;
         foreach($registeredMembers as $member){
             Mail::to($member->email)->send(new NotifyUsersNewRegistration($user, $member));
-            sendNewMemberNotification($user, $member);
+            (new TwilioService())->sendNewMemberNotification($user, $member);
         }
     }
 }
