@@ -45,6 +45,8 @@ class NewMemberAlert
         }
         
         $this->registeredMembers = User::whereIn('user_type', $user_types)->where(['zip' => $this->user->zip])->get();
+
+        \Log::error($this->registeredMembers);
         
     }
 
