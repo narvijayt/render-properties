@@ -64,11 +64,6 @@ class UsersController extends Controller
 	 */
     public function show($user_id) 
     {
-        $user = User::find($user_id);
-        // Trigger the event
-        event(new NewMemberAlert($user));
-        die;
-
         $isGuestViewer = $this->auth->guest();
         $categoryName = array();
         $fetchOverallData = array();
