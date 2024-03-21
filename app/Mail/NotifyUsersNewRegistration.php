@@ -56,7 +56,7 @@ class NotifyUsersNewRegistration extends Mailable
         }elseif($this->member->user_type == "realtor"){
             $memberType = 'Realtor';
         }
-        return $this->from(config('mail.from.address'))
+        return $this->from(config('mail.from.address'), config('mail.from.name'))
             ->subject("New Member Alert - Connect with More Home Buyers and Sellers!")
             ->markdown('email.matching.new-user-register-notification', compact('usertype', 'memberType'));
     }
