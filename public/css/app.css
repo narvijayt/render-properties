@@ -2133,7 +2133,7 @@ body .pitch.pitch-outer p{ padding-bottom:0px;}
 .number-list-box{padding-bottom: 0px;}
 .testimonials-outer { padding-top: 29px;}
 .testimonials-outer { padding-top: 29px; padding-bottom: 30px;}
-.testimonials-outer a.carousel-control.right.carousel-control-next{left: 24% !important;}
+/* .testimonials-outer a.carousel-control.right.carousel-control-next{left: 24% !important;} */
 .instant-access-outer .sign-up-link {display: flex; justify-content: center; margin-bottom: 30px;}
 .testimonials-outer .carousel .item { text-align: center;}
 .testimonials-outer .testimonials-left { padding-right: 15px;}
@@ -2154,13 +2154,28 @@ body .pitch.pitch-outer p{ padding-bottom:0px;}
 .instant-access-outer.instant-access-outer-02{padding-top: 33px;}
 .lender-inner-banner{background-position: -105px;}
 .lender-inner-banner p {line-height: 18px; margin-top: 3px;padding-right: 34% ! important;}
-.testimonials-outer .testimonials-left .carousel .item { min-height: 379px;}
+/* .testimonials-outer .testimonials-left .carousel .item { min-height: 379px;} */
 .lender-inner-banner p br { display: none;}
 .estate-jobs{background-position: -156px;}
 .vendor-top-banner h1 {font-size: 23px;}
 .vendor-top-banner h2 {font-size: 20px; margin-top: 10px ! important; margin-bottom: 10px ! important;}
 .vendor-top-banner{background-position: -98px}
+.testimonials-outer .carousel .carousel-indicators{bottom: inherit;}
+.testimonials-outer .carousel .carousel-indicators li{display:none;}
+.testimonials-outer .testimonials-left .carousel .item{min-height: auto; padding: 0% 10%;}
+.testimonials-outer #testimoniial-slider i.fa.fa-angle-left, .testimonials-outer #testimoniial-slider i.fa.fa-angle-right {
+font-size: 64px;}
+.testimonials-outer .carousel .carousel-indicators{left: 0; transform: inherit;width: 100%; margin: 0 auto; right: 0;}
+.testimonials-outer a.carousel-control.right.carousel-control-next{right: 2% !important; bottom:0px;}
+.testimonials-outer a.carousel-control.left.carousel-control-prev{ bottom:0px;}
+.testimonials-outer .carousel .carousel-indicators{top: 50%;transform: translateY(-50%);}
+.testimonials-outer a.carousel-control.left.carousel-control-prev{left: 7% ! important;}
+.testimonials-outer #testimoniial-slider i.fa.fa-angle-left, .testimonials-outer #testimoniial-slider i.fa.fa-angle-right{font-size: 58px ! important;}
+.testimonials-outer .testimonials .carousel .item{ min-height: auto;}
+.testimonials-outer #testimoniial-slider.carousel .overview b{font-size: 16px ! important;line-height: 17px;margin-bottom: 13px ! important;display:inline-block;}
+.testimonials-outer #testimoniial-slider i.fa.fa-angle-left{top: 0px;}
 }
+
 @media(max-width:480px)
 {
 .top-header-section li:first-child { margin-left: 0px;}
@@ -2190,6 +2205,8 @@ body .business-outer .business-box p br{display: none;}
 .counting-outer .container.stats.counting-section{padding-bottom: 3px;}
 .hero-banner {background-position: -305px;}
 .lender-inner-banner p {  padding-right: 22% !important;font-size: 15px;}
+
+
 }
 
 

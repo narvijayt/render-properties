@@ -19,7 +19,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
         $viewData = Cache::remember('home_page_queries', 20, function() {
             // $realtorCount = User::where('user_type','=','realtor')->whereDoesntHave('unmatch_relator', function($q) {
             //     $q->where('deleted_at', null);
