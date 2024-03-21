@@ -759,8 +759,96 @@ $(document).ready(function(){
     });
     
     
-     tinymce.init({
+    tinymce.init({
         selector: "#editor4",
+        theme: "modern",
+        height: "300px",
+        extended_valid_elements: 'span',
+        branding: false,
+        forced_root_block: "",
+        plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars code fullscreen",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern imagetools",
+            "image code"
+        ],
+        toolbar: "insertfile undo redo | styleselect | fontselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code | print preview media fullpage | forecolor backcolor emoticons",
+        image_title: true,
+        automatic_uploads: true,
+        file_picker_types: 'image',
+        image_advtab: true,
+       // advlist_bullet_styles: 'default',
+        file_picker_callback: function(cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function() {
+                var file = this.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+    });
+
+
+    tinymce.init({
+        selector: "#editor5",
+        theme: "modern",
+        height: "300px",
+        extended_valid_elements: 'span',
+        branding: false,
+        forced_root_block: "",
+        plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars code fullscreen",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern imagetools",
+            "image code"
+        ],
+        toolbar: "insertfile undo redo | styleselect | fontselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code | print preview media fullpage | forecolor backcolor emoticons",
+        image_title: true,
+        automatic_uploads: true,
+        file_picker_types: 'image',
+        image_advtab: true,
+       // advlist_bullet_styles: 'default',
+        file_picker_callback: function(cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function() {
+                var file = this.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+    });
+
+
+    tinymce.init({
+        selector: "#editor6",
         theme: "modern",
         height: "300px",
         extended_valid_elements: 'span',

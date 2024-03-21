@@ -293,6 +293,12 @@ Route::group([
         Route::post('/pages/check-page', 'PagesController@checkDuplicatePage');
         Route::get('/pages/{title}/{id}', 'PagesController@editContent');
         Route::get('/pages/{title}/{id}', 'PagesController@editContent');
+        
+        // Home Page Builder Routes
+        Route::get('/homepage/edit', 'PageBuilderController@editHomePage');
+        Route::post('/homepage/update', 'PageBuilderController@updateHomePage');
+
+
         Route::get('/testimonials', 'PagesController@testimonials');
         Route::get('/testimonials/new', 'PagesController@newTestimonial');
         Route::post('/testimonials/create', 'PagesController@createTestimonial');

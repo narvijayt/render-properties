@@ -144,6 +144,17 @@
                             <i class="fa fa-circle-o"></i>All Pages
                         </a>
                     </li>
+                    {{-- Home and Register --}}
+                    <li>
+                        <a href="{{url('cpldashrbcs/homepage/edit')}}">
+                            <i class="fa fa-circle-o"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('cpldashrbcs/pages')}}">
+                            <i class="fa fa-circle-o"></i>Register
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">
