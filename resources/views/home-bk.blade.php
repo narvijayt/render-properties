@@ -47,11 +47,10 @@
                         <!---<span>CONNECTING<br></span> Homes Buyers <span> to </span><br>Top Real Estate Agents<br><span>and</span> Loan Officers <br><span>in</span> YOUR LOCAL AREA-->
                         <!---Connecting <span>Home Buyers</span> and <span>Sellers</span> to  <span>Top Real Estate Agents,</span> <span>Trusted Mortgage Loan Officers</span> and <span>Reputable Home Service Providers</span> and <span>Vendors</span> -->
                        
-    			        {{-- <h1 class="m-0">Welcome to Render The Real Estate Connection</h1>
+    			        <h1 class="m-0">Welcome to Render The Real Estate Connection</h1>
                         <div class="home-banner-heading"><h2>We Connect Home <br> Buyers & Sellers With <br> Top-tier Real Estate Agents, <br> Loan Officers & Vendors.</h2></div>
+    					{{--<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>--}}
 						<p class="pr-4">Our platform empowers users to browse <br> and match with the best in the industry, <br> ensuring a seamless and successful <br> real estate experience.</p>
-    					<p>{!! get_application_name() !!} connects home<br>buyers and sellers to real estate<br>agents and loan officers.</p>--}}
-                        {!! $getHomePage->banner !!}
 						{{--<<p class="mt-1"><b>SEE SUBSCRIPTIONS FOR…</b></p>--}}
     					
                         {{-- <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button> --}}
@@ -167,7 +166,10 @@
 	
 	<div class="join-render-section py-3">
 	<div class="container">
-	{!! $getHomePage->section_1 !!}
+	<h2 class="text-center h1  mb-1 mt-0">Join Render Today!</h2>
+	<p class="text-center text-primary">Whether you're buying your dream home or selling a property, Render™ is here to help you every step of the way. Our curated network of Real Estate Pros is comprised of experienced and reputable individuals who are dedicated to providing exceptional service and guidance throughout your transaction.</p>
+	<p class="text-center text-primary">With Render, you can browse profiles, read reviews, and connect with professionals who align with your needs and preferences. Our platform streamlines the process of finding the right realtor, loan officer, or vendor, saving you time and effort.</p>
+	<p class="text-center text-primary">Join Render today and experience the difference. Let us connect you with the best in real estate, so you can focus on finding your perfect home or closing the deal on your property.</p>
 	<div class="col-md-12 center-box text-center mt-0 mb-0">
 	<h4 class="text-center mb-0 text-primary">SIGN ME UP!</h4> 
 	<div class="d-flex-btn-group justify-content-center"><a href="https://staging.render.properties/realtor-register" class="btn btn-primary btn-yellow ">REALTORS - FREE
@@ -180,26 +182,25 @@
 	</div>
 	<div class="render-network-section py-3">
 	<div class="container">
-    @php
-        $section2Array = '';
-        if (!is_null($getHomePage->section_2)):
-            $section2Array = (array) json_decode($getHomePage->section_2, true);
-        endif;
-    @endphp
-	{!! $section2Array[subsection1] !!}
+	
+	<h2 class="text-center text-white h1  mb-1 mt-0 text-center">Get Seen By Home Buyers & Sellers</h2>
+	<p class="text-box-center text-center text-white"> Render is a social network exclusively for real estate professionals that want to connect with other real estate pros. We’re all working towards the same goals… get more deals, close more deals.</p>
 	<div class="row ">
 	<div class="col-md-12 center-box text-center mt-2">
 	<div class="col-md-4 px-4">
 	<img src="{{url('/')}}/img/connect-icon.png">
-	{!! $section2Array[subsection2] !!}
+	<h3 class="text-orange">Get Seen by people <br> that want to connect:</h3>
+	<p class="text-white">Render was designed to connect and match real estate pros that are open to new relationships. With Render, you can spread your name, build your reputation, scale your business, and do it all with professionals that are open and looking for your service. No more cold calling and talking to the wrong people.</p>
 	</div>
 	<div class="col-md-4 px-4">
 	<img src="{{url('/')}}/img/monitoring-icon-02.png">
-	{!! $section2Array[subsection3] !!}
+	<h3 class="text-orange">More Leads & Referrals:</h3>
+	<p class="text-white">Everyone knows that the more you refer, the more referrals you’ll get. That’s what the Render Network is all about. Getting qualified leads is as easy as making a connection. Together, we all grow faster.</p>
 	</div>
 	<div class="col-md-4 px-4">
 	<img src="{{url('/')}}/img/sale-icon-1.png">
-    {!! $section2Array[subsection4] !!}
+	<h3 class="text-orange">Speed to Sale:</h3>
+	<p class="text-white">It takes a whole crew to move a property. Realtors, Lenders, Inspectors, Contractors, Title Agents, Lawyers, Photographers, and maybe even a handful of dudes with a truck. And connecting with everyone you need to make that sale has never been easier with Render.</p>
 	</div>
 	</div>
 	<div class="col-md-12 center-box text-center mt-0 mb-3">
@@ -268,21 +269,22 @@
 	    </div>
 	</div>
     </div>
-	@php
-        $section3Array = '';
-        if (!is_null($getHomePage->section_3)):
-            $section3Array = (array) json_decode($getHomePage->section_3, true);
-        endif;
-    @endphp
+	
 	<div class="works-section-outer py-3">
         <div class="container">
 		<div class="row ">
 	<div class="col-md-12 center-box text-left mt-0">
 	<div class="col-md-6 pr-4">
-	{!! $section3Array[subsection1] !!}
+	<h2 class="text-left text-white h1  mb-1 mt-0">How It Works For…</h2>
+	<div class="mobile-image"> <img src="{{url('/')}}/img/realtors-img-new.png"></div>
+	<h4 class="text-left text-white m-0">Realtors:</h4>
+	<p class="text-left text-white">
+	 Whether you’re a seasoned real estate agent or just starting, Render Properties provides you with a platform to connect with the right lenders and vendors for your clients. Easily find mortgage experts, photographers, home stagers, and more to enhance your services and provide a comprehensive experience to your clients. 
+	</p>
+	<a class="sign-link text-orange" href="{{ url('realtor-register') }}">Free Sign Up For Realtors</a>
 	</div>
 	<div class="col-md-6 desktop-image">
-	<img src="img/realtors-img-new.png">
+	<img src="{{url('/')}}/img/realtors-img-new.png">
 	</div>
 	</div>
 	
@@ -291,14 +293,22 @@
 	<img src="{{url('/')}}/img/lenders-img-new.png">
 	</div>
 	<div class="col-md-6 pl-4">
-	{!! $section3Array[subsection2] !!}
+	<h4 class="text-left text-white m-0">Lenders:</h4>
+	<p class="text-left text-white">
+	For lenders, Render Properties offers a direct line to real estate professionals seeking financing solutions. Connect with realtors who are open to establishing new relationships and have clients in need of mortgage services, ensuring a seamless and efficient lending process. No more Cold Calling or meet and greets. 
+	</p>
+	<a class=" sign-link text-orange" href="{{ url('lender-register') }}">Sign Me Up</a>
 	</div>
 	
 	</div>
 	
 	<div class="col-md-12 center-box text-left mt-3 flex-box-section">
 	<div class="col-md-6 pr-4 box-order-1">
-	{!! $section3Array[subsection3] !!}
+	<h4 class="text-left text-white m-0">Vendors:</h4>
+	<p class="text-left text-white">
+	If you’re a vendor specializing in real estate services such as photography, staging, or property inspection, Render Properties is your gateway to a wider network of potential clients. Realtors on our platform are actively seeking new partnerships, allowing you to showcase your skills and offerings to those who need them. 
+	</p>
+	 <a class="sign-link text-orange" href="{{ url('vendor-register') }}">Sign Me Up</a>
 	</div>
 	<div class="col-md-6  box-order-2">
 	<img src="{{url('/')}}/img/vendors-img-new.png">
@@ -311,7 +321,8 @@
         <div class="container pb-0">
 		<div class="row ">
 		<div class="col-md-12 center-box text-center mt-3 mobile-center-box">
-		{!! $getHomePage->section_4 !!}
+		<h2 class="text-center h1  mb-1 mt-0">All Profits Are Yours! <br> We Never Take A Cut.</h2>
+		<p class="text-primary">Unlike other online marketplaces, we never take a dime of <br> your proceeds. You only pay for your monthly subscription, <br> so you can do all the deals you want risk-free.</p>
 		<div class="col-md-12 center-box text-center mt-1 mb-3 ">
 	<h4 class="text-center text-primary mt-0 mb-0 ">CHECK IT OUT!</h4>
 	<div class="d-flex-btn-group justify-content-center">
@@ -333,7 +344,14 @@
 		<img src="{{url('/')}}/img/richard-image-home.png">
 		</div>
 		<div class="col-md-9 instant-text">
-		{!! $getHomePage->section_5 !!}
+		<h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br> Nationwide!</h2>
+		
+		<p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
+		<p class="text-primary">No more cold-calling. </p>
+		<p class="text-primary">No more hours of searching for the pros.</p>
+		<p class="text-primary">No more incompetent real estate pros.</p>
+		<p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render network can do for you.</p>
+		
 		<div class="center-box text-left mt-1 mb-3 pt-2">
 	<h4 class="text-left text-primary mt-0 mb-0">SIGN ME UP!</h4>
 	<div class="d-flex-btn-group">
