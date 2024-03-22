@@ -295,7 +295,7 @@ Route::group([
         Route::get('/pages/{title}/{id}', 'PagesController@editContent');
         
         // Home Page Builder Routes
-        Route::get('/homepage/edit', 'PageBuilderController@editHomePage');
+        Route::get('/homepage/edit', 'PageBuilderController@editHomePage')->name('admin.pages.edit-home-page');
         Route::post('/homepage/update', 'PageBuilderController@updateHomePage');
 
 

@@ -848,7 +848,7 @@ $(document).ready(function(){
 
 
     tinymce.init({
-        selector: "#editor6",
+        selector: "#editor6, #editor7, #editor8, #editor9, #editor10, #editor11",
         theme: "modern",
         height: "300px",
         extended_valid_elements: 'span',

@@ -30,39 +30,43 @@ class PageBuilderController extends Controller
      */
     protected function updateHomePage(Request $request) {
         try {
-            // We will add validations later.
-            $validate = [
-                'banner' => 'required',
-                'section_1' => 'required',
-                'section_2' => 'required',
-                'section_3' => 'required',
-                'section_4' => 'required',
-                'section_5' => 'required',
-            ];
+            // dd($request->all());
+            // Custom Validation Rules (Validator wasn't working)
+            $formInputKeys = ['banner', 'section1', 'section2', 'section3', 'section4', 'section5'];
 
-            $request->validate($validate);
-            
+            foreach ($request->all() as $key => $value) {
+                if (in_array($key, $formInputKeys)) {
+                    if (is_null($value)) {
+                        return \Redirect::back()->with('error', 'Please fill in all the required fields.');
+                    }
+                }
+            }
+
             $getHomePage = HomePageBuilder::first();
+            
             if (is_null($getHomePage)) {
                 $homePage = new HomePageBuilder;
             } else {
                 $homePage = HomePageBuilder::find($getHomePage->id);
             }
+            
             $homePage->userId = Auth::user()->user_id;
             $homePage->banner = $request->banner;
             $homePage->section_1 = $request->section1;
-            $homePage->section_2 = $request->section2;
-            $homePage->section_3 = $request->section3;
+            $homePage->section_2 = json_encode($request->section2);
+            $homePage->section_3 = json_encode($request->section3);
             $homePage->section_4 = $request->section4;
             $homePage->section_5 = $request->section5;
+            
             if ($homePage->save()) {
-                return redirect()->route('admin.pages.edit-home-page')->with('success', 'Home Page updated successfully.');
+                return \Redirect::route('admin.pages.edit-home-page')->with('success', 'Home Page updated successfully.'); 
             } else {
-                return redirect()->back()->with('error', 'Home Page updation failed.');
+                return \Redirect::back()->with('error', 'An unexpected error occurred while updating the Home page.');
             }
 
+
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return \Redirect::back()->with('error', 'Internal Server Error');
         }
     }
 }
