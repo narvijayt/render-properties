@@ -294,10 +294,13 @@ Route::group([
         Route::get('/pages/{title}/{id}', 'PagesController@editContent');
         Route::get('/pages/{title}/{id}', 'PagesController@editContent');
         
-        // Home Page Builder Routes
+        // Home and Register Page Builder Routes
+        // --> Home
         Route::get('/homepage/edit', 'PageBuilderController@editHomePage')->name('admin.pages.edit-home-page');
         Route::post('/homepage/update', 'PageBuilderController@updateHomePage');
-
+        // --> Register
+        Route::get('/register/realtor/edit', 'PageBuilderController@editRealtorRegisterPage')->name('admin.pages.edit-realtor-register-page');
+        Route::post('/realtor/update', 'PageBuilderController@updateRealtorRegisterPage');
 
         Route::get('/testimonials', 'PagesController@testimonials');
         Route::get('/testimonials/new', 'PagesController@newTestimonial');

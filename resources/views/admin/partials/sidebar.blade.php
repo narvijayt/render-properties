@@ -151,8 +151,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{url('cpldashrbcs/pages')}}">
-                            <i class="fa fa-circle-o"></i>Register
+                        <a href="{{url('cpldashrbcs/register/realtor/edit')}}">
+                            <i class="fa fa-circle-o"></i>Realtor Register
                         </a>
                     </li>
                 </ul>
