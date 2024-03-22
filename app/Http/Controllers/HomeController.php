@@ -10,6 +10,8 @@ use App\User;
 use DB;
 use Cache;
 use Illuminate\Http\Request;
+use App\HomePageBuilder;
+
 class HomeController extends Controller
 {
     /**
@@ -34,12 +36,13 @@ class HomeController extends Controller
             $homePage = Page::find(PageIdEnum::HOME);
             $testimonials = Testimonial::all();
             $getHomepagemeta = Meta::where('page_id','=',PageIdEnum::HOME)->get();
+            $getHomePage = HomePageBuilder::first();
             if($getHomepagemeta->isNotEmpty()){
                 $meta = Meta::find($getHomepagemeta[0]->id);
             }else{
                 $meta = null;
             }
-            return compact('realtorCount', 'brokerCount', 'messageCount', 'connectionCount', 'spotlightUsers','homePage', 'testimonials','meta');
+            return compact('realtorCount', 'brokerCount', 'messageCount', 'connectionCount', 'spotlightUsers','homePage', 'testimonials','meta', 'getHomePage');
         });
         return view('home', $viewData);
     }
