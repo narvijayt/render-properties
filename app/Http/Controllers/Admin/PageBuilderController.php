@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\HomePageBuilder;
 use Auth;
 use App\RealtorRegisterPageBuilder;
+use App\LenderRegisterPageBuilder;
 
 class PageBuilderController extends Controller
 {
@@ -108,8 +109,9 @@ class PageBuilderController extends Controller
      * 
      * @return html
      */
-    protected function updateRealtorRegisterPage(Request $request) {
+    protected function updateRegisterPage(Request $request) {
         try {
+            
             $formInputKeys = ['banner', 'sectionOneHeader', 'section1', 'section2'];
             $errorMessage = "Please fill in all the required fields.";
 
@@ -120,40 +122,68 @@ class PageBuilderController extends Controller
             foreach ($request->all() as $key => $value) {
                 if (in_array($key, $formInputKeys)) {
                     if (is_array($request->section1)) {
-                        foreach ($request->section1 as $key => $value) {
-                            if (is_null($value)) {
+                        foreach ($request->section1 as $innerValue) {
+                            if (is_null($innerValue)) {
                                 return \Redirect::back()->with('error', $errorMessage)->withInput($request->input());
                             }
                         }
                     }
-
+                                
                     if (is_null($value)) {
                         return \Redirect::back()->with('error', $errorMessage)->withInput($request->input());
                     }
-
                 }
             }
-    
-            $realtorRegisterPage = RealtorRegisterPageBuilder::first();
             
-            if (is_null($realtorRegisterPage)) {
-                $realtorRegisterPage = new RealtorRegisterPageBuilder;
-                $realtorRegisterPage->userId = Auth::user()->user_id;
+    
+            if ($request->page === "lender") {
+                $registerPage = LenderRegisterPageBuilder::first();
+            } else if ($request->page === "realtor") {
+                $registerPage = RealtorRegisterPageBuilder::first();
+            }
+            
+            if (is_null($registerPage)) {
+                if ($request->page === "lender") {
+                    $registerPage = new LenderRegisterPageBuilder;
+                } else if ($request->page === "realtor") {
+                    $registerPage = new RealtorRegisterPageBuilder;
+                }
+
+                $registerPage->userId = Auth::user()->user_id;
             }
     
-            $realtorRegisterPage->banner = $request->banner;
-            $realtorRegisterPage->section_1_Header = $request->sectionOneHeader;
-            $realtorRegisterPage->section_1 = json_encode($request->section1);
-            $realtorRegisterPage->section_2 = $request->section2;
+            $registerPage->banner = $request->banner;
+            $registerPage->section_1_Header = $request->sectionOneHeader;
+            $registerPage->section_1 = json_encode($request->section1);
+            $registerPage->section_2 = $request->section2;
             
-            if ($realtorRegisterPage->save()) {
-                return \Redirect::route('admin.pages.edit-realtor-register-page')->with('success', 'Realtor Register Page updated successfully.');
+            if ($registerPage->save()) {
+                if ($request->page === "lender") {
+                    return \Redirect::route('admin.pages.edit-lender-register-page')->with('success', 'Lender Register Page updated successfully.');
+                } else if ($request->page === "realtor") {
+                    return \Redirect::route('admin.pages.edit-realtor-register-page')->with('success', 'Realtor Register Page updated successfully.');
+                }
             } else {
-                return \Redirect::back()->with('error', 'An unexpected error occurred while updating the Realtor Register page.');
+                return \Redirect::back()->with('error', 'An unexpected error occurred while updating the '.ucfirst($request->page).' Register page.');
             }
             
         } catch (\Exception $e) {
             return \Redirect::back()->with('error', 'Internal Server Error'. $e->getMessage());
         }
     }
+
+
+    /**
+     *  Index Lender Register Page
+     * 
+     *  @since 1.0.0
+     * 
+     *  @return html
+     */
+    protected function editLenderRegisterPage() {
+        $data['getlenderRegisterPage'] = LenderRegisterPageBuilder::first();
+        // dd($data['getlenderRegisterPage']);
+        return view('admin.pages.edit-lender-register-page', $data);
+    }
+
 }

@@ -155,6 +155,11 @@
                             <i class="fa fa-circle-o"></i>Realtor Register
                         </a>
                     </li>
+                    <li>
+                        <a href="{{url('cpldashrbcs/register/lender/edit')}}">
+                            <i class="fa fa-circle-o"></i>Lender Register
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">

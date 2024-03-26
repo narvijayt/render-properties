@@ -34,7 +34,9 @@ $description = 'Register for Render'
 <div class="container">
  <div class="row">
  <div class="col-lg-7 col-md-5">
- {!! $getLenderRegisterPage->banner !!}
+ <h1 class="m-0 text-white orange-bg">LENDER SIGN UP</h1>
+ <h2 class="mt-1 h1 mb-2 pb-1">Match with Home Buyers <br> & Sellers on Render</h2>
+ <p class="text-primary mb-0 pl-5">Gain access to our network of realtors ready to bring you their next deal. Join our platform today to connect with motivated home buyers and sellers, and collaborate with real estate professionals to grow your business.</p>
  </div>
  <div class="col-lg-6 col-md-7 ">
  </div>
@@ -49,29 +51,38 @@ $description = 'Register for Render'
 </div>--}}
 
 <div class="col-md-7 number-list-box-left">
-        {!! $getLenderRegisterPage->section_1_Header !!}
-        <div class="mt-2"></div>
-
-        @if (isset($getLenderRegisterPage->section_1))
-            @php
-                $section1Array = (array) json_decode($getLenderRegisterPage->section_1, true);
-                $counter = 1;
-            @endphp
-
-            @if (!empty(section1Array))
-                @foreach ($section1Array as $key => $value)
-                    <div class="number-list-box mb-2">
-                        <div class="number-box">
-                            <h3 class="m-0">{{ $counter++ }}</h3>
-                        </div>
-                        <div class="streamlined-text">
-                            {!! $value !!}
-                        </div>
-                    </div>
-                @endforeach
-            @endif            
-        @endif
-        
+      <h2 class="text-left text-white h2  pb-1 mt-0">A Targeted Deal Funnel</h2>
+         
+		 <div class="number-list-box mb-2 mt-2">
+		 <div class="number-box">
+		 <h3 class="m-0">1</h3>
+		 </div>
+		 <div class="streamlined-text">
+		 <h4 class="text-orange m-0">Quality Referrals:</h4>
+		 <p class="text-white">Get deals without the hassle of cold-calling and expensive marketing. Connect with Realtors who have ready-to-buy clients. And connecting to Vendors can expand your reach even further.</p>
+		 </div>
+		 </div>
+		 
+		 <div class="number-list-box mb-2">
+		 <div class="number-box">
+		 <h3 class="m-0">2</h3>
+		 </div>
+		 <div class="streamlined-text">
+		 <h4 class="text-orange m-0">Showcase Your Expertise & Services:</h4>
+		 <p class="text-white">Realtors are actively looking for unique products that fit their client’s needs. Render gives you the opportunity to show how your experience and lending products solve their problems.</p>
+		 </div>
+		 </div>
+		 
+		 
+		 <div class="number-list-box mb-2">
+		 <div class="number-box">
+		 <h3 class="m-0">3</h3>
+		 </div>
+		 <div class="streamlined-text">
+		 <h4 class="text-orange m-0">Build Strategic Partnerships:</h4>
+		 <p class="text-white">Becoming a preferred pro for realtors and vendors helps build your repeat business. Now, you can focus on lending rather than prospecting.</p>
+		 </div>
+		 </div>
 		 <div class="per-month-price">
 		    <h3 class="text-white mt-0 text-uppercase">{{ $optionLabel }}</h3>
 		 </div>
@@ -207,7 +218,13 @@ $description = 'Register for Render'
         <div class="container pb-0">
 		<div class="row">
 		<div class="col-md-6 ">
-        {!! $getLenderRegisterPage->section_2 !!}
+		<h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br> Nationwide!</h2>
+		
+		<p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up creating the largest network of realtors and lenders in the country. Now, they’re bringing this powerful network to you. </p>
+		<p class="text-primary">No more cold-calling. </p>
+		<p class="text-primary">No more hours of searching for the pros.</p>
+		<p class="text-primary">No more incompetent real estate pros.</p>
+		<p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render network can do for you.</p>
 		<div class="sign-up-link text-left mt-1">
  <a class="text-primary" href="#streamlined-outer-scroll">SIGN UP NOW <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 </div>
