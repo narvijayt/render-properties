@@ -39,6 +39,7 @@ use DateTime;
 
 use App\Events\NewMemberAlert;
 use App\RealtorRegisterPageBuilder;
+use App\LenderRegisterPageBuilder;
 
 class RegisterController extends Controller
 {
@@ -103,12 +104,15 @@ class RegisterController extends Controller
             }
         }
 	    $testimonials = Testimonial::all();
+        
+        // Get Realtor Register page details
+        $getLenderRegisterPage = LenderRegisterPageBuilder::first();
         if ($request->input('remember_token')) 
         {
 			$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
-			return view('auth.lender-register', compact('user', 'registerType', 'lenderRegPage','testimonials', 'optionLabel'));
+			return view('auth.lender-register', compact('user', 'registerType', 'lenderRegPage','testimonials', 'optionLabel', 'getLenderRegisterPage'));
 		}
-        return view('auth.lender-register', compact('registerType', 'lenderRegPage','testimonials', 'optionLabel'));
+        return view('auth.lender-register', compact('registerType', 'lenderRegPage','testimonials', 'optionLabel', 'getLenderRegisterPage'));
 	}
 	
 	public function showRealtorRegistrationForm(Request $request)

@@ -1,11 +1,11 @@
 @extends('admin.layouts.main')
 @section('content')
     <section class="content-header">
-        <h1>Realtor Register Page</h1>
+        <h1>Lender Register Page</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="{{url('cpldashrbcs/pages')}}">Pages</a></li>
-            <li class="active">Realtor Register Page</li>
+            <li class="active">Lender Register Page</li>
         </ol>
     </section>
     
@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <h4>Banner</h4>
                                 <textarea id="editor1" name="banner" rows="10" cols="80">
-                                    @php $banner = !is_null($getRealtorRegisterPage->banner) ? $getRealtorRegisterPage->banner : '' @endphp
+                                    @php $banner = !is_null($getlenderRegisterPage->banner) ? $getlenderRegisterPage->banner : '' @endphp
                                     {{ $banner}}
                                 </textarea>
                             </div>
@@ -43,9 +43,9 @@
                             </div>
 
                             <div class="form-group">
-                                <h4>Header</h4>
+                                <h4>Section 1 Header</h4>
                                 <textarea class="tinyTextArea" name="sectionOneHeader" rows="10" cols="80">
-                                    @php $section1Header = !is_null($getRealtorRegisterPage->section_1_Header) ? $getRealtorRegisterPage->section_1_Header : '' @endphp
+                                    @php $section1Header = !is_null($getlenderRegisterPage->section_1_Header) ? $getlenderRegisterPage->section_1_Header : '' @endphp
                                     {{ $section1Header}}
                                 </textarea>
                             </div>
@@ -53,9 +53,9 @@
                             
                             
                             <div class="addNewSections mb-2">
-                                @if (isset($getRealtorRegisterPage->section_1))
+                                @if (isset($getlenderRegisterPage->section_1))
                                     @php
-                                        $section1Array = (array) json_decode($getRealtorRegisterPage->section_1, true);
+                                        $section1Array = (array) json_decode($getlenderRegisterPage->section_1, true);
                                         $counter = 1;
                                     @endphp
 
@@ -72,6 +72,7 @@
 
                                 @endif
                             </div>
+                            
                             <!-- END.// Section 1  -->
 
 
@@ -79,7 +80,7 @@
                             <div class="form-group">
                                 <h4>Section 2</h4>
                                 <textarea id="editor11" name="section2" rows="10" cols="80">
-                                    @php $section2 = !is_null($getRealtorRegisterPage->section_2) ? $getRealtorRegisterPage->section_2 : '' @endphp
+                                    @php $section2 = !is_null($getlenderRegisterPage->section_2) ? $getlenderRegisterPage->section_2 : '' @endphp
                                     {{ $section2 }}
                                 </textarea>
                             </div>
@@ -87,7 +88,7 @@
                             <!-- END.// Section 2 (Sub Section 1, 2, 3 and 4)  -->
 
                             <div class="box-footer">
-                                <input type="hidden" name="page" value="realtor" />
+                                <input type="hidden" name="page" value="lender" />
                                 <button type="submit" class="btn btn-primary pull-right">Update</button>
                             </div>
                          </form>

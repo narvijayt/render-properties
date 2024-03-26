@@ -298,9 +298,11 @@ Route::group([
         // --> Home
         Route::get('/homepage/edit', 'PageBuilderController@editHomePage')->name('admin.pages.edit-home-page');
         Route::post('/homepage/update', 'PageBuilderController@updateHomePage');
-        // --> Register
+        // --> Realtor Register
         Route::get('/register/realtor/edit', 'PageBuilderController@editRealtorRegisterPage')->name('admin.pages.edit-realtor-register-page');
-        Route::post('/realtor/update', 'PageBuilderController@updateRealtorRegisterPage');
+        Route::post('/register/update', 'PageBuilderController@updateRegisterPage');
+        // --> Register
+        Route::get('/register/lender/edit', 'PageBuilderController@editLenderRegisterPage')->name('admin.pages.edit-lender-register-page');
 
         Route::get('/testimonials', 'PagesController@testimonials');
         Route::get('/testimonials/new', 'PagesController@newTestimonial');
