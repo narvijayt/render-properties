@@ -40,6 +40,7 @@ use DateTime;
 use App\Events\NewMemberAlert;
 use App\RealtorRegisterPageBuilder;
 use App\LenderRegisterPageBuilder;
+use App\VendorRegisterPageBuilder;
 
 class RegisterController extends Controller
 {
@@ -455,7 +456,7 @@ class RegisterController extends Controller
     }
     
     public function loadVendorRegLayout(Request $request)
-    {
+    { 
         // $data['vendorPackages'] = VendorPackages::where(['status' => 1])->orderBy('packageType', 'ASC')->get();
         $vendorPackage = RegistrationPlans::where(['packageType' => 'vendor'])->first();
         $data['optionLabel'] = '';
@@ -471,6 +472,8 @@ class RegisterController extends Controller
             }
         }
         $data['vendorPackage'] = $vendorPackage;
+         // Get Realtor Register page details
+        $data['getVendorRegisterPage'] = VendorRegisterPageBuilder::first();
         // $data['selectedPackage'] = $request->has('package') ? $request->get('package') : '';
         $data['testimonials'] = Testimonial::all();
         return view('auth.vendor', $data );

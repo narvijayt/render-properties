@@ -8,6 +8,7 @@ use App\HomePageBuilder;
 use Auth;
 use App\RealtorRegisterPageBuilder;
 use App\LenderRegisterPageBuilder;
+use App\VendorRegisterPageBuilder;
 
 class PageBuilderController extends Controller
 {
@@ -103,7 +104,7 @@ class PageBuilderController extends Controller
     }
 
     /**
-     * Update realtor Register Page
+     * Update Register Page
      * 
      * @since 1.0.0
      * 
@@ -140,6 +141,8 @@ class PageBuilderController extends Controller
                 $registerPage = LenderRegisterPageBuilder::first();
             } else if ($request->page === "realtor") {
                 $registerPage = RealtorRegisterPageBuilder::first();
+            } else if ($request->page === "vendor") {
+                $registerPage = VendorRegisterPageBuilder::first();
             }
             
             if (is_null($registerPage)) {
@@ -147,6 +150,8 @@ class PageBuilderController extends Controller
                     $registerPage = new LenderRegisterPageBuilder;
                 } else if ($request->page === "realtor") {
                     $registerPage = new RealtorRegisterPageBuilder;
+                } else if ($request->page === "vendor") {
+                    $registerPage = new VendorRegisterPageBuilder;
                 }
 
                 $registerPage->userId = Auth::user()->user_id;
@@ -158,11 +163,7 @@ class PageBuilderController extends Controller
             $registerPage->section_2 = $request->section2;
             
             if ($registerPage->save()) {
-                if ($request->page === "lender") {
-                    return \Redirect::route('admin.pages.edit-lender-register-page')->with('success', 'Lender Register Page updated successfully.');
-                } else if ($request->page === "realtor") {
-                    return \Redirect::route('admin.pages.edit-realtor-register-page')->with('success', 'Realtor Register Page updated successfully.');
-                }
+                return \Redirect::route('admin.pages.edit-'.$request->page.'-register-page')->with('success', ''.ucfirst($request->page).' Register Page updated successfully.');
             } else {
                 return \Redirect::back()->with('error', 'An unexpected error occurred while updating the '.ucfirst($request->page).' Register page.');
             }
@@ -184,6 +185,18 @@ class PageBuilderController extends Controller
         $data['getlenderRegisterPage'] = LenderRegisterPageBuilder::first();
         // dd($data['getlenderRegisterPage']);
         return view('admin.pages.edit-lender-register-page', $data);
+    }
+    
+    /**
+     *  Index Vendor Register Page
+     * 
+     *  @since 1.0.0
+     * 
+     *  @return html
+     */
+    protected function editVendorRegisterPage() {
+        $data['getVendorRegisterPage'] = VendorRegisterPageBuilder::first();
+        return view('admin.pages.edit-vendor-register-page', $data);
     }
 
 }

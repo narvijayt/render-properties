@@ -301,8 +301,10 @@ Route::group([
         // --> Realtor Register
         Route::get('/register/realtor/edit', 'PageBuilderController@editRealtorRegisterPage')->name('admin.pages.edit-realtor-register-page');
         Route::post('/register/update', 'PageBuilderController@updateRegisterPage');
-        // --> Register
+        // --> Lender Register
         Route::get('/register/lender/edit', 'PageBuilderController@editLenderRegisterPage')->name('admin.pages.edit-lender-register-page');
+        // --> Vendor Register
+        Route::get('/register/vendor/edit', 'PageBuilderController@editVendorRegisterPage')->name('admin.pages.edit-vendor-register-page');
 
         Route::get('/testimonials', 'PagesController@testimonials');
         Route::get('/testimonials/new', 'PagesController@newTestimonial');
