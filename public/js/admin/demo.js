@@ -889,6 +889,9 @@ $(document).ready(function(){
             input.click();
         }
     });
+
+    
+    
     
 });
 
@@ -1038,3 +1041,80 @@ function deleteUser(id) {
         return false;
     }
 }
+
+
+
+
+
+
+// Div Counter (Realtor Register Page)
+let numberOfDivs = document.querySelectorAll('.section-box').length + 1;
+
+// Create tiny MCE textarea 
+function initTinyMCE(selector) {
+    tinymce.init({
+        selector: selector,
+        theme: "modern",
+        height: "300px",
+        extended_valid_elements: 'span',
+        branding: false,
+        forced_root_block: "",
+        plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars code fullscreen",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern imagetools",
+            "image code"
+        ],
+        toolbar: "insertfile undo redo | styleselect | fontselect | fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code | print preview media fullpage | forecolor backcolor emoticons",
+        image_title: true,
+        automatic_uploads: true,
+        file_picker_types: 'image',
+        image_advtab: true,
+        file_picker_callback: function(cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            input.onchange = function() {
+                var file = this.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        }
+    });
+}
+
+// Add New Sections
+$("#addSubSections").click(function(){
+    $(".addNewSections").append(`
+        <div class="section-box form-group">
+            <h4>Section 1 (Sub Section ${numberOfDivs++})</h4>
+            <textarea class="tinyTextArea" name="section1[]" rows="10" cols="80"></textarea>
+            <a class='btn btn-danger ms-1 remove_section_field'>Remove</a>
+        </div>        
+        <div class="clearfix"></div>
+    `);
+
+    // Call this to apply tiny mce textArea on this class when adding a new section
+    initTinyMCE(".tinyTextArea");
+});
+
+// Remove Section Field
+$('.addNewSections').on("click", ".remove_section_field", function(e){ 
+    e.preventDefault(); 
+    $(this).parent('.section-box').remove();
+});
+
+// First Call on while page load to apply tiny mce textArea on this class
+initTinyMCE(".tinyTextArea");

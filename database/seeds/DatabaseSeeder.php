@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
       $this->call(ConversationSeeder::class);
       $this->call(ReviewsSeeder::class);
       $this->call(HomePageSeeder::class);
+      $this->call(RealtorRegisterPageSeeder::class);
     }
 }

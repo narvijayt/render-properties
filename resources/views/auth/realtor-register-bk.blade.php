@@ -34,7 +34,9 @@ $description = 'Register for Render'
     <div class="container">
         <div class="row">
             <div class=" col-lg-6 col-md-5">
-               {!! $getRealtorRegisterPage->banner !!}
+                <h1 class="m-0 bg-bule text-white">REALTOR SIGN UP</h1>
+                <h2 class="mt-1 h1 mb-0">Close Fast & <br> Scale Your Business</h2>
+                <p class="text-primary mb-0">Join our network for free and get connected <br> to home buyers and sellers looking for your <br> expertise. With Render, closing deals is <br> easier than ever, thanks to our <br>  network of lenders and vendors. <br> Elevate your real estate game today.</p>
             </div>
             <div class="col-md-7 ">
             </div>
@@ -48,29 +50,43 @@ $description = 'Register for Render'
             @include('partials.registration.realtor-overview')
 	</div> --}}
             <div class="col-md-7 number-list-box-left">
-                {!! $getRealtorRegisterPage->section_1_Header !!}
-                
-                @if (isset($getRealtorRegisterPage->section_1))
-                    @php
-                        $section1Array = (array) json_decode($getRealtorRegisterPage->section_1, true);
-                        $counter = 1;
-                    @endphp
+                <h2 class="text-left text-white h2  pb-1 mt-0">A Streamlined Social Network, <br> Just For Real Estate
+                    Pros</h2>
+                <p class="text-left text-white">With Render, you’ll get access to pre-approved lenders and <br> real
+                    estate vendors in your area.</p>
+                <div class="number-list-box mb-2 mt-2">
+                    <div class="number-box">
+                        <h3 class="m-0">1</h3>
+                    </div>
+                    <div class="streamlined-text">
+                        <h4 class="text-orange m-0">Connect and Match with Home Buyers on Render:</h4>
+                        <p class="text-white">Render allows Realtors to connect and match with home buyers. Our platform provides a seamless experience for Realtors to find and connect with motivated home buyers. Join Render today to start building meaningful connections and closing deals with ease.</p>
+                    </div>
+                </div>
 
-                    @if (!empty(section1Array))
-                        @foreach ($section1Array as $key => $value)
-                            <div class="number-list-box mb-2 mt-2">
-                                <div class="number-box">
-                                    <h3 class="m-0">{{ $counter++ }}</h3>
-                                </div>
-                                <div class="streamlined-text">
-                                    {!! $value !!}
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                    
-                @endif
+                <div class="number-list-box mb-2">
+                    <div class="number-box">
+                        <h3 class="m-0">2</h3>
+                    </div>
+                    <div class="streamlined-text">
+                        <h4 class="text-orange m-0">Diverse Lenders with Tailored Products:</h4>
+                        <p class="text-white">Get access to a host of different lenders with a variety of offerings.
+                            From traditional lending, to Non-QM, to down payment programs; get hand-tailored lending
+                            products that fit your client’s unique needs.</p>
+                    </div>
+                </div>
 
+
+                <div class="number-list-box mb-2">
+                    <div class="number-box">
+                        <h3 class="m-0">3</h3>
+                    </div>
+                    <div class="streamlined-text">
+                        <h4 class="text-orange m-0">Render Offers a Variety of Vendors to Choose From:</h4>
+                        <p class="text-white">Render provides access to a range of vendors for your real estate needs. From home inspectors to appraisers and legal professionals, Render has vetted and verified vendors to ensure you're working with the best. Choose from our list of trusted vendors to streamline your real estate transactions and close deals faster.
+                        </p>
+                    </div>
+                </div>
                 <div class="sign-up-link">
 				<div class="d-flex-btn-group justify-content-start">
 				<a href="#streamlined-outer-scroll" class="btn btn-primary btn-yellow ">SIGN UP FOR FREE </a>
@@ -212,7 +228,18 @@ $description = 'Register for Render'
                     <img src="{{url('/')}}/img/richard-image-home.png">
                 </div>
                 <div class="col-md-9 instant-text">
-                    {!! $getRealtorRegisterPage->section_2 !!}
+                    <h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br>
+                        Nationwide!</h2>
+
+                    <p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker
+                        Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up
+                        creating the largest network of realtors and lenders in the country. Now, they’re bringing this
+                        powerful network to you. </p>
+                    <p class="text-primary">No more cold-calling. </p>
+                    <p class="text-primary">No more hours of searching for the pros.</p>
+                    <p class="text-primary">No more incompetent real estate pros.</p>
+                    <p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render
+                        network can do for you.</p>
                     <div class="sign-up-link text-left mt-1">
                         <a class="text-primary" href="#streamlined-outer-scroll">SIGN UP FOR FREE <i class="fa fa-arrow-right"
                                 aria-hidden="true"></i></a>
