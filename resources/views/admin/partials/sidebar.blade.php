@@ -160,6 +160,11 @@
                             <i class="fa fa-circle-o"></i>Lender Register
                         </a>
                     </li>
+                    <li>
+                        <a href="{{url('cpldashrbcs/register/vendor/edit')}}">
+                            <i class="fa fa-circle-o"></i>Vendor Register
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">

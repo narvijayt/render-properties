@@ -34,7 +34,10 @@ $description = 'Register for Render'
     <div class="container">
         <div class="row">
             <div class="col-md-5 col-sm-6">
-                {!! $getVendorRegisterPage->banner !!}
+                <h1 class="m-0 text-orange">VENDOR SIGN UP</h1>
+                <h2 class="mt-1 h1 mb-1 text-white">Your Expertise, <br> Their Needs – <br> Perfect Match</h2>
+                <p class="text-primary mb-0 pl-5 text-white"><b>Gain unrivaled access to a growing marketplace of
+                        realtors, lenders, and real estate pros looking for your services.</b></p>
             </div>
             <div class="col-md-7  col-sm-6">
             </div>
@@ -63,30 +66,44 @@ $description = 'Register for Render'
                 {{ csrf_field() }}
                <div class=" row realtor-row">
                 <div class="col-md-7 number-list-box-left">
-                    {!! $getVendorRegisterPage->section_1_Header !!}
+                    <h2 class="text-left text-white h2  pb-1 mt-0">How Render Gets You <br> More Jobs</h2>
 
-                    <div class="mt-2"></div>
-                    @if (isset($getVendorRegisterPage->section_1))
-                        @php
-                            $section1Array = (array) json_decode($getVendorRegisterPage->section_1, true);
-                            $counter = 1;
-                        @endphp
+                    <div class="number-list-box mb-2 mt-2">
+                        <div class="number-box">
+                            <h3 class="m-0">1</h3>
+                        </div>
+                        <div class="streamlined-text">
+                            <h4 class="text-orange m-0">Generate New Leads:</h4>
+                            <p class="text-white">Render can give you a steady stream of potential business without the
+                                need for expensive marketing. Our platform is a one-stop shop for realtors and other
+                                real estate pros who can constantly recommend your services.</p>
+                        </div>
+                    </div>
 
-                        @if (!empty(section1Array))
-                            @foreach ($section1Array as $key => $value)
-                                <div class="number-list-box mb-2 mt-2">
-                                    <div class="number-box">
-                                        <h3 class="m-0">{{ $counter++ }}</h3>
-                                    </div>
-                                    <div class="streamlined-text">
-                                        {!! $value !!}
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
-                        
-                    @endif
-                    
+                    <div class="number-list-box mb-2">
+                        <div class="number-box">
+                            <h3 class="m-0">2</h3>
+                        </div>
+                        <div class="streamlined-text">
+                            <h4 class="text-orange m-0">Showcase Your Expertise & Services:</h4>
+                            <p class="text-white">Realtors and lenders are actively looking for unique services that
+                                will help them close deals. Render gives you the opportunity to show how your experience
+                                and services solve their problems.</p>
+                        </div>
+                    </div>
+
+
+                    <div class="number-list-box mb-2">
+                        <div class="number-box">
+                            <h3 class="m-0">3</h3>
+                        </div>
+                        <div class="streamlined-text">
+                            <h4 class="text-orange m-0">Create Strategic Partnerships:</h4>
+                            <p class="text-white">At Render you’ll find a targeted audience of real estate professionals
+                                looking for your skills to help them close deals. Connecting with them is easy and puts
+                                you at the forefront of the real estate landscape.</p>
+                        </div>
+                    </div>
                     <div class="per-month-price">
                         <h3 class="text-white mt-0 text-uppercase">{{ $optionLabel }}</h3>
                     </div>
@@ -258,7 +275,18 @@ $description = 'Register for Render'
                     <img src="{{url('/')}}/img/richard-image-home.png">
                 </div>
                 <div class="col-md-9 instant-text">
-                {!! $getVendorRegisterPage->section_2 !!}
+                    <h2 class="text-left h1  mb-1 mt-0">Get Instant Access To <br> 1,000s Of Real Estate Pros, <br>
+                        Nationwide!</h2>
+
+                    <p class="text-primary">Render was created by The Carolinas leading, mortgage and real estate broker
+                        Richard Tocado, with a little help from Jimmy Kelly. To boost his own business, Richard wound up
+                        creating the largest network of realtors and lenders in the country. Now, they’re bringing this
+                        powerful network to you. </p>
+                    <p class="text-primary">No more cold-calling. </p>
+                    <p class="text-primary">No more hours of searching for the pros.</p>
+                    <p class="text-primary">No more incompetent real estate pros.</p>
+                    <p class="text-primary">And you get access to talent nationwide. Sign up now and see what the Render
+                        network can do for you.</p>
                     <div class="sign-up-link text-left mt-1">
                         <a class="text-primary" href="#">SIGN UP NOW <i class="fa fa-arrow-right"
                                 aria-hidden="true"></i></a>
