@@ -89,62 +89,71 @@ class PageBuilderController extends Controller
     }
 
 
+    /**
+     * Index realtor edit page.
+     * 
+     * @since 1.0.0
+     * 
+     * @return html
+     */
     protected function editRealtorRegisterPage() {
-        return view('admin.pages.edit-realtor-register-page');
+        $data['getRealtorRegisterPage'] = RealtorRegisterPageBuilder::first();
+        return view('admin.pages.edit-realtor-register-page', $data);
     }
 
-
-    protected function updateRealtorRegisterPage() {
+    /**
+     * Update realtor Register Page
+     * 
+     * @since 1.0.0
+     * 
+     * @return html
+     */
+    protected function updateRealtorRegisterPage(Request $request) {
         try {
-            // Custom Validation Rules (Validator wasn't working)
-            $formInputKeys = ['banner', 'section1', 'section2'];
+            $formInputKeys = ['banner', 'sectionOneHeader', 'section1', 'section2'];
             $errorMessage = "Please fill in all the required fields.";
+
+            if (!in_array('section1', array_keys($request->all()))) {
+                return \Redirect::back()->with('error', $errorMessage)->withInput($request->input());
+            }
 
             foreach ($request->all() as $key => $value) {
                 if (in_array($key, $formInputKeys)) {
+                    if (is_array($request->section1)) {
+                        foreach ($request->section1 as $key => $value) {
+                            if (is_null($value)) {
+                                return \Redirect::back()->with('error', $errorMessage)->withInput($request->input());
+                            }
+                        }
+                    }
+
                     if (is_null($value)) {
-                        return \Redirect::back()->with('error', $errorMessage);
+                        return \Redirect::back()->with('error', $errorMessage)->withInput($request->input());
                     }
 
-                    // Didn't use the merge approach as we have same key names
-                    $section2Array = array_values($request->section2);
-                    $section3Array = array_values($request->section3);
-
-                    foreach ($section2Array as $value) {
-                        if (is_null($value)) {
-                            return \Redirect::back()->with('error', $errorMessage);
-                        }
-                    }
-
-                    foreach ($section3Array as $value) {
-                        if (is_null($value)) {
-                            return \Redirect::back()->with('error', $errorMessage);
-                        }
-                    }
                 }
             }
-
-            $getRealtorRegisterPage = RealtorRegisterPageBuilder::first();
+    
+            $realtorRegisterPage = RealtorRegisterPageBuilder::first();
             
-            if (is_null($getRealtorRegisterPage)) {
-                $getRealtorRegisterPage = new RealtorRegisterPageBuilder;
-                $homePage->userId = Auth::user()->user_id;
-            } else {
-                $getRealtorRegisterPage = RealtorRegisterPageBuilder::find($getRealtorRegisterPage->id);
+            if (is_null($realtorRegisterPage)) {
+                $realtorRegisterPage = new RealtorRegisterPageBuilder;
+                $realtorRegisterPage->userId = Auth::user()->user_id;
             }
-
-            $homePage->banner = $request->banner;
-            $homePage->section_1 = $request->section1;
-            $homePage->section_2 = json_encode($request->section2);
-
-            if ($homePage->save()) {
-                return \Redirect::route('admin.pages.edit-realtor-register-page')->with('success', 'Realtor Register Page updated successfully.'); 
+    
+            $realtorRegisterPage->banner = $request->banner;
+            $realtorRegisterPage->section_1_Header = $request->sectionOneHeader;
+            $realtorRegisterPage->section_1 = json_encode($request->section1);
+            $realtorRegisterPage->section_2 = $request->section2;
+            
+            if ($realtorRegisterPage->save()) {
+                return \Redirect::route('admin.pages.edit-realtor-register-page')->with('success', 'Realtor Register Page updated successfully.');
             } else {
                 return \Redirect::back()->with('error', 'An unexpected error occurred while updating the Realtor Register page.');
             }
             
         } catch (\Exception $e) {
-            return \Redirect::back()->with('error', 'Internal Server Error');
+            return \Redirect::back()->with('error', 'Internal Server Error'. $e->getMessage());
         }
     }
 }

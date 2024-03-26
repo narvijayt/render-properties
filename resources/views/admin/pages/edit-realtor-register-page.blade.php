@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <h4>Banner</h4>
                                 <textarea id="editor1" name="banner" rows="10" cols="80">
-                                    @php $banner = !is_null($getHomePage->banner) ? $getHomePage->banner : '' @endphp
+                                    @php $banner = !is_null($getRealtorRegisterPage->banner) ? $getRealtorRegisterPage->banner : '' @endphp
                                     {{ $banner}}
                                 </textarea>
                             </div>
@@ -38,51 +38,49 @@
 
 
                             <!-- Section 1 -->
-                            <div class="form-group ">
-                                <h4>Section 1</h4>
-                                <textarea id="editor2" name="section1" rows="10" cols="80">
-                                    @php $section1 = !is_null($getHomePage->section_1) ? $getHomePage->section_1 : '' @endphp
-                                    {{ $section1}}
+                            <div class="d-flex">
+                                <h4>Section 1</h4><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button>
+                            </div>
+
+                            <div class="form-group">
+                                <h4>Header</h4>
+                                <textarea class="tinyTextArea" name="sectionOneHeader" rows="10" cols="80">
+                                    @php $section1Header = !is_null($getRealtorRegisterPage->section_1_Header) ? $getRealtorRegisterPage->section_1_Header : '' @endphp
+                                    {{ $section1Header}}
                                 </textarea>
+                            </div>
+                            <div class="clearfix"></div>
+                            
+                            
+                            <div class="addNewSections mb-2">
+                                @if (isset($getRealtorRegisterPage->section_1))
+                                    @php
+                                        $section1Array = (array) json_decode($getRealtorRegisterPage->section_1, true);
+                                        $counter = 1;
+                                    @endphp
+
+                                    @if (!empty(section1Array))
+                                        @foreach ($section1Array as $key => $value)
+                                            <div class="section-box form-group" key={{$key}}>
+                                                <h4>Section 1 (Sub Section {{ $counter++ }})</h4>
+                                                <textarea class="tinyTextArea" name="section1[]" rows="10" cols="80">{{ $value }}</textarea>
+                                                <a class='btn btn-danger ms-1 remove_section_field'>Remove</a>
+                                            </div>        
+                                            <div class="clearfix"></div>
+                                        @endforeach
+                                    @endif
+
+                                @endif
                             </div>
                             <!-- END.// Section 1  -->
 
-                            <!-- Section 2 (Sub Section 1, 2, 3 and 4) -->
-                            @php
-                                $section2Array = '';
-                                if (!is_null($getHomePage->section_2)):
-                                    $section2Array = (array) json_decode($getHomePage->section_2, true);
-                                endif;
-                            @endphp
-                            <div class="form-group">
-                                <h4>Section 2 (Sub Section 1)</h4>
-                                <textarea id="editor3" name="section2[subsection1]" rows="10" cols="80">
-                                    @php echo html_entity_decode($section2Array[subsection1]); @endphp
-                                </textarea>
-                            </div>
-                            <div class="clearfix"></div>
 
-
+                            <!-- Section 2 -->
                             <div class="form-group">
-                                <h4>Section 2 (Sub Section 2)</h4>
-                                <textarea id="editor4" name="section2[subsection2]" rows="10" cols="80">
-                                    @php echo html_entity_decode($section2Array[subsection2]); @endphp
-                                </textarea>
-                            </div>
-                            <div class="clearfix"></div>
-
-                            <div class="form-group">
-                                <h4>Section 2 (Sub Section 3)</h4>
-                                <textarea id="editor5" name="section2[subsection3]" rows="10" cols="80">
-                                    @php echo html_entity_decode($section2Array[subsection3]); @endphp
-                                </textarea>
-                            </div>
-                            <div class="clearfix"></div>
-
-                            <div class="form-group">
-                                <h4>Section 2 (Sub Section 4)</h4>
-                                <textarea id="editor6" name="section2[subsection4]" rows="10" cols="80">
-                                    @php echo html_entity_decode($section2Array[subsection4]); @endphp
+                                <h4>Section 2</h4>
+                                <textarea id="editor11" name="section2" rows="10" cols="80">
+                                    @php $section2 = !is_null($getRealtorRegisterPage->section_2) ? $getRealtorRegisterPage->section_2 : '' @endphp
+                                    {{ $section2 }}
                                 </textarea>
                             </div>
                             <div class="clearfix"></div>

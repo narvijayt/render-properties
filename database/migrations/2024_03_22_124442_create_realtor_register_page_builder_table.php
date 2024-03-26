@@ -18,6 +18,7 @@ class CreateRealtorRegisterPageBuilderTable extends Migration
             $table->increments('id');
             $table->integer('userId');
             $table->text('banner')->nullable();
+            $table->text('section_1_Header')->nullable();
             $table->text('section_1')->nullable();
             $table->text('section_2')->nullable();
             $table->timestamps();

@@ -38,6 +38,7 @@ use App\VendorMeta;
 use DateTime;
 
 use App\Events\NewMemberAlert;
+use App\RealtorRegisterPageBuilder;
 
 class RegisterController extends Controller
 {
@@ -115,12 +116,15 @@ class RegisterController extends Controller
         $registerType = 'realtor';
         $realtorRegPage = Page::find(PageIdEnum::REALTORREGISTER);
         $testimonials = Testimonial::all();
+        // Get Realtor Register page details
+        $getRealtorRegisterPage = RealtorRegisterPageBuilder::first();
+
         if ($request->input('remember_token')) 
         {
     		$user = PartialRegistration::where('remember_token', $request->input('remember_token'))->first();
     		return view('auth.realtor-register', compact('user', 'registerType', 'realtorRegPage','testimonials'));
     	}        
-        return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials'));
+        return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials', 'getRealtorRegisterPage'));
 	}
 
 	/**
