@@ -351,7 +351,7 @@
 	
 	
 	<div id="myModal" class="modal fade searching-popup" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
