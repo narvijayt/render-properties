@@ -39,24 +39,21 @@ class PageBuilderController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->with('error', $validator->errors()->first())->withInput();
             }
-
+            
             $getHomePage = HomePageBuilder::first();
-            
             if (is_null($getHomePage)) {
-                $homePage = new HomePageBuilder;
-                $homePage->userId = Auth::user()->user_id;
-            } else {
-                $homePage = HomePageBuilder::find($getHomePage->id);
-            }
+                $getHomePage = new HomePageBuilder;
+                $getHomePage->userId = Auth::user()->user_id;
+            } 
             
-            $homePage->banner = $request->banner;
-            $homePage->section_1 = $request->section1;
-            $homePage->section_2 = json_encode($request->section2);
-            $homePage->section_3 = json_encode($request->section3);
-            $homePage->section_4 = $request->section4;
-            $homePage->section_5 = $request->section5;
+            $getHomePage->banner = $request->banner;
+            $getHomePage->section_1 = $request->section1;
+            $getHomePage->section_2 = json_encode($request->section2);
+            $getHomePage->section_3 = json_encode($request->section3);
+            $getHomePage->section_4 = $request->section4;
+            $getHomePage->section_5 = $request->section5;
 
-            if ($homePage->save()) {
+            if ($getHomePage->save()) {
                 return \Redirect::route('admin.pages.edit-home-page')->with('success', 'Home Page updated successfully.'); 
             } else {
                 return \Redirect::back()->with('error', 'An unexpected error occurred while updating the Home page.');
@@ -156,7 +153,6 @@ class PageBuilderController extends Controller
 
             $builderClass = $pageBuilders[$request->page];
             $registerPage = $builderClass::first();
-
             if (is_null($registerPage)) {
                 $registerPage = new $builderClass;
                 $registerPage->userId = Auth::user()->user_id;
