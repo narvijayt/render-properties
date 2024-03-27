@@ -126,7 +126,7 @@ class PageBuilderController extends Controller
             // Check if the incoming request keys are present in formInputKeys array.
             foreach ($request->all() as $key => $value) {
                 if (in_array($key, $formInputKeys)) {                    
-                    // Section 1 will be an array, so check if this is an array, then loop over it and verify that the traversal should not be empty.
+                    // Section 1 will be an array, so check if this is an array, then loop over it and verify that on traversal values should not be empty.
                     if (is_array($request->section1)) {
                         foreach ($request->section1 as $innerValue) {
                             if (is_null($innerValue)) {
