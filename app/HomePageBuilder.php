@@ -26,7 +26,7 @@ class HomePageBuilder extends Model
         'section5.required' => 'Section 5 field is required.',
     ];
 
-    static $banner = '<h1 class="m-0">Welcome to Render The Reals Estate Connection</h1>
+    static $banner = '<h1 class="m-0">Welcome to Render The Real Estate Connection</h1>
     <div class="home-banner-heading">
     <h2>We Connect Home <br />Buyers &amp; Sellers With <br />Top-tier Real Estate Agents, <br />Loan Officers &amp; Vendors.</h2>
     </div>
