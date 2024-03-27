@@ -176,6 +176,7 @@
 	   <a href="{{ route('pick-package') }}" class="btn btn-primary btn-yellow ">VENDORS</a>
 	   </div>
 	   </div>
+    </div>
 	</div>
 	</div>
 	<div class="render-network-section py-3">
