@@ -50,9 +50,9 @@
                                         class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
                                 <li><a href="{{ route('lender-register') }}"
                                         class="navbar__button navbar__button--register">as a Loan Officer</a></li>
-                                {{--<li><a href="{{ url('vendor-register') }}" class="navbar__button
+                                <li><a href="{{ url('vendor-register') }}" class="navbar__button
                                 navbar__button--register">as a Vendor</a>
-                        </li>--}}
+                        </li>
                     </ul>
                     </li>
                     @endguest

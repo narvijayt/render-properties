@@ -46,7 +46,7 @@ $description = 'Register for Render'
         <div class="row realtor-row">
             {{-- <div class="col-md-12 " data-info-type="realtor">
             @include('partials.registration.realtor-overview')
-	</div> --}}
+	    </div> --}}
             <div class="col-md-7 number-list-box-left">
                 {!! $getRealtorRegisterPage->section_1_Header !!}
                 <div class=" mt-2"></div>
