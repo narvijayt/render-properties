@@ -49,7 +49,7 @@ $description = 'Register for Render'
 	</div> --}}
             <div class="col-md-7 number-list-box-left">
                 {!! $getRealtorRegisterPage->section_1_Header !!}
-                
+                <div class=" mt-2"></div>
                 @if (isset($getRealtorRegisterPage->section_1))
                     @php
                         $section1Array = (array) json_decode($getRealtorRegisterPage->section_1, true);
@@ -58,7 +58,7 @@ $description = 'Register for Render'
 
                     @if (!empty(section1Array))
                         @foreach ($section1Array as $key => $value)
-                            <div class="number-list-box mb-2 mt-2">
+                            <div class="number-list-box mb-2">
                                 <div class="number-box">
                                     <h3 class="m-0">{{ $counter++ }}</h3>
                                 </div>
