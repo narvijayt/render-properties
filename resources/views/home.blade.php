@@ -172,10 +172,10 @@
 	<p class="text-center text-primary">Join Render today and experience the difference. Let us connect you with the best in real estate, so you can focus on finding your perfect home or closing the deal on your property.</p>
 	<div class="col-md-12 center-box text-center mt-0 mb-0">
 	<h4 class="text-center mb-0 text-primary">SIGN ME UP!</h4> 
-	<div class="d-flex-btn-group justify-content-center"><a href="https://staging.render.properties/realtor-register" class="btn btn-primary btn-yellow ">REALTORS - FREE
+	<div class="d-flex-btn-group justify-content-center"><a href="{{ route('realtor-register') }}" class="btn btn-primary btn-yellow ">REALTORS - FREE
 	   </a>
-	   <a href="https://staging.render.properties/lender-register" class="btn btn-primary btn-yellow ">LENDERS</a> 
-	   <a href="https://staging.render.properties/vendor-register" class="btn btn-primary btn-yellow ">VENDORS</a>
+	   <a href="{{ route('lender-register') }}" class="btn btn-primary btn-yellow ">LENDERS</a> 
+	   <a href="{{ route('pick-package') }}" class="btn btn-primary btn-yellow ">VENDORS</a>
 	   </div>
 	   </div>
 	</div>
