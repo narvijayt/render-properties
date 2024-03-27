@@ -8,6 +8,19 @@ class HomePageBuilder extends Model
 {
     protected $table = 'home_page_builder';
 
+    static $rules = [
+        'banner' => 'required',
+        'section1' => 'required',
+        'section2.*' => 'required',
+        'section3.*' => 'required',
+        'section4' => 'required',
+        'section5' => 'required',
+    ];
+
+    static $messages = [
+        'banner' => 'Please fill in all the required fields.',
+    ];
+
     static $banner = '<h1 class="m-0">Welcome to Render The Reals Estate Connection</h1>
     <div class="home-banner-heading">
     <h2>We Connect Home <br />Buyers &amp; Sellers With <br />Top-tier Real Estate Agents, <br />Loan Officers &amp; Vendors.</h2>

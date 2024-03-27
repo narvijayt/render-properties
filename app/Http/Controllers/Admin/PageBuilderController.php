@@ -34,32 +34,10 @@ class PageBuilderController extends Controller
     protected function updateHomePage(Request $request) {
         try {
             
-            // Custom Validation Rules (Validator wasn't working)
-            $formInputKeys = ['banner', 'section1', 'section2', 'section3', 'section4', 'section5'];
-            $errorMessage = "Please fill in all the required fields.";
+            $validator = \Validator::make($request->all(), HomePageBuilder::$rules, HomePageBuilder::$messages);
 
-            foreach ($request->all() as $key => $value) {
-                if (in_array($key, $formInputKeys)) {
-                    if (is_null($value)) {
-                        return \Redirect::back()->with('error', $errorMessage);
-                    }
-
-                    // Didn't use the merge approach as we have same key names
-                    $section2Array = array_values($request->section2);
-                    $section3Array = array_values($request->section3);
-
-                    foreach ($section2Array as $value) {
-                        if (is_null($value)) {
-                            return \Redirect::back()->with('error', $errorMessage);
-                        }
-                    }
-
-                    foreach ($section3Array as $value) {
-                        if (is_null($value)) {
-                            return \Redirect::back()->with('error', $errorMessage);
-                        }
-                    }
-                }
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', $validator->errors()->first())->withInput();
             }
 
             $getHomePage = HomePageBuilder::first();
