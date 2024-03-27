@@ -16,9 +16,14 @@ class HomePageBuilder extends Model
         'section4' => 'required',
         'section5' => 'required',
     ];
-
+    
     static $messages = [
-        'banner' => 'Please fill in all the required fields.',
+        'banner.required' => 'Banner field is required.',
+        'section1.required' => 'Section 1 field is required.',
+        'section2.*.required' => 'Section 2 sub sections are required.',
+        'section3.*.required' => 'Section 3 sub sections are required.',
+        'section4.required' => 'Section 4 field is required.',
+        'section5.required' => 'Section 5 field is required.',
     ];
 
     static $banner = '<h1 class="m-0">Welcome to Render The Reals Estate Connection</h1>
