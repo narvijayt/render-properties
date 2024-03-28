@@ -22,7 +22,7 @@
                             <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
                         @endif
 
-                        <form id="add-page-form" method="post" action="{{url('cpldashrbcs/register/update')}}">
+                        <form id="add-page-form" method="post" action="{{ route('admin.pages.update-register-page') }}">
                             {{csrf_field()}}
 
                             <!-- Banner -->

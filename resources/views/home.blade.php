@@ -362,12 +362,12 @@
 	  
 	       <div class="row"> 
 	       <div class="col-md-5 col-md-offset-1"> 	       
-				  <a href="{{url('search-realtor-profiles')}}"  >		   
-				  <img src="img/Real-Estate-Agent-icon.png">
-				 <button type="button" class="btn btn-primary btn-block btn-lg">Search Real Estate Agent</button>
-				 </a>
+                <a href="{{url('search-realtor-profiles')}}" >
+                    <img src="img/Real-Estate-Agent-icon.png">
+                    <button type="button" class="btn btn-primary btn-block btn-lg">Search Real Estate Agent</button>
+                </a>
 		     </div>
-		 <div class="col-md-5"> 	
+		    <div class="col-md-5"> 	
 				 <a href="{{url('search-lender-profiles')}}"  >
 					<img src="img/Lender-icon.png">
 				 <button type="button" class="btn btn-primary btn-block btn-lg">Search Lender</button>
