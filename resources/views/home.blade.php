@@ -170,10 +170,11 @@
 	{!! $getHomePage->section_1 !!}
 	<div class="col-md-12 center-box text-center mt-0 mb-0">
 	<h4 class="text-center mb-0 text-primary">SIGN ME UP!</h4> 
-	<div class="d-flex-btn-group justify-content-center">
-        <a href="{{ url('realtor-register') }}" class="btn btn-primary btn-yellow ">REALTORS - FREE</a>
-        <a href="{{ url('lender-register') }}" class="btn btn-primary btn-yellow ">LENDERS</a> 
-        <a href="{{ url('vendor-register') }}" class="btn btn-primary btn-yellow ">VENDORS</a>
+	<div class="d-flex-btn-group justify-content-center"><a href="{{ route('realtor-register') }}" class="btn btn-primary btn-yellow ">REALTORS - FREE
+	   </a>
+	   <a href="{{ route('lender-register') }}" class="btn btn-primary btn-yellow ">LENDERS</a> 
+	   <a href="{{ route('pick-package') }}" class="btn btn-primary btn-yellow ">VENDORS</a>
+	   </div>
 	   </div>
     </div>
 	</div>
