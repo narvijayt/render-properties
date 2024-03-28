@@ -9390,8 +9390,8 @@
 				var t = this,
 					e = t.$createElement,
 					n = t._self._c || e;
-				return n("div", [n("a", {
-					staticClass: "text-dark text-uppercase",
+				return n("div", [n("div", {
+					staticClass: "text-dark text-uppercase form-group mb-2 user-contact-info chat_container",
 					attrs: {
 						href: "javascript:;"
 					},
@@ -9400,7 +9400,10 @@
 							t.show()
 						}
 					}
-				}, [t._v("Chat")]), t._v(" "), n("div", {
+				}, [
+					n("i", { staticClass: "fa fa-wechat" }),
+					n("a", [t._v("Chat")]),
+				], [t._v(" ")]), t._v(" "), n("div", {
 					directives: [{
 						name: "show",
 						rawName: "v-show",

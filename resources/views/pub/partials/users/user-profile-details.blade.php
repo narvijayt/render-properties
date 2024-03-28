@@ -116,7 +116,7 @@ if($user->user_type === 'broker'){
                     <div class="form-group mb-2 user-contact-info">
                         @if( ($match && $match->isAccepted() ) && Auth::user())
                             @if($user->user_id != Auth::user()->user_id)    
-                                <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
+                               <send-message :recipient="{{ $user }}"></send-message>
                             @endif
                         @elseif($viewDetails)
                             <i class="fa fa-wechat"></i> <send-message :recipient="{{ $user }}"></send-message>
