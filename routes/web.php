@@ -297,10 +297,10 @@ Route::group([
         // Home and Register Page Builder Routes
         // --> Home
         Route::get('/homepage/edit', 'PageBuilderController@editHomePage')->name('admin.pages.edit-home-page');
-        Route::post('/homepage/update', 'PageBuilderController@updateHomePage');
+        Route::post('/homepage/update', 'PageBuilderController@updateHomePage')->name('admin.pages.update-home-page');
         // --> Realtor Register
+        Route::post('/register/update', 'PageBuilderController@updateRegisterPage')->name('admin.pages.update-register-page');
         Route::get('/register/realtor/edit', 'PageBuilderController@editRealtorRegisterPage')->name('admin.pages.edit-realtor-register-page');
-        Route::post('/register/update', 'PageBuilderController@updateRegisterPage');
         // --> Lender Register
         Route::get('/register/lender/edit', 'PageBuilderController@editLenderRegisterPage')->name('admin.pages.edit-lender-register-page');
         // --> Vendor Register

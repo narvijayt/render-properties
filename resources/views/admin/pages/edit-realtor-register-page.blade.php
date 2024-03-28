@@ -22,7 +22,7 @@
                             <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
                         @endif
 
-                        <form id="add-page-form" method="post" action="{{url('cpldashrbcs/register/update')}}">
+                        <form id="add-page-form" method="post" action="{{ route('admin.pages.update-register-page') }}">
                             {{csrf_field()}}
 
                             <!-- Banner -->
@@ -38,8 +38,9 @@
 
 
                             <!-- Section 1 -->
-                            <div class="d-flex">
-                                <h4>Section 1</h4><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button>
+                            <div>
+                                <div><h4>Section 1</h4></div>
+                                <div><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button></div>
                             </div>
 
                             <div class="form-group">
