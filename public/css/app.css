@@ -1985,6 +1985,7 @@ button#registerVendor {
 /**************** 28-03-2023 Starts *********************/
 .text-locked{position: relative;}
 .text-locked:after{background: #ddd;position: absolute;width: 100%;content: "";height: 115%;left: 0;}
+.chat_container{cursor: pointer;}
 
 @media(max-width:1199px){
     .user-contact-info{ font-size:13px;}
