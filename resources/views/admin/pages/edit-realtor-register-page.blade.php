@@ -38,13 +38,9 @@
 
 
                             <!-- Section 1 -->
-                            <div>
-                                <div><h4>Section 1</h4></div>
-                                <div><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button></div>
-                            </div>
 
                             <div class="form-group">
-                                <h4>Header</h4>
+                                <h4>Section 1 Header</h4>
                                 <textarea class="tinyTextArea" name="sectionOneHeader" rows="10" cols="80">
                                     @php $section1Header = !is_null($getRealtorRegisterPage->section_1_Header) ? $getRealtorRegisterPage->section_1_Header : '' @endphp
                                     {{ $section1Header}}
@@ -73,6 +69,7 @@
 
                                 @endif
                             </div>
+                            <div class="text-center mb-2"><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button></div>
                             <!-- END.// Section 1  -->
 
 
