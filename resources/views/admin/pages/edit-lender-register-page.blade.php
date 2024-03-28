@@ -37,10 +37,7 @@
                             <!-- END.// Banner  -->
 
 
-                            <!-- Section 1 -->
-                            <div class="d-flex">
-                                <h4>Section 1</h4><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button>
-                            </div>
+                            <!-- Section 1 Header-->
 
                             <div class="form-group">
                                 <h4>Section 1 Header</h4>
@@ -72,6 +69,8 @@
 
                                 @endif
                             </div>
+
+                            <div class="text-center mb-2"><button type="button" class="btn btn-primary" id="addSubSections">Add New Sub Section</button></div>
 
                             <!-- END.// Section 1  -->
 
