@@ -24,7 +24,7 @@
           </h2>
           <h3 class="h2 mb-2">Oops! You're lost.</h3>
           <p class="mb-5">The page you are looking for was not found.</p>
-          <span class="back-btn-box"><a class="bsb-btn-5xl btn-dark px-5 fs-6 m-0 shadow-none" href="{{ route('home') }}" >Back to Home</a></span>
+          <span class="back-btn-box"><a class="bsb-btn-5xl btn-warning px-5 fs-6 m-0 shadow-none" href="{{ route('home') }}" >Back to Home</a></span>
         </div>
       </div>
     </div>
