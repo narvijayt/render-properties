@@ -275,8 +275,8 @@
 		<div class="row ">
 	<div class="col-md-12 center-box text-left mt-0">
 	<div class="col-md-6 pr-4">
+        <div class="mobile-image"> <img src="{{url('/')}}/img/realtors-img-new.png"></div>
 	<h2 class="text-left text-white h1  mb-1 mt-0">How It Works For…</h2>
-	<div class="mobile-image"> <img src="{{url('/')}}/img/realtors-img-new.png"></div>
 	<h4 class="text-left text-white m-0">Realtors:</h4>
 	<p class="text-left text-white">
 	 Whether you’re a seasoned real estate agent or just starting, Render Properties provides you with a platform to connect with the right lenders and vendors for your clients. Easily find mortgage experts, photographers, home stagers, and more to enhance your services and provide a comprehensive experience to your clients. 

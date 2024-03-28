@@ -278,11 +278,10 @@
 	<div class="works-section-outer py-3">
         <div class="container">
 		<div class="row ">
-	<div class="col-md-12 center-box text-left mt-0">
-	<div class="col-md-6 pr-4">
-	{!! $section3Array[subsection1] !!}
-	</div>
-	<div class="col-md-6 desktop-image">
+	<div class="col-md-12 center-box text-left mt-0 how-it-work">
+    
+    {!! $section3Array[subsection1] !!} 
+	<div class="col-md-6 desktop-image order-2">
 	<img src="img/realtors-img-new.png">
 	</div>
 	</div>
@@ -299,6 +298,7 @@
 	
 	<div class="col-md-12 center-box text-left mt-3 flex-box-section">
 	<div class="col-md-6 pr-4 box-order-1">
+   
 	{!! $section3Array[subsection3] !!}
 	</div>
 	<div class="col-md-6  box-order-2">

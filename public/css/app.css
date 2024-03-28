@@ -2101,15 +2101,11 @@ hr.style1{
 .contact-company-name {display: none;}
 /**************** 09-02-2024 Ends *********************/
 
-<<<<<<< HEAD
-
-=======
 /**************** 28-03-2024 Starts *********************/
 .back-btn-box a {text-decoration: none; padding: 10px;}
 .back-btn-box a:hover {color: #fff;}
 .chat_container{cursor: pointer;}
 /**************** 28-03-2024 Starts *********************/
->>>>>>> c5e04d2f (add 404 not found page)
 
 @media(max-width:625px)
 {
