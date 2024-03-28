@@ -1985,7 +1985,6 @@ button#registerVendor {
 /**************** 28-03-2023 Starts *********************/
 .text-locked{position: relative;}
 .text-locked:after{background: #ddd;position: absolute;width: 100%;content: "";height: 115%;left: 0;}
-.chat_container{cursor: pointer;}
 
 @media(max-width:1199px){
     .user-contact-info{ font-size:13px;}
@@ -2095,6 +2094,7 @@ hr.style1{
 /**************** 28-03-2024 Starts *********************/
 .back-btn-box a {text-decoration: none; padding: 10px;}
 .back-btn-box a:hover {color: #fff;}
+.chat_container{cursor: pointer;}
 /**************** 28-03-2024 Starts *********************/
 
 @media(max-width:625px)
