@@ -55,7 +55,7 @@
                                 endif;
                             @endphp
                             <div class="form-group">
-                                <h4>Section 2 (Sub Section 1)</h4>
+                                <h4>Section 2 Header</h4>
                                 <textarea id="editor3" name="section2[subsection1]" rows="10" cols="80">
                                     @php echo html_entity_decode($section2Array[subsection1]); @endphp
                                 </textarea>
@@ -64,7 +64,7 @@
 
 
                             <div class="form-group">
-                                <h4>Section 2 (Sub Section 2)</h4>
+                                <h4>Section 2 (Sub Section 1)</h4>
                                 <textarea id="editor4" name="section2[subsection2]" rows="10" cols="80">
                                     @php echo html_entity_decode($section2Array[subsection2]); @endphp
                                 </textarea>
@@ -72,7 +72,7 @@
                             <div class="clearfix"></div>
 
                             <div class="form-group">
-                                <h4>Section 2 (Sub Section 3)</h4>
+                                <h4>Section 2 (Sub Section 2)</h4>
                                 <textarea id="editor5" name="section2[subsection3]" rows="10" cols="80">
                                     @php echo html_entity_decode($section2Array[subsection3]); @endphp
                                 </textarea>
@@ -80,7 +80,7 @@
                             <div class="clearfix"></div>
 
                             <div class="form-group">
-                                <h4>Section 2 (Sub Section 4)</h4>
+                                <h4>Section 2 (Sub Section 3)</h4>
                                 <textarea id="editor6" name="section2[subsection4]" rows="10" cols="80">
                                     @php echo html_entity_decode($section2Array[subsection4]); @endphp
                                 </textarea>
