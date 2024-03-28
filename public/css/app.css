@@ -2091,6 +2091,11 @@ hr.style1{
 .contact-company-name {display: none;}
 /**************** 09-02-2024 Ends *********************/
 
+/**************** 28-03-2024 Starts *********************/
+.back-btn-box a {text-decoration: none; padding: 10px;}
+.back-btn-box a:hover {color: #fff;}
+/**************** 28-03-2024 Starts *********************/
+
 @media(max-width:625px)
 {
 body .navbar .header-contact { width: 100%; float: right;}
