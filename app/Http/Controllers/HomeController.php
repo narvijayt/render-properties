@@ -21,36 +21,30 @@ class HomeController extends Controller
      */
     public function index()
     {
-        try {
-            $viewData = Cache::remember('home_page_queries', 20, function() {
-                // $realtorCount = User::where('user_type','=','realtor')->whereDoesntHave('unmatch_relator', function($q) {
-                //     $q->where('deleted_at', null);
-                //    })->count();
-                // $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
-                $realtorCount = User::where('user_type','=','realtor')->count();
-                $brokerCount = User::where('user_type','=','broker')->count();
-                $messageCount = Message::count();
-                $connectionCount = Match::count();
-                $messageCount = $messageCount > 121 ? $messageCount : 121;
-                $connectionCount = $connectionCount > 31 ? $connectionCount : 31;
-                $spotlightUsers = $this->checkUserIp();
-                $homePage = Page::find(PageIdEnum::HOME);
-                $testimonials = Testimonial::all();
-                $getHomepagemeta = Meta::where('page_id','=',PageIdEnum::HOME)->get();
-                $getHomePage = HomePageBuilder::first();
-                if($getHomepagemeta->isNotEmpty()){
-                    $meta = Meta::find($getHomepagemeta[0]->id);
-                }else{
-                    $meta = null;
-                }
-                return compact('realtorCount', 'brokerCount', 'messageCount', 'connectionCount', 'spotlightUsers','homePage', 'testimonials','meta', 'getHomePage');
-            });
-            
-            return view('home', $viewData);
-
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $viewData = Cache::remember('home_page_queries', 20, function() {
+            // $realtorCount = User::where('user_type','=','realtor')->whereDoesntHave('unmatch_relator', function($q) {
+            //     $q->where('deleted_at', null);
+            //    })->count();
+            // $brokerCount = User::where('user_type','=','broker')->where('payment_status', 1)->count();
+            $realtorCount = User::where('user_type','=','realtor')->count();
+            $brokerCount = User::where('user_type','=','broker')->count();
+            $messageCount = Message::count();
+            $connectionCount = Match::count();
+            $messageCount = $messageCount > 121 ? $messageCount : 121;
+            $connectionCount = $connectionCount > 31 ? $connectionCount : 31;
+            $spotlightUsers = $this->checkUserIp();
+            $homePage = Page::find(PageIdEnum::HOME);
+            $testimonials = Testimonial::all();
+            $getHomepagemeta = Meta::where('page_id','=',PageIdEnum::HOME)->get();
+            $getHomePage = HomePageBuilder::first();
+            if($getHomepagemeta->isNotEmpty()){
+                $meta = Meta::find($getHomepagemeta[0]->id);
+            }else{
+                $meta = null;
+            }
+            return compact('realtorCount', 'brokerCount', 'messageCount', 'connectionCount', 'spotlightUsers','homePage', 'testimonials','meta', 'getHomePage');
+        });
+        return view('home', $viewData);
     }
     
     public function checkUserIp(){
