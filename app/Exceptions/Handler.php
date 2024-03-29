@@ -46,20 +46,29 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-    	if ($exception instanceof IJSONException) {
-    		return $exception->respond();
-		}
+        if ($exception instanceof IJSONException) {
+            return $exception->respond();
+        }
 
-		if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-			return response()->json(['token_expired'], $exception->getStatusCode());
-		} else if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-			return response()->json(['token_invalid'], $exception->getStatusCode());
-		} else if ($exception instanceof \App\Exceptions\ApiException) {
-			return response()->json($this->serializeException($exception));
-		}
+        if ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+            return response()->json(['token_expired'], $exception->getStatusCode());
+        } elseif ($exception instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+            return response()->json(['token_invalid'], $exception->getStatusCode());
+        } elseif ($exception instanceof \App\Exceptions\ApiException) {
+            return response()->json($this->serializeException($exception));
+        } elseif ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return response()->view('errors.404', [], 404);
+        } else {
+            if (config('app.debug') === true) {
+                dd($exception);
+            }
+            return view('errors.error');
+        }
 
-        return parent::render($request, $exception);
+        // return parent::render($request, $exception);
+
     }
+
 
     /**
      * Convert an authentication exception into an unauthenticated response.
