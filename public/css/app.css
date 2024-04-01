@@ -2107,6 +2107,7 @@ hr.style1{
 .chat_container{cursor: pointer;}
 /**************** 28-03-2024 Starts *********************/
 
+
 @media(max-width:625px)
 {
 body .navbar .header-contact { width: 100%; float: right;}

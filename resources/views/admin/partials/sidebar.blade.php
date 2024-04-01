@@ -139,9 +139,30 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li>
+                    {{-- <li>
                         <a href="{{url('cpldashrbcs/pages')}}">
                             <i class="fa fa-circle-o"></i>All Pages
+                        </a>
+                    </li> --}}
+                    {{-- Home and Register --}}
+                    <li>
+                        <a href="{{url('cpldashrbcs/homepage/edit')}}">
+                            <i class="fa fa-circle-o"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('cpldashrbcs/register/realtor/edit')}}">
+                            <i class="fa fa-circle-o"></i>Realtor Register
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('cpldashrbcs/register/lender/edit')}}">
+                            <i class="fa fa-circle-o"></i>Lender Register
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{url('cpldashrbcs/register/vendor/edit')}}">
+                            <i class="fa fa-circle-o"></i>Vendor Register
                         </a>
                     </li>
                     {{-- Home and Register --}}
