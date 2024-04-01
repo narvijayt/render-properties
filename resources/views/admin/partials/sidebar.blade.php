@@ -139,11 +139,13 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    {{-- <li>
-                        <a href="{{url('cpldashrbcs/pages')}}">
-                            <i class="fa fa-circle-o"></i>All Pages
-                        </a>
-                    </li> --}}
+                    {{--
+                        <li>
+                            <a href="{{url('cpldashrbcs/pages')}}">
+                                <i class="fa fa-circle-o"></i>All Pages
+                            </a>
+                        </li> 
+                    --}}
                     {{-- Home and Register --}}
                     <li>
                         <a href="{{url('cpldashrbcs/homepage/edit')}}">
