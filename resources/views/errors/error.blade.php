@@ -17,7 +17,6 @@
         <h2 class="display-4 mb-4">Oops! An unexpected error occurred.</h2>
         <p class="lead mb-4">We're sorry, but something went wrong while processing your request. Please try again later.</p>
         <span class="back-btn-box"><a class="bsb-btn-5xl btn-warning px-5 fs-6 m-0 shadow-none" href="{{ route('home') }}" >Back to Home</a></span>
-        
       </div>
     </div>
   </div>
