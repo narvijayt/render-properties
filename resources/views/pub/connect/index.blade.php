@@ -19,7 +19,7 @@
             {{ meta('keywords','Search Lenders Profiles, Loan Officers') }}
         @endif
          @if(Request::segment(1) == 'search-realtor-profiles')
-            {{ meta('keywords','Search Realtors Profiles,Gold Standard Agents,Real Estate Agents') }}
+            {{ meta('keywords','Search Realtors Profiles,Gold Standard Brokers,Real Estate Agents') }}
         @endif
         @if(Request::segment(1) == 'search-vendor-profiles')
             {{ meta('keywords','Search Vendor Profiles') }}

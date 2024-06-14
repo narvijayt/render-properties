@@ -47,7 +47,7 @@
                                 <div class="form-group {{ $errors->has('designation') ? ' has-error' : '' }}">
                                     <label for="page">Designation</label><br>
                                    <input type="hidden" name="designation" value="null" />
-                                   <input type="checkbox" name="designation" value="GOLD STANDARD AGENT"/> <label>GOLD STANDARD AGENT</label>
+                                   <input type="checkbox" name="designation" value="Gold Standard Broker"/> <label>Gold Standard Broker</label>
                                    <span id="pages-error"></span>
                                 </div>
                                 @if ($errors->has('designation'))

@@ -70,7 +70,7 @@
                                 <div class="form-group {{ $errors->has('designation') ? ' has-error' : '' }}">
                                     <label for="page">Designation</label></br>
                                     <input type="hidden" name="designation" value="" />
-                                   <input type="checkbox" name="designation" value="GOLD STANDARD AGENT" <?php if($user->designation !="" && $user->designation !="null") echo "checked";?>> <label>GOLD STANDARD AGENT</label>
+                                   <input type="checkbox" name="designation" value="Gold Standard Broker" <?php if($user->designation !="" && $user->designation !="null") echo "checked";?>> <label>Gold Standard Broker</label>
                                     
                                     <span id="pages-error"></span>
                                 </div>

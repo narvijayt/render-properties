@@ -413,7 +413,7 @@
 		<!---	 <div class="well">
              <div class="row">
 			      <div class="col-md-8">
-				     Is it ok for our platinum members to contact you about the program and about you becoming a gold standard agent?
+				     Is it ok for our platinum members to contact you about the program and about you becoming a Gold Standard Broker?
 				   </div>
 				   <div class="col-md-4">
 					<div class="radio fancy_radio">						
