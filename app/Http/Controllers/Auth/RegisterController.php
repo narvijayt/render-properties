@@ -132,7 +132,7 @@ class RegisterController extends Controller
         return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials', 'getRealtorRegisterPage'));
 	}
 
-    /*protected function register(Request $request){
+    protected function register(Request $request){
 	    $validation = $this->validator($request->all());
 	    
 	    if ($validation->fails()) {
@@ -140,10 +140,166 @@ class RegisterController extends Controller
         }
         
         
-        $this->create($request->all());
+        Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
+            return $value == '';
+        });
+
+        $data = $request->all();
+        $rules = array( 'honey_pot' => 'honey_pot');
+        $messages = array('honey_pot' => 'Nothing Here');
+	    $validation = Validator::make($data, $rules, $messages);
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation)->withInput();
+        }
         
-        return redirect("profile");
-	}*/
+        //if first name or last name contains http:// or https:// then it is invalid name.
+        if(strpos($data['first_name'], 'http://') !== false || strpos($data['first_name'], 'https://') !== false){
+	        return redirect()->back()->with('error','Invalid First Name.');
+	    }
+	    
+	    if(strpos($data['last_name'], 'http://') !== false || strpos($data['last_name'], 'https://') !== false){
+	        return redirect()->back()->with('error','Invalid Last Name.');
+	    }
+	    
+	    $geolocationService = new GeolocationService();
+        $location = $geolocationService->cityStateZip($data['city'],$data['state'],$data['zip']);
+        if($data['city'] === "Select City" || $data['city'] == '0' || $data['city'] === "Other") {
+            $c = $data['anotherCity']; 
+        } else {
+            $c= $data['city'];  
+        }
+        if($data['phone_ext'] ==''){
+            $data['phone_ext'] = null;
+        }
+        if($data['user_type'] =='realtor'){
+            // dd($data);
+                $user = User::create([
+                'first_name' 	=> $data['first_name'],
+                'last_name' 	=> $data['last_name'],
+                'email' 		=> strtolower($data['email']),
+                'password' 		=> bcrypt($data['password']),
+                'email_token'	=> Uuid::uuid4()->toString(),
+                'verified' 		=> false,
+                'user_type' 	=> $data['user_type'],
+                'city' 			=> $c,
+                'state' 		=> $data['state'],
+                'zip' 			=> $data['zip'],
+                'register_ts' 	=> new DateTime(),
+                'verify_ts' 	=> null,
+                'years_of_exp'	=> null,
+                // 'specialties' => $data['specialties'],
+                'latitude'		=> $location->lat,
+                'longitude'		=> $location->long,
+                'phone_number'	=> $data['phone_number'],
+                'phone_ext'		=> $data['phone_ext'],
+                'website'		=> $data['website'],
+                'firm_name'		=> $data['firm_name'],
+                'uid'			=> Uuid::uuid4(),
+                'license' =>  $data['license'],
+                'volume_closed_monthly' =>  $data['volume_closed_monthly'],
+                'contact_term' =>  isset($data['enable_emails']) ? $data['enable_emails'] : 0,
+                'promote_profile' => isset($data['provide_content']) ? $data['provide_content'] : null
+            ]);
+            
+        }else{
+            $user = User::create([
+                'first_name' 	=> $data['first_name'],
+                'last_name' 	=> $data['last_name'],
+                'email' 		=> strtolower($data['email']),
+                'password' 		=> bcrypt($data['password']),
+                'email_token'	=> Uuid::uuid4()->toString(),
+                'verified' 		=> false,
+                'user_type' 	=> $data['user_type'],
+                'city' 			=> $c,
+                'state' 		=> $data['state'],
+                'zip' 			=> $data['zip'],
+                'postal_code_service' => $data['postal_code_service'],
+                'register_ts' 	=> new DateTime(),
+                'verify_ts' 	=> null,
+                'years_of_exp'	=> null,
+                'specialties' => $data['specialties'],
+                'latitude'		=> $location->lat,
+                'longitude'		=> $location->long,
+                'phone_number'	=> $data['phone_number'],
+                'phone_ext'		=> $data['phone_ext'],
+                'website'		=> $data['website'],
+                'firm_name'		=> $data['firm_name'],
+                'uid'			=> Uuid::uuid4(),
+                'license' =>  $data['license'],
+                'volume_closed_monthly' =>  $data['volume_closed_monthly'],
+                'contact_term' =>  $data['agree'],
+                'promote_profile' => $data['provide_content']
+            ]);
+        }
+        $findUser = User::find($user->user_id);
+        $findUser->contact_term = $data['agree'];
+        $findUser->promote_profile = $data['provide_content'];
+        if($data['user_type'] =='realtor'){
+            // $findUser->rbc_free_marketing = $data['rbc_free_marketing'];
+            /*$findUser->lo_matching_acknowledged = $data['lo_matching_acknowledged'];
+            $findUser->open_to_lender_relations = $data['open_to_lender_relations'];
+            $findUser->co_market = isset($data['co_market']) ? $data['co_market'] : "No";
+            $findUser->contact_me_for_match = isset($data['contact_me_for_match']) ? $data['contact_me_for_match'] : null;
+            $findUser->contact_term = (isset($data['enable_emails'])) ? $data['enable_emails'] : 0;
+            $findUser->referral_fee_acknowledged = isset($data['referral_fee_acknowledged']) ? $data['referral_fee_acknowledged'] : null;*/
+            $findUser->how_long_realtor = $data['how_long_realtor'];
+        }
+        $findUser->update();
+        if($data['user_type'] =='realtor'){
+            $realtorDetail = RealtorDetail::where(['user_id' => $user->user_id])->first();
+            if(is_null($realtorDetail)){
+                $realtorDetail = new RealtorDetail();
+                $realtorDetail->user_id = $user->user_id;
+            }
+            $realtorDetail->require_financial_solution = $data['require_financial_solution'] == "yes" ? 1 : 0;
+            $realtorDetail->require_professional_service = $data['require_professional_service'] == "yes" ? 1 : 0;
+            $realtorDetail->partnership_with_lender = $data['partnership_with_lender'] == "yes" ? 1 : 0;
+            $realtorDetail->partnership_with_vendor = $data['partnership_with_vendor'] == "yes" ? 1 : 0;
+            $realtorDetail->can_realtor_contact = $data['can_realtor_contact'] == "yes" ? 1 : 0;
+            $realtorDetail->save();
+        }
+        $user->assign('user');
+        $user->assign($user['user_type']);
+        if(!isset($user['receive_email'])) 
+        {
+			$settings = $user->settings;
+			$settings->email_receive_match_suggestions = false;
+			$settings->save();
+		}
+        if (isset($data['provider'])
+			&& $data['provider'] !== null
+			&& isset($data['provider_id'])
+			&& $data['provider_id'] !== null
+		) {
+			$this->createUserProvider($data, $user);
+		}
+        if(!in_array(env('APP_ENV'),['local'])){
+            $this->notifyAdmin($user);
+            $this->emailVerification($user);
+            $this->welcomeEmail($user);
+
+            // Trigger the event
+            event(new NewMemberAlert($user));
+        }
+        if ($user->user_type === UserAccountType::BROKER) 
+        {
+			MatchPurchase::create([
+				'user_id' => $user->user_id,
+				'type' => MatchPurchaseType::COMPLIMENTARY,
+				'quantity' => 2,
+			]);
+		} elseif ($user->user_type === UserAccountType::REALTOR) 
+		{
+			MatchPurchase::create([
+				'user_id' => $user->user_id,
+				'type' => MatchPurchaseType::COMPLIMENTARY,
+				'quantity' => 1,
+			]);
+		}
+		// return $user;
+        
+        return redirect()->route("pub.profile.detail.edit");
+	}
 
 	/**
 	 * Get a validator for an incoming registration request.
