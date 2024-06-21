@@ -132,7 +132,7 @@ class RegisterController extends Controller
         return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials', 'getRealtorRegisterPage'));
 	}
 
-    protected function register(Request $request){
+    /*protected function register(Request $request){
 	    $validation = $this->validator($request->all());
 	    
 	    if ($validation->fails()) {
@@ -142,7 +142,7 @@ class RegisterController extends Controller
         
         $this->create($request->all());
         
-	}
+	}*/
 
 	/**
 	 * Get a validator for an incoming registration request.
