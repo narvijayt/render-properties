@@ -132,22 +132,101 @@ class RegisterController extends Controller
         return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials', 'getRealtorRegisterPage'));
 	}
 
-    protected function register(Request $request){
-	    $validation = $this->validator($request->all());
-	    
-	    if ($validation->fails()) {
-            return redirect()->back()->withErrors($validation)->withInput();
-        }
-        
-        
-        Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
-            return $value == '';
-        });
+	/**
+	 * Get a validator for an incoming registration request.
+	 *
+	 * @param  array  $data
+	 * @return \Illuminate\Contracts\Validation\Validator
+	 */
+	protected function validator(array $data)
+	{
+	    if($data['user_type'] == 'realtor'){
+	        return Validator::make($data, [
+			'provider' 		=> 'string',
+			'provider_id' 	=> 'string',
+			'first_name' 	=> 'required|string|max:250',
+			'last_name' 	=> 'required|string|max:250',
+			'email' 		=> 'required|string|email|max:255|unique:users',
+			'password' 		=> 'required|string|min:6|confirmed',
+			'user_type' 	=> 'required|string|in:realtor,broker',
+			'city' 			=> 'nullable|string',
+			'state' 		=> 'required|string|min:2|max:2',
+			'zip' 			=> 'required',
+			'years_of_exp'	=> 'numeric|min:0|max:100',
+            // 'specialties' => 'nullable|string',
+			'phone_number'	=>	'required|alpha_dash',
+			'phone_ext'		=>	'nullable|alpha_dash',
+			'firm_name'		=>	'nullable|string',
+			'website'		=>	'nullable|string',
+			'receive_email'	=>	'nullable',
+            'license' => 'required|string|max:255',
+            'volume_closed_monthly' =>	'nullable|string',
+			// 'require_financial_solution' => 'required',
+			// 'require_professional_service' => 'required',
+			// 'partnership_with_lender' => 'required',
+			// 'partnership_with_vendor' => 'required',
+			// 'can_realtor_contact' => 'required',
+		], [
+			'zip.required' => 'Zip field is required',
+			'postal_code_service.required' => 'Postal code of service area field is required',
+			'phone_number.required'	=>	'The phone number field is required',
+			'firm_name.string'	=>	'The company name must be a string',
+			'user_type.required' => 'You must select either real estate agent or lender',
+			// 'require_financial_solution.required' => 'You must select either real estate agent or lender',
+		]);
+	    }else{
+		return Validator::make($data, [
+			'provider' 		=> 'string',
+			'provider_id' 	=> 'string',
+			'first_name' 	=> 'required|string|max:250',
+			'last_name' 	=> 'required|string|max:250',
+			'email' 		=> 'required|string|email|max:255|unique:users',
+			'password' 		=> 'required|string|min:6|confirmed',
+			'user_type' 	=> 'required|string|in:realtor,broker',
+			'city' 			=> 'nullable|string',
+			'state' 		=> 'required|string|min:2|max:2',
+			'zip' 			=> 'required',
+			'postal_code_service' => 'required|string|max:200',
+			'years_of_exp'	=> 'numeric|min:0|max:100',
+            'specialties' => 'nullable|string',
+			'phone_number'	=>	'required|alpha_dash',
+			'phone_ext'		=>	'nullable|alpha_dash',
+			'firm_name'		=>	'nullable|string',
+			'website'		=>	'nullable|string',
+			// 'receive_email'	=>	'nullable',
+            'license' => 'required|string|max:255',
+            'volume_closed_monthly' =>	'nullable|string'
+		], [
+			'zip.required' => 'Zip field is required',
+			'postal_code_service.required' => 'Postal code of service area field is required',
+			'phone_number.required'	=>	'The phone number field is required',
+			'firm_name.string'	=>	'The company name must be a string',
+			'user_type.required' => 'You must select either real estate agent or lender',
+		]);
+	    }
+	}
 
-        $data = $request->all();
-        $rules = array( 'honey_pot' => 'honey_pot');
+	/**
+	 * Create a new user instance after a valid registration.
+	 *
+	 * @param  array  $data
+	 * @return \App\User
+	 */
+	protected function create(array $data)
+	{
+	    Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
+
+        return $value == '';
+
+         });
+        $rules = array(
+            'honey_pot' => 'honey_pot'
+        );
+
         $messages = array('honey_pot' => 'Nothing Here');
+	    
 	    $validation = Validator::make($data, $rules, $messages);
+	    
         if ($validation->fails()) {
             return redirect()->back()->withErrors($validation)->withInput();
         }
@@ -198,7 +277,7 @@ class RegisterController extends Controller
                 'license' =>  $data['license'],
                 'volume_closed_monthly' =>  $data['volume_closed_monthly'],
                 'contact_term' =>  isset($data['enable_emails']) ? $data['enable_emails'] : 0,
-                'promote_profile' => isset($data['provide_content']) ? $data['provide_content'] : null
+                'promote_profile' => $data['provide_content']
             ]);
             
         }else{
@@ -296,244 +375,8 @@ class RegisterController extends Controller
 				'quantity' => 1,
 			]);
 		}
-		// return $user;
-        
-        return redirect()->route("pub.profile.detail.edit");
-	}
-
-	/**
-	 * Get a validator for an incoming registration request.
-	 *
-	 * @param  array  $data
-	 * @return \Illuminate\Contracts\Validation\Validator
-	 */
-	protected function validator(array $data)
-	{
-	    if($data['user_type'] == 'realtor'){
-	        return Validator::make($data, [
-			'provider' 		=> 'string',
-			'provider_id' 	=> 'string',
-			'first_name' 	=> 'required|string|max:250',
-			'last_name' 	=> 'required|string|max:250',
-			'email' 		=> 'required|string|email|max:255|unique:users',
-			'password' 		=> 'required|string|min:6|confirmed',
-			'user_type' 	=> 'required|string|in:realtor,broker',
-			'city' 			=> 'nullable|string',
-			'state' 		=> 'required|string|min:2|max:2',
-			'zip' 			=> 'required',
-			'years_of_exp'	=> 'numeric|min:0|max:100',
-            // 'specialties' => 'nullable|string',
-			'phone_number'	=>	'required|alpha_dash',
-			'phone_ext'		=>	'nullable|alpha_dash',
-			'firm_name'		=>	'nullable|string',
-			'website'		=>	'nullable|string',
-			'receive_email'	=>	'nullable',
-            'license' => 'required|string|max:255',
-            'volume_closed_monthly' =>	'nullable|string',
-			// 'require_financial_solution' => 'required',
-			// 'require_professional_service' => 'required',
-			// 'partnership_with_lender' => 'required',
-			// 'partnership_with_vendor' => 'required',
-			// 'can_realtor_contact' => 'required',
-		], [
-			'zip.required' => 'Zip field is required',
-			'postal_code_service.required' => 'Postal code of service area field is required',
-			'phone_number.required'	=>	'The phone number field is required',
-			'firm_name.string'	=>	'The company name must be a string',
-			'user_type.required' => 'You must select either real estate agent or lender',
-			// 'require_financial_solution.required' => 'You must select either real estate agent or lender',
-		]);
-	    }else{
-		return Validator::make($data, [
-			'provider' 		=> 'string',
-			'provider_id' 	=> 'string',
-			'first_name' 	=> 'required|string|max:250',
-			'last_name' 	=> 'required|string|max:250',
-			'email' 		=> 'required|string|email|max:255|unique:users',
-			'password' 		=> 'required|string|min:6|confirmed',
-			'user_type' 	=> 'required|string|in:realtor,broker',
-			'city' 			=> 'nullable|string',
-			'state' 		=> 'required|string|min:2|max:2',
-			'zip' 			=> 'required',
-			'postal_code_service' => 'required|string|max:200',
-			'years_of_exp'	=> 'numeric|min:0|max:100',
-            'specialties' => 'nullable|string',
-			'phone_number'	=>	'required|alpha_dash',
-			'phone_ext'		=>	'nullable|alpha_dash',
-			'firm_name'		=>	'nullable|string',
-			'website'		=>	'nullable|string',
-			// 'receive_email'	=>	'nullable',
-            'license' => 'required|string|max:255',
-            'volume_closed_monthly' =>	'nullable|string'
-		], [
-			'zip.required' => 'Zip field is required',
-			'postal_code_service.required' => 'Postal code of service area field is required',
-			'phone_number.required'	=>	'The phone number field is required',
-			'firm_name.string'	=>	'The company name must be a string',
-			'user_type.required' => 'You must select either real estate agent or lender',
-		]);
-	    }
-	}
-
-	/**
-	 * Create a new user instance after a valid registration.
-	 *
-	 * @param  array  $data
-	 * @return \App\User
-	 */
-	/*protected function create(array $data)
-	{
-	    Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
-            return $value == '';
-        });
-
-        $rules = array( 'honey_pot' => 'honey_pot');
-        $messages = array('honey_pot' => 'Nothing Here');
-	    $validation = Validator::make($data, $rules, $messages);
-        if ($validation->fails()) {
-            return redirect()->back()->withErrors($validation)->withInput();
-        }
-        
-        //if first name or last name contains http:// or https:// then it is invalid name.
-        if(strpos($data['first_name'], 'http://') !== false || strpos($data['first_name'], 'https://') !== false){
-	        return redirect()->back()->with('error','Invalid First Name.');
-	    }
-	    
-	    if(strpos($data['last_name'], 'http://') !== false || strpos($data['last_name'], 'https://') !== false){
-	        return redirect()->back()->with('error','Invalid Last Name.');
-	    }
-	    
-	    $geolocationService = new GeolocationService();
-        $location = $geolocationService->cityStateZip($data['city'],$data['state'],$data['zip']);
-        if($data['city'] === "Select City" || $data['city'] == '0' || $data['city'] === "Other") {
-            $c = $data['anotherCity']; 
-        } else {
-            $c= $data['city'];  
-        }
-        if($data['phone_ext'] ==''){
-            $data['phone_ext'] = null;
-        }
-        if($data['user_type'] =='realtor'){
-            // dd($data);
-                $user = User::create([
-                'first_name' 	=> $data['first_name'],
-                'last_name' 	=> $data['last_name'],
-                'email' 		=> strtolower($data['email']),
-                'password' 		=> bcrypt($data['password']),
-                'email_token'	=> Uuid::uuid4()->toString(),
-                'verified' 		=> false,
-                'user_type' 	=> $data['user_type'],
-                'city' 			=> $c,
-                'state' 		=> $data['state'],
-                'zip' 			=> $data['zip'],
-                'register_ts' 	=> new DateTime(),
-                'verify_ts' 	=> null,
-                'years_of_exp'	=> null,
-                // 'specialties' => $data['specialties'],
-                'latitude'		=> $location->lat,
-                'longitude'		=> $location->long,
-                'phone_number'	=> $data['phone_number'],
-                'phone_ext'		=> $data['phone_ext'],
-                'website'		=> $data['website'],
-                'firm_name'		=> $data['firm_name'],
-                'uid'			=> Uuid::uuid4(),
-                'license' =>  $data['license'],
-                'volume_closed_monthly' =>  $data['volume_closed_monthly'],
-                'contact_term' =>  isset($data['enable_emails']) ? $data['enable_emails'] : 0,
-                'promote_profile' => isset($data['provide_content']) ? $data['provide_content'] : null
-            ]);
-            
-        }else{
-            $user = User::create([
-                'first_name' 	=> $data['first_name'],
-                'last_name' 	=> $data['last_name'],
-                'email' 		=> strtolower($data['email']),
-                'password' 		=> bcrypt($data['password']),
-                'email_token'	=> Uuid::uuid4()->toString(),
-                'verified' 		=> false,
-                'user_type' 	=> $data['user_type'],
-                'city' 			=> $c,
-                'state' 		=> $data['state'],
-                'zip' 			=> $data['zip'],
-                'postal_code_service' => $data['postal_code_service'],
-                'register_ts' 	=> new DateTime(),
-                'verify_ts' 	=> null,
-                'years_of_exp'	=> null,
-                'specialties' => $data['specialties'],
-                'latitude'		=> $location->lat,
-                'longitude'		=> $location->long,
-                'phone_number'	=> $data['phone_number'],
-                'phone_ext'		=> $data['phone_ext'],
-                'website'		=> $data['website'],
-                'firm_name'		=> $data['firm_name'],
-                'uid'			=> Uuid::uuid4(),
-                'license' =>  $data['license'],
-                'volume_closed_monthly' =>  $data['volume_closed_monthly'],
-                'contact_term' =>  $data['agree'],
-                'promote_profile' => $data['provide_content']
-            ]);
-        }
-        $findUser = User::find($user->user_id);
-        $findUser->contact_term = $data['agree'];
-        $findUser->promote_profile = $data['provide_content'];
-        if($data['user_type'] =='realtor'){
-            // $findUser->rbc_free_marketing = $data['rbc_free_marketing'];
-            $findUser->how_long_realtor = $data['how_long_realtor'];
-        }
-        $findUser->update();
-        if($data['user_type'] =='realtor'){
-            $realtorDetail = RealtorDetail::where(['user_id' => $user->user_id])->first();
-            if(is_null($realtorDetail)){
-                $realtorDetail = new RealtorDetail();
-                $realtorDetail->user_id = $user->user_id;
-            }
-            $realtorDetail->require_financial_solution = $data['require_financial_solution'] == "yes" ? 1 : 0;
-            $realtorDetail->require_professional_service = $data['require_professional_service'] == "yes" ? 1 : 0;
-            $realtorDetail->partnership_with_lender = $data['partnership_with_lender'] == "yes" ? 1 : 0;
-            $realtorDetail->partnership_with_vendor = $data['partnership_with_vendor'] == "yes" ? 1 : 0;
-            $realtorDetail->can_realtor_contact = $data['can_realtor_contact'] == "yes" ? 1 : 0;
-            $realtorDetail->save();
-        }
-        $user->assign('user');
-        $user->assign($user['user_type']);
-        if(!isset($user['receive_email'])) 
-        {
-			$settings = $user->settings;
-			$settings->email_receive_match_suggestions = false;
-			$settings->save();
-		}
-        if (isset($data['provider'])
-			&& $data['provider'] !== null
-			&& isset($data['provider_id'])
-			&& $data['provider_id'] !== null
-		) {
-			$this->createUserProvider($data, $user);
-		}
-        if(!in_array(env('APP_ENV'),['local'])){
-            $this->notifyAdmin($user);
-            $this->emailVerification($user);
-            $this->welcomeEmail($user);
-
-            // Trigger the event
-            event(new NewMemberAlert($user));
-        }
-        if ($user->user_type === UserAccountType::BROKER) 
-        {
-			MatchPurchase::create([
-				'user_id' => $user->user_id,
-				'type' => MatchPurchaseType::COMPLIMENTARY,
-				'quantity' => 2,
-			]);
-		} elseif ($user->user_type === UserAccountType::REALTOR) 
-		{
-			MatchPurchase::create([
-				'user_id' => $user->user_id,
-				'type' => MatchPurchaseType::COMPLIMENTARY,
-				'quantity' => 1,
-			]);
-		}
 		return $user;
-    }*/
+    }
 
 	/**
      * Send an email to the admin notifying them that a new user has
