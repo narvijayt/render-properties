@@ -33,11 +33,8 @@ class VerifyMobileController extends Controller
         if(isset($user->phone_number) && !empty($user->phone_number) ){
             $response = (new MobileVerificationService())->generateOtp($user->user_id);
             // echo '<pre>'; print_r($response); die;
-            try{
-                (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
-            }catch(Exception $e){
-                          
-            }
+
+            (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
 
             flash("OTP has been sent successfully")->success();
             return redirect()->route('verify.phone', ['id' => $user->user_id]);
@@ -126,11 +123,7 @@ class VerifyMobileController extends Controller
         if(isset($user->phone_number) && !empty($user->phone_number) ){
             $response = (new MobileVerificationService())->regenerateOtp($user->user_id);
             // echo '<pre>'; print_r($response); die;
-            try{
-                (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
-            }catch(Exception $e){
-                            
-            }
+            (new TwilioService())->sendOTPVerificationSMS($user, $response->otp);
         }
         return true;
     }

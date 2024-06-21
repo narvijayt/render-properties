@@ -10,22 +10,22 @@ use Illuminate\Support\Facades\Log;
 class TwilioService{
 
     public function sendOTPVerificationSMS( object $user, $otp){
-        return $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code for Render: '.$otp);
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code for Render: '.$otp);
     }
     
     public function sendLoginOTPVerificationSMS( object $user, $otp){
         
-        return $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code to login your account in Render is: '.$otp);
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Your OTP Code to login your account in Render is: '.$otp);
     }
 
     public function sendAutoMatchRequestSMS($lendor, $realtor){
         // $this->sendSMS( $realtor->phone_number, 'Hey '.$realtor->first_name.'! Time to increase your sales! Congratulations, a Loan Officer in your area, '.$lendor->first_name.' '.$lendor->last_name.' wants to connect with you. Click on the link below to see the details. '.route('view.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
-        return $this->sendSMS( $realtor->phone_number, 'Hey '.$realtor->first_name.'! Congratulations, a Loan Officer in your area wants to get buyer leads started. Match with '.$lendor->first_name.' '.$lendor->last_name.' and start the leads today. Click on the link below to see details: '.route('view.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
+        $this->sendSMS( $realtor->phone_number, 'Hey '.$realtor->first_name.'! Congratulations, a Loan Officer in your area wants to get buyer leads started. Match with '.$lendor->first_name.' '.$lendor->last_name.' and start the leads today. Click on the link below to see details: '.route('view.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
     }
     
     public function sendRealtorConnectToLender($lendor, $realtor){
         // $this->sendSMS( $lendor->phone_number, 'Hey '.$lendor->first_name.'! Congratulations, a Real Estate Agent in your area '.$realtor->first_name.' '.$realtor->last_name.' has connected with you. Click on the link below to see the details. '.route('realtordetails.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
-        return $this->sendSMS( $lendor->phone_number, 'Hey '.$lendor->first_name.'! Congratulations, a Real Estate Agent in your area '.$realtor->first_name.' '.$realtor->last_name.' has connected with you. Click on the link below to see the details '.route('realtordetails.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
+        $this->sendSMS( $lendor->phone_number, 'Hey '.$lendor->first_name.'! Congratulations, a Real Estate Agent in your area '.$realtor->first_name.' '.$realtor->last_name.' has connected with you. Click on the link below to see the details '.route('realtordetails.automatch', ['brokerId' => $lendor->user_id, 'realtorId' => $realtor->user_id]) );
     }
 
     public function sendConversationNotificationSMS($conversationData){
@@ -38,7 +38,7 @@ class TwilioService{
             $brokerId = $conversationData['recipient']->user_id;
         }*/
 
-        return $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('pub.message-center.index') );
+        $this->sendSMS( $conversationData['recipient']->phone_number, 'Hey '.$conversationData['recipient']->first_name.'! You have received a new message from a '.$userType.'. Click on the link below to check the message and reply '. route('pub.message-center.index') );
     }
 
     /**
@@ -48,7 +48,7 @@ class TwilioService{
     public function sendNewRequestMatchNotification($authUser, $user){
         // $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. You can view the request in your profile '. route('pub.profile.matches.index') );
         
-        return $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. Click on the link below to check the details '. route('view.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! you have received a new match request from '.$authUser->first_name.'. Click on the link below to check the details '. route('view.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
     }
     
     /**
@@ -56,7 +56,7 @@ class TwilioService{
      * 
      */
     public function sendMatchAcceptedNotification($authUser, $user){
-        return $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Congratulations, '.$authUser->first_name.' has accpeted your match request. Click on the link below to check the details '. route('matchdetails.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
+        $this->sendSMS( $user->phone_number, 'Hey '.$user->first_name.'! Congratulations, '.$authUser->first_name.' has accpeted your match request. Click on the link below to check the details '. route('matchdetails.automatch', ['authUser' => $user->user_id, 'user' => $authUser->user_id]) );
     }
     
     
@@ -72,7 +72,7 @@ class TwilioService{
         }elseif($user->user_type == "realtor"){
             $usertype = 'Realtor';
         }
-        return $this->sendSMS( $member->phone_number, 'Hey '.$member->first_name.', a new '.$usertype.' has just joined in your area. Click on the link below to match with a member and get connected to more home buyers and sellers who need your services. '. route('pub.user.show', ['user_id' => $user->user_id]) );
+        $this->sendSMS( $member->phone_number, 'Hey '.$member->first_name.', a new '.$usertype.' has just joined in your area. Click on the link below to match with a member and get connected to more home buyers and sellers who need your services. '. route('pub.user.show', ['user_id' => $user->user_id]) );
     }
 
     public function sendSMS($to, $body){
