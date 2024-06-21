@@ -61,7 +61,11 @@ class AutoConnectionController extends Controller
                 }
 
                 if($connection_exists == false){
-                    $response = (new TwilioService())->sendAutoMatchRequestSMS($user, $realtor);
+                    try{
+                        $response = (new TwilioService())->sendAutoMatchRequestSMS($user, $realtor);
+                    }catch(Exception $e){
+
+                    }
                     $email = new NewLenderNotificationToRealtors($user, $realtor);
                     Mail::to($realtor->email)->send($email);
                 }
@@ -123,7 +127,11 @@ class AutoConnectionController extends Controller
         $email = new autoConfirmMatchRequestEmail($authUser, $user);
         Mail::to($user->email)->send($email);
 
-		(new TwilioService())->sendMatchAcceptedNotification($authUser, $user);
+        try{
+            (new TwilioService())->sendMatchAcceptedNotification($authUser, $user);
+        }catch(Exception $e){
+                            
+        }
 
         flash('You have successfully matched with '.$user->full_name())->success();
 

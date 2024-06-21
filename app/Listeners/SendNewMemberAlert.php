@@ -35,7 +35,11 @@ class SendNewMemberAlert
         $registeredMembers = $event->registeredMembers;
         foreach($registeredMembers as $member){
             Mail::to($member->email)->send(new NotifyUsersNewRegistration($user, $member));
-            (new TwilioService())->sendNewMemberNotification($user, $member);
+            try{
+                (new TwilioService())->sendNewMemberNotification($user, $member);
+            }catch(Exception $e){
+                
+            }
         }
     }
 }

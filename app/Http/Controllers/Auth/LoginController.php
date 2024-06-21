@@ -44,7 +44,11 @@ class LoginController extends Controller
             if($request->input('loginWithOTP') == 1){
                 $response = (new MobileVerificationService())->generateOtp($usr->user_id);    
                 // echo '<pre>'; print_r($response); die;
-                (new TwilioService())->sendLoginOTPVerificationSMS($usr, $response->otp);
+                try{
+                    (new TwilioService())->sendLoginOTPVerificationSMS($usr, $response->otp);
+                }catch(Exception $e){
+                            
+                }
                 $email = new SendLoginOTPNotification($usr, $response->otp);
                 Mail::to($usr->email)->send($email);
     
@@ -308,7 +312,11 @@ class LoginController extends Controller
 
         if(isset($user->phone_number) && !empty($user->phone_number) ){
             $response = (new MobileVerificationService())->regenerateOtp($user->user_id);
-            (new TwilioService())->sendLoginOTPVerificationSMS($user, $response->otp);
+            try{
+                (new TwilioService())->sendLoginOTPVerificationSMS($user, $response->otp);
+            }catch(Exception $e){
+                          
+            }
             
             $email = new SendLoginOTPNotification($user, $response->otp);
             Mail::to($user->email)->send($email);

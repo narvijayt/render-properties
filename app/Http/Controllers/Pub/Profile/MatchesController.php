@@ -165,7 +165,11 @@ class MatchesController extends Controller
             }else{
                 $this->matchRequestEmail($user);
             }
-			(new TwilioService())->sendNewRequestMatchNotification($authUser, $user);
+			try{
+				(new TwilioService())->sendNewRequestMatchNotification($authUser, $user);
+			}catch(Exception $e){
+                          
+			}
            	event(new NewMatch($match, $user));
 		} else {
 			flash('Unable to send match request')->error();
@@ -204,7 +208,11 @@ class MatchesController extends Controller
 		}
 		
         $this->confirmMatchRequestEmail($user);
-		(new TwilioService())->sendMatchAcceptedNotification($authUser, $user);
+		try{
+			(new TwilioService())->sendMatchAcceptedNotification($authUser, $user);
+		}catch(Exception $e){
+                          
+		}
 
 		flash('You have successfully matched with '.$user->full_name())->success();
 
