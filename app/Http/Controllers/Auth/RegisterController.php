@@ -220,7 +220,13 @@ class RegisterController extends Controller
 
          });
         $rules = array(
-            'honey_pot' => 'honey_pot'
+            'first_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+            'user_type' => 'required',
+            'zip' => 'required',
+            'phone_number' => 'required',
+            'license' => 'required',
         );
 
         $messages = array('honey_pot' => 'Nothing Here');
@@ -277,7 +283,7 @@ class RegisterController extends Controller
                 'license' =>  $data['license'],
                 'volume_closed_monthly' =>  $data['volume_closed_monthly'],
                 'contact_term' =>  isset($data['enable_emails']) ? $data['enable_emails'] : 0,
-                'promote_profile' => $data['provide_content']
+                'promote_profile' => isset($data['provide_content']) ? $data['provide_content'] : null
             ]);
             
         }else{
