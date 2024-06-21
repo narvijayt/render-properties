@@ -132,6 +132,21 @@ class RegisterController extends Controller
         return view('auth.realtor-register', compact('registerType', 'realtorRegPage','testimonials', 'getRealtorRegisterPage'));
 	}
 
+    protected function register(Request $request){
+	    $validation = $this->validator($request->all());
+	    
+	    if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation)->withInput();
+        }
+        
+        
+        $user = $this->create($request->all());
+        
+        Auth::login($user);
+
+        return redirect("pub.profile.detail.edit");
+	}
+
 	/**
 	 * Get a validator for an incoming registration request.
 	 *
@@ -215,18 +230,12 @@ class RegisterController extends Controller
 	protected function create(array $data)
 	{
 	    Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
+            return $value == '';
+        });
 
-        return $value == '';
-
-         });
-        $rules = array(
-            'honey_pot' => 'honey_pot'
-        );
-
+        $rules = array( 'honey_pot' => 'honey_pot');
         $messages = array('honey_pot' => 'Nothing Here');
-	    
 	    $validation = Validator::make($data, $rules, $messages);
-	    
         if ($validation->fails()) {
             return redirect()->back()->withErrors($validation)->withInput();
         }
@@ -277,7 +286,7 @@ class RegisterController extends Controller
                 'license' =>  $data['license'],
                 'volume_closed_monthly' =>  $data['volume_closed_monthly'],
                 'contact_term' =>  isset($data['enable_emails']) ? $data['enable_emails'] : 0,
-                'promote_profile' => $data['provide_content']
+                'promote_profile' => isset($data['provide_content']) ? $data['provide_content'] : null
             ]);
             
         }else{
