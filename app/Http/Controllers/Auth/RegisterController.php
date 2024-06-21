@@ -381,7 +381,7 @@ class RegisterController extends Controller
 	 * @param  array  $data
 	 * @return \App\User
 	 */
-	protected function create(array $data)
+	/*protected function create(array $data)
 	{
 	    Validator::extend('honey_pot', function ($attribute, $value, $parameters) {
             return $value == '';
@@ -478,12 +478,6 @@ class RegisterController extends Controller
         $findUser->promote_profile = $data['provide_content'];
         if($data['user_type'] =='realtor'){
             // $findUser->rbc_free_marketing = $data['rbc_free_marketing'];
-            /*$findUser->lo_matching_acknowledged = $data['lo_matching_acknowledged'];
-            $findUser->open_to_lender_relations = $data['open_to_lender_relations'];
-            $findUser->co_market = isset($data['co_market']) ? $data['co_market'] : "No";
-            $findUser->contact_me_for_match = isset($data['contact_me_for_match']) ? $data['contact_me_for_match'] : null;
-            $findUser->contact_term = (isset($data['enable_emails'])) ? $data['enable_emails'] : 0;
-            $findUser->referral_fee_acknowledged = isset($data['referral_fee_acknowledged']) ? $data['referral_fee_acknowledged'] : null;*/
             $findUser->how_long_realtor = $data['how_long_realtor'];
         }
         $findUser->update();
@@ -539,7 +533,7 @@ class RegisterController extends Controller
 			]);
 		}
 		return $user;
-    }
+    }*/
 
 	/**
      * Send an email to the admin notifying them that a new user has
