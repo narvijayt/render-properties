@@ -144,7 +144,7 @@ class RegisterController extends Controller
         
         Auth::login($user);
 
-        return redirect("pub.profile.detail.edit");
+        return redirect()->route("pub.profile.detail.edit");
 	}
 
 	/**
