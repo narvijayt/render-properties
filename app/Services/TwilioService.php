@@ -72,7 +72,8 @@ class TwilioService{
         }elseif($user->user_type == "realtor"){
             $usertype = 'Realtor';
         }
-        $this->sendSMS( $member->phone_number, 'Hey '.$member->first_name.', a new '.$usertype.' has just joined in your area. Click on the link below to match with a member and get connected to more home buyers and sellers who need your services. '. route('pub.user.show', ['user_id' => $user->user_id]) );
+
+        $this->sendSMS( $member->phone_number, 'Hey '.$member->first_name.', a new '.$usertype.' has just joined in your area. Click on the link below to match with the member and get connected to more home buyers and sellers who need your services. '. route('pub.user.show', ['user_id' => $user->user_id]) );
     }
 
     public function sendSMS($to, $body){
