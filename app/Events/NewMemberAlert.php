@@ -38,13 +38,16 @@ class NewMemberAlert
         $user_types = [];
         if($this->user->user_type == "broker"){
             $user_types = ['vendor','realtor'];
+            $whereClause = ['zip' => $this->user->zip];
         }else if($this->user->user_type == "realtor"){
             $user_types = ['vendor','broker'];
+            $whereClause = ['state' => $this->user->state, 'payment_status' => 1];
         }else if($this->user->user_type == "vendor"){
             $user_types = ['realtor','broker'];
+            $whereClause = ['zip' => $this->user->zip];
         }
-        
-        $this->registeredMembers = User::whereIn('user_type', $user_types)->where(['zip' => $this->user->zip])->get();        
+
+        $this->registeredMembers = User::whereIn('user_type', $user_types)->where($whereClause)->get();
     }
 
     /**
