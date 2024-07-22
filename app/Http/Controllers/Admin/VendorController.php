@@ -82,7 +82,7 @@ class VendorController extends Controller
             'verified' 		=> false,
             'register_ts' 	=> new \DateTime(),
             'user_type'     => UserAccountType::VENDOR,
-            'phone_number'	=> $request->phone_no,
+            'phone_number'	=> str_replace("-","",$request->phone_no),
             'firm_name'		=> $request->company_name,
             'uid'			=> Uuid::uuid4(),
             'bio'           => $request->short_description,
@@ -98,7 +98,7 @@ class VendorController extends Controller
             'verified' 		=> false,
             'register_ts' 	=> new \DateTime(),
             'user_type'     => UserAccountType::VENDOR,
-            'phone_number'	=> $request->phone_no,
+            'phone_number'	=> str_replace("-","",$request->phone_no),
             'firm_name'		=> $request->company_name,
             'uid'			=> Uuid::uuid4(),
             'bio'           => $request->short_description

@@ -172,7 +172,6 @@ class DetailController extends Controller
 			'state',
 			'zip',
             'firm_name',
-            'phone_number',
             'website',
             'video_url',
             'license',
@@ -190,6 +189,7 @@ class DetailController extends Controller
 			$details['latitude'] = $location->lat;
 			$details['longitude'] = $location->long;
 		}
+        $details['phone_number'] = str_replace("-","",$request->phone_number);
 		$user->email = strtolower($user->email);
         $userUpdate = $user->update($details);
         

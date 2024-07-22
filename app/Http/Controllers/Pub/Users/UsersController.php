@@ -856,7 +856,7 @@ class UsersController extends Controller
                 'specialties' => $data['specialties'],
                 'latitude'		=> $location->lat,
                 'longitude'		=> $location->long,
-                'phone_number'	=> $data['phone_number'],
+                'phone_number'	=> str_replace("-","",$data['phone_number']),
                 'phone_ext'		=> $data['phone_ext'],
                 'website'		=> $data['website'],
                 'firm_name'		=> $data['firm_name'],
@@ -1341,7 +1341,7 @@ class UsersController extends Controller
                 'verify_ts' 	=> null,
                 'latitude'		=> $location->lat,
                 'longitude'		=> $location->long,
-                'phone_number'	=> $data['phone_number'],
+                'phone_number'	=> str_replace("-","",$data['phone_number']),
                 'phone_ext'		=> $data['phone_ext'],
                 'uid' => Uuid::uuid4(),
                 'contact_term' => $data['agree']
