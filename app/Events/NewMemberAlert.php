@@ -11,6 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 use App\User;
+use DB;
 
 class NewMemberAlert
 {
@@ -36,18 +37,16 @@ class NewMemberAlert
         //
         $this->user = $user;
         $user_types = [];
+        $registeredMembersQuery = User::where(['state' => $this->user->state]);
         if($this->user->user_type == "broker"){
-            $user_types = ['vendor','realtor'];
-            $whereClause = ['zip' => $this->user->zip];
-        }else if($this->user->user_type == "realtor"){
-            $user_types = ['vendor','broker'];
-            $whereClause = ['state' => $this->user->state, 'payment_status' => 1];
+            $registeredMembersQuery->whereRaw("( (user_type = 'vendor' and payment_status = 1) OR (user_type = 'realtor') ) ");
+        }else if($this->user->user_type == "realtor"){            
+            $registeredMembersQuery->whereIn('user_type', ["vendor", "broker"])->where(['payment_status' => 1]);
         }else if($this->user->user_type == "vendor"){
-            $user_types = ['realtor','broker'];
-            $whereClause = ['zip' => $this->user->zip];
+            $registeredMembersQuery->whereRaw("( (user_type = 'broker' and payment_status = 1) OR (user_type = 'realtor') ) ");
         }
 
-        $this->registeredMembers = User::whereIn('user_type', $user_types)->where($whereClause)->get();
+        $this->registeredMembers = $registeredMembersQuery->get();
     }
 
     /**
