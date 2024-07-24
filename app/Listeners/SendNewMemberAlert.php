@@ -34,8 +34,16 @@ class SendNewMemberAlert
         $user = $event->user;
         $registeredMembers = $event->registeredMembers;
         foreach($registeredMembers as $member){
-            Mail::to($member->email)->send(new NotifyUsersNewRegistration($user, $member));
-            (new TwilioService())->sendNewMemberNotification($user, $member);
+            if($member->user_type == "realtor" && $member->verified === false){
+                // nothing to do
+            }else{
+                Mail::to($member->email)->send(new NotifyUsersNewRegistration($user, $member));
+            }
+            if($member->user_type == "realtor" && $member->mobile_verified != 1){
+                // nothing to do
+            }else{
+                (new TwilioService())->sendNewMemberNotification($user, $member);
+            }
         }
     }
 }
