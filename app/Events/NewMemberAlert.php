@@ -39,14 +39,15 @@ class NewMemberAlert
         $user_types = [];
         $registeredMembersQuery = User::where(['state' => $this->user->state]);
         if($this->user->user_type == "broker"){
-            $registeredMembersQuery->whereRaw("( (user_type = 'vendor' and payment_status = 1) OR (user_type = 'realtor') ) ");
+            $registeredMembersQuery->whereRaw("( (user_type = 'vendor' and payment_status = 1) OR (user_type = 'realtor' and (mobile_verified = 1 OR verified = true) ) ) ");
         }else if($this->user->user_type == "realtor"){            
             $registeredMembersQuery->whereIn('user_type', ["vendor", "broker"])->where(['payment_status' => 1]);
         }else if($this->user->user_type == "vendor"){
-            $registeredMembersQuery->whereRaw("( (user_type = 'broker' and payment_status = 1) OR (user_type = 'realtor') ) ");
+            $registeredMembersQuery->whereRaw("( (user_type = 'broker' and payment_status = 1) OR (user_type = 'realtor' and (mobile_verified = 1 OR verified = true)) ) ");
         }
 
         $this->registeredMembers = $registeredMembersQuery->get();
+        // dd($this->registeredMembers);
     }
 
     /**
