@@ -48,7 +48,7 @@ if($user->user_type === 'broker'){
                     <p class="text-center text-dark font-weight-bold mb-1">Now you can send text to this {{ ucfirst($sub_title) }} by clicking "Send a Text" button below:</p>
                 @else
                     @if(Auth::user() && Auth::user()->user_id == $match->user_id1)
-                        <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! Your requested has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
+                        <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! Your request has been sent to {{ ucfirst($user->first_name) }} to connect.</h4>
                         <!-- <p>To connect with this {{ ucfirst($sub_title) }}, click below:</p> -->
                     @else
                         <h4 class="text-primary text-center match-info-heading mt-0">Congratulations! You are requested by {{ ucfirst($user->first_name) }} to connect.</h4>
