@@ -207,7 +207,7 @@
     --}}
 @endif
 
-@php echo "User Role Type: ". auth()->user()->user_type; @endphp
+
 @if(auth()->user()->user_type == 'broker')
     <div class="form-group {{ $errors->has('specialties') ? 'has-error' : '' }}">
         <label class="control-label" for="specialties">
