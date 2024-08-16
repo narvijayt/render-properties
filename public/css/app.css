@@ -1471,7 +1471,17 @@ body .footer .navbar-right{margin-right: -16px;}
 .chat_container{cursor: pointer;}
 .works-section-outer .desktop-image {margin-top: -48px;}
 
-/**************** 28-03-2024 Starts *********************/
+/**************** 28-03-2024 ends *********************/
+
+/**************** 16-08-2024 Starts *********************/
+.form-submit-btn{font-weight: bold; letter-spacing: 1px; padding: 10px 45px !important; border-radius: 5px;}
+/* .sell_buy_banner{position: relative;} */
+.sell_buy_banner_img{height: 140px; width: 100%; }
+.sell_buy_banner{ position: relative;text-align: center;color: white;}
+.sell_buy_banner_text{position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);font-size:35px;color:white}
+/**************** 16-08-2024 ends *********************/
+
+
 /* ============================= Responsive CSS================================= */
 
 
@@ -2107,6 +2117,8 @@ hr.style1{
 .chat_container{cursor: pointer;}
 /**************** 28-03-2024 Starts *********************/
 
+.submit-btn{width: 100%; float: left;border-radius: 0px;margin-left: 0px;margin-top: 10px;font-size: 15px;}
+
 
 @media(max-width:625px)
 {
@@ -2272,3 +2284,6 @@ body .navbar .header-contact{width: 100%;}
 /* @media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){ */
 /* .hero-banner {margin-top: 20px;} */
 /* } */
+
+
+

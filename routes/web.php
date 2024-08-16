@@ -25,6 +25,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', function() {
     return redirect()->route('home');
 });
+Route::get('/sell-your-property', 'SellPropertyController@index')->name('property.sell');
+Route::post('/sell-your-property', 'SellPropertyController@store')->name('property.sell.store');
+Route::get('/buy-property', 'BuyPropertyController@index')->name('property.buy');
+Route::post('/buy-property', 'BuyPropertyController@store')->name('property.buy.store');
 Route::get('/password/request-new-password', 'SetPasswordController@index')->name('requestPasswordView');
 Route::post('/password/request-new-password', 'SetPasswordController@postEmail')->name('postEmail');
 
