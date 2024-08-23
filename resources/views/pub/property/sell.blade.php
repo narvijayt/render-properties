@@ -1,3 +1,4 @@
+@inject('states', 'App\Http\Utilities\Geo\USStates')
 @extends("layouts.app")
 @section('title', 'Sell your property')
 @section('meta')
@@ -234,9 +235,18 @@
                                 <div class="col-lg-6 mb-1">
                                     <input type="text" class="form-control" name="city" placeholder="City" value="{{ old('city','') }}">
                                 </div>
-                                <div class="col-lg-3 mb-1">
+                                <!-- <div class="col-lg-3 mb-1">
                                     <input type="text" class="form-control" name="state" placeholder="State / Province" value="{{ old('state','') }}">
+                                </div> -->
+                                <div class="col-lg-3 mb-1">
+                                    <select id="state" class="form-control" name="state">
+                                        <option value="">Choose a state</option>
+                                        @foreach($states::all() as $abbr => $stateName)
+                                            <option value="{{ $abbr }}" {{ collect(old('state'))->contains($abbr) ? 'selected' : '' }}>{{ $stateName }}</option>
+                                        @endforeach
+                                    </select>    
                                 </div>
+
                                 <div class="col-lg-3 mb-1">
                                     <input type="text" class="form-control" name="postal_code" placeholder="Postal / Zip Code" value="{{ old('postal_code','') }}">
                                 </div>
@@ -248,7 +258,7 @@
                     <script src="https://www.google.com/recaptcha/api.js"></script>
                     <div class="form-group row recaptcha-row">
                         <div class="col-lg-6 offset-lg-4">
-                            <div class="g-recaptcha" data-sitekey="{{ env('CAPTCHA_KEY') }}"></div>
+                            <div class="g-recaptcha" data-sitekey="6Lf0QSgqAAAAAM7PmZOrZOmCV0NCsyS6gUK8wAOd"></div>
                             <span class="msg-error error"></span>
                             @if ($errors->has('g-recaptcha-response'))
                                 <span class="invalid-feedback" style="display: block;">

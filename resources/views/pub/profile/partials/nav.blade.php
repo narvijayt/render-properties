@@ -28,6 +28,10 @@
     @endif
     <li><a href="{{ route('pub.profile.profileSocialReviews') }}">Social Reviews</a></li>
 
+    @if (auth()->user()->user_type === "broker"|| auth()->user()->user_type === "realtor")
+      <li><a href="{{ route('pub.profile.leads') }}">Leads</a></li>
+    @endif
+
     @if(auth()->user()->user_type != 'vendor')
     <li><a href="{{ route('pub.profile.settings.index') }}">Settings</a></li>
     @endif

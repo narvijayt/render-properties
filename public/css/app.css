@@ -1481,6 +1481,48 @@ body .footer .navbar-right{margin-right: -16px;}
 .sell_buy_banner_text{position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);font-size:35px;color:white}
 /**************** 16-08-2024 ends *********************/
 
+/****************19-08-2024 Starts *********************/
+.property-form-outer{border: none !important;}
+.property-form-outer .container {width: 1000px;box-shadow: 2px 2px 14px 11px #f4f4f4;}    
+.property-form-outer .form-check {margin-right: 20px;}
+.property-form-outer .check-d-flex{display: flex;flex-wrap: wrap;}
+.view-lead-form .container {
+    width: 100%;
+    box-shadow: 2px 2px 14px 11px #f4f4f4;
+}
+
+
+/* Hide the default checkbox */
+.property-form-outer .form-check .check-input { position: absolute; opacity: 0;cursor: pointer;}
+
+/* Create a custom checkbox */
+.property-form-outer .form-check .check-label::before { content: "";
+display: inline-block;width: 18px; height: 18px; background-color: #fff; border: 2px solid #c3c2c2; border-radius: 4px; margin-right: 7px; vertical-align: middle;}
+
+/* Checked checkbox style */
+.property-form-outer .form-check .check-input:checked + .check-label::before {background-color: #007bff; border-color: #007bff; background-image: url('/img/sell-check-icon-01.png');background-size: 12px;background-repeat: no-repeat; background-position: center;
+}
+/* Hover state */
+.property-form-outer .form-check .check-input:hover + .sell-home-outer .check-label::before { border-color: #0056b3;}
+.property-form-outer label.check-label{font-size: 16px;color: #858585;margin-bottom: 0px;display: flex; align-items: center;}
+
+/* Hide the default radio button */
+.property-form-outer .form-check .form-check-input {  position: absolute;opacity: 0; cursor: pointer;}
+
+/* Create a custom radio button */
+.property-form-outer .form-check .form-check-label::before { content: ""; display: inline-block; width: 20px; height: 20px; background-color: #fff;border: 2px solid #c3c2c2;border-radius: 50%;margin-right: 5px;vertical-align: middle;}
+
+/* Checked radio button style */
+.property-form-outer .form-check .form-check-input:checked + .form-check-label::before { background-color: #007bff; border-color: #007bff; background-image: url('/img/sell-dote-icon.png'); background-size: 10px;background-repeat: no-repeat;background-position: center;
+}
+
+/* Hover state */
+.property-form-outer .form-check .form-check-input:hover + .form-check-label::before {border-color: #0056b3;}
+.property-form-outer label.form-check-label { font-size: 16px; color: #858585;margin-bottom: 0px;display: flex; align-items: center;}
+.property-form-outer .form-control{ font-size: 16px; color: #858585;}
+.property-form-outer p {margin-bottom: 5px;}
+/****************19-08-2024 End *********************/
+
 
 /* ============================= Responsive CSS================================= */
 
@@ -1571,6 +1613,8 @@ body .footer.footer-light{padding-top: 27px;padding-bottom: 17px;}
   .realtor-register_form_outer.vendor-register_form_outer .form-group span{font-size: 15px;}
   .realtor-register_form_outer.vendor-register_form_outer .multi-select-menuitem{font-size: 15px;}
   .vendor-top-banner{background-position: -211px;}
+  .property-form-outer .container{width:100%;}
+  .property-form-outer .form-check .form-check-input:checked + .form-check-label::before{background-size: 10px;}
 }
 @media(max-width:1130px)
 {
@@ -1717,6 +1761,7 @@ body .business-outer .business-box p { font-size: 1.5vw;line-height: 22px;}
 .instant-access-outer.instant-access-outer-02{padding-top: 33px;}
 .testimonials-outer .testimonials-left .carousel .item {min-height: 190px;}
 .home-banner-heading h2{font-size: 32px; line-height: 41px;}
+
 }
 @media(max-width:988px)
 {
@@ -2003,6 +2048,11 @@ button#registerVendor {
 /**************** 27-03-2023 Ends *********************/
 
 /**************** 28-03-2023 Starts *********************/
+
+
+
+
+
 .text-locked{position: relative;}
 .text-locked:after{background: #ddd;position: absolute;width: 100%;content: "";height: 115%;left: 0;}
 

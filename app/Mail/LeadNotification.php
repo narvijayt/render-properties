@@ -12,18 +12,23 @@ class LeadNotification extends Mailable
 {
     use Queueable, SerializesModels;
     protected $formDetails;
+    public $email_type;
+    public $subject;
+    public $username;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($formId)
+    public function __construct($formId, $email_type, $recipient_name)
     {
-        // dd($formId);
         $this->formDetails = BuySellProperty::find($formId);
-        // dd($this->formDetails);
+        $this->email_type = $email_type;
+        $this->username = $recipient_name;
+        $this->subject = "Lead: ". $this->formDetails->firstName ." " . $this->formDetails->lastName . " wants to " . $this->formDetails->formPropertyType . " property";
     }
+
 
     /**
      * Build the message.
@@ -33,13 +38,16 @@ class LeadNotification extends Mailable
     public function build()
     {
         return $this->from(config('mail.from.address'), 'Render')
-                    ->subject("New Leads!")
+                    ->subject($this->subject)
                     ->markdown('email.lead-notification', [
                         'formDetails' => $this->formDetails,
+                        'email_type' => $this->email_type,
+                        'user_name' => $this->username,
                     ])
                     ->withSwiftMessage(function ($message) {
                         \Log::info($message->toString());
                     });
+
     }
 
 }

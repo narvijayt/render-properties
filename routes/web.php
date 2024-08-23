@@ -25,10 +25,9 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', function() {
     return redirect()->route('home');
 });
-Route::get('/sell-your-property', 'SellPropertyController@index')->name('property.sell');
-Route::post('/sell-your-property', 'SellPropertyController@store')->name('property.sell.store');
-Route::get('/buy-property', 'BuyPropertyController@index')->name('property.buy');
-Route::post('/buy-property', 'BuyPropertyController@store')->name('property.buy.store');
+Route::get('/sell-property', 'Pub\PropertyController@sellPropertyForm')->name('property.sell');
+Route::get('/buy-property', 'Pub\PropertyController@buyPropertyForm')->name('property.buy');
+Route::post('/submit-property-form', 'Pub\PropertyController@store')->name('property.store');
 Route::get('/password/request-new-password', 'SetPasswordController@index')->name('requestPasswordView');
 Route::post('/password/request-new-password', 'SetPasswordController@postEmail')->name('postEmail');
 
@@ -120,6 +119,8 @@ Route::group([
 	function() {
 		// Profile Routes
 		Route::get('/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@index')->name('profile.profileSocialReviews');
+		Route::get('/profile/leads', 'Profile\LeadsController@index')->name('profile.leads');
+		Route::get('/profile/leads/view/{lead_id}', 'Profile\LeadsController@viewLead')->name('profile.leads.view');
 		Route::match(['PUT', 'PATCH'], '/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@update')->name('profile.profileSocialReviews.update');
 		
 		Route::get('/profile', 'Profile\DashboardController@index')->name('profile.index');

@@ -58,6 +58,8 @@ class Handler extends ExceptionHandler
             return response()->json($this->serializeException($exception));
         } elseif ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             return response()->view('errors.404', [], 404);
+        } elseif ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return redirect('/login');
         } else {
             if (config('app.debug') === true) {
                 dd($exception);

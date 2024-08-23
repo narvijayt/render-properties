@@ -5,7 +5,7 @@
 @section('page_content')
 
 <div class="row justify-content-center align-items-center p-2">
-    <div class="card property-form-outer">
+    <div class="card view-lead-form">
         <div class="card-body">
 
             <div class="container p-3">
@@ -138,8 +138,8 @@
                         </div>
                     </div>
 
-                     <!-- Do You Currently Live in the House -->
-                     <div class="row">
+                    <!-- Do You Currently Live in the House -->
+                    <div class="row">
                         <div class="col-lg-3 mb-1">
                             <h5>Do You Currently Live in the House</h5>
                         </div>
