@@ -59,7 +59,7 @@
             
             <form method="POST" action="{{ route('property.store') }}" enctype="multipart/form-data">
                 {{csrf_field()}}
-                <div class="container p-3">
+                <div class="container p-3 mb-3">
                     <!-- First and Last name section -->
                     <div class="row">
                         <div class="col-lg-6 mb-1">

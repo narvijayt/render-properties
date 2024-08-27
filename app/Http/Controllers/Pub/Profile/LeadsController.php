@@ -17,23 +17,26 @@ class LeadsController extends Controller
      * 
      * @return html
      */
-    public function index () {
-
+    public function index()
+    {
         $data['user'] = Auth::user();
-        $data['showLeads'] = false;
+        $state = $data['user']->state;
+        $agentId = $data['user']->user_id;
         $city = strtolower($data['user']->city);
         
-        $data['leads'] = BuySellProperty::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' ,$data['user']->state)->get();
-        $data['role'] = $data['user']->user_type;
-
-        if (($data['user']->user_type === "broker" && $data['user']->payment_status == 1) ||
-            ($data['user']->user_type === "realtor" && $data['user']->availableMatchCount() > 0)) {
-
-            $data['showLeads'] = true;
-        }
-
+        // Get leads that match the user's city and state, were sent by email to the user
+        $data['leads'] = BuySellProperty::whereRaw('LOWER(city) = ?', [$city])
+            ->where('state', $state)
+            ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
+                $query->where('agent_id', $agentId);
+            })
+            ->with('areLeadsVisible')
+            ->get();
+        
         return view('pub.profile.leads.index', $data);
     }
+
+
 
 
     /**
@@ -44,31 +47,40 @@ class LeadsController extends Controller
      * @return html
      */
     public function viewLead($lead_id = '') {
-        $data['user'] = Auth::user();
+        $user = Auth::user();
+        $agentId = $user->user_id;
+
+        // Get lead by ID
         $data['lead'] = BuySellProperty::find($lead_id);
-        
-        // $leads_relation = \App\LeadNotificationRelationships::where(['property_form_id' => $lead_id, 'agent_id' => $data['user']->id])->get();
-        // if ($leads_relation->isEmpty()) {
-        //     return redirect()->route('pub.profile.leads');
-        // }
-        // dd($leads_relation);
-        // dd($data['lead']->areLeadsVisible()->get()->toArray());
 
-
+        // Check if lead exists.
         if (!$data['lead']) {
-            return redirect()->route('profile.leads')->withErrors('Lead not found.');
+            return redirect()->route('pub.profile.leads')->with('error', 'The requested lead could not be found.');
         }
-        // dd($data['user']->availableMatchCount());
-        // dd($data['user']->user_type === "realtor" && $data['user']->availableMatchCount() > 0);
-        if (($data['user']->user_type === "broker" && $data['user']->payment_status == 1) ||
-            ($data['user']->user_type === "realtor" && $data['user']->availableMatchCount() > 0)) {
 
-            return view('pub.profile.leads.view', $data);
+        // Check if the user has access to view the lead
+        $hasLeadAccess = $data['lead']->areLeadsVisible()->where('agent_id', $agentId)->get();
+        
+        if ($hasLeadAccess->isEmpty()) {
+            return redirect()->route('pub.profile.leads')->with('error', 'You do not have permission to view this lead.');
         }
         
-        return redirect()->route('pub.profile.leads');
-        
+        // Check leads visibility
+        $checkVisibility = $hasLeadAccess->whereIn('notification_type', ['lead_unmatched', 'subscription_upgrade']);
+        if ($checkVisibility->isNotEmpty()) {
+            
+            // Set role based error messages.
+            $message = '';
+            if ($user->user_type === "realtor") {
+                $message = "Please match with someone to view the lead details.";
+            } else if ($user->user_type === "broker") {
+                $message = "Please upgrade your subscription to access this lead.";
+            }
 
+            return redirect()->route('pub.profile.leads')->with('error', $message);
+        }
+
+        return view('pub.profile.leads.view', $data);
     }
 
 }

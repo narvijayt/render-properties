@@ -602,6 +602,8 @@ $(function () {
         'searching': false
     });
 
+    $('#leads_listing_table').DataTable();
+
     /* add page form */
     $(function() {
         $("#add-page-form").validate({
@@ -1118,3 +1120,20 @@ $('.addNewSections').on("click", ".remove_section_field", function(e){
 
 // First Call on while page load to apply tiny mce textArea on this class
 initTinyMCE(".tinyTextArea");
+
+
+// $(document).ready(function() {
+//     $('#leads-listing-table').DataTable({
+//         dom: 'Bfrtip', // Define the position of the buttons
+//         buttons: [
+//             'copy', 'excel', 'pdf', 'colvis'
+//         ],
+//         "paging": true, // Enable pagination
+//         "searching": true, // Enable search functionality
+//         "ordering": true, // Enable column sorting
+//         "info": true, // Show info about the table
+//         "autoWidth": false // Disable auto width calculation
+//     });
+// });
+
+// new DataTable('#leads-listing-table');

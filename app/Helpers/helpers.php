@@ -417,3 +417,12 @@ if(!function_exists('subscription_cancelation_reasons')){
 		];
 	}
 }
+
+/**
+ * Print and test data in anywhere 
+ */
+if (!function_exists('pr')) {
+    function pr($array = []) {
+        echo '<pre>'; print_r($array); echo '</pre>';
+    }
+}

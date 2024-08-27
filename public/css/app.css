@@ -1488,9 +1488,70 @@ body .footer .navbar-right{margin-right: -16px;}
 .property-form-outer .check-d-flex{display: flex;flex-wrap: wrap;}
 .view-lead-form .container {
     width: 100%;
-    box-shadow: 2px 2px 14px 11px #f4f4f4;
+    /* box-shadow: 2px 2px 14px 11px #f4f4f4; */
+    background: #eee;
+    padding-bottom: 0px;
 }
-
+.blurred-row {
+    filter: blur(3px);
+    pointer-events: none;
+    opacity: 0.8;
+    background: #fff;
+    height: 52px;
+}
+td.subscription-text p {
+    position: absolute;
+    bottom: 50%;
+    width: 100%;
+    text-align: center;
+    color: #005597;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* transform: translate(-50%); */
+    transform: translateY(-59%);
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+td.subscription-text {
+    border: none ! important;
+    padding: 0px ! important;
+    position: relative;
+}
+td.subscription-text i {
+    color: #f7991f;
+    font-size: 21px;
+    margin-top: -2px;
+}
+table#leads_listing_table th {
+    color: #005597;
+    vertical-align: middle;
+}
+table#leads_listing_table td {
+    vertical-align: middle;
+}
+.view-lead-form .container .row {
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    display: flex;
+    justify-content: start;
+}
+.view-lead-form .container .row h5 {
+    color: #005597;
+    font-size: 15px;
+    padding-right: 45px;
+    border-right: 2px solid #ddd;
+}
+.view-lead-form .container .row h6 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+.view-lead-form .container .row:last-child {
+    border-bottom: 0px;
+}
 
 /* Hide the default checkbox */
 .property-form-outer .form-check .check-input { position: absolute; opacity: 0;cursor: pointer;}
