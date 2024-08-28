@@ -60,7 +60,7 @@
 
             <form action="{{ route('property.store') }}" method="POST">
                 {{csrf_field()}}
-                <div class="container  p-3 mb-3">
+                <div class="container p-3 mb-3">
                     <!-- First and Last name section -->
                     <div class="row">
                         <div class="col-lg-6 mb-1">

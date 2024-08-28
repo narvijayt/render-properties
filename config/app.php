@@ -205,9 +205,6 @@ return [
         /* stripe inegration */
        // Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
        Maatwebsite\Excel\ExcelServiceProvider::class,
-       LaraCrafts\UrlShortener\UrlShortenerServiceProvider::class,
-
-
     ],
 
     /*

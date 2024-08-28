@@ -109,6 +109,10 @@ Route::get('/blog', 'Pub\BlogsController@index')->name('blogListing');
 Route::get('/mortgage-blog/{title}', 'Pub\BlogsController@viewBlog')->name('lenderBlogView');
 Route::get('/real-estate-blog/{title}', 'Pub\BlogsController@viewBlog')->name('agentBlogView');
 
+// Short URl Route
+Route::get('/r/{short_url}', 'Pub\RedirectLinkController@redirectLink')->name('redirect.link');
+
+
 // Authenticated Routes
 Route::group([
 		'namespace' => 'Pub',

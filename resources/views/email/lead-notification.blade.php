@@ -125,7 +125,7 @@ A new lead has been received in your area. Please upgrade your subscription to v
 A new lead has been received in your area. Please match with some Loan Officer in your area to view the details.
 @endif
 
-@component('mail::button', ['url' => config('app.url') . '/profile/leads/view/' . $formDetails->id])
+@component('mail::button', ['url' => $short_url])
 @if (in_array($email_type, ["subscription_upgrade"]))
 Upgrade Your Subscription
 @elseif (in_array($email_type, ["lead_unmatched"]))

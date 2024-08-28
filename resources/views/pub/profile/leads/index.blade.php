@@ -16,63 +16,53 @@
         <table id="leads_listing_table" class="table table-striped table-bordered" style="background: #eee;" >
             <thead>
                 <tr>
-                    <th scope="col">S. No.</th>
+                    <th scope="col">#</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
-                    <th scope="col">City</th>
                     <th scope="col">Sell / Buy</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
+            
             <tbody>
-                
-            @if (!$leads->isEmpty())
-                @php $currentIndex = 1; @endphp
-                @foreach ($leads as $lead)
-                    @php
-                        $checkVisibility = $lead->areLeadsVisible->whereIn('notification_type', ['lead_unmatched', 'subscription_upgrade']);
-                        $rowClass = $checkVisibility->isNotEmpty() ? 'blurred-row' : '';
-                    @endphp
-
-                    <tr class="{{ $rowClass }}">
-                        <th scope="row">{{ $currentIndex }}</th>
-                        <td>{{ $lead->firstName }}</td>
-                        <td>{{ $lead->lastName }}</td>
-                        <td>{{ $lead->email }}</td>
-                        <td>{{ $lead->phoneNumber }}</td>
-                        <td>{{ $lead->city }}</td>
-                        <td>{{ ucfirst($lead->formPropertyType) }}</td>
-                        <td>
-                            @if ($checkVisibility->isNotEmpty())
-                                <span class="text-muted">{{ $message }}</span>
-                            @else
-                                <a class="btn btn-primary" href="{{ route('pub.profile.leads.view', ['lead_id' => $lead->id]) }}">
+            @if ($showLeads)
+                @if (!$leads->isEmpty())
+                    @php $currentIndex = 1; @endphp
+                    @foreach ($leads as $lead)
+                        <tr>
+                            <th scope="row">{{ $currentIndex }}</th>
+                            <td>{{ $lead->firstName }}</td>
+                            <td>{{ $lead->lastName }}</td>
+                            <td>{{ $lead->email }}</td>
+                            <td>{{ $lead->phoneNumber }}</td>
+                            <td>{{ ucfirst($lead->formPropertyType) }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ route('pub.profile.leads.view', [ 'lead_id' => $lead->id ]) }}">
                                     <i class="fa fa-fw fa-eye"></i>
                                 </a>
-                            @endif
-                        </td>
+                            </td>
+                        </tr>
+                        @php $currentIndex++; @endphp
+                    @endforeach
 
-                        @if ($rowClass)
-                            <tr>
-                                <td class="subscription-text" colspan="8" class="text-center">
-                                    @if ($user->user_type === "realtor")
-                                        <p><i class="fa fa-fw fa-lock"></i>Please match with someone to view this lead.</p>
-                                    @elseif ($user->user_type === "broker")
-                                        <p><i class="fa fa-fw fa-lock"></i>Please upgrade your subscription to access this lead.</p>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endif
+                @else
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            <p>There are no leads available in your city.</p>
+                        </td>
                     </tr>
-                    
-                    @php $currentIndex++; @endphp
-                @endforeach
+                @endif
+
             @else
                 <tr>
-                    <td colspan="8" class="text-center">
-                        <p>There are no leads available in your city.</p>
+                    <td colspan="7" class="text-center subscription-text">
+                        @if ($role === 'realtor')
+                            <p><i class="fa fa-fw fa-lock"></i>Please match with someone to view the lead details.</p>
+                        @elseif ($role === 'broker')
+                            <p><i class="fa fa-fw fa-lock"></i>Please upgrade your subscription to access the lead details.</p>
+                        @endif
                     </td>
                 </tr>
             @endif

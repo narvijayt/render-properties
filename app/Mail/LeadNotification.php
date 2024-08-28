@@ -15,17 +15,20 @@ class LeadNotification extends Mailable
     public $email_type;
     public $subject;
     public $username;
+    public $completeShortURL;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($formId, $email_type, $recipient_name)
+    public function __construct($formId, $email_type, $recipient_name, $completeShortURL)
     {
+        // dd($email_type);
         $this->formDetails = BuySellProperty::find($formId);
         $this->email_type = $email_type;
         $this->username = $recipient_name;
+        $this->completeShortURL = $completeShortURL;
         $this->subject = "Lead: ". $this->formDetails->firstName ." " . $this->formDetails->lastName . " wants to " . $this->formDetails->formPropertyType . " property";
     }
 
@@ -43,6 +46,7 @@ class LeadNotification extends Mailable
                         'formDetails' => $this->formDetails,
                         'email_type' => $this->email_type,
                         'user_name' => $this->username,
+                        'short_url' => $this->completeShortURL,
                     ])
                     ->withSwiftMessage(function ($message) {
                         \Log::info($message->toString());

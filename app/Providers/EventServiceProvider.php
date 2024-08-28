@@ -59,6 +59,11 @@ class EventServiceProvider extends ServiceProvider
 		'App\Events\NewMemberAlert' => [
 			'App\Listeners\SendNewMemberAlert'
 		],
+
+		// Lead Notification
+		'App\Events\LeadNotificationEvent' => [
+			'App\Listeners\SendLeadNotification'
+		],
     ];
 
     /**

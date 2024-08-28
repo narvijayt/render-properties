@@ -19,20 +19,32 @@ class LeadsController extends Controller
      */
     public function index()
     {
+        // dd(User::whereRaw('LOWER(city) = ?', ['levittown'])->where('state', '=', 'NY')->get());
+        // User details
         $data['user'] = Auth::user();
-        $state = $data['user']->state;
         $agentId = $data['user']->user_id;
+        $data['role'] = $data['user']->user_type;
+        $state = $data['user']->state;
         $city = strtolower($data['user']->city);
         
-        // Get leads that match the user's city and state, were sent by email to the user
-        $data['leads'] = BuySellProperty::whereRaw('LOWER(city) = ?', [$city])
-            ->where('state', $state)
-            ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
-                $query->where('agent_id', $agentId);
-            })
-            ->with('areLeadsVisible')
-            ->get();
-        
+        // Set show lead flag
+        $data['showLeads'] = false;
+
+        // Show leads if user is paid broker or matched REA
+        if (($data['user']->user_type === "broker" && $data['user']->payment_status == 1) ||
+            ($data['user']->user_type === "realtor" && $data['user']->availableMatchCount() > 0)) {
+
+            // Filter leads those matches with city and state
+            // Where has will list only those which were sent via email to REA or LO, if we remove them it will show all of city and state.
+            $data['leads'] = BuySellProperty::whereRaw('LOWER(city) = ?', [$city])->where('state', '=', $state)
+                            ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
+                                $query->where('agent_id', $agentId);
+                            })->latest()->get();
+
+            $data['showLeads'] = true;
+        }
+
+        // Show the page
         return view('pub.profile.leads.index', $data);
     }
 
@@ -58,28 +70,21 @@ class LeadsController extends Controller
             return redirect()->route('pub.profile.leads')->with('error', 'The requested lead could not be found.');
         }
 
-        // Check if the user has access to view the lead
+        // If user is accesing the lead through url and is Unpaid Lo or Unmatched REA then throw an error.
+        if ($user->user_type === "broker" && $user->payment_status != 1) {
+            return redirect()->route('pub.profile.leads')->with('error', 'Please upgrade your subscription to access this lead.');
+            
+        } else if ($user->user_type === "realtor" && $user->availableMatchCount() < 0) {
+            return redirect()->route('pub.profile.leads')->with('error', 'Please match with someone to view the lead details.');
+        }
+
+        // Check if the user has access to view the lead/ Only those can see who received the email.
         $hasLeadAccess = $data['lead']->areLeadsVisible()->where('agent_id', $agentId)->get();
-        
         if ($hasLeadAccess->isEmpty()) {
             return redirect()->route('pub.profile.leads')->with('error', 'You do not have permission to view this lead.');
         }
-        
-        // Check leads visibility
-        $checkVisibility = $hasLeadAccess->whereIn('notification_type', ['lead_unmatched', 'subscription_upgrade']);
-        if ($checkVisibility->isNotEmpty()) {
-            
-            // Set role based error messages.
-            $message = '';
-            if ($user->user_type === "realtor") {
-                $message = "Please match with someone to view the lead details.";
-            } else if ($user->user_type === "broker") {
-                $message = "Please upgrade your subscription to access this lead.";
-            }
 
-            return redirect()->route('pub.profile.leads')->with('error', $message);
-        }
-
+        // Show the page.
         return view('pub.profile.leads.view', $data);
     }
 
