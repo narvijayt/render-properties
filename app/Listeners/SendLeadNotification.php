@@ -78,7 +78,7 @@ class SendLeadNotification
             $lead->notification_type = $email_type;
             
             // Send Email
-            if (env('APP_ENV') == "local") {
+            if (env('APP_ENV') != "local") {
                 Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $email_type, $recipient_name, $completeShortURL));
             }
 
@@ -98,7 +98,7 @@ class SendLeadNotification
             $lead->notification_type = $email_type;
             
             // Send Email
-            if (env('APP_ENV') == "local") {
+            if (env('APP_ENV') != "local") {
                 Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $email_type, $recipient_name, $completeShortURL));
             }
 
@@ -118,7 +118,7 @@ class SendLeadNotification
             $lead->notification_type = $email_type;
 
             // Send Email
-            if (env('APP_ENV') == "local") {
+            if (env('APP_ENV') != "local") {
                 Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $email_type, $recipient_name, $completeShortURL));
             }
 
@@ -149,7 +149,7 @@ class SendLeadNotification
                     $lead->notification_type = "detailed";
 
                     // Send Email and SMS
-                    if (env('APP_ENV') == "local") {
+                    if (env('APP_ENV') != "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please click on the link below to view details:\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
@@ -163,7 +163,7 @@ class SendLeadNotification
                     $lead->notification_type = "subscription_upgrade";
 
                     // Send Email and SMS
-                    if (env('APP_ENV') == "local") {
+                    if (env('APP_ENV') != "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please upgrade your subscription to view the details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
@@ -184,7 +184,7 @@ class SendLeadNotification
                     $lead->notification_type = "detailed_with_lead_matched";
                     
                     // Send Email and SMS
-                    if (env('APP_ENV') == "local") {
+                    if (env('APP_ENV') != "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please click on the link below to view details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
@@ -198,7 +198,7 @@ class SendLeadNotification
                     $lead->notification_type = "lead_unmatched";
                     
                     // Send Email and SMS
-                    if (env('APP_ENV') == "local") {
+                    if (env('APP_ENV') != "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please match with some Loan Officer in your area to view the details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
