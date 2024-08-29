@@ -19,7 +19,6 @@ class LeadsController extends Controller
      */
     public function index()
     {
-        // dd(User::whereRaw('LOWER(city) = ?', ['levittown'])->where('state', '=', 'NY')->get());
         // User details
         $data['user'] = Auth::user();
         $agentId = $data['user']->user_id;

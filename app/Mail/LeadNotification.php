@@ -24,7 +24,6 @@ class LeadNotification extends Mailable
      */
     public function __construct($formId, $email_type, $recipient_name, $completeShortURL)
     {
-        // dd($email_type);
         $this->formDetails = BuySellProperty::find($formId);
         $this->email_type = $email_type;
         $this->username = $recipient_name;
@@ -47,11 +46,7 @@ class LeadNotification extends Mailable
                         'email_type' => $this->email_type,
                         'user_name' => $this->username,
                         'short_url' => $this->completeShortURL,
-                    ])
-                    ->withSwiftMessage(function ($message) {
-                        \Log::info($message->toString());
-                    });
-
+                    ]);
     }
 
 }

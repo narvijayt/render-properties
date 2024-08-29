@@ -4,7 +4,7 @@
 
 @section('page_content')
 
-<div class="row justify-content-center align-items-center p-2">
+<div class="row align-items-center p-2">
     <div class="card view-lead-form">
         <div class="card-body">
 
@@ -24,7 +24,7 @@
                         <h5>First Name</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->firstName }}</h6>
+                        <h6>{{ $lead->firstName ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -34,7 +34,7 @@
                         <h5>Last Name</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->lastName }}</h6>
+                        <h6>{{ $lead->lastName ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -44,7 +44,7 @@
                         <h5>Email</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->email }}</h6>
+                        <h6>{{ $lead->email ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@
                         <h5>Phone Number</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->phoneNumber }}</h6>
+                        <h6>{{ $lead->phoneNumber ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
                         <h5>Street Address</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->streetAddress }}</h6>
+                        <h6>{{ $lead->streetAddress ?? 'N/A' }}</h6>
                     </div>
                 </div>
                 
@@ -74,7 +74,7 @@
                         <h5>Street Address Line 2</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->streetAddressLine2 }}</h6>
+                        <h6>{{ $lead->streetAddressLine2 ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@
                         <h5>City</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->city }}</h6>
+                        <h6>{{ $lead->city ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
                         <h5>State</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->state }}</h6>
+                        <h6>{{ $lead->state ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -104,7 +104,7 @@
                         <h5>Postal Code</h5>
                     </div>
                     <div class="col-lg-5">
-                        <h6>{{ $lead->postal_code }}</h6>
+                        <h6>{{ $lead->postal_code ?? 'N/A' }}</h6>
                     </div>
                 </div>
 
@@ -122,9 +122,7 @@
                             <h5>Best Time To Contact You</h5>
                         </div>
                         <div class="col-lg-5">
-                            @if (!empty($timeToContact))
-                                <h6>{{ $timeToContact}}</h6>
-                            @endif
+                            <h6>{{ $timeToContact ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -134,7 +132,7 @@
                             <h5>How Soon Do You Need To Sell</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $sellUrgency }}</h6>
+                            <h6>{{ $sellUrgency ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -144,7 +142,7 @@
                             <h5>Do You Currently Live in the House</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->liveInHouse }}</h6>
+                            <h6>{{ $lead->liveInHouse ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -154,7 +152,7 @@
                             <h5>Would you like a free home valuation?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->freeValuation }}</h6>
+                            <h6>{{ $lead->freeValuation ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -164,7 +162,7 @@
                             <h5>Would you like to offer a buyer agent commission? The recent NAR settlement no longer requires it, though it can still be beneficial. The choice is yours as the seller.</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->offerCommission }}</h6>
+                            <h6>{{ $lead->offerCommission ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -174,7 +172,7 @@
                             <h5>Why Are You Selling?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->whyAreYouSelling }}</h6>
+                            <h6>{{ $lead->whyAreYouSelling ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -184,7 +182,7 @@
                             <h5>What Type of Property?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->propertyType }}</h6>
+                            <h6>{{ $lead->propertyType ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -198,7 +196,7 @@
                             <h5>Do you currently Own or Rent?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->currentlyOwnOrRent }}</h6>
+                            <h6>{{ $lead->currentlyOwnOrRent ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -208,7 +206,7 @@
                             <h5>What is your timeframe for moving?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->timeframeForMoving }}</h6>
+                            <h6>{{ $lead->timeframeForMoving ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -218,7 +216,7 @@
                             <h5>How many bedrooms do you need?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->numberOfBedrooms }}</h6>
+                            <h6>{{ $lead->numberOfBedrooms ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -228,7 +226,7 @@
                             <h5>How many bathrooms do you need?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->numberOfBathrooms }}</h6>
+                            <h6>{{ $lead->numberOfBathrooms ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -238,7 +236,7 @@
                             <h5>What is your price range?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->priceRange }}</h6>
+                            <h6>{{ $lead->priceRange ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -248,7 +246,7 @@
                             <h5>Have you been preapproved for a mortgage?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->preapprovedForMontage }}</h6>
+                            <h6>{{ $lead->preapprovedForMontage ?? 'N/A' }}</h6>
                         </div>
                     </div>
 
@@ -258,7 +256,7 @@
                             <h5>Do you need to sell a home before you buy?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->sellHomeBeforeBuy }}</h6>
+                            <h6>{{ $lead->sellHomeBeforeBuy ?? 'N/A' }}</h6>
                         </div>
                     </div>
                     
@@ -268,7 +266,7 @@
                             <h5>Is there anything else that will help us find your new home?</h5>
                         </div>
                         <div class="col-lg-5">
-                            <h6>{{ $lead->helpsFindingHomeDesc }}</h6>
+                            <h6>{{ $lead->helpsFindingHomeDesc ?? 'N/A' }}</h6>
                         </div>
                     </div>
 

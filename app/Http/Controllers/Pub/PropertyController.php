@@ -10,7 +10,6 @@ use App\User;
 use App\RedirectLinks;
 use App\Mail\LeadNotification;
 use Illuminate\Support\Facades\Mail;
-// use App\Services\TwilioService;
 use Twilio\Rest\Client;
 use App\Events\LeadNotificationEvent;
 
@@ -99,31 +98,8 @@ class PropertyController extends Controller
     
             if ($propertyForm->save()) {
 
-                $app_url = config('app.url');
-                $generateShortURLPath = generateUniqueShortURLPath();
-                $destinationPath = "/profile/leads/view/$propertyForm->id";
-                
-                // Create short link
-                $createShortLink = new RedirectLinks;
-                $createShortLink->short_url_path = $generateShortURLPath;
-                $createShortLink->destination_url_path = $destinationPath;
-                $createShortLink->save();
-                
-                // Complete Short URl
-                $completeShortURL = "$app_url/r/$generateShortURLPath";
-
-                // Filter users with city and state
-                $city = strtolower($request->city);
-                $users = User::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' ,$request->state)->get();
-                
-                // Get users with realtor (REA) and broker (Loan Officer) roles
-                $usersWithRoles = $users->whereIn('user_type', ['realtor', 'broker']);
-                $realtorCount = $users->where('user_type', 'realtor')->count();
-                $brokerCount = $users->where('user_type', 'broker')->count();
-
                 // Trigger the event
-                event(new LeadNotificationEvent($propertyForm, $usersWithRoles, $realtorCount, $brokerCount, $completeShortURL));
-
+                event(new LeadNotificationEvent($propertyForm));
                 return redirect()->back()->with('success', 'Form Submitted Successfully!');
 
             } else {

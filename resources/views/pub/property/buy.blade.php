@@ -266,7 +266,7 @@
                     <script src="https://www.google.com/recaptcha/api.js"></script>
                     <div class="form-group row recaptcha-row">
                         <div class="col-md-6 offset-md-4">
-                            <div class="g-recaptcha" data-sitekey="6Lf0QSgqAAAAAM7PmZOrZOmCV0NCsyS6gUK8wAOd"></div>
+                            <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
                             <span class="msg-error error"></span>
                             @if ($errors->has('g-recaptcha-response'))
                                 <span class="invalid-feedback" style="display: block;">

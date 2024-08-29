@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\LeadNotificationRelationships;
 use App\User;
+use App\RedirectLinks;
 use App\Mail\LeadNotification;
 use Illuminate\Support\Facades\Mail;
 use App\Services\TwilioService;
@@ -34,11 +35,30 @@ class SendLeadNotification
     {
         // Get data from event
         $propertyForm = $event->propertyForm;
-        $usersWithRoles = $event->usersWithRoles;
-        $realtorCount = $event->realtorCount;
-        $brokerCount = $event->brokerCount;
-        $completeShortURL = $event->completeShortURL;
 
+        // Generate Short Link
+        $app_url = config('app.url');
+        $generateShortURLPath = generateUniqueShortURLPath();
+        $destinationPath = "/profile/leads/view/$propertyForm->id";
+
+        // Create short link
+        $createShortLink = new RedirectLinks;
+        $createShortLink->short_url_path = $generateShortURLPath;
+        $createShortLink->destination_url_path = $destinationPath;
+        $createShortLink->save();
+
+        // Complete Short URl
+        $completeShortURL = "$app_url/r/$generateShortURLPath";
+
+        // Filter users with city and state
+        $city = strtolower($propertyForm->city);
+        $users = User::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' ,$propertyForm->state)->get();
+
+        // Get users with realtor (REA) and broker (Loan Officer) roles
+        $usersWithRoles = $users->whereIn('user_type', ['realtor', 'broker']);
+        $realtorCount = $users->where('user_type', 'realtor')->count();
+        $brokerCount = $users->where('user_type', 'broker')->count();
+        
         // Find Richard User ID
         $findRichardUserId = User::where('email', '=', 'richardtocado@gmail.com')->first();
         $recipient_name = "Richard Tocado";
@@ -110,6 +130,8 @@ class SendLeadNotification
         foreach ($usersWithRoles as $currentUser) {
              
             $toPhoneNumber = '+917876161790'; // Replace with the recipient's phone number
+            // $toPhoneNumber = $currentUser->phone_number;
+            // $recipient_email = $currentUser->email;
             $recipient_name = $currentUser->username ?? '';
 
             // Save the lead to whom the email is sent.
@@ -129,7 +151,7 @@ class SendLeadNotification
                     // Send Email and SMS
                     if (env('APP_ENV') == "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please click on the link below to view details:\n$completeShortURL";
-                        (new TwilioService())->sendSMS($toPhoneNumber, $message);
+                        if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
                         Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));
                     }
@@ -143,7 +165,7 @@ class SendLeadNotification
                     // Send Email and SMS
                     if (env('APP_ENV') == "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please upgrade your subscription to view the details.\n$completeShortURL";
-                        (new TwilioService())->sendSMS($toPhoneNumber, $message);
+                        if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
                         Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));                            
                     }
@@ -164,7 +186,7 @@ class SendLeadNotification
                     // Send Email and SMS
                     if (env('APP_ENV') == "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please click on the link below to view details.\n$completeShortURL";
-                        (new TwilioService())->sendSMS($toPhoneNumber, $message);
+                        if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
                         Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));
                     }
@@ -178,7 +200,7 @@ class SendLeadNotification
                     // Send Email and SMS
                     if (env('APP_ENV') == "local") {
                         $message = "Hi $recipient_name,\nRender: A new lead has been received in your area. Please match with some Loan Officer in your area to view the details.\n$completeShortURL";
-                        (new TwilioService())->sendSMS($toPhoneNumber, $message);
+                        if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
                         Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));
                     }

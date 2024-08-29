@@ -14,23 +14,15 @@ class LeadNotificationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $propertyForm;
-    public $usersWithRoles;
-    public $realtorCount;
-    public $brokerCount;
-    public $completeShortURL;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($propertyForm, $usersWithRoles, $realtorCount, $brokerCount, $completeShortURL)
+    public function __construct($propertyForm)
     {
         $this->propertyForm = $propertyForm;
-        $this->usersWithRoles = $usersWithRoles;
-        $this->realtorCount = $realtorCount;
-        $this->brokerCount = $brokerCount;
-        $this->completeShortURL = $completeShortURL;
     }
 
     /**
