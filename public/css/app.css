@@ -1363,7 +1363,7 @@ a.carousel-control.right.carousel-control-next{bottom: 0; right: 80px;display: b
 .testimonials-outer  .carousel-indicators li.active {background: #fff;box-shadow: none;border: 2px solid #ddd;}
 .testimonials-outer .carousel-indicators li, .testimonials-outer .carousel-indicators li.active{width: 13px; height: 13px;  margin: 1px 5px;}
 .lender-inner-banner{background: url(/img/lender-signup-bg.png) no-repeat ;background-size: cover;background-position:left bottom;padding: 5% 0% 4% 0%;}
-.vendor-top-banner{background: url(/img/vendor-top-banner-bg.png) no-repeat ;background-size: cover;background-position: center right;padding: 4% 0px;}
+.vendor-top-banner{background: url(/img/vendor-top-banner-bg.png) no-repeat ;background-size: cover;background-position: center center;padding: 4% 0px;}
 .estate-jobs{background: url(/img/estate-jobs-bg.png) no-repeat ;background-size: cover;background-position: center center;padding: 5% 0px;}
 .vendor-reg-box.vendor-reg-box-01 {padding: 0px;background: transparent;}
 .vendors-serve-box { display: flex;}
@@ -1463,7 +1463,8 @@ body .footer .navbar-right{margin-right: -16px;}
 .top-inner-banner h1.bg-bule{ background: #184586; padding: 2px 14px;display: inline-block;}
 .top-inner-banner p{font-size: 1.4vw;letter-spacing: 1px;font-weight: 600;}
 .lender-inner-banner .orange-bg {background: #f79a2c;display: inline-block; padding: 2px 15px;}
-.lender-inner-banner p{ padding-right: 30% !important;font-size: 1.4vw;letter-spacing: 1px;font-weight: 600;}
+.lender-inner-banner p{ padding-right: 15% !important;font-size: 1.4vw;letter-spacing: 1px;font-weight: 600;}
+.lender-inner-banner iframe .vp-center{justify-content: left !important;}
 /*********************************07-03-2024-Css-End*************************************/
 /**************** 28-03-2024 Starts *********************/
 .back-btn-box a {text-decoration: none; padding: 10px;}
@@ -1614,7 +1615,8 @@ body .footer a.dropdown-toggle.navbar__button.navbar__button--register {padding:
 .btn-yellow{font-size: 17px;}
 .hero-banner p{font-size: 1.2vw;}
 .top-inner-banner p{font-size: 1.2vw;}
-.lender-inner-banner p.pl-5 {padding-right: 18% !important;}
+.lender-inner-banner p.pl-5 {padding-right: 0% !important;}
+.lender-inner-banner h3{font-size: 36px;}
 }
 
 @media(max-width:1290px)
@@ -2124,6 +2126,9 @@ button#registerVendor {
     .mp-2{ padding: 1rem;}
 	.lender-inner-banner p{ padding-right: 0px !important;}
 	.lender-inner-banner h2{font-size: 27px;}
+	.lender-inner-banner p{font-size: 16px;}
+	.lender-inner-banner{background-position: 21%;}
+	
 }
 @media(max-width:991px){
     .user-basic-info-section, .user-basic-info-section .d-flex{ text-align: center; justify-content: center;}
@@ -2345,7 +2350,8 @@ body .business-outer .business-box p br{display: none;}
 .container.stats.counting-section h2{line-height: 17px;}
 .counting-outer .container.stats.counting-section{padding-bottom: 3px;}
 .hero-banner {background-position: -305px;}
-.lender-inner-banner p {  padding-right: 22% !important;font-size: 15px;}
+.lender-inner-banner p {  padding-right:0% !important;font-size: 15px;}
+body .lender-inner-banner h3{font-size: 19px;}
 
 
 }
@@ -2381,7 +2387,7 @@ body .navbar .header-contact{width: 100%;}
  .top-inner-banner{background-position: -295px;}
  .top-inner-banner p{padding-right: 18% !important;}
  .lender-inner-banner p {padding-right: 10% !important; font-size: 14px;}
-{
+}
 
 /* @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){ */
 /* .hero-banner {margin-top: 20px;} */

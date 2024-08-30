@@ -33,7 +33,7 @@ $description = 'Register for Render'
 <div class="lender-inner-banner">
 <div class="container">
  <div class="row">
- <div class="col-lg-7 col-md-5">
+ <div class="col-lg-7 col-md-7">
  {!! $getLenderRegisterPage->banner !!}
  </div>
  <div class="col-lg-6 col-md-7 ">
