@@ -3,11 +3,7 @@
 <table style="background-color: #eee; padding: 15px;">
     <tr>
         <td style="color: #000; padding-bottom: 5px;">
-            @if (!filter_var($user_name, FILTER_VALIDATE_EMAIL)) 
-                <strong>Hi {{ $user_name }}</strong> 
-            @else 
-                {{ $user_name }} 
-            @endif,
+            <strong>Hi {{ $user_name }},</strong>
         </td>
     </tr>
     

@@ -130,7 +130,7 @@ class SendLeadNotification
 
             $toPhoneNumber = $currentUser->phone_number;
             $user_email = $currentUser->email;
-            $user_name = $currentUser->username ?? '';
+            $user_name = "$currentUser->first_name $currentUser->last_name";
 
             // Save the lead to whom the email is sent.
             $lead = new LeadNotificationRelationships;
