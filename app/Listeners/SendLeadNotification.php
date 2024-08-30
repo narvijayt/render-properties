@@ -105,7 +105,7 @@ class SendLeadNotification
             $lead->save();
         }
 
-        // Send Email to Richard Tocado if neither Realtor not Broker found in the area.
+        // Send Email to Richard Tocado if neither Realtor nor Broker found in the area.
         if (!$realtorCount > 0 && !$brokerCount > 0) {
 
             // Email/Notification Type.
@@ -199,7 +199,7 @@ class SendLeadNotification
                     
                     // Send Email and SMS
                     if (env('APP_ENV') != "local") {
-                        $message = "Render: A new lead has been received in your area. Please match with some Loan Officer in your area to view the details.\n$completeShortURL";
+                        $message = "Render: A new lead has been received in your area. Please match with a Loan Officer in your area to view the details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
                         Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));

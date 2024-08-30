@@ -145,21 +145,21 @@
         </tr>
     @elseif (in_array($email_type, ["lead_unmatched"]))
         <tr>
-            <td style="color: #000; padding: 5px 0px;">A new lead has been received in your area. Please match with some Loan Officer in your area to view the details.</td>
+            <td style="color: #000; padding: 5px 0px;">A new lead has been received in your area. Please match with a Loan Officer in your area to view the details.</td>
         </tr>
     @endif
 
     <tr>
         <td>
             <a href="{{ $short_url }}">
-                <button style="background-color: #F79A2C; border: none; color: #184586; padding: 12px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; font-weight: bold; margin: 10px 0px 10px 0px; text-transform: uppercase;">
+                <button style="background-color: #F79A2C; border: none; color: #184586; padding: 12px 15px; text-align: center; text-decoration: none; display: inline-block; font-size: 12px; font-weight: bold; margin: 10px 0px 10px 0px; text-transform: uppercase; cursor:pointer;">
                     @if (in_array($email_type, ["subscription_upgrade"]))
                         Upgrade Your Subscription
                     @elseif (in_array($email_type, ["lead_unmatched"]))
                         Match with Loan Officer
                     @else
                         View Details
-                    @endif                    
+                    @endif
                 </button>
             </a>
         </td>

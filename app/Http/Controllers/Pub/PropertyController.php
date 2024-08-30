@@ -53,7 +53,7 @@ class PropertyController extends Controller
             
             // Validate Form Types
             if (!$request->has('formPropertyType') || !in_array($request->formPropertyType, $allowedFormTypes)) {
-                return \Redirect::back()->with('error', 'Failed to submit form. Please try again later.')->withInput($request->input());
+                return \Redirect::back()->with('error', 'An unexpected error occurred while submitting the form.')->withInput($request->input());
             }
 
             // Validate forms fields
