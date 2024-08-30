@@ -62,8 +62,7 @@ class SendLeadNotification
         // Find Richard User ID
         $findRichardUserId = User::where('email', '=', 'richardtocado@gmail.com')->first();
         $recipient_name = "Richard Tocado";
-        $recipient_email = "iamabhaykumar2002@gmail.com";
-        // $recipient_email = "richardtocado@gmail.com";
+        $recipient_email = "richardtocado@gmail.com";
 
         // Send Email to Richard Tocado if there is Realtor in the area but not the Broker.
         if ($realtorCount > 0 && !$brokerCount > 0) {
@@ -128,11 +127,10 @@ class SendLeadNotification
 
         // Send an email and SMS message to users with the roles of realtor and broker.
         foreach ($usersWithRoles as $currentUser) {
-             
-            $toPhoneNumber = '+917876161790'; // Replace with the recipient's phone number
-            // $toPhoneNumber = $currentUser->phone_number;
-            // $recipient_email = $currentUser->email;
-            $recipient_name = $currentUser->username ?? '';
+
+            $toPhoneNumber = $currentUser->phone_number;
+            $user_email = $currentUser->email;
+            $user_name = $currentUser->username ?? '';
 
             // Save the lead to whom the email is sent.
             $lead = new LeadNotificationRelationships;
@@ -153,7 +151,7 @@ class SendLeadNotification
                         $message = "Render: A new lead has been received in your area. Please click on the link below to view details:\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
-                        Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));
+                        Mail::to($user_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $user_name, $completeShortURL));
                     }
                     
                     $lead->save();
@@ -167,7 +165,7 @@ class SendLeadNotification
                         $message = "Render: A new lead has been received in your area. Please upgrade your subscription to view the details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
-                        Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));                            
+                        Mail::to($user_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $user_name, $completeShortURL));                            
                     }
 
                     $lead->save();
@@ -188,7 +186,7 @@ class SendLeadNotification
                         $message = "Render: A new lead has been received in your area. Please click on the link below to view details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
-                        Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));
+                        Mail::to($user_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $user_name, $completeShortURL));
                     }
 
                     $lead->save();
@@ -202,7 +200,7 @@ class SendLeadNotification
                         $message = "Render: A new lead has been received in your area. Please match with a Loan Officer in your area to view the details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
-                        Mail::to($recipient_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $recipient_name, $completeShortURL));
+                        Mail::to($user_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $user_name, $completeShortURL));
                     }
 
                     $lead->save();
