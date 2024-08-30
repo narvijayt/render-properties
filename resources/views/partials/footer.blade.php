@@ -35,7 +35,17 @@
                             </ul>
                         </li>
 
-                        <li><a href="{{ route('pub.contact.index') }}" class="">Contact</a></li>
+                        {{-- <li><a href="{{ route('pub.contact.index') }}" class="">Contact</a></li> --}}
+
+                        <li class="dropdown dropdown-top">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">Contact <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                            <li><a href="{{ route('pub.contact.index') }}" class="">Contact</a></li>
+                                <li><a href="{{ route('property.buy') }}">Buy Property</a></li>
+                                <li><a href="{{ route('property.sell') }}">Sell Property</a></li>
+                            </ul>
+                        </li>
                         @guest
                         <li><a href="{{ url('/login') }}" class="navbar__button navbar__button--login"
                                 role="button">Login</a></li>

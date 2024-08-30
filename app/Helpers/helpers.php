@@ -3,6 +3,8 @@ use Illuminate\Support\HtmlString;
 use App\User;
 use App\Subscribe;
 use App\BraintreePlan;
+use App\RedirectLinks;
+use Illuminate\Support\Str;
 
 function datepickerFormat($format, $dateString)
 {
@@ -415,5 +417,38 @@ if(!function_exists('subscription_cancelation_reasons')){
 			// 'low_quality'	=>	'Quality was less than expected',
 			'other'	=>	'Other reason',
 		];
+	}
+}
+
+/**
+ * Print and test data in anywhere 
+ */
+if (!function_exists('pr')) {
+    function pr($array = []) {
+        echo '<pre>'; print_r($array); echo '</pre>';
+    }
+}
+
+/**
+ * Print and test data in anywhere 
+ */
+if (!function_exists('pr')) {
+    function pr($array = []) {
+        echo '<pre>'; print_r($array); echo '</pre>';
+    }
+}
+
+/**
+ * Generate unique short url path
+ */
+if (!function_exists('generateUniqueShortURLPath')) {
+    function generateUniqueShortURLPath($length = 6) {
+		do {
+			$randomString = Str::random($length);
+	
+			$exists = RedirectLinks::where('short_url_path', $randomString)->exists();
+		} while ($exists); // do until short url path exists.
+	
+		return $randomString;
 	}
 }
