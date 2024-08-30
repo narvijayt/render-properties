@@ -29,6 +29,11 @@ class LeadsController extends Controller
         // Set show lead flag
         $data['showLeads'] = false;
 
+        // Redirect to Home page if user role is vendor. 
+        if ($data['user']->user_type === "vendor") {
+            return redirect()->route('home');
+        }
+
         // Show leads if user is paid broker or matched REA
         if (($data['user']->user_type === "broker" && $data['user']->payment_status == 1) ||
             ($data['user']->user_type === "realtor" && $data['user']->availableMatchCount() > 0)) {
