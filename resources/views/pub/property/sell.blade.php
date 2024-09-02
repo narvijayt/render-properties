@@ -1,6 +1,6 @@
 @inject('states', 'App\Http\Utilities\Geo\USStates')
 @extends("layouts.app")
-@section('title', 'Sell your property')
+@section('title', 'Sell Property')
 @section('meta')
 @if(!empty($meta))
 @if(!is_null($meta->description))
