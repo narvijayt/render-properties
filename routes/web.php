@@ -314,6 +314,11 @@ Route::group([
         Route::get('/register/lender/edit', 'PageBuilderController@editLenderRegisterPage')->name('admin.pages.edit-lender-register-page');
         // --> Vendor Register
         Route::get('/register/vendor/edit', 'PageBuilderController@editVendorRegisterPage')->name('admin.pages.edit-vendor-register-page');
+        
+        // --> Leads Listing
+        Route::get('/leads', 'LeadsController@index')->name('admin.leads');
+        Route::get('/leads/view/{lead_id}', 'LeadsController@viewLead')->name('admin.leads.view');
+        Route::post('/get-lead-by-filter', 'LeadsController@getLeadsByFilter')->name('admin.leads.filter');
 
         Route::get('/testimonials', 'PagesController@testimonials');
         Route::get('/testimonials/new', 'PagesController@newTestimonial');

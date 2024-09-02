@@ -1,3 +1,4 @@
+const domainURL = document.location.origin;
 /**
  * AdminLTE Demo Menu
  * ------------------
@@ -1137,3 +1138,76 @@ initTinyMCE(".tinyTextArea");
 // });
 
 // new DataTable('#leads-listing-table');
+
+$(document).ready(function () {
+    // Hide the select field initially if needed
+    $('#search_value_option').hide();
+    $('#search_value_input').show();
+
+    $('#lead_search_type').change(function () {
+        // Get the selected value from the dropdown
+        var searchType = $(this).val();
+
+        // Sell and buy toggle case
+        if (searchType === 'form_type') {
+            $('#search_value_option').show();
+            $('#search_value_input').hide();
+        } else {
+            $('#search_value_option').hide();
+            $('#search_value_input').show();
+        }
+    });
+
+    // Trigger change event on page load to set the correct initial state
+    $('#lead_search_type').trigger('change');
+
+    function getLeadContent () {
+        // Get the form element
+        let form = $("#filter-lead-form");
+
+        // Create FormData object from form element
+        let formData = new FormData(form[0]);
+        let searchType = formData.get("search_type");
+        let search_value = formData.get("search_value");
+        let search_option_value = formData.get("search_option_value");
+        
+        console.log(searchType);
+        console.log(search_value);
+        console.log(searchType != "all");
+        console.log(search_value == "");
+        console.log(searchType.includes("all", "formType"));
+
+        console.log(searchType == "formType");
+        if (searchType != "all" && searchType != "formType") {
+            if (search_value == "")  $(".lead-field-error").html("Please enter value"); else $(".lead-field-error").html("");
+        } else if (searchType == "formType") {
+            if (search_option_value == "")  $(".lead-field-error").html("Please enter value"); else $(".lead-field-error").html("");            
+        }
+        
+        console.log(Array.from(formData.entries()));
+
+        // Send AJAX request
+        $.ajax({
+            url: form.attr("action"),
+            method: "POST",
+            data: formData,
+            processData: false, // Prevent jQuery from automatically transforming the data into a query string
+            contentType: false, // Set contentType to false since we're sending FormData
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Add CSRF token for Laravel
+            },
+            success: function (response) {
+                // Handle successful response
+                $('.lead_data_content').html(response.content);
+                console.log("Leads filtered successfully", response);
+            },
+            error: function (error) {
+                // Handle error response
+                console.error("Error filtering leads", error);
+            }
+        });
+    }
+
+    $("#filter_leads").click(getLeadContent());
+    getLeadContent();
+});

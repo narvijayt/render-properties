@@ -191,6 +191,11 @@
                 </ul>
             </li>
             <li>
+                <a href="{{ route('admin.leads') }}">
+                    <i class="fa fa-file-text"></i> Leads
+                </a>
+            </li>
+            <li>
                 <a href="{{url('cpldashrbcs/testimonials')}}">
                     <i class="fa fa-comments"></i>Testimonials
                 </a>
