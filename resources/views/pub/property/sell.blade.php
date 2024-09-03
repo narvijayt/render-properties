@@ -43,6 +43,9 @@
 </div>
 
 <!-- Form -->
+<div class="card-body">
+    <p class="text-center">Connect with top Realtors in your area to maximize your home's value. Fill out the form below to get started!</p>
+</div>
 <div class="row justify-content-center align-items-center p-2">
     <div class="card property-form-outer">
         <div class="card-body">

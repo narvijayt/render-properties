@@ -56,8 +56,8 @@
     					
                         {{-- <button type="button" class="btn btn-warning util__mb--small text-uppercase btn-registerModal" data-toggle="modal" data-target="#registerModal">SIGN UP NOW</button> --}}
 						<div class="d-flex-btn-group">
-                            <a class="btn btn-primary btn-yellow " href="{{ route('property.buy') }}">BUY PROPERTY</a>
-                            <a class="btn btn-primary btn-yellow " href="{{ route('property.sell') }}">SELL PROPERTY</a>
+                            <a class="btn btn-primary btn-yellow property-btn" href="{{ route('property.buy') }}">BUY PROPERTY</a>
+                            <a class="btn btn-primary btn-yellow property-btn" href="{{ route('property.sell') }}">SELL PROPERTY</a>
                             {{-- <a class="btn btn-primary btn-yellow " href="{{ url('vendor-register') }}">VENDORS</a> --}}
                         </div>
                     </div>

@@ -1586,7 +1586,6 @@ display: inline-block;width: 18px; height: 18px; background-color: #fff; border:
 .property-form-outer p {margin-bottom: 5px;}
 /****************19-08-2024 End *********************/
 
-
 /* ============================= Responsive CSS================================= */
 
 
@@ -2405,3 +2404,11 @@ body .navbar .header-contact{width: 100%;}
 
 
 
+/****************03-09-2024 End *********************/
+@media(max-width:592px)
+{
+    .property-btn {
+        padding: 7px 14px 7px 14px !important;
+    }
+}
+/****************03-09-2024 End *********************/

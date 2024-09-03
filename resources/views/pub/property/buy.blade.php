@@ -42,6 +42,9 @@
 </div>
 
 <!-- Form -->
+<div class="card-body">
+    <p class="text-center">Complete the form below to connect with the best Realtors in your area, ready to help you find your dream home.</p>
+</div>
 <div class="row justify-content-center align-items-center p-2">
     <div class="card property-form-outer">
         <div class="card-body">
