@@ -48,18 +48,16 @@
 		
 		@guest
 				<ul class="login-button-nav">
-                    <li><a href="{{ url('/login') }}" class="navbar__button navbar__button--login" role="button">Login</a></li>
-                    {{--<li><a href="{{ route('register') }}" class="navbar__button navbar__button--register">Register</a></li>--}}
+                    <!-- Sell Property -->
                     <li class="dropdown">
-					 <a href="#" class="dropdown-toggle navbar__button navbar__button--register" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false">Register <span class="caret"></span></a>
-					 <ul class="dropdown-menu">					     
-							<li><a href="{{ route('realtor-register') }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
-							<li><a href="{{ route('lender-register') }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
-							<li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>
-					    </ul>
-					    </li>
-						</ul>
+                        <a href="{{ route('property.sell') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Sell Property</a>
+                    </li>
+                    
+                    <!-- Buy Property -->
+                    <li class="dropdown">
+                        <a href="{{ route('property.buy') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Buy Property</a>
+                    </li>
+                </ul>
                 @endguest
             <ul class="nav navbar-nav navbar-right">
 			  
@@ -79,13 +77,18 @@
 			    </li>
 
                 <!-- Contact -->
+                <li><a href="{{ route('pub.contact.index') }}" class="">Contact</a></li>
+
+                <!-- Login -->
+                <li><a href="{{ url('/login') }}" class="">Login</a></li>
+
+                <!-- Register -->
                 <li class="dropdown">
-					 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true" aria-expanded="false">Contact <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Register <span class="caret"></span></a>
 					<ul class="dropdown-menu">					     
-                        <li><a href="{{ route('pub.contact.index') }}" class="">Contact</a></li>
-						<li><a href="{{ route('property.buy') }}">Buy Property</a></li>
-						<li><a href="{{ route('property.sell') }}">Sell Property</a></li>
+                        <li><a href="{{ route('realtor-register') }}"  class="navbar__button navbar__button--register">as a Real Estate Agent</a></li>
+                        <li><a href="{{ route('lender-register') }}"  class="navbar__button navbar__button--register">as a Loan Officer</a></li>
+                        <li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>
 				    </ul>
 			    </li>
 			    
