@@ -46,20 +46,19 @@
         </div>
         <div class="collapse navbar-collapse" id="realbroker-navbar-collapse">
 		
-		@guest
-				<ul class="login-button-nav">
-                    
-                    <!-- Buy Property -->
-                    <li class="dropdown">
-                        <a href="{{ route('property.buy') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Buy Property</a>
-                    </li>
-                    
-                    <!-- Sell Property -->
-                    <li class="dropdown">
-                        <a href="{{ route('property.sell') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Sell Property</a>
-                    </li>
-                </ul>
-                @endguest
+            <ul class="login-button-nav">
+                
+                <!-- Buy Property -->
+                <li class="dropdown">
+                    <a href="{{ route('property.buy') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Buy Property</a>
+                </li>
+                
+                <!-- Sell Property -->
+                <li class="dropdown">
+                    <a href="{{ route('property.sell') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Sell Property</a>
+                </li>
+            </ul>
+            
             <ul class="nav navbar-nav navbar-right">
 			  
 				<ul class="nav navbar-nav">
@@ -80,6 +79,8 @@
                 <!-- Contact -->
                 <li><a href="{{ route('pub.contact.index') }}" class="">Contact</a></li>
 
+                @guest
+
                 <!-- Login -->
                 <li><a href="{{ url('/login') }}" class="">Login</a></li>
 
@@ -92,6 +93,8 @@
                         <li><a href="{{ url('vendor-register') }}"  class="navbar__button navbar__button--register">as a Vendor</a></li>
 				    </ul>
 			    </li>
+
+                @endguest
 			    
               </ul>
 
