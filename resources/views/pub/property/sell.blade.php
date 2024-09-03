@@ -43,27 +43,25 @@
 </div>
 
 <!-- Form -->
-<div class="card-body">
-    <p class="text-center">Connect with top Realtors in your area to maximize your home's value. Fill out the form below to get started!</p>
-</div>
 <div class="row justify-content-center align-items-center p-2">
     <div class="card property-form-outer">
         <div class="card-body">
             @if(session()->has('success'))
-                <div class="mb-1">
-                    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('success') }}</p>
-                </div>
+            <div class="mb-1">
+                <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('success') }}</p>
+            </div>
             @endif
-
+            
             @if(session()->has('error'))
-                <div class="mb-1">
-                    <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
-                </div>
+            <div class="mb-1">
+                <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
+            </div>
             @endif
-
+            
             <form action="{{ route('property.store') }}" method="POST">
                 {{csrf_field()}}
                 <div class="container p-3 mb-3">
+                    <h3 class="text-center">Connect with top Realtors in your area to maximize your home's value. <br> Fill out the form below to get started!</h3>
                     <!-- First and Last name section -->
                     <div class="row">
                         <div class="col-lg-6 mb-1">

@@ -42,9 +42,6 @@
 </div>
 
 <!-- Form -->
-<div class="card-body">
-    <p class="text-center">Complete the form below to connect with the best Realtors in your area, ready to help you find your dream home.</p>
-</div>
 <div class="row justify-content-center align-items-center p-2">
     <div class="card property-form-outer">
         <div class="card-body">
@@ -63,6 +60,7 @@
             <form method="POST" action="{{ route('property.store') }}" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="container p-3 mb-3">
+                    <h3 class="text-center">Complete the form below to connect with the best Realtors in your area, <br> ready to help you find your dream home.</h3>
                     <!-- First and Last name section -->
                     <div class="row">
                         <div class="col-lg-6 mb-1">

@@ -1586,6 +1586,12 @@ display: inline-block;width: 18px; height: 18px; background-color: #fff; border:
 .property-form-outer p {margin-bottom: 5px;}
 /****************19-08-2024 End *********************/
 
+/****************03-09-2024 Start *********************/
+.property-form-outer .container h3{font-size: 22px; margin-top: 0px;margin-bottom: 28px;}
+.property-form-outer .container{padding-top: 34px;}
+/****************03-09-2024 End *********************/
+
+
 /* ============================= Responsive CSS================================= */
 
 
@@ -2134,6 +2140,8 @@ button#registerVendor {
     .user-profile-view .profile-box-inner{ min-height: auto;}
     .user-profile-view .user-profile__avatar-container{ margin-bottom: 10px;}
 	.lender-inner-banner p{ padding-right: 38% !important;}
+    .property-form-outer .container h3{font-size: 20px;}
+    .property-form-outer .container h3 br{display: none;}
 }
 /**************** 28-03-2023 Ends *********************/
 
@@ -2319,6 +2327,7 @@ font-size: 64px;}
 .testimonials-outer .testimonials .carousel .item{ min-height: auto;}
 .testimonials-outer #testimoniial-slider.carousel .overview b{font-size: 16px ! important;line-height: 17px;margin-bottom: 13px ! important;display:inline-block;}
 .testimonials-outer #testimoniial-slider i.fa.fa-angle-left{top: 0px;}
+
 }
 
 @media(max-width:480px)
