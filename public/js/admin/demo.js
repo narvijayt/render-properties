@@ -1139,54 +1139,158 @@ initTinyMCE(".tinyTextArea");
 
 // new DataTable('#leads-listing-table');
 
+// $(document).ready(function () {
+//     // Function to toggle input visibility based on selected search type
+//     function toggleInputFields(searchType) {
+//         // Clear previous input and error message
+//         $("#search_value_input").val("");
+//         $(".lead-field-error").html("");
+//         $('#search_form_type, #search_state, #search_value_input').hide();
+
+//         if (searchType === 'form_type') {
+//             $('#search_form_type').show();
+//         } else if (searchType === 'state') {
+//             $('#search_state').show();
+//         } else {
+//             $('#search_value_input').show();
+//         }
+//     }
+
+//     // Initialize the form state based on the selected search type
+//     toggleInputFields($('#lead_search_type').val());
+
+//     $('#lead_search_type').change(function () {
+//         toggleInputFields($(this).val());
+//     });
+
+//     function getLeadContent() {
+//         let form = $("#filter-lead-form");
+//         let formData = new FormData(form[0]);
+//         let searchType = formData.get("search_type");
+
+//         // Clear error message before validation
+//         $(".lead-field-error").html("");
+
+//         // Form validation logic
+//         let isValid = true;
+//         if (searchType === 'all' || searchType === 'name' || searchType === 'email' || searchType === 'phone_number' || searchType === 'city') {
+//             if (!formData.get("search_value")) {
+//                 $(".lead-field-error").html("Please enter a value");
+//                 isValid = false;
+//             }
+//         } else if (searchType === 'state' && !formData.get("search_state")) {
+//             $(".lead-field-error").html("Please select a state");
+//             isValid = false;
+//         } else if (searchType === 'form_type' && !formData.get("search_form_type")) {
+//             $(".lead-field-error").html("Please select a form type");
+//             isValid = false;
+//         }
+
+//         // If validation fails, do not proceed with AJAX request
+//         if (!isValid) {
+//             return;
+//         }
+
+//         // AJAX request to filter leads
+//         $.ajax({
+//             url: form.attr("action"),
+//             method: "POST",
+//             data: formData,
+//             processData: false,
+//             contentType: false,
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//             },
+//             success: function (response) {
+//                 $('.lead_data_content').html(response.content);
+//                 console.log("Leads filtered successfully", response);
+//             },
+//             error: function (error) {
+//                 console.error("Error filtering leads", error);
+//                 if (error.responseJSON && error.responseJSON.message) {
+//                     alert(error.responseJSON.message);
+//                 }
+//             }
+//         });
+//     }
+
+//     // Bind click event to the filter button
+//     $("#filter_leads").click(getLeadContent);
+
+//     // Initial content load on page load
+//     getLeadContent();
+// });
+
+
+
+
 $(document).ready(function () {
-    // Hide the select field initially if needed
-    $('#search_value_option').hide();
+    // Hide or show the select field based on the initial dropdown state
+    $('#search_form_type').hide();
+    $('#search_state').hide();
     $('#search_value_input').show();
 
-    $('#lead_search_type').change(function () {
-        // Get the selected value from the dropdown
-        var searchType = $(this).val();
+    // Function to toggle input fields based on selected search type
+    function toggleInputFields(searchType) {
+        $("#search_value_input").val(""); // Clear input value
+        $(".lead-field-error").html(""); // Clear error message
+        
+        $('#search_form_type, #search_state, #search_value_input').hide(); // Hide all fields initially
 
-        // Sell and buy toggle case
         if (searchType === 'form_type') {
-            $('#search_value_option').show();
-            $('#search_value_input').hide();
+            $('#search_form_type').show();
+        } else if (searchType === 'state') {
+            $('#search_state').show();
         } else {
-            $('#search_value_option').hide();
             $('#search_value_input').show();
         }
+    }
+
+    // Initialize the form state based on the selected search type
+    $('#lead_search_type').change(function () {
+        toggleInputFields($(this).val());
     });
 
     // Trigger change event on page load to set the correct initial state
     $('#lead_search_type').trigger('change');
 
-    function getLeadContent () {
-        // Get the form element
+    // Function to handle form validation and lead content retrieval
+    function getLeadContent() {
         let form = $("#filter-lead-form");
-
-        // Create FormData object from form element
         let formData = new FormData(form[0]);
+    
         let searchType = formData.get("search_type");
-        let search_value = formData.get("search_value");
-        let search_option_value = formData.get("search_option_value");
-        
-        console.log(searchType);
-        console.log(search_value);
-        console.log(searchType != "all");
-        console.log(search_value == "");
-        console.log(searchType.includes("all", "formType"));
-
-        console.log(searchType == "formType");
-        if (searchType != "all" && searchType != "formType") {
-            if (search_value == "")  $(".lead-field-error").html("Please enter value"); else $(".lead-field-error").html("");
-        } else if (searchType == "formType") {
-            if (search_option_value == "")  $(".lead-field-error").html("Please enter value"); else $(".lead-field-error").html("");            
+        let searchValue = formData.get("search_value");
+        let formTypeValue = formData.get("search_form_type");
+        let stateValue = formData.get("search_state");
+    
+        // Clear any previous error messages
+        $(".lead-field-error").html("");
+    
+        // Form validation logic
+        if (searchType !== "all" && searchType !== "form_type" && searchType !== "state") {
+            if (!searchValue) {
+                $(".lead-field-error").html("Please enter a value");
+                return;
+            }
+        } else if (searchType === "state") {
+            if (!stateValue) {
+                $(".lead-field-error").html("Please select a state");
+                return;
+            }
+        } else if (searchType === "form_type") {
+            if (!formTypeValue) {
+                $(".lead-field-error").html("Please select a form type");
+                return;
+            }
         }
-        
-        console.log(Array.from(formData.entries()));
-
-        // Send AJAX request
+    
+        // Show loader and hide table quickly
+        console.log('Hiding table and showing loader');
+        $('.admin_lead_table').hide(); // Hide the table quickly
+        $('#loader-2').show(); // Show the loader
+    
+        // Send AJAX request to filter leads
         $.ajax({
             url: form.attr("action"),
             method: "POST",
@@ -1197,17 +1301,33 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Add CSRF token for Laravel
             },
             success: function (response) {
-                // Handle successful response
-                $('.lead_data_content').html(response.content);
-                console.log("Leads filtered successfully", response);
+                console.log("Leads filtered successfully", response); // Debugging
+                $('.lead_data_content').html(response.content); // Update content with response
             },
             error: function (error) {
-                // Handle error response
-                console.error("Error filtering leads", error);
+                console.error("Error filtering leads", error); // Debugging
+            },
+            complete: function () {
+                $('.admin_lead_table').hide();
+                // Start a timeout to ensure loader is visible for at least 1 second
+                let loaderTimeout = setTimeout(() => {
+                    $('#loader-2').hide(); // Hide loader after 1 second
+                    $('.admin_lead_table').fadeIn(); // Show table with fade-in effect
+                }, 800); // 1000ms = 1 second
             }
         });
     }
 
-    $("#filter_leads").click(getLeadContent());
+    // Event handler to hide error messages when a valid input is made
+    $('#search_state, #search_form_type, #search_value_input').change(function () {
+        if ($(this).val() !== "") {
+            $(".lead-field-error").html(""); // Clear error message when valid input is provided
+        }
+    });
+
+    // Bind click event to filter button
+    $("#filter_leads").click(getLeadContent);
+
+    // Initial content load on page load
     getLeadContent();
 });

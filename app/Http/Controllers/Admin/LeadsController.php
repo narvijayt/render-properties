@@ -46,57 +46,57 @@ class LeadsController extends Controller
         return view('admin.leads.view', $data);
     }
 
-    public function getLeadsByFilter (Request $request) {
-        // dd($request->all());
-        $value = $request->search_value;
-        $option_value = $request->search_option_value;
 
+    public function getLeadsByFilter(Request $request) {
+        $value = strtolower($request->input('search_value', '')); // Convert search value to lowercase
+        $formTypeValue = strtolower($request->input('search_form_type', '')); // Convert form type value to lowercase
+        $stateValue = strtolower($request->input('search_state', '')); // Convert state value to lowercase
+        
         $data['leads_count'] = BuySellProperty::count();
         $query = BuySellProperty::latest();
         
-        if ($request->search_type === "name") {
-            $nameParts = explode(' ', $value);
-
-            // Check if we have both first and last names
-            if (count($nameParts) === 2) {
-                $firstName = $nameParts[0];
-                $lastName = $nameParts[1];
-
-                $query = $query->where(function ($q) use ($firstName, $lastName) {
-                    $q->where('first_name', 'like', '%' . $firstName . '%')
-                    ->orWhere('last_name', 'like', '%' . $lastName . '%');
-                });
-
-            } else {
-                // If only one name is provided, use it for both first and last name search
-                $name = $nameParts[0];
-                $query = $query->where(function ($q) use ($name) {
-                    $q->where('first_name', 'like', '%' . $name . '%')
-                    ->orWhere('last_name', 'like', '%' . $name . '%');
-                });
-            }
-
-        } else if ($request->search_type === "email") {
-            $query = $query->where('email', 'like', '%' . $value . '%');
+        switch ($request->input('search_type')) {
+            case 'name':
+                $nameParts = explode(' ', $value);
+                if (count($nameParts) === 2) {
+                    $firstName = $nameParts[0];
+                    $lastName = $nameParts[1];
+                    $query->where(function ($q) use ($firstName, $lastName) {
+                        $q->whereRaw('LOWER("firstName") LIKE ?', ['%' . strtolower($firstName) . '%'])
+                        ->orWhereRaw('LOWER("lastName") LIKE ?', ['%' . strtolower($lastName) . '%']);
+                    });
+                } else {
+                    $query->where(function ($q) use ($value) {
+                        $q->whereRaw('LOWER("firstName") LIKE ?', ['%' . $value . '%'])
+                        ->orWhereRaw('LOWER("lastName") LIKE ?', ['%' . $value . '%']);
+                    });
+                }
+                break;
             
-        } else if ($request->search_type === "phone_number") {
-            $query = $query->where('phone_number', 'like', '%' . $value . '%');
-
-        } else if ($request->search_type === "state") {
-            $query = $query->where('state', 'like', '%' . $value . '%');
-
-        } else if ($request->search_type === "city") {
-            $query = $query->where('city', 'like', '%' . str_to_lower($value) . '%');
+            case 'email':
+                $query->whereRaw('LOWER("email") LIKE ?', ['%' . $value . '%']);
+                break;
             
-        } else if ($request->search_type === "form_type") {
-            $query = $query->where('formPropertyType', 'like', '%' . $option_value . '%');
-
+            case 'phone_number':
+                $query->whereRaw('LOWER("phoneNumber") LIKE ?', ['%' . $value . '%']);
+                break;
+            
+            case 'state':
+                $query->whereRaw('LOWER("state") LIKE ?', ['%' . $stateValue . '%']);
+                break;
+            
+            case 'city':
+                $query->whereRaw('LOWER("city") LIKE ?', ['%' . $value . '%']);
+                break;
+            
+            case 'form_type':
+                $query->whereRaw('LOWER("formPropertyType") LIKE ?', ['%' . $formTypeValue . '%']);
+                break;
         }
 
         $data['leads'] = $query->get();
-        
-        // dd($data);
-        $data['content']= view('admin.leads.render-leads', $data)->render();
+        $data['content'] = view('admin.leads.render-leads', $data)->render();
         return response()->json($data);
     }
+  
 }
