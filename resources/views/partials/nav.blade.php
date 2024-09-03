@@ -48,14 +48,15 @@
 		
 		@guest
 				<ul class="login-button-nav">
-                    <!-- Sell Property -->
-                    <li class="dropdown">
-                        <a href="{{ route('property.sell') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Sell Property</a>
-                    </li>
                     
                     <!-- Buy Property -->
                     <li class="dropdown">
                         <a href="{{ route('property.buy') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Buy Property</a>
+                    </li>
+                    
+                    <!-- Sell Property -->
+                    <li class="dropdown">
+                        <a href="{{ route('property.sell') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Sell Property</a>
                     </li>
                 </ul>
                 @endguest
