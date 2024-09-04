@@ -604,6 +604,7 @@ $(function () {
     });
 
     $('#leads_listing_table').DataTable();
+    $('#view_leads_listing_table').DataTable();
 
     /* add page form */
     $(function() {
@@ -1290,7 +1291,7 @@ $(document).ready(function () {
         }
     
         // Show loader and hide table quickly
-        console.log('Hiding table and showing loader');
+        // console.log('Hiding table and showing loader');
         $('.admin_lead_table').hide(); // Hide the table quickly
         $('#loader-2').show(); // Show the loader
     
@@ -1337,7 +1338,7 @@ $(document).ready(function () {
 });
 
 function renderByPage(pageNumber) {
-    console.log(pageNumber);
+    // console.log(pageNumber);
     let form = $("#filter-lead-form");
     let formData = new FormData(form[0]);
 
@@ -1355,12 +1356,12 @@ function renderByPage(pageNumber) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function (response) {
-            console.log("Leads filtered successfully", response); // Debugging
-            $('.lead_data_content').html(response.content); // Update content with response
+            // console.log("Leads filtered successfully", response);
+            $('.lead_data_content').html(response.content);
             updatePaginationButtons(response.totalPages, pageNumber);
         },
         error: function (error) {
-            console.error("Error filtering leads", error); // Debugging
+            // console.error("Error filtering leads", error);
         },
         complete: function () {
             $('.admin_lead_table').hide();
@@ -1377,21 +1378,20 @@ function updatePaginationButtons(totalPages, currentPage) {
 
     for (let i = 1; i <= totalPages; i++) {
         paginationHtml += `
-            <button class="btn btn-secondary ${i === currentPage ? 'active' : ''}" onclick="renderByPage(${i})">
+            <button class="btn btn-secondary ${i === currentPage ? 'active' : ''}" style="margin: 0px 3px" onclick="renderByPage(${i})">
                 ${i}
             </button>`;
     }
 
     paginationHtml += '</div>';
 
-    // Now you can insert the paginationHtml into the desired element on your page
     $('#pagination-container').html(paginationHtml);
 
 }
 
 $('.lead-form').keypress(function(e) {
     if (e.which == 13) {
-        e.preventDefault(); // Prevent the default form submission on Enter
-        $("#filter_leads").click(); // Trigger the click event on the button
+        e.preventDefault();
+        $("#filter_leads").click();
     }
 });

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\Geo\GeolocationService;
 use SimpleXMLElement;
 use Illuminate\Support\Facades\Validator;
+use App\BuySellProperty;
 
 use App\Http\Traits\AutoMatchTrait;
 class UsersController extends Controller
@@ -379,6 +380,23 @@ class UsersController extends Controller
       $user = User::find($id);
       return view('admin.users.update_designation', compact('page_title', 'page_description', 'user'));
    }
+
+    // View User Leads
+    public function viewUserLeads ($user_id) {
+        // Get User by ID
+        $data['user'] = User::find($user_id);
+
+        // Check if user exists.
+        if (!$data['user']) {
+            return redirect()->route('admin.realtors')->with('error', 'The requested user leads could not be found.');
+        }
+
+        // Eager load the userLeads relationship
+        $data['userLeads'] = $data['user']->userLeads()->with('propertyFormDetails')->get();
+        return view('admin.users.leads', $data);
+    }
+
+
     public function updateDesignation(Request $request){
         $userId = $request->user_id;
         $designation = $request->designation;

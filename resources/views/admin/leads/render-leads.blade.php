@@ -19,7 +19,7 @@
         </thead>
         <tbody>
         
-            @if(isset($leads) && !empty($leads))
+            @if(isset($leads) && $leads->isNotEmpty())
                 @php $currentIndex = $startIndex; @endphp
                 @foreach($leads as $lead)
                     <tr>
@@ -38,14 +38,14 @@
                     </tr>
                 @endforeach
             @else
-                <tr>No Records Found.</tr>
+                <tr><td colspan=8 class="text-center">No Records Found.</td></tr>
             @endif
         </tbody>
     </table>
-    <div id="pagination-container">
+    <div id="pagination-container" class="text-center">
         @if (isset($totalPages))
             @for($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++)
-                <button class="btn btn-secondary {{ $pageNumber == 1 ? 'active' : '' }}" onclick="renderByPage({{ $pageNumber }})">
+                <button class="btn btn-secondary {{ $pageNumber == 1 ? 'active' : '' }}" style="margin: 0px 3px" onclick="renderByPage({{ $pageNumber }})">
                     {{ $pageNumber }}
                 </button>
             @endfor

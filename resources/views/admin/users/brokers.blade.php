@@ -97,7 +97,9 @@
 												<i class="fa fa-trash-o"></i>
 											</a>
 											<a href="{{url('/cpldashrbcs/edit-user',[$user['user_id']])}}" class="edit-icon" data-toggle="tooltip" data-placement="top" title="Edit User">
-                                                    <i class="fa fa-pencil-square-o"></i></a></td>
+                                            <i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="{{ route('admin.user.leads', ['user_id' => $user['user_id']]) }}" class="edit-icon" data-toggle="tooltip" data-placement="top" title="View Leads">
+                                            <i class="fa fa-eye"></i></a></td>
 										
                                           
                                         </td>

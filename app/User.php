@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use App\RealtorDetail;
 use App\LenderDetail;
 use App\VendorMeta;
+use App\LeadNotificationRelationships;
 
 class User extends Authenticatable implements ISecurable
 {
@@ -877,4 +878,11 @@ class User extends Authenticatable implements ISecurable
     public function vendorMeta(){
         return $this->hasOne(VendorMeta::Class, VendorMeta::USER_ID, self::PKEY);
     }
+
+	/**
+     * Get the user leads.
+     */
+	public function userLeads() {
+		return $this->hasMany(LeadNotificationRelationships::class, 'agent_id');
+	}
 }

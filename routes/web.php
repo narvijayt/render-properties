@@ -332,6 +332,7 @@ Route::group([
         Route::get('add-designation','UsersController@loadAdddesignation');
         Route::post('add-designation','UsersController@addDesignation');
         Route::get('users-with-designation','UsersController@loadAllUsersWithDesignation');
+        Route::get('user/{user_id}/leads','UsersController@viewUserLeads')->name('admin.user.leads');
         Route::get('edit-user/{id}','UsersController@loadUpdateDesignation');
         Route::post('edit-user/{id}','UsersController@updateDesignation');
         Route::post('/autocomplete/fetch', 'UsersController@fetchAutocompleteUser')->name('autocomplete.fetch');

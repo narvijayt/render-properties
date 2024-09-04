@@ -83,7 +83,7 @@
                     </form>
                 </div>
 
-                <div class="box-body lead_data_content"></div>
+                <div class="view-lead-box lead_data_content"></div>
             </div>
         </div>
     </div>

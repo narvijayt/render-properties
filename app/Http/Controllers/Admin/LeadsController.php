@@ -40,8 +40,30 @@ class LeadsController extends Controller
             return redirect()->route('admin.leads')->with('error', 'The requested lead could not be found.');
         }
 
-        $data['lead_sent_to'] = $data['lead']->areLeadsVisible()->with('getAgentDetails')->get();
-        // dd($data['lead']->areLeadsVisible()->with('getAgentDetails')->get());
+        $data['brokerSentLeads'] = $data['lead']->areLeadsVisible()
+            ->whereHas('getAgentDetails', function ($query) {
+                $query->where('user_type', 'broker');
+            })
+            ->with(['getAgentDetails' => function ($query) {
+                $query->where('user_type', 'broker');
+            }])->get();
+
+        $data['realtorSentLeads'] = $data['lead']->areLeadsVisible()
+            ->whereHas('getAgentDetails', function ($query) {
+                $query->where('user_type', 'realtor');
+            })
+            ->with(['getAgentDetails' => function ($query) {
+                $query->where('user_type', 'realtor');
+            }])->get();
+
+        $data['richardTocadoLeads'] = $data['lead']->areLeadsVisible()
+            ->whereHas('getAgentDetails', function ($query) {
+                $query->where('email', 'richardtocado@gmail.com');
+            })
+            ->with(['getAgentDetails' => function ($query) {
+                $query->where('email', 'richardtocado@gmail.com');
+            }])
+            ->get();
 
         return view('admin.leads.view', $data);
     }

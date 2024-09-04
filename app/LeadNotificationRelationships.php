@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\BuySellProperty;
 
 class LeadNotificationRelationships extends Model
 {
@@ -22,5 +23,16 @@ class LeadNotificationRelationships extends Model
      */
     public function getAgentDetails() {
         return $this->hasOne(User::class, 'user_id', 'agent_id');
+    }
+
+    /**
+     * Relationship of property form Id with the buy sell property table
+     * 
+     * @since 1.0.0
+     * 
+     * @return Collection|Object
+     */
+    public function propertyFormDetails() {
+        return $this->hasOne(BuySellProperty::class, 'id', 'property_form_id');
     }
 }
