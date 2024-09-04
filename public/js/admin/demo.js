@@ -1241,7 +1241,11 @@ $(document).ready(function () {
             $('#search_form_type').show();
         } else if (searchType === 'state') {
             $('#search_state').show();
+        } else if (searchType === "all") {
+            $("#search_value_input").prop('disabled', true);
+            $('#search_value_input').show();
         } else {
+            $("#search_value_input").prop('disabled', false);
             $('#search_value_input').show();
         }
     }
@@ -1330,4 +1334,64 @@ $(document).ready(function () {
 
     // Initial content load on page load
     getLeadContent();
+});
+
+function renderByPage(pageNumber) {
+    console.log(pageNumber);
+    let form = $("#filter-lead-form");
+    let formData = new FormData(form[0]);
+
+    // Add page number to form data
+    formData.append("page", pageNumber);
+
+    // Send AJAX request to filter leads with pagination
+    $.ajax({
+        url: form.attr("action"),
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            console.log("Leads filtered successfully", response); // Debugging
+            $('.lead_data_content').html(response.content); // Update content with response
+            updatePaginationButtons(response.totalPages, pageNumber);
+        },
+        error: function (error) {
+            console.error("Error filtering leads", error); // Debugging
+        },
+        complete: function () {
+            $('.admin_lead_table').hide();
+            let loaderTimeout = setTimeout(() => {
+                $('#loader-2').hide();
+                $('.admin_lead_table').fadeIn();
+            }, 800);
+        }
+    });
+}
+
+function updatePaginationButtons(totalPages, currentPage) {
+    let paginationHtml = '<div id="pagination-container">';
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHtml += `
+            <button class="btn btn-secondary ${i === currentPage ? 'active' : ''}" onclick="renderByPage(${i})">
+                ${i}
+            </button>`;
+    }
+
+    paginationHtml += '</div>';
+
+    // Now you can insert the paginationHtml into the desired element on your page
+    $('#pagination-container').html(paginationHtml);
+
+}
+
+$('.lead-form').keypress(function(e) {
+    if (e.which == 13) {
+        e.preventDefault(); // Prevent the default form submission on Enter
+        $("#filter_leads").click(); // Trigger the click event on the button
+    }
 });

@@ -156,7 +156,10 @@ a.delete-icon {color: #ff0000;padding: 5px;}
 }
 
 
-
+#pagination-container button.active {
+    background-color: #007bff;
+    color: white;
+}
 
 /****************03-09-2024 End *********************/
 

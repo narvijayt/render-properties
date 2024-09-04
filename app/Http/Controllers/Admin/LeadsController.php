@@ -48,13 +48,17 @@ class LeadsController extends Controller
 
 
     public function getLeadsByFilter(Request $request) {
-        $value = strtolower($request->input('search_value', '')); // Convert search value to lowercase
-        $formTypeValue = strtolower($request->input('search_form_type', '')); // Convert form type value to lowercase
-        $stateValue = strtolower($request->input('search_state', '')); // Convert state value to lowercase
-        
-        $data['leads_count'] = BuySellProperty::count();
+        $value = strtolower($request->input('search_value', ''));
+        $formTypeValue = strtolower($request->input('search_form_type', ''));
+        $stateValue = strtolower($request->input('search_state', ''));
+    
+        $limit = 10;
+        $page = $request->input('page', 1);
+        $offset = ($page - 1) * $limit;
+    
         $query = BuySellProperty::latest();
         
+        // Apply the filters based on the search type
         switch ($request->input('search_type')) {
             case 'name':
                 $nameParts = explode(' ', $value);
@@ -93,10 +97,22 @@ class LeadsController extends Controller
                 $query->whereRaw('LOWER("formPropertyType") LIKE ?', ['%' . $formTypeValue . '%']);
                 break;
         }
-
-        $data['leads'] = $query->get();
+    
+        // Calculate total records and pages
+        $totalRecords = $query->count();
+        $totalPages = ceil($totalRecords / $limit);
+        
+        // Get the paginated results
+        $leads = $query->skip($offset)->take($limit)->get();
+    
+        // Prepare the response data
+        $data['totalPages'] = $totalPages;
+        $data['startIndex'] = $offset + 1;
+        // dd($page);
+        $data['leads'] = $leads;
         $data['content'] = view('admin.leads.render-leads', $data)->render();
         return response()->json($data);
     }
+    
   
 }

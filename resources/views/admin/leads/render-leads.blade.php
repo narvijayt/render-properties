@@ -20,7 +20,7 @@
         <tbody>
         
             @if(isset($leads) && !empty($leads))
-                @php $currentIndex = 1; @endphp
+                @php $currentIndex = $startIndex; @endphp
                 @foreach($leads as $lead)
                     <tr>
                         <td>{{ $currentIndex++ }}</td>
@@ -42,4 +42,13 @@
             @endif
         </tbody>
     </table>
+    <div id="pagination-container">
+        @if (isset($totalPages))
+            @for($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++)
+                <button class="btn btn-secondary {{ $pageNumber == 1 ? 'active' : '' }}" onclick="renderByPage({{ $pageNumber }})">
+                    {{ $pageNumber }}
+                </button>
+            @endfor
+        @endif
+    </div>
 </div>
