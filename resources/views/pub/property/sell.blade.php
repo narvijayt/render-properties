@@ -37,9 +37,10 @@
 
 @section("content")
 <!-- Banner -->
-<div class="banner connect">
-    
+<div class="banner privacy">
+   <div class="container">
     <h1 class="banner-title">Sell your home with the <br>  best Realtors</h1>
+    </div>
 </div>
 
 <!-- Form -->

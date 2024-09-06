@@ -37,10 +37,11 @@
 
 @section("content")
 <!-- Banner -->
-<div class="banner connect">
+<div class="banner privacy">
+      <div class="container">
   <h1 class="banner-title">Find your Dream Home with <br> Top Realtors</h1>
 </div>
-
+</div>
 <!-- Form -->
 <div class="row justify-content-center align-items-center p-2">
     <div class="card property-form-outer">
