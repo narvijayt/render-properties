@@ -1,7 +1,17 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	    
+	 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11277202705"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'AW-11277202705');
+	</script>
+
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>@yield('title', 'Default') | {{ config('app.name', 'Render') }}</title>
 	<link rel="icon" href="/img/icon.png" sizes="32x32" type="image/png">
