@@ -58,7 +58,7 @@
                 </div>
             @endif
             
-            <form method="POST" action="{{ route('property.store') }}" enctype="multipart/form-data">
+            <form class="form-prevent-multiple-submits" method="POST" action="{{ route('property.store') }}" enctype="multipart/form-data" >
                 {{csrf_field()}}
                 <div class="container p-3 mb-3">
                     <h3 class="text-center">Complete the form below to connect with the best Realtors in your area, <br> ready to help you find your dream home.</h3>
@@ -281,7 +281,7 @@
                     <!-- Submit -->
                     <div class="text-center col-lg-12 mt-1">
                         <input type="hidden" name="formPropertyType" value="buy" />
-                        <button type="submit" class="btn py-4 text-white navbar__button navbar__button--register form-submit-btn"><span>SUBMIT</span></button>
+                        <button type="submit" class="btn py-4 text-white navbar__button navbar__button--register form-submit-btn form-prevent-multiple-submits"><span>SUBMIT</span></button>
                     </div>
                     
                 </div>
@@ -290,3 +290,13 @@
     </div>
 </div>
 @endsection
+
+@push('scripts-footer')
+    <script type="text/javascript">
+        (function(){
+            $('.form-prevent-multiple-submits').on('submit', function(){
+                $('.form-prevent-multiple-submits').attr('disabled','true');
+            })
+        })();
+    </script>
+@endpush
