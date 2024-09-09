@@ -283,6 +283,12 @@
                         <input type="hidden" name="formPropertyType" value="buy" />
                         <button type="submit" class="btn py-4 text-white navbar__button navbar__button--register form-submit-btn form-prevent-multiple-submits"><span>SUBMIT</span></button>
                     </div>
+
+                    <!-- Form On Submit Loader -->
+                    <div class="text-center col-lg-12 mt-2 loader-container">
+                        <span class="form-loader"></span>
+                        <h5>Please wait, your form is being submitted...</h5>
+                    </div>
                     
                 </div>
             </form>
@@ -293,9 +299,16 @@
 
 @push('scripts-footer')
     <script type="text/javascript">
+        // Hide Loader as its Intial State
+        $('.loader-container').hide();
+
+        // Disable Submit Button and Show Loader.
         (function(){
             $('.form-prevent-multiple-submits').on('submit', function(){
                 $('.form-prevent-multiple-submits').attr('disabled','true');
+                $('.loader-container').show();
+                $('.navbar__button--register').attr('style', 'background-color: gray !important');
+                $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
             })
         })();
     </script>
