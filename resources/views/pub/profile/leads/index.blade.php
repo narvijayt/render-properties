@@ -22,6 +22,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Sell / Buy</th>
+                    <th scope="col">Received On</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -38,6 +39,7 @@
                             <td>{{ $lead->email }}</td>
                             <td>{{ $lead->phoneNumber }}</td>
                             <td>{{ ucfirst($lead->formPropertyType) }}</td>
+                            <td>{{ $lead->created_at->format('d M, Y') }}</td>
                             <td>
                                 <a class="btn btn-primary" href="{{ route('pub.profile.leads.view', [ 'lead_id' => $lead->id ]) }}">
                                     <i class="fa fa-fw fa-eye"></i>

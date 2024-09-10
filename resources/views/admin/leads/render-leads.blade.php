@@ -14,6 +14,7 @@
                 <th>City</th>
                 <th>State</th>
                 <th>Sell / Buy</th>
+                <th>Received On</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                         <td>{{ $lead->city }}</td>
                         <td>{{ $lead->state }}</td>
                         <td>{{ ucfirst($lead->formPropertyType) }}</td>
+                        <td>{{ $lead->created_at->format('d M, Y') . ' at ' .$lead->created_at->format('H:i:s') }}</td>
                         <td>
                             <a href="{{ route('admin.leads.view', [ 'lead_id' => $lead->id ]) }}">
                                 <i class="fa fa-fw fa-eye"></i>

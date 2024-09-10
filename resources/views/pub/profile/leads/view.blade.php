@@ -272,6 +272,26 @@
 
                 @endif
 
+                <!-- Lead Form Type -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h5>Lead Form Type</h5>
+                    </div>
+                    <div class="col-lg-5">
+                        <h6>{{ ucfirst($lead->formPropertyType) }}</h6>
+                    </div>
+                </div>
+
+                <!-- Lead Received On -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h5>Lead Received On</h5>
+                    </div>
+                    <div class="col-lg-5">
+                        <h6>{{ $lead->created_at->format('d M, Y') . ' at ' .$lead->created_at->format('H:i:s') }}</h6>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

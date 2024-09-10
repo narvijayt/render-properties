@@ -182,6 +182,18 @@
 
                                     @endif
 
+                                    <!-- Lead Form Type -->
+                                    <tr>
+                                        <th>Lead Form Type</th>
+                                        <td>{{ ucfirst($lead->formPropertyType) }}</td>
+                                    </tr>
+
+                                    <!-- Lead Received On -->
+                                    <tr>
+                                        <th>Lead Received On</th>
+                                        <td>{{ $lead->created_at->format('d M, Y') . ' at ' .$lead->created_at->format('H:i:s') }}</td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>

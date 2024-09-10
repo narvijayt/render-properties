@@ -40,6 +40,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Sell / Buy</th>
+                                <th scope="col">Received On</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -56,6 +57,7 @@
                                         <td>{{ $currentLead->email }}</td>
                                         <td>{{ $currentLead->phoneNumber ?? 'N/A' }}</td>
                                         <td>{{ ucfirst($currentLead->formPropertyType) }}</td>
+                                        <td>{{ $lead->created_at->format('d M, Y') . ' at ' .$lead->created_at->format('H:i:s') }}</td>
                                         <td>
                                             <a href="{{ route('admin.leads.view', [ 'lead_id' => $lead->property_form_id ]) }}">
                                                 <i class="fa fa-fw fa-eye"></i>
