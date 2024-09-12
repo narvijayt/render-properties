@@ -87,12 +87,16 @@ class AppServiceProvider extends ServiceProvider
 
 			return $value > $data[$parameters[0]];
 		});
+
+		Validator::extend('us_phone_regex', function($attribute, $value, $parameters) {
+			// Regular expression to accept various US phone number formats and reject invalid characters
+			return preg_match('/^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/', $value);
+		});
 		
-		
-		 Validator::extend(
+		Validator::extend(
           'recaptcha',
           'App\\Validators\\ReCaptcha@validate'
-             );
+		);
 
 		if (config('app.env', 'production') !== 'local') {
 			// Force https on all generated urls

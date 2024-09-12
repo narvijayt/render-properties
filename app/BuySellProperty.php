@@ -12,17 +12,18 @@ class BuySellProperty extends Model
     static $rules = [
         'firstName' => 'required',
         'lastName' => 'required',
-        'email' => 'required|email',
+        'phoneNumber' => 'required|us_phone_regex',
         'city' => 'required',
         'state' => 'required',
-        'postal_code' => 'required',
+        'postal_code' => 'required|numeric',
         'g-recaptcha-response' => 'required',
     ];
     
     static $messages = [
         'firstName.required' => 'First Name field is required.',
         'lastName.required' => 'Last Name field is required.',
-        'email.required' => 'The User Email must be a valid email address.',
+        'phoneNumber.required' => 'The Phone number field is required.',
+        'phoneNumber.us_phone_regex' => 'PLease enter a valid phone number.',
         'city.required' => 'City field is required.',
         'state.required' => 'State field is required.',
         'postal_code.required' => 'Postal Code field is required.',
