@@ -28,6 +28,7 @@ Route::get('/home', function() {
 Route::get('/sell-property', 'Pub\PropertyController@sellPropertyForm')->name('property.sell');
 Route::get('/buy-property', 'Pub\PropertyController@buyPropertyForm')->name('property.buy');
 Route::post('/submit-property-form', 'Pub\PropertyController@store')->name('property.store');
+Route::get('/refinance-your-home-loan', 'Pub\RefinanceController@index')->name('refinance.home-loan');
 Route::get('/password/request-new-password', 'SetPasswordController@index')->name('requestPasswordView');
 Route::post('/password/request-new-password', 'SetPasswordController@postEmail')->name('postEmail');
 

@@ -2141,9 +2141,57 @@ button#registerVendor {
 
 /**************** 27-03-2023 Ends *********************/
 
-/**************** 28-03-2023 Starts *********************/
 
+/**************** 09-09-2024 Starts *********************/
+.step {display: none;}
+.step.active { display: block;}
+.multi-step-form .btn-check {position: absolute; opacity: 0;}
+.multi-step-form .btn {display: inline-block; padding: 10px 20px; font-size: 16px; font-weight: 600;border-radius: 5px;cursor: pointer; background-color: #F79A2C;color: #184586;transition: background-color 0.3s ease; width: 100%;border: 2px solid #F79A2C;}
+.multi-step-form .btn:hover {background-color: #184586;color: #fff;border: 2px solid #184586;}
+.multi-step-form .btn-check:checked + .btn { background-color: #184586;color: #fff;border: 2px solid #2670db;}
+.btn-check:focus + .btn { outline: 2px solid #2670db; outline-offset: 2px;}
+.multi-step-form .btn-check:focus + .btn {outline: none;}
+.multi-step-form .btn:active {background-color: #184586;color:#fff;}
+.multi-step-form ul{padding:0px;margin-top: 29px;margin-bottom: 27px;}
+.multi-step-form ul li{list-style:none;margin-bottom: 16px;}
+.multi-step-form ul li:last-child{margin-bottom: 0px;}
+.multi-step-form .step-inner { width: 417px;margin: 0 auto ! important;}
+.multi-step-form .step-btn {display: flex;justify-content: center; column-gap: 15px;margin-top: 40px;}
+.multi-step-form .step {display: none;}
+.multi-step-form .step-active {display: block;}
+.multi-step-form .step-inner { margin: 20px;}
+.multi-step-form .radio-container { margin: 10px 0;}
+/* .multi-step-form .btn-check:checked + .btn-secondary {background-color: #007bff;color: white;} */
+.multi-step-form button {margin: 10px;}
+.multi-step-form button.next, .multi-step-form button.prev { background-color: #007bff;color: white;border: none; padding: 10px 20px;cursor: pointer;}
+.multi-step-form button.next:hover, .multi-step-form button.prev:hover { background-color: #184586;}
+.multi-step-form #step-5 .step-inner, .multi-step-form #step-9 .step-inner, .multi-step-form #step-10 .step-inner{ width: 600px;}
+.range-slider { margin-top: 50px;}
+.price-slider-container {width: 100%; margin: 0px;margin-top: 35px;}
+.price-slider-container input[type="range"] {width: 100%;-webkit-appearance: none;appearance: none;
+height: 12px; background: #ccc; border-radius: 5px;outline: none;transition: opacity .15s ease-in-out;}
 
+.price-slider-container input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none;appearance: none;width: 35px;height:35px;border-radius: 50%;background: #fff;cursor: pointer;box-shadow: 0 2px 5px -1px rgba(0, 0, 0, .35); border: 1px solid #999;}
+
+.price-slider-container input[type="range"]::-moz-range-thumb {width: 35px; height: 35px;
+border-radius: 50%;background: #fff;cursor: pointer; border: 1px solid #999;box-shadow: 0 2px 5px -1px rgba(0, 0, 0, .35);}
+.price-slider-container label { display: inline-block;max-width: 100%;margin-top: 15px; font-weight: 600;
+font-size: 19px;color:#184586;}
+.multi-step-form .form-box {display: flex;column-gap: 20px;margin-bottom: 16px;}
+.multi-step-form #step-12 .step-inner{width:600px;}
+.multi-step-form .form-box div {width: 100%;}
+.multi-step-form .form-box button.btn.btn-primary{width: auto; margin: 0 auto;display: flex;padding: 10px 63px;margin-top: 37px;}
+.multi-step-form label{color: #000;}
+.price-slider-container label{width: 100%; display: flex;justify-content: center; margin-top: 9px;}
+.progress-outer { width: 1000px; margin: 0 auto;}
+.progress-outer .progress{height:9px;background-color: #ccc;z-index: 1;position: relative;margin-bottom: 0px;}
+.multi-step-form p{font-size: 13px;}
+.multi-step-form .step-btn .btn:hover { border: none;}
+.multi-step-form .step-btn .btn{padding: 10px 20px ! important;width: auto; margin: 0px ! important;}
+.form-text {width: 100%; float: left;}
+.quote-btn-outer {margin-top: 25px;float: left;width: 100%; }
+.quote-btn-outer button.btn.btn-primary{margin: 0px;width: auto;padding: 10px 65px;display: flex;margin: 0 auto;}
+/**************** 09-09-2024 End *********************/
 
 
 
@@ -2179,6 +2227,16 @@ button#registerVendor {
     .user-contact-info a{ font-size: 16px;}
     .user-contact-info .text-locked{ font-size: 13px;}
 	.lender-inner-banner h2 { font-size: 20px;}
+    /**************** 10-09-2024 Starts *********************/
+    .multi-step-form .step-inner{width:100%;}
+    .multi-step-form #step-5 .step-inner, .multi-step-form #step-9 .step-inner, .multi-step-form #step-10 .step-inner {width: 100%;}
+    .multi-step-form #step-12 .step-inner {width: 100%;}
+    .multi-step-form .form-box{row-gap: 13px;column-gap: 0; margin-bottom: 13px;flex-direction: column;}
+    /* .multi-step-form button.btn.btn-primary{margin: 0px;margin-top: 25px;} */
+    .card.property-form-outer.property-Step-form {width: 82%;margin: 0 auto;}
+    .progress-outer{width: 100%;}
+    .card.property-form-outer.property-Step-form .container {width: 100%;padding: 32px;padding-top: 11px; }
+    /**************** 10-09-2024 End *********************/
 }
 /**************** 31-03-2023 Ends *********************/
 
