@@ -385,6 +385,40 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-box">
+                                        <div class="mb-0">
+                                            <label for="email" class="form-label">Street Address</label>
+                                             <input type="text" class="form-control" name="streetAddress" placeholder="Street Address" value="{{ old('streetAddress','') }}">
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="phone" class="form-label">Street Address Line 2</label>
+                                            <input type="text" class="form-control" name="streetAddressLine2" placeholder="Street Address Line 2" value="{{ old('streetAddressLine2','') }}">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-box">
+                                        <div class="mb-0">
+                                            <label for="email" class="form-label">City</label>
+                                            <input type="text" class="form-control" name="city" placeholder="City" value="{{ old('city','') }}">
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="phone" class="form-label">State</label>
+                                            <select id="state" class="form-control" name="state">
+                                                <option value="">Choose a state</option>
+                                                @foreach($states::all() as $abbr => $stateName)
+                                                <option value="{{ $abbr }}" {{ collect(old('state'))->contains($abbr) ? 'selected' : '' }}>{{ $stateName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-box">
+                                        <div class="mb-0">
+                                            <label for="email" class="form-label">Postal / Zip Code</label>
+                                            <input type="text" class="form-control" name="postal_code" placeholder="Postal / Zip Code" value="{{ old('postal_code','') }}">
+                                        </div>
+                                    </div>
+
                                     <div class="form-text">
                                         <p>I agree to be contacted by Richard Tocado Companies, INC via call, email and text. To opt-out, you can reply “stop” at any time or click the unsubscribe link in the emails. Message and data rates may apply.</p>
                                     </div>
