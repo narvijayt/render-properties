@@ -65,9 +65,8 @@ class SendRefinanceLeadNotification
 
         // Find Richard User ID
         $findRichardUserId = User::where('email', '=', 'richardtocado@gmail.com')->first();
-        // $recipient_email = "richardtocado@gmail.com";
         $recipient_name = "Richard Tocado";
-        $recipient_email = "iamabhaykumar2002@gmail.com";
+        $recipient_email = "richardtocado@gmail.com";
 
         // Send email to Richard Tocado if no Broker found in the area.
         if (!$brokerCount > 0) {
@@ -93,9 +92,8 @@ class SendRefinanceLeadNotification
         // Send an email to users with role broker.
         foreach ($usersWithRoles as $currentUser) {
 
-            // $toPhoneNumber = $currentUser->phone_number;
-            $toPhoneNumber = "+91 7876161790";
-            // $user_email = $currentUser->email;
+            $toPhoneNumber = $currentUser->phone_number;
+            $user_email = $currentUser->email;
             $user_name = "$currentUser->first_name $currentUser->last_name";
 
             // Save the lead to whom the email is sent.
@@ -117,7 +115,7 @@ class SendRefinanceLeadNotification
                         $message = "Render: $formSubmittedBy wants to refinance their home loan. Please click on the link below to view details:\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
 
-                        Mail::to($recipient_email)->send(new RefinanceNotificationMail($refinanceForm->id, $lead->notification_type, $user_name, $completeShortURL));
+                        Mail::to($user_email)->send(new RefinanceNotificationMail($refinanceForm->id, $lead->notification_type, $user_name, $completeShortURL));
                     }
                     
                     $lead->save();
@@ -131,7 +129,7 @@ class SendRefinanceLeadNotification
                         $message = "Render: $formSubmittedBy wants to refinance their home loan. Please upgrade your subscription to view the details.\n$completeShortURL";
                         if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
-                        Mail::to($recipient_email)->send(new RefinanceNotificationMail($refinanceForm->id, $lead->notification_type, $user_name, $completeShortURL));
+                        Mail::to($user_email)->send(new RefinanceNotificationMail($refinanceForm->id, $lead->notification_type, $user_name, $completeShortURL));
                     }
 
                     $lead->save();
