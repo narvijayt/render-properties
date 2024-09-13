@@ -64,6 +64,11 @@ class EventServiceProvider extends ServiceProvider
 		'App\Events\LeadNotificationEvent' => [
 			'App\Listeners\SendLeadNotification'
 		],
+
+		// Refinance Lead Notification
+		'App\Events\RefinanceLeadNotificationEvent' => [
+			'App\Listeners\SendRefinanceLeadNotification'
+		],
     ];
 
     /**

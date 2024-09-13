@@ -28,7 +28,8 @@ Route::get('/home', function() {
 Route::get('/sell-property', 'Pub\PropertyController@sellPropertyForm')->name('property.sell');
 Route::get('/buy-property', 'Pub\PropertyController@buyPropertyForm')->name('property.buy');
 Route::post('/submit-property-form', 'Pub\PropertyController@store')->name('property.store');
-Route::get('/refinance-your-home-loan', 'Pub\RefinanceController@index')->name('refinance.home-loan');
+Route::get('/refinance-quote', 'Pub\RefinanceController@index')->name('refinance.home-loan');
+Route::post('/refinance-quote', 'Pub\RefinanceController@store')->name('refinance.store');
 Route::get('/password/request-new-password', 'SetPasswordController@index')->name('requestPasswordView');
 Route::post('/password/request-new-password', 'SetPasswordController@postEmail')->name('postEmail');
 
@@ -126,6 +127,10 @@ Route::group([
 		Route::get('/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@index')->name('profile.profileSocialReviews');
 		Route::get('/profile/leads', 'Profile\LeadsController@index')->name('profile.leads');
 		Route::get('/profile/leads/view/{lead_id}', 'Profile\LeadsController@viewLead')->name('profile.leads.view');
+
+        Route::get('/profile/refinance-leads', 'Profile\LeadsController@indexRefinanceLeads')->name('profile.refinance-leads');
+		Route::get('/profile/refinance-leads/view/{lead_id}', 'Profile\LeadsController@viewRefinanceLead')->name('profile.refinance-leads.view');
+
 		Route::match(['PUT', 'PATCH'], '/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@update')->name('profile.profileSocialReviews.update');
 		
 		Route::get('/profile', 'Profile\DashboardController@index')->name('profile.index');

@@ -2191,6 +2191,8 @@ font-size: 19px;color:#184586;}
 .form-text {width: 100%; float: left;}
 .quote-btn-outer {margin-top: 25px;float: left;width: 100%; }
 .quote-btn-outer button.btn.btn-primary{margin: 0px;width: auto;padding: 10px 65px;display: flex;margin: 0 auto;}
+.form-header {box-shadow: none !important; padding-top: 0px !important;}
+.form-header h4 {color: #184586 ;}
 /**************** 09-09-2024 End *********************/
 
 

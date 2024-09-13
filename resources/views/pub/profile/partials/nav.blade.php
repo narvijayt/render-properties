@@ -32,6 +32,10 @@
       <li><a href="{{ route('pub.profile.leads') }}">Leads</a></li>
     @endif
 
+    @if (auth()->user()->user_type === "broker")
+      <li><a href="{{ route('pub.profile.refinance-leads') }}">Refinance Leads</a></li>
+    @endif
+
     @if(auth()->user()->user_type != 'vendor')
     <li><a href="{{ route('pub.profile.settings.index') }}">Settings</a></li>
     @endif
