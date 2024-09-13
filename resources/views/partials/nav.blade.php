@@ -57,6 +57,11 @@
                 <li class="dropdown">
                     <a href="{{ route('property.sell') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Sell Property</a>
                 </li>
+
+                <!-- Refinance Your Home Loan -->
+                <li class="dropdown">
+                    <a href="{{ route('refinance.home-loan') }}" class="dropdown-toggle navbar__button navbar__button--register" role="button" >Refinance</a>
+                </li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
