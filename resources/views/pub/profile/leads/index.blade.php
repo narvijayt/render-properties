@@ -51,7 +51,7 @@
 
                 @else
                     <tr>
-                        <td colspan="7" class="text-center">
+                        <td colspan="8" class="text-center">
                             <p>There are no leads available in your city.</p>
                         </td>
                     </tr>
@@ -59,7 +59,7 @@
 
             @else
                 <tr>
-                    <td colspan="7" class="text-center subscription-text">
+                    <td colspan="8" class="text-center subscription-text">
                         @if ($role === 'realtor')
                             <p><i class="fa fa-fw fa-lock"></i>Please match with someone to view the lead details.</p>
                         @elseif ($role === 'broker')
