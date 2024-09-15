@@ -1,10 +1,11 @@
 @extends('admin.layouts.main')
 @section('content')
     <section class="content-header">
-    <h1>View Lead</h1>
+    <h1>View Property Lead</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li>Leads</li>
+            <li>Property</li>
             <li class="active">View</li>
         </ol>
     </section>
@@ -25,9 +26,15 @@
                             <!-- First name section -->
                             <div class="row mb-1">
                                 <div class="col-lg-5 mb-1">
-                                    <a class="btn btn-primary" href="{{ url()->previous() }}"> 
-                                        <i class="fa fa-fw fa-arrow-left"></i> Back
-                                    </a>
+                                    @if (isset($user_id))
+                                        <a class="btn btn-primary" href="{{ route('admin.user.leads', ['user_id' => $user_id]) }}">
+                                            <i class="fa fa-fw fa-arrow-left"></i> Back
+                                        </a>
+                                    @else
+                                        <a class="btn btn-primary" href="{{ $prev_url }}"> 
+                                            <i class="fa fa-fw fa-arrow-left"></i> Back
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
 
@@ -225,7 +232,7 @@
                             @if(isset($realtorSentLeads) && $realtorSentLeads->isNotEmpty())
                                 <div>
                                     <h3 class="mb-2 lead-sent-title"><b>Realtors</b></h3>
-                                    <table id="leads_listing_table" class="table table-striped table-bordered" style="background: #eee;" >
+                                    <table id="view_leads_listing_table1" class="table table-striped table-bordered" style="background: #eee;" >
                                         <thead>
                                             <tr>
                                                 <th>Sr No.</th>
@@ -236,32 +243,36 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($realtorSentLeads) && $realtorSentLeads->isNotEmpty())
-                                                @php $currentIndex = 1; @endphp
-                                                @foreach($realtorSentLeads as $lead)
-                                                    @php 
-                                                        $lead_sent_detail = $lead->getAgentDetails()->first();
-                                                    @endphp
-                                                    <tr>
-                                                        <td>{{ $currentIndex++ }}</td>
-                                                        <td>{{ $lead_sent_detail->first_name.' '.$lead_sent_detail->last_name }}</td>
-                                                        <td>{{ $lead_sent_detail->email }}</td>
-                                                        <td>{{ $lead_sent_detail->phone_number ?? 'N/A' }}</td>
-                                                        <td>{{ $getNotificationTypeDetails[$lead->notification_type] ?? 'N/A' }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>No Records Found.</tr>
-                                            @endif
+                                            @php $currentIndex = (isset($_REQUEST['realtors']) && !empty($_REQUEST['realtors'])) ? ( ($_REQUEST['realtors']-1)*10) + 1 : 1; @endphp
+                                            @foreach($realtorSentLeads as $lead)
+                                                @php 
+                                                    $lead_sent_detail = $lead->getAgentDetails()->first();
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $currentIndex++ }}</td>
+                                                    <td>{{ $lead_sent_detail->first_name.' '.$lead_sent_detail->last_name }}</td>
+                                                    <td>{{ $lead_sent_detail->email }}</td>
+                                                    <td>{{ $lead_sent_detail->phone_number ?? 'N/A' }}</td>
+                                                    <td>{{ $getNotificationTypeDetails[$lead->notification_type] ?? 'N/A' }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
+
+                                    <!-- Pagination for Realtors Table -->
+                                    <div class="text-right">
+                                        <ul class="pagination pagination-sm" style="margin: 0;">
+                                            {{ $realtorSentLeads->appends(request()->except('page'))->links() }}
+                                        </ul>
+                                    </div>
+
                                 </div>
                             @endif
 
                             @if(isset($brokerSentLeads) && $brokerSentLeads->isNotEmpty())
                                 <div>
                                     <h3 class="mb-2 lead-sent-title"><b>Brokers</b></h3>
-                                    <table id="view_leads_listing_table" class="table table-striped table-bordered" style="background: #eee;" >
+                                    <table id="view_leads_listing_table2" class="table table-striped table-bordered" style="background: #eee;" >
                                         <thead>
                                             <tr>
                                                 <th>Sr No.</th>
@@ -272,28 +283,30 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(isset($brokerSentLeads) && $brokerSentLeads->isNotEmpty())
-                                                @php $currentIndex = 1; @endphp
-                                                @foreach($brokerSentLeads as $lead)
-                                                    @php 
-                                                        $lead_sent_detail = $lead->getAgentDetails()->first();
-                                                    @endphp
-                                                    <tr>
-                                                        <td>{{ $currentIndex++ }}</td>
-                                                        <td>{{ $lead_sent_detail->first_name.' '.$lead_sent_detail->last_name }}</td>
-                                                        <td>{{ $lead_sent_detail->email }}</td>
-                                                        <td>{{ $lead_sent_detail->phone_number ?? 'N/A' }}</td>
-                                                        <td>{{ $getNotificationTypeDetails[$lead->notification_type] ?? 'N/A' }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>No Records Found.</tr>
-                                            @endif
+                                            @php $currentIndex = (isset($_REQUEST['brokers']) && !empty($_REQUEST['brokers'])) ? ( ($_REQUEST['brokers']-1)*10) + 1 : 1; @endphp
+                                            @foreach($brokerSentLeads as $lead)
+                                                @php 
+                                                    $lead_sent_detail = $lead->getAgentDetails()->first();
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $currentIndex++ }}</td>
+                                                    <td>{{ $lead_sent_detail->first_name.' '.$lead_sent_detail->last_name }}</td>
+                                                    <td>{{ $lead_sent_detail->email }}</td>
+                                                    <td>{{ $lead_sent_detail->phone_number ?? 'N/A' }}</td>
+                                                    <td>{{ $getNotificationTypeDetails[$lead->notification_type] ?? 'N/A' }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
+
+                                    <!-- Pagination for Brokers Table -->
+                                    <div class="text-right">
+                                        <ul class="pagination pagination-sm" style="margin: 0;">
+                                            {{ $brokerSentLeads->appends(request()->except('page'))->links() }}
+                                        </ul>
+                                    </div>
                                 </div>
                             @endif
-
                         </div>
                     </div>
                 </div>

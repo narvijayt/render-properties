@@ -604,7 +604,22 @@ $(function () {
     });
 
     $('#leads_listing_table').DataTable();
-    $('#view_leads_listing_table').DataTable();
+    
+    
+    $('#view_leads_listing_table1').DataTable({
+        "paging": false, 
+        "searching": true,
+        "ordering": true,
+        "info": false,
+    });
+
+    $('#view_leads_listing_table2').DataTable({
+        "paging": false, 
+        "searching": true,
+        "ordering": true,
+        "info": false,
+    });
+
 
     /* add page form */
     $(function() {

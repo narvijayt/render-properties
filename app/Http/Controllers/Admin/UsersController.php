@@ -392,7 +392,10 @@ class UsersController extends Controller
         }
 
         // Eager load the userLeads relationship
-        $data['userLeads'] = $data['user']->userLeads()->with('propertyFormDetails')->get();
+        $data['userLeads'] = $data['user']->userLeads()->with('propertyFormDetails')->latest()->paginate(10, ['*'], 'property_leads');
+        $data['user_refinance_leads'] = $data['user']->userRefinanceLeads()->with('refinanceFormDetails')->latest()->paginate(10, ['*'], 'refinance_leads');
+        $data['property_lead_count'] =  $data['user']->userLeads()->with('propertyFormDetails')->count();
+        $data['refinance_lead_count'] =  $data['user']->userRefinanceLeads()->with('refinanceFormDetails')->count();
         return view('admin.users.leads', $data);
     }
 

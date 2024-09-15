@@ -190,11 +190,30 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="{{ route('admin.leads') }}">
-                    <i class="fa fa-file-text"></i> Leads
+
+            <!-- Leads Dropdown -->
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-file-text"></i>
+                    <span>Leads</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ route('admin.leads.property') }}">
+                            <i class="fa fa-circle-o"></i>Property
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.leads.refinance') }}">
+                            <i class="fa fa-circle-o"></i>Refinance
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             <li>
                 <a href="{{url('cpldashrbcs/testimonials')}}">
                     <i class="fa fa-comments"></i>Testimonials
