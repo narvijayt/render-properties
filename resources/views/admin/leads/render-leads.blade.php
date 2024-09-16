@@ -77,13 +77,34 @@
     </table>
 
     <!-- Pagination Container -->
-    <div id="pagination-container" class="text-center">
+    <div id="pagination-container" class="text-right">
         @if (isset($totalPages))
+            <!-- Previous Button -->
+            <button class="btn btn-secondary {{ $page == 1 ? 'disabled' : '' }}" 
+                    style="margin: 0px 3px" 
+                    onclick="renderByPage({{ $page - 1 }})" 
+                    {{ $page == 1 ? 'disabled' : '' }}>
+                Previous
+            </button>
+
+            <!-- Page Number Buttons -->
             @for($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++)
-                <button class="btn btn-secondary {{ $pageNumber == 1 ? 'active' : '' }}" style="margin: 0px 3px" onclick="renderByPage({{ $pageNumber }})">
+                <button class="btn btn-secondary {{ $pageNumber == $page ? 'active' : '' }}" 
+                        style="margin: 0px 3px" 
+                        onclick="renderByPage({{ $pageNumber }})">
                     {{ $pageNumber }}
                 </button>
             @endfor
+
+            <!-- Next Button -->
+            <button class="btn btn-secondary {{ $page == $totalPages ? 'disabled' : '' }}" 
+                    style="margin: 0px 3px" 
+                    onclick="renderByPage({{ $page + 1 }})" 
+                    {{ $page == $totalPages ? 'disabled' : '' }}>
+                Next
+            </button>
         @endif
     </div>
+
+
 </div>

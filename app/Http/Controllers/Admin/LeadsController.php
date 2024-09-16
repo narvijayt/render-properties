@@ -93,8 +93,8 @@ class LeadsController extends Controller
         $stateValue = strtolower($request->input('search_state', ''));
     
         $limit = 10;
-        $page = $request->input('page', 1);
-        $offset = ($page - 1) * $limit;
+        $data['page'] = $request->input('page', 1);
+        $offset = ($data['page'] - 1) * $limit;
     
         if ($request->filter_type == "property") {
             $query = BuySellProperty::latest();

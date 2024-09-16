@@ -1388,9 +1388,17 @@ function renderByPage(pageNumber) {
     });
 }
 
-function updatePaginationButtons(totalPages, currentPage) {
-    let paginationHtml = '<div id="pagination-container">';
 
+function updatePaginationButtons(totalPages, currentPage) {
+    let paginationHtml = '<div id="pagination-container" class="text-right">';
+
+    // Previous Button
+    paginationHtml += `
+        <button class="btn btn-secondary ${currentPage === 1 ? 'disabled' : ''}" style="margin: 0px 3px" onclick="renderByPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} >
+            Previous
+        </button>`;
+
+    // Page Buttons
     for (let i = 1; i <= totalPages; i++) {
         paginationHtml += `
             <button class="btn btn-secondary ${i === currentPage ? 'active' : ''}" style="margin: 0px 3px" onclick="renderByPage(${i})">
@@ -1398,11 +1406,17 @@ function updatePaginationButtons(totalPages, currentPage) {
             </button>`;
     }
 
+    // Next Button
+    paginationHtml += `
+        <button class="btn btn-secondary ${currentPage === totalPages ? 'disabled' : ''}" style="margin: 0px 3px" onclick="renderByPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+            Next
+        </button>`;
+
     paginationHtml += '</div>';
 
     $('#pagination-container').html(paginationHtml);
-
 }
+
 
 $('.lead-form').keypress(function(e) {
     if (e.which == 13) {
