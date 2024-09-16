@@ -2077,6 +2077,16 @@ body .footer .navbar-nav{display:block;}
 .join-render-section { padding-top: 5%;padding-bottom: 6%;}
 .top-inner-banner p br { display: none;}
 .hero-banner p br{display: none;}
+.container.form-header {padding: 0px !important;padding-bottom: 7px !important;}
+/* .recaptcha-container {transform: scale(0.80);-webkit-transform: scale(0.80);} */
+.recaptcha-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns items to the start (left) */
+    transform: scale(0.80);
+    transform-origin: 0 0; /* Ensures scaling happens from the top-left corner */
+    margin: 0; /* Adjust if needed */
+}
 }
 
 h4.premium-user-logo.line-left {
@@ -2152,19 +2162,23 @@ button#registerVendor {
 .btn-check:focus + .btn { outline: 2px solid #2670db; outline-offset: 2px;}
 .multi-step-form .btn-check:focus + .btn {outline: none;}
 .multi-step-form .btn:active {background-color: #184586;color:#fff;}
-.multi-step-form ul{padding:0px;margin-top: 29px;margin-bottom: 27px;}
+.multi-step-form ul{padding:0px;margin-bottom: 27px;}
 .multi-step-form ul li{list-style:none;margin-bottom: 16px;}
 .multi-step-form ul li:last-child{margin-bottom: 0px;}
 .multi-step-form .step-inner { width: 417px;margin: 0 auto ! important;}
-.multi-step-form .step-btn {display: flex;justify-content: center; column-gap: 15px;margin-top: 40px;}
+.multi-step-form .step-btn {display: flex;justify-content: center; column-gap: 15px;margin-top: 15px;float: left;text-align: center;width: 100%;}
+button.btn.btn-primary.refinance-form-submit-btn.form-prevent-multiple-submits {border: none;background-color: #184586 !important; color: #fff !important;}
+button.btn.btn-primary.refinance-form-submit-btn.form-prevent-multiple-submits:hover {background-color: #F79A2C !important;}
+.check-icon{font-size: 38px;background: #28a745 !important;padding: 13px;display: table;margin-bottom: 2;margin: 0 auto;margin-bottom: 11px;border-radius: 100px;color: #ffff;}
+.thankyou-msg h4 {color: #184586;}
 .multi-step-form .step {display: none;}
 .multi-step-form .step-active {display: block;}
 .multi-step-form .step-inner { margin: 20px;}
 .multi-step-form .radio-container { margin: 10px 0;}
 /* .multi-step-form .btn-check:checked + .btn-secondary {background-color: #007bff;color: white;} */
 .multi-step-form button {margin: 10px;}
-.multi-step-form button.next, .multi-step-form button.prev { background-color: #007bff;color: white;border: none; padding: 10px 20px;cursor: pointer;}
-.multi-step-form button.next:hover, .multi-step-form button.prev:hover { background-color: #184586;}
+.multi-step-form button.next, .multi-step-form button.prev { background-color: #184586;color: white;border: none; padding: 10px 20px;cursor: pointer;}
+.multi-step-form button.next:hover, .multi-step-form button.prev:hover { background-color: #F79A2C !important;}
 .multi-step-form #step-5 .step-inner, .multi-step-form #step-9 .step-inner, .multi-step-form #step-10 .step-inner{ width: 600px;}
 .range-slider { margin-top: 50px;}
 .price-slider-container {width: 100%; margin: 0px;margin-top: 35px;}
@@ -2193,6 +2207,20 @@ font-size: 19px;color:#184586;}
 .quote-btn-outer button.btn.btn-primary{margin: 0px;width: auto;padding: 10px 65px;display: flex;margin: 0 auto;}
 .form-header {box-shadow: none !important; padding-top: 0px !important;}
 .form-header h4 {color: #184586 ;}
+.show-error {
+    color: #d9534f; /* Red color for error */
+    font-size: 16px; /* Adjust font size as needed */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+.show-error i {
+    font-size: 18px; /* Size of the Font Awesome icon */
+    color: #d9534f; /* Same color as the text */
+}
+.error-message {display: none;}
+.s11-error-message {color: red;}
 /**************** 09-09-2024 End *********************/
 
 
@@ -2237,7 +2265,7 @@ font-size: 19px;color:#184586;}
     /* .multi-step-form button.btn.btn-primary{margin: 0px;margin-top: 25px;} */
     .card.property-form-outer.property-Step-form {width: 82%;margin: 0 auto;}
     .progress-outer{width: 100%;}
-    .card.property-form-outer.property-Step-form .container {width: 100%;padding: 32px;padding-top: 11px; }
+    .card.property-form-outer.property-Step-form .container {width: 100%;padding: 32px;padding-top: 26px; }
     /**************** 10-09-2024 End *********************/
 }
 /**************** 31-03-2023 Ends *********************/
@@ -2412,8 +2440,7 @@ font-size: 64px;}
 .testimonials-outer .testimonials .carousel .item{ min-height: auto;}
 .testimonials-outer #testimoniial-slider.carousel .overview b{font-size: 16px ! important;line-height: 17px;margin-bottom: 13px ! important;display:inline-block;}
 .testimonials-outer #testimoniial-slider i.fa.fa-angle-left{top: 0px;}
-
-}
+.hero-banner .d-flex-btn-group{display: flex;flex-wrap: wrap;row-gap: 10px;column-gap: 10px;}
 
 @media(max-width:480px)
 {

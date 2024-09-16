@@ -30,6 +30,7 @@ Route::get('/buy-property', 'Pub\PropertyController@buyPropertyForm')->name('pro
 Route::post('/submit-property-form', 'Pub\PropertyController@store')->name('property.store');
 Route::get('/refinance-quote', 'Pub\RefinanceController@index')->name('refinance.home-loan');
 Route::post('/refinance-quote', 'Pub\RefinanceController@store')->name('refinance.store');
+Route::get('/thank-you', 'Pub\RefinanceController@indexThankyouPage')->name('lead-form.thankyou');
 Route::get('/password/request-new-password', 'SetPasswordController@index')->name('requestPasswordView');
 Route::post('/password/request-new-password', 'SetPasswordController@postEmail')->name('postEmail');
 
