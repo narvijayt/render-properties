@@ -112,14 +112,12 @@
                                         @endforeach
                                     </select>    
                                 </div>
-                            </div>
-                            
-                            <!-- City, State and Zip Code | Country -->
-                            <div class="row">
-                                <div class="col-lg-6 mb-1">
+                                <!-- City, State and Zip Code | Country -->
+                                <div class="col-lg-3 mb-1">
                                     <input type="text" class="form-control" name="postal_code" placeholder="Postal / Zip Code" value="{{ old('postal_code', '') }}">
                                 </div>
                             </div>
+                            
 
                         </div>
                     </div>                    
