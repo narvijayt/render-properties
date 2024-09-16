@@ -125,11 +125,12 @@ Route::group([
 	function() {
 		// Profile Routes
 		Route::get('/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@index')->name('profile.profileSocialReviews');
-		Route::get('/profile/leads', 'Profile\LeadsController@index')->name('profile.leads');
-		Route::get('/profile/leads/view/{lead_id}', 'Profile\LeadsController@viewLead')->name('profile.leads.view');
+		
+        Route::get('/profile/leads/property', 'Profile\LeadsController@indexPropertyLead')->name('profile.leads.property');
+		Route::get('/profile/leads/property/view/{lead_id}', 'Profile\LeadsController@viewPropertyLead')->name('profile.leads.property.view');
 
-        Route::get('/profile/refinance-leads', 'Profile\LeadsController@indexRefinanceLeads')->name('profile.refinance-leads');
-		Route::get('/profile/refinance-leads/view/{lead_id}', 'Profile\LeadsController@viewRefinanceLead')->name('profile.refinance-leads.view');
+        Route::get('/profile/leads/refinance', 'Profile\LeadsController@indexRefinanceLeads')->name('profile.leads.refinance');
+		Route::get('/profile/leads/refinance/view/{lead_id}', 'Profile\LeadsController@viewRefinanceLead')->name('profile.leads.refinance.view');
 
 		Route::match(['PUT', 'PATCH'], '/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@update')->name('profile.profileSocialReviews.update');
 		

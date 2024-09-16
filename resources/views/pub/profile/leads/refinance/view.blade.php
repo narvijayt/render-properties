@@ -1,6 +1,6 @@
 @extends('pub.profile.layouts.profile')
 
-@section('title', 'Lead Form')
+@section('title', 'Refinance Lead Form')
 
 @section('page_content')
 
@@ -12,7 +12,7 @@
                 <!-- First name section -->
                 <div class="row">
                     <div class="col-lg-5 mb-1">
-                        <a class="btn btn-primary" href="{{ route('pub.profile.refinance-leads') }}"> 
+                        <a class="btn btn-primary" href="{{ route('pub.profile.leads.refinance') }}"> 
                             <i class="fa fa-fw fa-arrow-left"></i> Back
                         </a>
                     </div>

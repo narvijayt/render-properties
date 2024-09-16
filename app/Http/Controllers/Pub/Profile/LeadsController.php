@@ -18,7 +18,7 @@ class LeadsController extends Controller
      * 
      * @return html
      */
-    public function index()
+    public function indexPropertyLead()
     {
         // User details
         $data['user'] = Auth::user();
@@ -50,7 +50,7 @@ class LeadsController extends Controller
         }
 
         // Show the page
-        return view('pub.profile.leads.index', $data);
+        return view('pub.profile.leads.property.index', $data);
     }
 
 
@@ -63,7 +63,7 @@ class LeadsController extends Controller
      * 
      * @return html
      */
-    public function viewLead($lead_id = '') {
+    public function viewPropertyLead($lead_id = '') {
         $user = Auth::user();
         $agentId = $user->user_id;
 
@@ -72,25 +72,25 @@ class LeadsController extends Controller
 
         // Check if lead exists.
         if (!$data['lead']) {
-            return redirect()->route('pub.profile.leads')->with('error', 'The requested lead could not be found.');
+            return redirect()->route('pub.profile.leads.property')->with('error', 'The requested lead could not be found.');
         }
 
         // If user is accesing the lead through url and is Unpaid Lo or Unmatched REA then throw an error.
         if ($user->user_type === "broker" && $user->payment_status != 1) {
-            return redirect()->route('pub.profile.leads')->with('error', 'Please upgrade your subscription to access this lead.');
+            return redirect()->route('pub.profile.leads.property')->with('error', 'Please upgrade your subscription to access this lead.');
             
         } else if ($user->user_type === "realtor" && $user->availableMatchCount() < 0) {
-            return redirect()->route('pub.profile.leads')->with('error', 'Please match with someone to view the lead details.');
+            return redirect()->route('pub.profile.leads.property')->with('error', 'Please match with someone to view the lead details.');
         }
 
         // Check if the user has access to view the lead/ Only those can see who received the email.
         $hasLeadAccess = $data['lead']->areLeadsVisible()->where('agent_id', $agentId)->get();
         if ($hasLeadAccess->isEmpty()) {
-            return redirect()->route('pub.profile.leads')->with('error', 'You do not have permission to view this lead.');
+            return redirect()->route('pub.profile.leads.property')->with('error', 'You do not have permission to view this lead.');
         }
 
         // Show the page.
-        return view('pub.profile.leads.view', $data);
+        return view('pub.profile.leads.property.view', $data);
     }
 
 
@@ -153,18 +153,18 @@ class LeadsController extends Controller
 
         // Check if lead exists.
         if (!$data['lead']) {
-            return redirect()->route('pub.profile.refinance-leads')->with('error', 'The requested lead could not be found.');
+            return redirect()->route('pub.profile.leads.refinance')->with('error', 'The requested lead could not be found.');
         }
 
         // If user is accesing the lead through url and is Unpaid Lo or Unmatched REA then throw an error.
         if ($user->user_type === "broker" && $user->payment_status != 1) {
-            return redirect()->route('pub.profile.refinance-leads')->with('error', 'Please upgrade your subscription to access this lead.');   
+            return redirect()->route('pub.profile.leads.refinance')->with('error', 'Please upgrade your subscription to access this lead.');   
         }
 
         // Check if the user has access to view the lead/ Only those can see who received the email.
         $hasLeadAccess = $data['lead']->areLeadsVisible()->where('agent_id', $agentId)->get();
         if ($hasLeadAccess->isEmpty()) {
-            return redirect()->route('pub.profile.refinance-leads')->with('error', 'You do not have permission to view this lead.');
+            return redirect()->route('pub.profile.leads.refinance')->with('error', 'You do not have permission to view this lead.');
         }
 
         // Show the page.
