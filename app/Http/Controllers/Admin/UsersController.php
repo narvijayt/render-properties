@@ -391,6 +391,11 @@ class UsersController extends Controller
             return redirect()->route('admin.realtors')->with('error', 'The requested user leads could not be found.');
         }
 
+        // Users roles other than broker and realtors can not access this page.
+        if (!in_array($data['user']->user_type, ["realtor", "broker"])) {
+            return redirect()->route('admin.dashboard')->with('error', 'This user does not have the lead details');
+        }
+
         // Eager load the userLeads relationship
         $data['userLeads'] = $data['user']->userLeads()->with('propertyFormDetails')->latest()->paginate(10, ['*'], 'property_leads');
         $data['user_refinance_leads'] = $data['user']->userRefinanceLeads()->with('refinanceFormDetails')->latest()->paginate(10, ['*'], 'refinance_leads');

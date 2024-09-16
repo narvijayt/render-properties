@@ -26,15 +26,9 @@
                             <!-- First name section -->
                             <div class="row mb-1">
                                 <div class="col-lg-5 mb-1">
-                                    @if (isset($user_id))
-                                        <a class="btn btn-primary" href="{{ route('admin.user.leads', ['user_id' => $user_id]) }}">
-                                            <i class="fa fa-fw fa-arrow-left"></i> Back
-                                        </a>
-                                    @else
-                                        <a class="btn btn-primary" href="{{ $prev_url }}"> 
-                                            <i class="fa fa-fw fa-arrow-left"></i> Back
-                                        </a>
-                                    @endif
+                                    <a class="btn btn-primary" href="{{ $prev_url }}"> 
+                                        <i class="fa fa-fw fa-arrow-left"></i> Back
+                                    </a>
                                 </div>
                             </div>
 

@@ -39,6 +39,10 @@ class LeadsController extends Controller
             $data['prev_url'] = route('admin.leads.property');
         }
 
+        if (isset($request->user_id) && !is_null($request->user_id)) {
+            $data['prev_url'] = route('admin.user.leads', ['user_id' => $request->user_id]);
+        }
+
         // Check if lead exists.
         if (!$data['lead']) {
             return redirect()->route('admin.leads.property')->with('error', 'The requested lead could not be found.');
@@ -186,6 +190,10 @@ class LeadsController extends Controller
 
         if (isset($request->prev_url) && $request->prev_url == "refinance") {
             $data['prev_url'] = route('admin.leads.refinance');
+        }
+
+        if (isset($request->user_id) && !is_null($request->user_id)) {
+            $data['prev_url'] = route('admin.user.leads', ['user_id' => $request->user_id]);
         }
 
         // Get lead by ID
