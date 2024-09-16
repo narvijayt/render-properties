@@ -81,6 +81,11 @@
                         <div class="step" id="step-1">
                             <h2 class="text-center">What type of property you are refinancing?</h2>
                             <div class="step-inner">
+                                <div class="text-center mt-2">
+                                    <span class="show-error error-message">
+                                        <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                    </span>
+                                </div>
                                 <ul>
                                     <li>
                                         <div class="radio-container">
@@ -117,6 +122,12 @@
                         <!-- Step 2 -->
                         <div class="step" id="step-2">
                             <h2 class="text-center">Estimate your credit score.</h2>
+                            <div class="text-center mt-2">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+                            
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -160,6 +171,12 @@
                         <!-- Step 3 -->
                         <div class="step" id="step-3">
                             <h2 class="text-center">How will this property be used?</h2>
+                            <div class="text-center mt-2">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+                            
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -190,7 +207,13 @@
 
                         <!-- Step 4-->
                         <div class="step" id="step-4">
-                            <h2 class="text-center">Do you have second mortgage?</h2>
+                            <h2 class="text-center mt-2">Do you have second mortgage?</h2>
+                            <div class="text-center">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -231,6 +254,12 @@
                         <!-- Step 6-->
                         <div class="step" id="step-6">
                             <h2 class="text-center">What is your employment status?</h2>
+                            <div class="text-center mt-2">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -274,6 +303,12 @@
                         <!-- Step 7-->
                         <div class="step" id="step-7">
                             <h2 class="text-center">Bankruptcy, short sale, or foreclosure <br> in the last 3 years?</h2>
+                            <div class="text-center mt-2">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -299,6 +334,12 @@
                         <!-- Step 8-->
                         <div class="step" id="step-8">
                             <h2 class="text-center">Can you show proof of income?</h2>
+                            <div class="text-center mt-2">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+                            
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -354,6 +395,12 @@
                         <!-- Step 11-->
                         <div class="step" id="step-11">
                             <h2 class="text-center">Do you currently have an FHA loan?</h2>
+                            <div class="text-center mt-2">
+                                <span class="show-error error-message">
+                                    <i class="fa fa-exclamation-circle"></i> Please select an option.
+                                </span>
+                            </div>
+
                             <div class="step-inner">
                                 <ul>
                                     <li>
@@ -383,11 +430,17 @@
                                     <div class="mb-0">
                                         <label for="firstName" class="form-label">First Name</label>
                                         <input type="text" class="form-control" id="firstName" name="firstName" value="{{ old('firstName', '') }}"  placeholder="Enter your first name">
+                                        <div class="text-left">
+                                            <span id="firstName-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
 
                                     <div class="mb-0">
                                         <label for="lastName" class="form-label">Last Name</label>
                                         <input type="text" class="form-control" id="lastName" name="lastName" value="{{ old('lastName', '') }}" placeholder="Enter your last name">
+                                        <div class="text-left">
+                                            <span id="lastName-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -395,10 +448,17 @@
                                     <div class="mb-0">
                                         <label for="email" class="form-label">What is your email address?</label>
                                         <input type="email" class="form-control" id="email" name="email" value="{{ old('email', '') }}" placeholder="Enter your email">
+                                        <div class="text-left">
+                                            <span id="email-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
+
                                     <div class="mb-0">
                                         <label for="phone" class="form-label">What is your phone number?</label>
                                         <input type="tel" class="form-control" id="phone" name="phoneNumber" value="{{ old('phoneNumber', '') }}" placeholder="Enter your phone number">
+                                        <div class="text-left">
+                                            <span id="phoneNumber-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -406,6 +466,10 @@
                                     <div class="mb-0">
                                         <label for="email" class="form-label">Street Address</label>
                                         <input type="text" class="form-control" name="streetAddress" placeholder="Street Address" value="{{ old('streetAddress','') }}">
+                                        <div class="text-left">
+                                            <span id="streetAddress-error" class="s11-error-message"></span>
+                                        </div>
+
                                     </div>
                                     <div class="mb-0">
                                         <label for="phone" class="form-label">Street Address Line 2</label>
@@ -417,6 +481,9 @@
                                     <div class="mb-0">
                                         <label for="email" class="form-label">City</label>
                                         <input type="text" class="form-control" name="city" placeholder="City" value="{{ old('city','') }}">
+                                        <div class="text-left">
+                                            <span id="city-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-0">
                                         <label for="phone" class="form-label">State</label>
@@ -426,18 +493,25 @@
                                                 <option value="{{ $abbr }}" {{ collect(old('state'))->contains($abbr) ? 'selected' : '' }}>{{ $stateName }}</option>
                                             @endforeach
                                         </select>
+                                        <div class="text-left">
+                                            <span id="state-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-0">
                                         <label for="email" class="form-label">Postal / Zip Code</label>
                                         <input type="text" class="form-control" name="postal_code" placeholder="Postal / Zip Code" value="{{ old('postal_code','') }}">
+                                        <div class="text-left">
+                                            <span id="postalCode-error" class="s11-error-message"></span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="form-box">
                                     <script src="https://www.google.com/recaptcha/api.js"></script>
-                                    <div class="mb-0">
+                                    <div class="mb-0 recaptcha-container">
                                         <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
                                         <span class="msg-error error"></span>
+                                        <span id="gcaptcha-error" class="s11-error-message"></span>
                                         @if ($errors->has('g-recaptcha-response'))
                                             <span class="invalid-feedback" style="display: block;">
                                                 <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
@@ -450,7 +524,13 @@
                                     <p>I agree to be contacted by Richard Tocado Companies, INC via call, email and text. To opt-out, you can reply “stop” at any time or click the unsubscribe link in the emails. Message and data rates may apply.</p>
                                 </div>
 
-                                <div class="quote-btn-outer">
+                                <!-- <div class="quote-btn-outer">
+                                    <button type="button" class="btn btn-secondary prev" id="prevBtn" onclick="prevStep()">Previous</button>
+                                    <button type="submit" class="btn btn-primary refinance-form-submit-btn form-prevent-multiple-submits">Get My Quote </button>
+                                </div> -->
+                                
+                                <div class="step-btn">
+                                    <button type="button" class="btn btn-secondary prev" id="prevBtn" onclick="prevStep()">Previous</button>
                                     <button type="submit" class="btn btn-primary refinance-form-submit-btn form-prevent-multiple-submits">Get My Quote </button>
                                 </div>
 
@@ -539,35 +619,158 @@ function updatePrice(sliderId, outputId, value) {
     }
   }
 
-  function nextStep() {
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    } else {
-      document.getElementById("multi-step-form").submit(); // Submit the form
-    }
-  }
+    function isRadioSelected(radioGroupName) {
+        const radioGroup = document.getElementsByName(radioGroupName);
 
-  function prevStep() {
-    if (currentStep > 0) {
-      currentStep--;
-      showStep(currentStep);
+        for (let i = 0; i < radioGroup.length; i++) {
+            if (radioGroup[i].checked) {
+                return true;
+            }
+        }
+
+        return false; 
     }
-  }
+
+    function nextStep() {
+        if (currentStep == 4 || currentStep == 8 || currentStep == 9) {
+            currentStep++;
+            showStep(currentStep);
+
+        } else {
+            const targetElement = event.target;
+
+            // Find closest step container
+            const closestElement = targetElement.closest('.step-btn').closest('.step');
+
+            // Get all radio properties
+            let input = closestElement.querySelectorAll('input[type="radio"]');
+
+            // Get first input name
+            let value = input[0].name;
+
+            // Check if radio button is checked or not
+            const selectedProperty = closestElement.querySelector(`input[name="${value}"]:checked`);
+
+            // Move steps if property is selected
+            if (selectedProperty) {
+                currentStep++;
+                showStep(currentStep);
+                closestElement.querySelector('.error-message').style.display = "none";
+
+            } else {
+                closestElement.querySelector('.error-message').style.display = "block";
+            }
+        }
+    }
+
+
+    function prevStep() {
+        if (currentStep > 0) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    }
 </script>
 
 <script type="text/javascript">
-    // Hide Loader as its Intial State
+    // Hide Loader as its Initial State
     $('.loader-container').hide();
 
-    // Disable Submit Button and Show Loader.
+    // Function to validate form fields
+    function validateForm() {
+        const firstName = $("input[name=firstName]").val();
+        const lastName = $("input[name='lastName']").val();
+        const phoneNumber = $("input[name='phoneNumber']").val();
+        const streetAddress = $("input[name='streetAddress']").val();
+        const city = $("input[name='city']").val();
+        const state = $('select[name="state"]').val();
+        const postalCode = $("input[name='postal_code']").val();
+        var google_captcha_response = grecaptcha.getResponse();
+
+        const firstNameError = $('#firstName-error');
+        const lastNameError = $("#lastName-error");
+        const phoneNumberError = $("#phoneNumber-error");
+        const streetAddressError = $("#streetAddress-error");
+        const cityError = $("#city-error");
+        const stateError = $("#state-error");
+        const postalCodeError = $("#postalCode-error");
+        const gCaptchaError = $("#gcaptcha-error");
+    
+        firstNameError.text("");
+        lastNameError.text("");
+        phoneNumberError.text("");
+        streetAddressError.text("");
+        cityError.text("");
+        stateError.text("");
+        postalCodeError.text("");
+        gCaptchaError.text("");
+
+        let isValid = true;
+    
+        if (firstName === "" || /\d/.test(firstName)) {
+            firstNameError.html("<i class='fa fa-exclamation-circle'></i> Please enter a first name.");
+            isValid = false;
+        }
+
+        if (lastName === "") {
+            lastNameError.html("<i class='fa fa-exclamation-circle'></i> Please enter a last name.");
+            isValid = false;
+        }
+
+        if (phoneNumber === "") {
+            phoneNumberError.html("<i class='fa fa-exclamation-circle'></i> Please enter a phone number.");
+            isValid = false;
+
+        } else if (/^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/.test(phoneNumber) == false) {
+            phoneNumberError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid phone number.");
+            isValid = false;
+        }
+
+        if (streetAddress === "") {
+            streetAddressError.html("<i class='fa fa-exclamation-circle'></i> Please enter a street address.");
+            isValid = false;
+        }
+
+        if (city === "") {
+            cityError.html("<i class='fa fa-exclamation-circle'></i> Please enter a city.");
+            isValid = false;
+        }
+
+        if (state === "") {
+            stateError.html("<i class='fa fa-exclamation-circle'></i> Please select a state.");
+            isValid = false;
+        }
+        
+        if (postalCode === "") {
+            postalCodeError.html("<i class='fa fa-exclamation-circle'></i> Please enter a postal code.");
+            isValid = false;
+        } else if (/^[0-9]*$/.test(postalCode) == false) {
+            postalCodeError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid postal code.");
+            isValid = false;
+        }
+        
+        if (google_captcha_response === "") {
+            gCaptchaError.html("<i class='fa fa-exclamation-circle'></i> Please verify that you are not a robot.");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Disable Submit Button and Show Loader on Form Submit.
     (function(){
-        $('.form-prevent-multiple-submits').on('submit', function(){
-            $('.form-prevent-multiple-submits').attr('disabled','true');
+        $('.form-prevent-multiple-submits').on('submit', function(event){
+            if (!validateForm()) {
+                event.preventDefault();
+                return false;
+            }
+
+            $('.form-prevent-multiple-submits').attr('disabled', 'true');
             $('.loader-container').show();
             $('.refinance-form-submit-btn').attr('style', 'background-color: gray !important');
-            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-        })
+            $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
+        });
     })();
 </script>
+
 @endpush
