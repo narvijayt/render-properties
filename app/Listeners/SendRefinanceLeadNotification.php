@@ -39,7 +39,8 @@ class SendRefinanceLeadNotification
         // Generate Short Link
         $app_url = config('app.url');
         $generateShortURLPath = generateUniqueShortURLPath();
-        $destinationPath = "profile/refinance-leads/view/$refinanceForm->id";
+        // $destinationPath = "profile/refinance-leads/view/$refinanceForm->id";
+        $destinationPath = "profile/leads/refinance/view/$refinanceForm->id";
 
         // Create short link
         $createShortLink = new RedirectLinks;
