@@ -58,7 +58,7 @@
                 </div>
             @endif
             
-            <form class="form-prevent-multiple-submits" method="POST" action="{{ route('property.store') }}" enctype="multipart/form-data" >
+            <form id="buy_property_form" class="form-prevent-multiple-submits" method="POST" action="{{ route('property.store') }}" enctype="multipart/form-data" >
                 {{csrf_field()}}
                 <div class="container p-3 mb-3">
                     <h3 class="text-center">Complete the form below to connect with the best Realtors in your area, <br> ready to help you find your dream home.</h3>
@@ -300,14 +300,71 @@
         // Hide Loader as its Intial State
         $('.loader-container').hide();
 
-        // Disable Submit Button and Show Loader.
-        (function(){
-            $('.form-prevent-multiple-submits').on('submit', function(){
+        $("#buy_property_form").validate({
+            rules: {
+                firstName: {
+                    required: true 
+                },
+                lastName: {
+                    required: true
+                },
+                phoneNumber: {
+                    required: true,
+                    regex: /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/
+                },
+                streetAddress: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                state: {
+                    required: true
+                },
+                postal_code: {
+                    required: true,
+                    regex: /^[0-9]*$/
+                },
+            },
+            messages: {
+                firstName:{
+                    required: "Please enter a first name.",
+                },
+                lastName:{
+                    required: "Please enter a last name.",
+                },
+                phoneNumber:{
+                    required: "Please enter a phone number.",
+                    regex: "Please enter a valid phone number format."
+                },
+                streetAddress:{
+                    required: "Please enter a street address.",
+                },
+                city:{
+                    required: "Please enter a city.",
+                },
+                state:{
+                    required: "Please select a state.",
+                },
+                postal_code:{
+                    required: "Please enter a postal code.",
+                    regex: "Please enter a valid zip code."
+                },
+            },
+            submitHandler: function(form) {
                 $('.form-prevent-multiple-submits').attr('disabled','true');
                 $('.loader-container').show();
                 $('.navbar__button--register').attr('style', 'background-color: gray !important');
                 $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-            })
-        })();
+                form.submit();
+            }
+        });
+
+        // Add a custom validator for regex rule
+        $.validator.addMethod("regex", function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        }, "Please check your input.");
     </script>
+
 @endpush
