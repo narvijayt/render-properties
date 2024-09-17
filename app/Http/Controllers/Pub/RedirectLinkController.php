@@ -24,6 +24,10 @@ class RedirectLinkController extends Controller
     public function redirectLink($short_url = '') {
         $app_url = config('app.url');
         $findRedirectLink = RedirectLinks::where('short_url_path', $short_url)->first();
+        if (is_null($findRedirectLink)) {
+            return response()->view('errors.404', [], 404);
+        }
+        
         $segments = explode('/', $findRedirectLink->destination_url_path);
         $getPosition = substr($findRedirectLink->destination_url_path, 0, 28);
         
