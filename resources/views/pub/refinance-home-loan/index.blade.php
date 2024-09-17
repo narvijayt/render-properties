@@ -455,7 +455,7 @@
 
                                     <div class="mb-0">
                                         <label for="phone" class="form-label">What is your phone number?</label>
-                                        <input type="tel" class="form-control" id="phone" name="phoneNumber" value="{{ old('phoneNumber', '') }}" placeholder="Enter your phone number">
+                                        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="{{ old('phoneNumber', '') }}" placeholder="Enter your phone number">
                                         <div class="text-left">
                                             <span id="phoneNumber-error" class="s11-error-message"></span>
                                         </div>
@@ -465,7 +465,7 @@
                                 <div class="form-box">
                                     <div class="mb-0">
                                         <label for="email" class="form-label">Street Address</label>
-                                        <input type="text" class="form-control" name="streetAddress" placeholder="Street Address" value="{{ old('streetAddress','') }}">
+                                        <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Street Address" value="{{ old('streetAddress','') }}">
                                         <div class="text-left">
                                             <span id="streetAddress-error" class="s11-error-message"></span>
                                         </div>
@@ -480,14 +480,14 @@
                                 <div class="form-box">
                                     <div class="mb-0">
                                         <label for="email" class="form-label">City</label>
-                                        <input type="text" class="form-control" name="city" placeholder="City" value="{{ old('city','') }}">
+                                        <input type="text" class="form-control" id="city_field" name="city" placeholder="City" value="{{ old('city','') }}">
                                         <div class="text-left">
                                             <span id="city-error" class="s11-error-message"></span>
                                         </div>
                                     </div>
                                     <div class="mb-0">
-                                        <label for="phone" class="form-label">State</label>
-                                        <select id="state" class="form-control" name="state">
+                                        <label for="phone" id="state" class="form-label">State</label>
+                                        <select class="form-control" id="state" name="state">
                                             <option value="">Choose a state</option>
                                             @foreach($states::all() as $abbr => $stateName)
                                                 <option value="{{ $abbr }}" {{ collect(old('state'))->contains($abbr) ? 'selected' : '' }}>{{ $stateName }}</option>
@@ -499,7 +499,7 @@
                                     </div>
                                     <div class="mb-0">
                                         <label for="email" class="form-label">Postal / Zip Code</label>
-                                        <input type="text" class="form-control" name="postal_code" placeholder="Postal / Zip Code" value="{{ old('postal_code','') }}">
+                                        <input type="text" class="form-control" id="postal_code" name="postal_code" placeholder="Postal / Zip Code" value="{{ old('postal_code','') }}">
                                         <div class="text-left">
                                             <span id="postalCode-error" class="s11-error-message"></span>
                                         </div>
@@ -509,7 +509,10 @@
                                 <div class="form-box">
                                     <script src="https://www.google.com/recaptcha/api.js"></script>
                                     <div class="mb-0 recaptcha-container">
-                                        <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                                        <div class="g-recaptcha" 
+                                            data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}" 
+                                            data-callback="onRecaptchaSuccess"
+                                            data-expired-callback="onRecaptchaExpired"></div>
                                         <span class="msg-error error"></span>
                                         <span id="gcaptcha-error" class="s11-error-message"></span>
                                         @if ($errors->has('g-recaptcha-response'))
@@ -520,14 +523,10 @@
                                     </div>
                                 </div>
 
+
                                 <div class="form-text">
                                     <p>I agree to be contacted by Richard Tocado Companies, INC via call, email and text. To opt-out, you can reply “stop” at any time or click the unsubscribe link in the emails. Message and data rates may apply.</p>
                                 </div>
-
-                                <!-- <div class="quote-btn-outer">
-                                    <button type="button" class="btn btn-secondary prev" id="prevBtn" onclick="prevStep()">Previous</button>
-                                    <button type="submit" class="btn btn-primary refinance-form-submit-btn form-prevent-multiple-submits">Get My Quote </button>
-                                </div> -->
                                 
                                 <div class="step-btn">
                                     <button type="button" class="btn btn-secondary prev" id="prevBtn" onclick="prevStep()">Previous</button>
@@ -676,6 +675,8 @@ function updatePrice(sliderId, outputId, value) {
     // Hide Loader as its Initial State
     $('.loader-container').hide();
 
+    var formSubmitted = false;
+
     // Function to validate form fields
     function validateForm() {
         const firstName = $("input[name=firstName]").val();
@@ -695,7 +696,8 @@ function updatePrice(sliderId, outputId, value) {
         const stateError = $("#state-error");
         const postalCodeError = $("#postalCode-error");
         const gCaptchaError = $("#gcaptcha-error");
-    
+
+        // Clear previous errors
         firstNameError.text("");
         lastNameError.text("");
         phoneNumberError.text("");
@@ -706,62 +708,87 @@ function updatePrice(sliderId, outputId, value) {
         gCaptchaError.text("");
 
         let isValid = true;
-    
-        if (firstName === "" || /\d/.test(firstName)) {
-            firstNameError.html("<i class='fa fa-exclamation-circle'></i> Please enter a first name.");
-            isValid = false;
-        }
 
-        if (lastName === "") {
-            lastNameError.html("<i class='fa fa-exclamation-circle'></i> Please enter a last name.");
-            isValid = false;
-        }
+        // Only show errors if form has been submitted at least once
+        if (formSubmitted) {
+            if (firstName === "" || /\d/.test(firstName)) {
+                firstNameError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid first name.");
+                isValid = false;
+            }
 
-        if (phoneNumber === "") {
-            phoneNumberError.html("<i class='fa fa-exclamation-circle'></i> Please enter a phone number.");
-            isValid = false;
+            if (lastName === "" || /\d/.test(lastName)) {
+                lastNameError.html("<i class='fa fa-exclamation-circle'></i> Please enter a last name.");
+                isValid = false;
+            }
 
-        } else if (/^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/.test(phoneNumber) == false) {
-            phoneNumberError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid phone number.");
-            isValid = false;
-        }
+            if (phoneNumber === "") {
+                phoneNumberError.html("<i class='fa fa-exclamation-circle'></i> Please enter a phone number.");
+                isValid = false;
+            } else if (/^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/.test(phoneNumber) == false) {
+                phoneNumberError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid phone number.");
+                isValid = false;
+            }
 
-        if (streetAddress === "") {
-            streetAddressError.html("<i class='fa fa-exclamation-circle'></i> Please enter a street address.");
-            isValid = false;
-        }
+            if (streetAddress === "") {
+                streetAddressError.html("<i class='fa fa-exclamation-circle'></i> Please enter a street address.");
+                isValid = false;
+            }
 
-        if (city === "") {
-            cityError.html("<i class='fa fa-exclamation-circle'></i> Please enter a city.");
-            isValid = false;
-        }
+            if (city === "") {
+                cityError.html("<i class='fa fa-exclamation-circle'></i> Please enter a city.");
+                isValid = false;
+            }
 
-        if (state === "") {
-            stateError.html("<i class='fa fa-exclamation-circle'></i> Please select a state.");
-            isValid = false;
-        }
-        
-        if (postalCode === "") {
-            postalCodeError.html("<i class='fa fa-exclamation-circle'></i> Please enter a postal code.");
-            isValid = false;
-        } else if (/^[0-9]*$/.test(postalCode) == false) {
-            postalCodeError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid postal code.");
-            isValid = false;
-        }
-        
-        if (google_captcha_response === "") {
-            gCaptchaError.html("<i class='fa fa-exclamation-circle'></i> Please verify that you are not a robot.");
-            isValid = false;
+            if (state === "") {
+                stateError.html("<i class='fa fa-exclamation-circle'></i> Please select a state.");
+                isValid = false;
+            }
+
+            if (postalCode === "") {
+                postalCodeError.html("<i class='fa fa-exclamation-circle'></i> Please enter a postal code.");
+                isValid = false;
+            } else if (/^[0-9]*$/.test(postalCode) == false) {
+                postalCodeError.html("<i class='fa fa-exclamation-circle'></i> Please enter a valid postal code.");
+                isValid = false;
+            }
+
+            if (google_captcha_response === "") {
+                gCaptchaError.html("<i class='fa fa-exclamation-circle'></i> Please verify that you are not a robot.");
+                isValid = false;
+            }
         }
 
         return isValid;
     }
 
+    $(document).ready(function() {
+        // Only validate after form submission attempt
+        $("#firstName, #lastName, #phoneNumber, #streetAddress, #city_field, #state, #postal_code").on("input", function() {
+            if (formSubmitted) {
+                validateForm();
+            }
+        });
+    });
+
+    // Function to handle successful reCAPTCHA response
+    function onRecaptchaSuccess(token) {
+        // Clear any existing error message when reCAPTCHA is successful
+        $('#gcaptcha-error').text('');
+    }
+
+    // Function to handle expired reCAPTCHA (optional)
+    function onRecaptchaExpired() {
+        $('#gcaptcha-error').html("<i class='fa fa-exclamation-circle'></i> reCAPTCHA expired. Please try again.");
+        console.log("reCAPTCHA expired");
+    }
+
     // Disable Submit Button and Show Loader on Form Submit.
     (function(){
         $('.form-prevent-multiple-submits').on('submit', function(event){
+            formSubmitted = true; // Mark form as submitted after first attempt
+
             if (!validateForm()) {
-                event.preventDefault();
+                event.preventDefault(); // Prevent submission if validation fails
                 return false;
             }
 
@@ -772,5 +799,7 @@ function updatePrice(sliderId, outputId, value) {
         });
     })();
 </script>
+
+
 
 @endpush
