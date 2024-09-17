@@ -109,7 +109,7 @@ class LeadsController extends Controller
         $agentId = $data['user']->user_id;
         $data['role'] = $data['user']->user_type;
         $state = $data['user']->state;
-        $city = strtolower($data['user']->city);
+        // $city = strtolower($data['user']->city);
         
         // Set show lead flag
         $data['showLeads'] = false;
@@ -122,9 +122,9 @@ class LeadsController extends Controller
         // Show leads if user is paid broker 
         if (($data['user']->user_type === "broker" && $data['user']->payment_status == 1)) {
 
-            // Filter leads those matches with city and state
-            // Where has will list only those which were sent via email to REA or LO, if we remove them it will show all of city and state.
-            $data['leads'] = Refinance::whereRaw('LOWER(city) = ?', [$city])->where('state', '=', $state)
+            // Filter leads those matches with state
+            // Where has will list only those which were sent via email to LO, if we remove them it will show all of city and state.
+            $data['leads'] = Refinance::where('state', '=', $state)
                             ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
                                 $query->where('agent_id', $agentId);
                             })->latest()->get();
