@@ -263,11 +263,15 @@
                     </div>
 
                     <!-- Recaptcha -->
-                    <script src="https://www.google.com/recaptcha/api.js"></script>
-                    <div class="form-group row recaptcha-row">
-                        <div class="col-md-6 offset-md-4">
-                            <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                    <div class="form-box">
+                        <script src="https://www.google.com/recaptcha/api.js"></script>
+                        <div class="mb-0 recaptcha-container">
+                            <div class="g-recaptcha" 
+                                data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}" 
+                                data-callback="onRecaptchaSuccess"
+                                data-expired-callback="onRecaptchaExpired"></div>
                             <span class="msg-error error"></span>
+                            <span id="gcaptcha-error" class="s11-error-message"></span>
                             @if ($errors->has('g-recaptcha-response'))
                                 <span class="invalid-feedback" style="display: block;">
                                     <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
@@ -299,6 +303,38 @@
     <script type="text/javascript">
         // Hide Loader as its Intial State
         $('.loader-container').hide();
+
+        function validateRecaptcha () {
+            var google_captcha_response = grecaptcha.getResponse();
+            const gCaptchaError = $("#gcaptcha-error");
+            gCaptchaError.text("");
+
+            let isValid = true;
+
+            if (google_captcha_response === "") {
+                gCaptchaError.html("<i class='fa fa-exclamation-circle'></i> Please verify that you are not a robot.");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Function to handle successful reCAPTCHA response
+        function onRecaptchaSuccess(token) {
+            // Clear any existing error message when reCAPTCHA is successful
+            $('#gcaptcha-error').text('');
+        }
+
+        // Function to handle expired reCAPTCHA (optional)
+        function onRecaptchaExpired() {
+            $('#gcaptcha-error').html("<i class='fa fa-exclamation-circle'></i> reCAPTCHA expired. Please try again.");
+        }
+
+        $(document).ready(function() {
+            $(".form-submit-btn").click(function(){
+                validateRecaptcha();
+            });
+        });
 
         $("#buy_property_form").validate({
             rules: {
