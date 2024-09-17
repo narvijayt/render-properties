@@ -20,6 +20,17 @@ class RefinanceController extends Controller
         return view('pub.refinance-home-loan.index');
     }
 
+    /**
+     * Show Thank You Page
+     * 
+     * @since 1.0.0
+     * 
+     * @return html
+     */
+    public function indexThankyouPage() {
+        return view('pub.refinance-home-loan.thank-you');
+    }
+
 
     /**
      * Store
@@ -64,9 +75,7 @@ class RefinanceController extends Controller
 
                 // Trigger the event
                 event(new RefinanceLeadNotificationEvent($refinanceForm));
-
-                // TODO: Redirect to Thankyou page
-                return redirect()->back()->with('success', 'Form Submitted Successfully!');
+                return redirect()->route('lead-form.thankyou');
 
             } else {
                 return redirect()->back()->with('error', 'An unexpected error occurred while submitting the form.');

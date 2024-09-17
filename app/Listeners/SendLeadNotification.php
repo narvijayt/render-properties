@@ -40,7 +40,8 @@ class SendLeadNotification
         // Generate Short Link
         $app_url = config('app.url');
         $generateShortURLPath = generateUniqueShortURLPath();
-        $destinationPath = "profile/leads/view/$propertyForm->id";
+        // $destinationPath = "profile/leads/view/$propertyForm->id";
+        $destinationPath = "profile/leads/property/view/$propertyForm->id";
 
         // Create short link
         $createShortLink = new RedirectLinks;

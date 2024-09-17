@@ -29,11 +29,11 @@
     <li><a href="{{ route('pub.profile.profileSocialReviews') }}">Social Reviews</a></li>
 
     @if (auth()->user()->user_type === "broker"|| auth()->user()->user_type === "realtor")
-      <li><a href="{{ route('pub.profile.leads') }}">Leads</a></li>
+      <li><a href="{{ route('pub.profile.leads.property') }}">Property Leads</a></li>
     @endif
 
     @if (auth()->user()->user_type === "broker")
-      <li><a href="{{ route('pub.profile.refinance-leads') }}">Refinance Leads</a></li>
+      <li><a href="{{ route('pub.profile.leads.refinance') }}">Refinance Leads</a></li>
     @endif
 
     @if(auth()->user()->user_type != 'vendor')

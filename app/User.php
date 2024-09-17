@@ -20,6 +20,7 @@ use App\RealtorDetail;
 use App\LenderDetail;
 use App\VendorMeta;
 use App\LeadNotificationRelationships;
+use App\RefinanceNotificationRelationships;
 
 class User extends Authenticatable implements ISecurable
 {
@@ -880,9 +881,16 @@ class User extends Authenticatable implements ISecurable
     }
 
 	/**
-     * Get the user leads.
+     * Get the user property leads.
      */
 	public function userLeads() {
 		return $this->hasMany(LeadNotificationRelationships::class, 'agent_id');
+	}
+
+	/**
+     * Get the user refinance leads.
+     */
+	public function userRefinanceLeads() {
+		return $this->hasMany(RefinanceNotificationRelationships::class, 'agent_id');
 	}
 }

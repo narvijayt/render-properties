@@ -100,7 +100,7 @@ class PropertyController extends Controller
 
                 // Trigger the event
                 event(new LeadNotificationEvent($propertyForm));
-                return redirect()->back()->with('success', 'Form Submitted Successfully!');
+                return redirect()->route('lead-form.thankyou');
 
             } else {
                 return redirect()->back()->with('error', 'An unexpected error occurred while submitting the form.');

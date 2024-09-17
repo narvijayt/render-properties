@@ -30,6 +30,7 @@ Route::get('/buy-property', 'Pub\PropertyController@buyPropertyForm')->name('pro
 Route::post('/submit-property-form', 'Pub\PropertyController@store')->name('property.store');
 Route::get('/refinance-quote', 'Pub\RefinanceController@index')->name('refinance.home-loan');
 Route::post('/refinance-quote', 'Pub\RefinanceController@store')->name('refinance.store');
+Route::get('/thank-you', 'Pub\RefinanceController@indexThankyouPage')->name('lead-form.thankyou');
 Route::get('/password/request-new-password', 'SetPasswordController@index')->name('requestPasswordView');
 Route::post('/password/request-new-password', 'SetPasswordController@postEmail')->name('postEmail');
 
@@ -125,11 +126,12 @@ Route::group([
 	function() {
 		// Profile Routes
 		Route::get('/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@index')->name('profile.profileSocialReviews');
-		Route::get('/profile/leads', 'Profile\LeadsController@index')->name('profile.leads');
-		Route::get('/profile/leads/view/{lead_id}', 'Profile\LeadsController@viewLead')->name('profile.leads.view');
+		
+        Route::get('/profile/leads/property', 'Profile\LeadsController@indexPropertyLead')->name('profile.leads.property');
+		Route::get('/profile/leads/property/view/{lead_id}', 'Profile\LeadsController@viewPropertyLead')->name('profile.leads.property.view');
 
-        Route::get('/profile/refinance-leads', 'Profile\LeadsController@indexRefinanceLeads')->name('profile.refinance-leads');
-		Route::get('/profile/refinance-leads/view/{lead_id}', 'Profile\LeadsController@viewRefinanceLead')->name('profile.refinance-leads.view');
+        Route::get('/profile/leads/refinance', 'Profile\LeadsController@indexRefinanceLeads')->name('profile.leads.refinance');
+		Route::get('/profile/leads/refinance/view/{lead_id}', 'Profile\LeadsController@viewRefinanceLead')->name('profile.leads.refinance.view');
 
 		Route::match(['PUT', 'PATCH'], '/profile/manage-social-reviews', 'Profile\ProfileSocailReviewsController@update')->name('profile.profileSocialReviews.update');
 		
@@ -321,10 +323,16 @@ Route::group([
         // --> Vendor Register
         Route::get('/register/vendor/edit', 'PageBuilderController@editVendorRegisterPage')->name('admin.pages.edit-vendor-register-page');
         
-        // --> Leads Listing
-        Route::get('/leads', 'LeadsController@index')->name('admin.leads');
-        Route::get('/leads/view/{lead_id}', 'LeadsController@viewLead')->name('admin.leads.view');
-        Route::post('/get-lead-by-filter', 'LeadsController@getLeadsByFilter')->name('admin.leads.filter');
+        // --> Property Leads Listing
+        Route::get('/leads/property', 'LeadsController@indexPropertyLeads')->name('admin.leads.property');
+        Route::get('/leads/property/view/{lead_id}', 'LeadsController@viewPropertyLead')->name('admin.leads.property.view');
+        // Route::post('/get-property-leads-by-filter', 'LeadsController@getPropertyLeadsByFilter')->name('admin.leads.property.filter');
+        Route::post('/get-leads-by-filter', 'LeadsController@getLeadsByFilter')->name('admin.leads.filter');
+
+        // --> Property Leads Listing
+        Route::get('/leads/refinance', 'LeadsController@indexRefinanceLeads')->name('admin.leads.refinance');
+        Route::get('/leads/refinance/view/{lead_id}', 'LeadsController@viewRefinanceLead')->name('admin.leads.refinance.view');
+        // Route::post('/get-refinance-leads-by-filter', 'LeadsController@getRefinanceLeadsByFilter')->name('admin.leads.refinance.filter');
 
         Route::get('/testimonials', 'PagesController@testimonials');
         Route::get('/testimonials/new', 'PagesController@newTestimonial');

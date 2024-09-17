@@ -2,10 +2,11 @@
 @extends('admin.layouts.main')
 @section('content')
 <section class="content-header">
-    <h1>All Leads</h1>
+    <h1>Refinance Leads</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Leads</li>
+        <li>Leads</li>
+        <li class="active">Refinance</li>
     </ol>
 </section>
 <section class="content">
@@ -21,11 +22,8 @@
 
             <div class="box">
                 <div class="box-header">
-                    <div class="col-md-10">
-                        <h4>Leads</h4>
-                    </div>
-                    <div class="col-md-2 text-right">
-                        <h4>Total: {{ $leads_count }}</h4>
+                    <div class="col-md-12">
+                        <h4>All Leads</h4>
                     </div>
                 </div>
                 <div class="box-body">
@@ -41,7 +39,6 @@
                                     <option value="phone_number">Phone Number</option>
                                     <option value="state">State</option>
                                     <option value="city">City</option>
-                                    <option value="form_type">Form Type</option>
                                 </select>
                             </div>
                         </div>
@@ -75,6 +72,7 @@
                             <div class="form-group">
                                 <label>&nbsp;</label>
                                 <div class="form-input">
+                                    <input type="hidden" name="filter_type" value="refinance" />
                                     <button type="button" id="filter_leads" name="filter_leads" class="btn btn-success">Filter</button>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 @extends('pub.profile.layouts.profile')
 
-@section('title', 'Leads')
+@section('title', 'Refinance Leads')
 
 @section('page_content')
 <div class="row">
@@ -39,7 +39,7 @@
                             <td>{{ $lead->phone_number ?? 'N/A' }}</td>
                             <td>{{ $lead->created_at->format('d M, Y') }}</td>
                             <td>
-                                <a class="btn btn-primary" href="{{ route('pub.profile.refinance-leads.view', [ 'lead_id' => $lead->id ]) }}">
+                                <a class="btn btn-primary" href="{{ route('pub.profile.leads.refinance.view', [ 'lead_id' => $lead->id ]) }}">
                                     <i class="fa fa-fw fa-eye"></i>
                                 </a>
                             </td>
@@ -73,13 +73,3 @@
     </div>
 </div>
 @endsection
-
-<!-- @push('scripts-footer')
-    <script src="{{ URL::asset ('js/admin/demo.js') }}"></script>
-    <script src="http://127.0.0.1:8000/js/admin/datatables/jquery.dataTables.min.js"></script>
-    <script src="http://127.0.0.1:8000/js/admin/datatables/dataTables.bootstrap.min.js"></script>
-    <script src="http://127.0.0.1:8000/js/admin/admin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
-    <script src="http://127.0.0.1:8000/js/admin/bootstrap/bootstrap.min.js"></script>
-@endpush -->

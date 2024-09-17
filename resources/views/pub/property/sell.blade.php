@@ -59,7 +59,7 @@
             </div>
             @endif
             
-            <form class="form-prevent-multiple-submits" action="{{ route('property.store') }}" method="POST">
+            <form id="sell_property_form" class="form-prevent-multiple-submits" action="{{ route('property.store') }}" method="POST">
                 {{csrf_field()}}
                 <div class="container p-3 mb-3">
                     <h3 class="text-center">Connect with top Realtors in your area to maximize your home's value. <br> Fill out the form below to get started!</h3>
@@ -257,11 +257,15 @@
                         </div>
                     </div>
 
-                    <script src="https://www.google.com/recaptcha/api.js"></script>
-                    <div class="form-group row recaptcha-row">
-                        <div class="col-lg-6 offset-lg-4">
-                            <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                    <div class="form-box">
+                        <script src="https://www.google.com/recaptcha/api.js"></script>
+                        <div class="mb-0 recaptcha-container">
+                            <div class="g-recaptcha" 
+                                data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}" 
+                                data-callback="onRecaptchaSuccess"
+                                data-expired-callback="onRecaptchaExpired"></div>
                             <span class="msg-error error"></span>
+                            <span id="gcaptcha-error" class="s11-error-message"></span>
                             @if ($errors->has('g-recaptcha-response'))
                                 <span class="invalid-feedback" style="display: block;">
                                     <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
@@ -295,14 +299,104 @@
         // Hide Loader as its Intial State
         $('.loader-container').hide();
 
-        // Disable Submit Button and Show Loader.
-        (function(){
-            $('.form-prevent-multiple-submits').on('submit', function(){
+        function validateRecaptcha () {
+            var google_captcha_response = grecaptcha.getResponse();
+            const gCaptchaError = $("#gcaptcha-error");
+            gCaptchaError.text("");
+
+            let isValid = true;
+
+            if (google_captcha_response === "") {
+                gCaptchaError.html("<i class='fa fa-exclamation-circle'></i> Please verify that you are not a robot.");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Function to handle successful reCAPTCHA response
+        function onRecaptchaSuccess(token) {
+            // Clear any existing error message when reCAPTCHA is successful
+            $('#gcaptcha-error').text('');
+        }
+
+        // Function to handle expired reCAPTCHA (optional)
+        function onRecaptchaExpired() {
+            $('#gcaptcha-error').html("<i class='fa fa-exclamation-circle'></i> reCAPTCHA expired. Please try again.");
+        }
+
+        $(document).ready(function() {
+            $(".form-submit-btn").click(function(){
+                validateRecaptcha();
+            });
+        });
+
+
+        $("#sell_property_form").validate({
+            rules: {
+                firstName: {
+                    required: true 
+                },
+                lastName: {
+                    required: true
+                },
+                phoneNumber: {
+                    required: true,
+                    regex: /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/
+                },
+                streetAddress: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                state: {
+                    required: true
+                },
+                postal_code: {
+                    required: true,
+                    regex: /^[0-9]*$/
+                },
+            },
+            messages: {
+                firstName:{
+                    required: "Please enter a first name.",
+                },
+                lastName:{
+                    required: "Please enter a last name.",
+                },
+                phoneNumber:{
+                    required: "Please enter a phone number.",
+                    regex: "Please enter a valid phone number format."
+                },
+                streetAddress:{
+                    required: "Please enter a street address.",
+                },
+                city:{
+                    required: "Please enter a city.",
+                },
+                state:{
+                    required: "Please select a state.",
+                },
+                postal_code:{
+                    required: "Please enter a postal code.",
+                    regex: "Please enter a valid zip code."
+                },
+            },
+            submitHandler: function(form) {
+
                 $('.form-prevent-multiple-submits').attr('disabled','true');
                 $('.loader-container').show();
                 $('.navbar__button--register').attr('style', 'background-color: gray !important');
                 $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-            })
-        })();
+                form.submit();
+            }
+        });
+
+        // Add a custom validator for regex rule
+        $.validator.addMethod("regex", function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        }, "Please check your input.");
     </script>
 @endpush

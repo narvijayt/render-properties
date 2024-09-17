@@ -39,7 +39,8 @@ class SendRefinanceLeadNotification
         // Generate Short Link
         $app_url = config('app.url');
         $generateShortURLPath = generateUniqueShortURLPath();
-        $destinationPath = "profile/refinance-leads/view/$refinanceForm->id";
+        // $destinationPath = "profile/refinance-leads/view/$refinanceForm->id";
+        $destinationPath = "profile/leads/refinance/view/$refinanceForm->id";
 
         // Create short link
         $createShortLink = new RedirectLinks;
@@ -52,12 +53,13 @@ class SendRefinanceLeadNotification
 
         // Filter users with city and state
         $city = strtolower($refinanceForm->city);
-        $users = User::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' , $refinanceForm->state)->get();
-        
+        // $users = User::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' , $refinanceForm->state)->get();
+        $users = User::where('state', '=' , $refinanceForm->state)->get();
+        // dd($users->where('user_type', 'broker')->where('payment_status', 1));
+
         // Get users with broker (Loan Officer) role
         $usersWithRoles = $users->where('user_type', 'broker');
         $brokerCount = $usersWithRoles->count();
-
 
         // Get Form Details
         $formDetails = Refinance::find($refinanceForm->id);
