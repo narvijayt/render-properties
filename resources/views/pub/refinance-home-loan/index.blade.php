@@ -779,7 +779,6 @@ function updatePrice(sliderId, outputId, value) {
     // Function to handle expired reCAPTCHA (optional)
     function onRecaptchaExpired() {
         $('#gcaptcha-error').html("<i class='fa fa-exclamation-circle'></i> reCAPTCHA expired. Please try again.");
-        console.log("reCAPTCHA expired");
     }
 
     // Disable Submit Button and Show Loader on Form Submit.
