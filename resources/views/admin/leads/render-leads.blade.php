@@ -8,16 +8,12 @@
 <!-- Records Summary Section -->
 <div class="admin_lead_table mb-4">
     <div class="row">
-        <div class="col-md-6">
-            <div class="card border-info mb-3">
-                <div class="card-header bg-info text-white p-2">
+        <div class="col-md-12">
+            <div class="card border-warning mb-3 total-records">
+                <div class="card-header bg-primary text-dark header">
                     Total Records: {{ $total_records ?? 'N/A' }}
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card border-warning mb-3">
-                <div class="card-header bg-warning text-dark">
+                <div class="card-header bg-primary text-dark header">
                     Filtered Records: {{ $total_filtered_records ?? 'N/A' }}
                 </div>
             </div>

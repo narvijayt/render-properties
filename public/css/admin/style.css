@@ -169,5 +169,6 @@ a.delete-icon {color: #ff0000;padding: 5px;}
 .view-lead-detail-table tbody tr th {width: 50%;}
 .view-lead-detail-table tbody tr td {width: 50%;}
 .lead-sent-title{font-size: 19px !important;}
-
+.total-records{display: flex;justify-content: start;column-gap: 20px;align-items: start;}
+.total-records .header{padding: 7px 20px;font-size: 18px;}
 /****************04-09-2024 End *********************/
