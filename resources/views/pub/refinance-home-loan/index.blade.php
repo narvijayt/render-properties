@@ -506,7 +506,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-box">
+                                <div class="form-box recaptcha-box">
                                     <script src="https://www.google.com/recaptcha/api.js"></script>
                                     <div class="mb-0 recaptcha-container">
                                         <div class="g-recaptcha" 
@@ -525,7 +525,7 @@
 
 
                                 <div class="form-text">
-                                    <p>I agree to be contacted by Richard Tocado Companies, INC via call, email and text. To opt-out, you can reply “stop” at any time or click the unsubscribe link in the emails. Message and data rates may apply.</p>
+                                    <p>I agree to be contacted via call, email and text. To opt-out, you can reply “stop” at any time.</p>
                                 </div>
                                 
                                 <div class="step-btn">
