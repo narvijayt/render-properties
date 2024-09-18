@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
 		\App\Console\Commands\MatchesClean::class,
 		\App\Console\Commands\MatchesGenerate::class,
 		\App\Console\Commands\ReportNewUsers::class,
+		\App\Console\Commands\ReportNewLeads::class,
 		\App\Console\Commands\ReportAllUsers::class,
 		\App\Console\Commands\ReportPaidUsers::class,
 		\App\Console\Commands\ReportUnpaidLenders::class,
@@ -69,6 +70,14 @@ class Kernel extends ConsoleKernel
 			->daily()
 			->at('6:00')
 			->timezone('America/New_York');
+
+		$schedule->command('report:new-leads')
+			->daily()
+			->at('8:50')
+			->timezone('America/New_York');
+
+		// $schedule->command('report:new-leads')
+		// 	->everyMinute();
 			
 		/*	$schedule->command('lender-platinium:cron')
 			->tuesdays()

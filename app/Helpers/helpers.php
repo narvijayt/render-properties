@@ -430,15 +430,6 @@ if (!function_exists('pr')) {
 }
 
 /**
- * Print and test data in anywhere 
- */
-if (!function_exists('pr')) {
-    function pr($array = []) {
-        echo '<pre>'; print_r($array); echo '</pre>';
-    }
-}
-
-/**
  * Generate unique short url path
  */
 if (!function_exists('generateUniqueShortURLPath')) {
@@ -452,3 +443,138 @@ if (!function_exists('generateUniqueShortURLPath')) {
 		return $randomString;
 	}
 }
+
+
+function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $formType) {
+	$sellPropertyColumns = [
+		'First Name',
+		'Last Name',
+		'Email',
+		'Phone Number',
+		'Street Address',
+		'Street Address Line 2',
+		'City',
+		'State',
+	    'Zip',
+	    'Best Time To Contact You',
+	    'How Soon Do You Need To Sell',
+	    'Do You Currently Live in the House',
+	    'Would you like a free home valuation?',
+	    'Would you like to offer a buyer agent commission?',
+	    'Why Are You Selling?',
+	    'What Type of Property?',	   
+	];
+
+	$buyPropertyColumns = [
+		'First Name',
+		'Last Name',
+		'Email',
+		'Phone Number',
+		'Street Address',
+		'Street Address Line 2',
+		'City',
+		'State',
+	    'Zip',
+	    'Do you currently Own or Rent?',
+	    'What is your timeframe for moving?',
+	    'How many bedrooms do you need?',
+	    'How many bathrooms do you need?',
+	    'What is your price range?',
+	    'Have you been preapproved for a mortgage?',
+	    'Do you need to sell a home before you buy?',	   
+	    'Is there anything else that will help us find your new home?',
+	];
+
+
+	$refinanceColumns = [
+		'First Name',
+		'Last Name',
+		'Email',
+		'Phone Number',
+		'Street Address',
+		'Street Address Line 2',
+		'City',
+		'State',
+	    'Zip',
+	    'What type of property you are refinancing?',
+	    'Estimate your credit score.',
+	    'How will this property be used?',
+	    'Do you have second mortgage?',
+	    'Would you like to borrow additional cash?',
+	    'What is your employment status?',
+	    'Bankruptcy, short sale, or foreclosure in the last 3 years?',	   
+	    'Can you show proof of income?',
+	    'What is your average monthly income?',
+	    'What are your average monthly expenses?',
+	    'Do you currently have an FHA loan?',
+	];
+
+	$file = fopen('php://temp', 'w+');
+	
+	if ($formType == "buy") {
+		fputcsv($file, $buyPropertyColumns);
+	} else if ($formType == "sell") { 
+		fputcsv($file, $sellPropertyColumns);
+	} else if ($formType == "refinance") {
+		fputcsv($file, $refinanceColumns);
+	}
+
+	if ($formType == "buy" || $formType == "sell") {
+		$leads->each(function ($propertyLead) use ($file, $formType) {
+			if ($formType === "sell") {
+				$timeToContact = implode(", ", json_decode($propertyLead->timeToContact, true)) ?? 'N/A';
+				$sellUrgency = implode(", ", json_decode($propertyLead->sellUrgency, true)) ?? 'N/A';
+			}
+
+			fputcsv($file, [
+				$propertyLead->firstName,
+				$propertyLead->lastName,
+				$propertyLead->email,
+				"'".$propertyLead->phoneNumber,
+				$propertyLead->streetAddress,
+				$propertyLead->streetAddressLine2,
+				$propertyLead->city,
+				$propertyLead->state,
+				$propertyLead->postal_code,
+				$formType == "sell" ? $timeToContact : $propertyLead->currentlyOwnOrRent,
+				$formType == "sell" ? $sellUrgency : $propertyLead->timeframeForMoving,
+				$formType == "sell" ? $propertyLead->liveInHouse : $propertyLead->numberOfBedrooms,
+				$formType == "sell" ? $propertyLead->freeValuation : $propertyLead->numberOfBathrooms,
+				$formType == "sell" ? $propertyLead->offerCommission : $propertyLead->priceRange,
+				$formType == "sell" ? $propertyLead->whyAreYouSelling : $propertyLead->preapprovedForMontage,
+				$formType == "sell" ? $propertyLead->propertyType : $propertyLead->sellHomeBeforeBuy,
+				$formType == "buy" ? $propertyLead->helpsFindingHomeDesc : null
+			]);
+		});
+	} else if ($formType == "refinance") {
+		$leads->each(function ($refinanceLead) use ($file) {
+			fputcsv($file, [
+				$refinanceLead->firstName,
+				$refinanceLead->lastName,
+				$refinanceLead->email,
+				"'".$refinanceLead->phone_number,
+				$refinanceLead->street_address,
+				$refinanceLead->street_address_line_2,
+				$refinanceLead->city,
+				$refinanceLead->state,
+				$refinanceLead->postal_code,
+				$refinanceLead->type_of_property,
+				$refinanceLead->estimate_credit_score,
+				$refinanceLead->how_property_used,
+				$refinanceLead->have_second_mortgage,
+				'$'.$refinanceLead->borrow_additional_cash,
+				$refinanceLead->employment_status,
+				$refinanceLead->bankruptcy_shortscale_foreclosure,
+				$refinanceLead->proof_of_income,
+				'$'.$refinanceLead->average_monthly_income,
+				'$'.$refinanceLead->average_monthly_expenses,
+				$refinanceLead->currently_have_fha_loan,
+			]);
+		});
+	}
+
+	rewind($file);
+
+	return stream_get_contents($file);
+}
+
