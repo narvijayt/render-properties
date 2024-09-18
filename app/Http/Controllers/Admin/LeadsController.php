@@ -128,7 +128,11 @@ class LeadsController extends Controller
                 break;
             
             case 'phone_number':
-                $query->whereRaw('LOWER("phoneNumber") LIKE ?', ['%' . $value . '%']);
+                if ($request->filter_type == "property") {
+                    $query->whereRaw('LOWER("phoneNumber") LIKE ?', ['%' . $value . '%']);
+                } else if ($request->filter_type == "refinance") {
+                    $query->whereRaw('LOWER("phone_number") LIKE ?', ['%' . $value . '%']);
+                }
                 break;
             
             case 'state':
