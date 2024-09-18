@@ -73,7 +73,7 @@ class Kernel extends ConsoleKernel
 
 		$schedule->command('report:new-leads')
 			->daily()
-			->at('8:50')
+			->at('9:10')
 			->timezone('America/New_York');
 
 		// $schedule->command('report:new-leads')
