@@ -50,7 +50,7 @@
                 @else
                     <tr>
                         <td colspan="7" class="text-center">
-                            <p>There are no leads available in your city.</p>
+                            <p>There are no leads available in your state.</p>
                         </td>
                     </tr>
                 @endif
