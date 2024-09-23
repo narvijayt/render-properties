@@ -165,7 +165,7 @@
 
                                         <!-- Have you been preapproved for a mortgage? -->
                                         <tr>
-                                            <th>Have you been preapproved for a mortgage??</th>
+                                            <th>Have you been preapproved for a mortgage?</th>
                                             <td>{{ $lead->preapprovedForMontage ?? 'N/A' }}</td>
                                         </tr>
 
