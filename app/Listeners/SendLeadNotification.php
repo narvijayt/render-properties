@@ -205,7 +205,8 @@ class SendLeadNotification
                     // Send Email and SMS
                     if (env('APP_ENV') != "local") {
                         $message = "Render: $smsHeaderMessage. Please match with a Loan Officer in your area to view the details.\n$completeShortURL";
-                        if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
+                        // Edit: Do not send SMS in case of unmatched REA
+                        // if (!is_null($toPhoneNumber)) (new TwilioService())->sendSMS($toPhoneNumber, $message);
                         
                         Mail::to($user_email)->send(new LeadNotification($propertyForm->id, $lead->notification_type, $user_name, $completeShortURL));
                     }
