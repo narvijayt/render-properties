@@ -147,7 +147,7 @@
                                             <option value="1 week" {{ old('timeframeForMoving') == '1 week' ? 'selected' : '' }}>1 week</option>
                                             <option value="1 month" {{ old('timeframeForMoving') == '1 month' ? 'selected' : '' }}>1 month</option>
                                             <option value="6 months" {{ old('timeframeForMoving') == '6 months' ? 'selected' : '' }}>6 months</option>
-                                            <option value="1 Undecided" {{ old('timeframeForMoving') == '1 Undecided' ? 'selected' : '' }}>1 Undecided</option>
+                                            {{-- <option value="1 Undecided" {{ old('timeframeForMoving') == '1 Undecided' ? 'selected' : '' }}>1 Undecided</option> --}}
                                         </select>
                                     </div>
                                 </div>
