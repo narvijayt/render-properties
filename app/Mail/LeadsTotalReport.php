@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Carbon\Carbon;
 
 class LeadsTotalReport extends Mailable
 {
@@ -33,6 +34,8 @@ class LeadsTotalReport extends Mailable
      */
     public function build()
     {
+        $date = Carbon::today();
+
         $email = $this->markdown('email.reports.leads-total', [
             'buy_property_count' => $this->buy_property_count,
             'sell_property_count' => $this->sell_property_count,
@@ -44,20 +47,20 @@ class LeadsTotalReport extends Mailable
         $csvFiles = [
             [
                 'report' => $this->forms['buy']['file'],
-                'name' => $this->forms['buy']['fileName'].'.csv',
+                'name' => $this->forms['buy']['fileName'],
             ],
             [
                 'report' => $this->forms['sell']['file'],
-                'name' => $this->forms['sell']['fileName'].'.csv',
+                'name' => $this->forms['sell']['fileName'],
             ],
             [
                 'report' => $this->forms['refinance']['file'],
-                'name' => $this->forms['refinance']['fileName'].'.csv',
+                'name' => $this->forms['refinance']['fileName'],
             ],
         ];
 
         foreach ($csvFiles as $value) {
-            $email->attachData($value['report'], $value['name'].'.csv', [
+            $email->attachData($value['report'], $value['name'].'-'.$date->format('d-M-Y').'.csv', [
                 'mime' => 'text/csv',
             ]);
         }
