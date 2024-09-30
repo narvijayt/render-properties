@@ -78,8 +78,7 @@ class ReportLeadsTotal extends Command
         $mail = new \App\Mail\LeadsTotalReport($forms);        
 
         if (env('APP_ENV') != "local") {
-            // Mail::to(['richardtocado@gmail.com'])->cc(['nv@culture-red.com', 'iamabhaykumar2002@gmail.com'])->send($mail);
-            Mail::to(['iamabhaykumar2002@gmail.com'])->cc(['nv@culture-red.com'])->send($mail);
+            Mail::to(['richardtocado@gmail.com'])->cc(['nv@culture-red.com', 'iamabhaykumar2002@gmail.com'])->send($mail);
         }
     }
 }
