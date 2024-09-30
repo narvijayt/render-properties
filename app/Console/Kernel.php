@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
 		\App\Console\Commands\ReportNewLeads::class,
 		\App\Console\Commands\ReportAllUsers::class,
 		\App\Console\Commands\ReportPaidUsers::class,
+		\App\Console\Commands\ReportLeadsTotal::class,
 		\App\Console\Commands\ReportUnpaidLenders::class,
         \App\Console\Commands\TestEmail::class,
 		\App\Console\Commands\GenerateThumbnails::class,
