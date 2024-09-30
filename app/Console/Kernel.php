@@ -76,6 +76,11 @@ class Kernel extends ConsoleKernel
 			->at('9:10')
 			->timezone('America/New_York');
 
+		$schedule->command('report:leads-total')
+			->daily()
+			->at('9:10')
+			->timezone('America/New_York');
+
 		// $schedule->command('report:new-leads')
 		// 	->everyMinute();
 			
