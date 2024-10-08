@@ -95,7 +95,7 @@ class ReportNewLeads extends Command
         foreach ($forms as $key => $data) {
             $mail = new LeadsReport($data["file"], $data["fileName"], $data["formTitle"], $data["totalLeads"]);
             if (env('APP_ENV') != "local") {
-                \Mail::to(['richardtocado@gmail.com'])->cc(['nv@culture-red.com'])->send($mail);
+                \Mail::to(['richardtocado@gmail.com'])->cc(['nv@culture-red.com', 'iamabhaykumar2002@gmail.com'])->send($mail);
             }
 
             $this->output = new ConsoleOutput;

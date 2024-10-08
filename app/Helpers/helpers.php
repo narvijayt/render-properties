@@ -446,6 +446,7 @@ if (!function_exists('generateUniqueShortURLPath')) {
 
 
 function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $formType) {
+	
 	$sellPropertyColumns = [
 		'First Name',
 		'Last Name',
@@ -462,7 +463,9 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 	    'Would you like a free home valuation?',
 	    'Would you like to offer a buyer agent commission?',
 	    'Why Are You Selling?',
-	    'What Type of Property?',	   
+	    'What Type of Property?',
+	    'Lead Sent to Loan Officers',
+	    'Lead Sent to Realtors',
 	];
 
 	$buyPropertyColumns = [
@@ -483,6 +486,8 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 	    'Have you been preapproved for a mortgage?',
 	    'Do you need to sell a home before you buy?',	   
 	    'Is there anything else that will help us find your new home?',
+		'Lead Sent to Loan Officers',
+	    'Lead Sent to Realtors',
 	];
 
 
@@ -507,6 +512,7 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 	    'What is your average monthly income?',
 	    'What are your average monthly expenses?',
 	    'Do you currently have an FHA loan?',
+		'Lead Sent to Loan Officers',
 	];
 
 	$file = fopen('php://temp', 'w+');
@@ -521,6 +527,40 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 
 	if ($formType == "buy" || $formType == "sell") {
 		$leads->each(function ($propertyLead) use ($file, $formType) {
+			
+			// Get details of all paid loan officers to whom this lead was sent. 
+			$paidBrokers = $propertyLead->areLeadsVisible()
+			->whereHas('getAgentDetails', function ($query) {
+				$query->where('user_type', 'broker');
+			})
+			->with(['getAgentDetails' => function ($query) {
+				$query->where('user_type', 'broker');
+			}])->where("notification_type", "detailed")->get();
+
+			// Get details of all matched realtors to whom this lead was sent. 
+			$matchedRealtors = $propertyLead->areLeadsVisible()
+			->whereHas('getAgentDetails', function ($query) {
+				$query->where('user_type', 'realtor');
+			})
+			->with(['getAgentDetails' => function ($query) {
+				$query->where('user_type', 'realtor');
+			}])->where("notification_type", "detailed_with_lead_matched")->get();
+
+			// Variables
+			$paidBrokerNames = [];
+			$matchedRealtorNames = [];
+
+			foreach($paidBrokers as $lead) {
+				$lead_sent_detail = $lead->getAgentDetails()->first();
+				$paidBrokerNames[] = "$lead_sent_detail->first_name $lead_sent_detail->last_name";
+			}
+
+			foreach($matchedRealtors as $lead) {
+				$lead_sent_detail = $lead->getAgentDetails()->first();
+				$matchedRealtorNames[] = "$lead_sent_detail->first_name $lead_sent_detail->last_name";
+			}
+
+
 			if ($formType === "sell") {
 				$timeToContact = implode(", ", json_decode($propertyLead->timeToContact, true)) ?? 'N/A';
 				$sellUrgency = implode(", ", json_decode($propertyLead->sellUrgency, true)) ?? 'N/A';
@@ -543,11 +583,31 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 				$formType == "sell" ? $propertyLead->offerCommission : $propertyLead->priceRange,
 				$formType == "sell" ? $propertyLead->whyAreYouSelling : $propertyLead->preapprovedForMontage,
 				$formType == "sell" ? $propertyLead->propertyType : $propertyLead->sellHomeBeforeBuy,
-				$formType == "buy" ? $propertyLead->helpsFindingHomeDesc : null
+				$formType == "buy" ? $propertyLead->helpsFindingHomeDesc : null,
+				implode(", ", $paidBrokerNames),
+				implode(", ", $matchedRealtorNames),
 			]);
 		});
 	} else if ($formType == "refinance") {
 		$leads->each(function ($refinanceLead) use ($file) {
+			
+			// Get details of all paid loan officers to whom this lead was sent. 
+			$refinancePaidBrokers = $refinanceLead->areLeadsVisible()
+            ->whereHas('getAgentDetails', function ($query) {
+                $query->where('user_type', 'broker');
+            })
+            ->with(['getAgentDetails' => function ($query) {
+                $query->where('user_type', 'broker');
+            }])->where("notification_type", "detailed_with_paid_loan_officer")->get();
+
+			// Variables
+			$paidBrokerNames = [];
+
+			foreach($refinancePaidBrokers as $lead) {
+				$lead_sent_detail = $lead->getAgentDetails()->first();
+				$paidBrokerNames[] = "$lead_sent_detail->first_name $lead_sent_detail->last_name";
+			}
+
 			fputcsv($file, [
 				$refinanceLead->firstName,
 				$refinanceLead->lastName,
@@ -569,6 +629,7 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 				'$'.$refinanceLead->average_monthly_income,
 				'$'.$refinanceLead->average_monthly_expenses,
 				$refinanceLead->currently_have_fha_loan,
+				implode(", ", $paidBrokerNames),
 			]);
 		});
 	}
