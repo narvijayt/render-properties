@@ -187,7 +187,7 @@
 <input class="rcv_email" type="hidden" name="provide_content" value="f">
 @if($registerType == 'lender')
 	<div class="form-group{{ $errors->has('specialties') ? ' has-error' : '' }}">
-		<span>What types of mortgage products do you specialize in, and can you provide examples of recent success stories with these products?</span>
+		<span>What type of Home Loans do you prefer to work with? i.e. Primary homes, second homes, and investment property. All of them</span>
 		<textarea id="specialties" class="form-control" name="specialties" required>{{ old('specialties') }}</textarea>
 		@if ($errors->has('specialties'))
 		<span class="help-block">
@@ -195,6 +195,7 @@
 		</span>
 		@endif
 	</div>
+	{{-- 
 	<div class="form-group{{ $errors->has('stay_updated') ? ' has-error' : '' }}">
 		<span>How do you stay updated on changes in the mortgage industry, and what steps do you take to ensure you can offer the best financing solutions to your clients?</span>
 		<textarea id="stay_updated" class="form-control" name="stay_updated" required>{{ old('stay_updated') }}</textarea>
@@ -204,8 +205,9 @@
 		</span>
 		@endif
 	</div>
+	--}}
 	<div class="form-group{{ $errors->has('handle_challanges') ? ' has-error' : '' }}">
-		<span>How do you handle challenging or unique financing situations, such as clients with low credit scores or non-traditional income sources?</span>
+		<span>Do you work with clients with low credit scores or non-traditional income sources?</span>
 		<textarea id="handle_challanges" class="form-control" name="handle_challanges" required>{{ old('handle_challanges') }}</textarea>
 		@if ($errors->has('handle_challanges'))
 		<span class="help-block">
@@ -213,6 +215,7 @@
 		</span>
 		@endif
 	</div>
+	{{-- 
 	<div class="form-group{{ $errors->has('unique_experties') ? ' has-error' : '' }}">
 		<span>What sets you apart from other loan officers in terms of the level of service and expertise you provide to your clients, and how do you ensure a smooth and efficient mortgage application process?</span>
 		<textarea id="unique_experties" class="form-control" name="unique_experties" required>{{ old('unique_experties') }}</textarea>
@@ -222,7 +225,7 @@
 		</span>
 		@endif
 	</div>
-
+	--}}
 	@php 
 	$partnership_with_realtor = old('partnership_with_realtor');
 	@endphp

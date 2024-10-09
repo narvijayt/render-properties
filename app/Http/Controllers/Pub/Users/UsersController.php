@@ -894,9 +894,9 @@ class UsersController extends Controller
                     $lenderDetail = new LenderDetail();
                     $lenderDetail->user_id = $user->user_id;
                 }
-                $lenderDetail->stay_updated = $data['stay_updated'];
+                $lenderDetail->stay_updated = isset($data['stay_updated']) ? $data['stay_updated'] : '';
                 $lenderDetail->handle_challanges = $data['handle_challanges'];
-                $lenderDetail->unique_experties = $data['unique_experties'];
+                $lenderDetail->unique_experties = isset($data['unique_experties']) ? $data['unique_experties'] : '';
                 $lenderDetail->partnership_with_realtor = $data['partnership_with_realtor'] == "yes" ? 1 : 0;
                 $lenderDetail->save();
             }

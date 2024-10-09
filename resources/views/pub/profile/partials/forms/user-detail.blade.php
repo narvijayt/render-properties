@@ -211,7 +211,8 @@
 @if(auth()->user()->user_type == 'broker')
     <div class="form-group {{ $errors->has('specialties') ? 'has-error' : '' }}">
         <label class="control-label" for="specialties">
-            @if($errors->has('specialties'))<i class="fa fa-times-circle-o"></i>@endif Specialties
+            @if($errors->has('specialties'))<i class="fa fa-times-circle-o"></i>@endif 
+            What type of Home Loans do you prefer to work with? i.e. Primary homes, second homes, and investment property. All of them
         </label>
         <input type="text" class="form-control" placeholder="Specialties" name="specialties"
             value="{{ $user->specialties }}">
@@ -220,7 +221,7 @@
         @endif
     </div>
 
-    
+    {{-- 
     <div class="form-group {{ $errors->has('stay_updated') ? 'has-error' : '' }}">
         <label class="control-label" for="stay_updated">
             @if($errors->has('stay_updated'))<i class="fa fa-times-circle-o"></i>@endif
@@ -233,12 +234,11 @@
         <span class="help-block">{{ $errors->first('stay_updated') }}</span>
         @endif
     </div>
-
+    --}}
     <div class="form-group {{ $errors->has('handle_challanges') ? 'has-error' : '' }}">
         <label class="control-label" for="handle_challanges">
             @if($errors->has('handle_challanges'))<i class="fa fa-times-circle-o"></i>@endif
-            How do you handle challenging or unique financing situations, such as clients with low credit scores or
-            non-traditional income sources?
+            Do you work with clients with low credit scores or non-traditional income sources?
         </label>
         <input type="text" class="form-control" placeholder="" name="handle_challanges"
             value="{{ $user->lenderDetail->handle_challanges }}">
@@ -246,7 +246,7 @@
         <span class="help-block">{{ $errors->first('handle_challanges') }}</span>
         @endif
     </div>
-
+    {{-- 
     <div class="form-group {{ $errors->has('unique_experties') ? 'has-error' : '' }}">
         <label class="control-label" for="unique_experties">
             @if($errors->has('unique_experties'))<i class="fa fa-times-circle-o"></i>@endif
@@ -259,7 +259,7 @@
         <span class="help-block">{{ $errors->first('unique_experties') }}</span>
         @endif
     </div>
-
+    --}}
     <div class="form-group-row">
         <label class="control-label">
             @if($errors->has('partnership_with_realtor'))<i class="fa fa-times-circle-o"></i>@endif
