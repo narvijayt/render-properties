@@ -1397,12 +1397,17 @@ function updatePaginationButtons(totalPages, currentPage) {
     let endIndex = totalPages;
 
     if (totalPages > maxPagesToShow) {
+        // No ellipses at start but at end
         if (currentPage <= pageNumbersToShowAroundPage + 1) {
             startIndex = 1;
             endIndex = maxPagesToShow;
+
+        // No ellipses at end but at start
         } else if (currentPage >= totalPages - pageNumbersToShowAroundPage) {
             startIndex = totalPages - maxPagesToShow + 1;
             endIndex = totalPages;
+
+        //  ellipses at both side
         } else {
             startIndex = currentPage - pageNumbersToShowAroundPage;
             endIndex = currentPage + pageNumbersToShowAroundPage;
