@@ -180,7 +180,7 @@ class SendLeadNotification
 
             } else if ($currentUser->user_type === "realtor") {
                 // Check match count
-                $availableMatches = $currentUser->availableMatchCount();
+                $availableMatches = $currentUser->getAvailableMatchCount();
                 $hasMatches = $availableMatches > 0;
                 
                 // Matched and Unmatched REA case.
