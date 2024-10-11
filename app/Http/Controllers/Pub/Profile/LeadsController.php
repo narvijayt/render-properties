@@ -79,7 +79,7 @@ class LeadsController extends Controller
         if ($user->user_type === "broker" && $user->payment_status != 1) {
             return redirect()->route('pub.profile.leads.property')->with('error', 'Please upgrade your subscription to access this lead.');
             
-        } else if ($user->user_type === "realtor" && $user->getAvailableMatchCount() < 0) {
+        } else if ($user->user_type === "realtor" && $user->getAvailableMatchCount() <= 0) {
             return redirect()->route('pub.profile.leads.property')->with('error', 'Please match with someone to view the lead details.');
         }
 
