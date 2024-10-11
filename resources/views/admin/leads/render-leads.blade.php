@@ -75,6 +75,30 @@
     <!-- Pagination Container -->
     <div id="pagination-container" class="text-right">
         @if (isset($totalPages))
+            @php
+                $maxPagestoShow = 5;
+                $pageNumberstoShowAroundPage = floor($maxPagestoShow / 2);
+                $startIndex = 1;
+                $endIndex = $maxPagestoShow;
+                
+                if ($page > ($pageNumberstoShowAroundPage + 1)) {
+                    $startIndex = $page - (($page >= ($totalPages - $pageNumberstoShowAroundPage)) ? $maxPagestoShow : $pageNumberstoShowAroundPage);
+                    $endIndex = ($page >= ($totalPages - $pageNumberstoShowAroundPage)) ? $totalPages : $page + $pageNumberstoShowAroundPage;
+                    
+                }
+                
+                if ($page >= ($totalPages - $pageNumberstoShowAroundPage)) {
+                    $startIndex = ($totalPages - $maxPagestoShow) + 1;
+                    $endIndex = $totalPages;
+                }
+
+                if ($totalPages <= 6) {
+                    $startIndex = 1;
+                    $endIndex = $totalPages;
+                }
+            @endphp
+            
+
             <!-- Previous Button -->
             <button class="btn btn-secondary {{ $page == 1 ? 'disabled' : '' }}" 
                     style="margin: 0px 3px" 
@@ -82,15 +106,45 @@
                     {{ $page == 1 ? 'disabled' : '' }}>
                 Previous
             </button>
+            
+            @if ($totalPages > 6)
+                @if ($startIndex > 1)
+                    <button class="btn btn-secondary" 
+                        style="margin: 0px 3px" 
+                        onclick="renderByPage(1)">
+                        1
+                    </button>
+            
+                    @if ($startIndex > 2)                    
+                        <span>...</span>
+                    @endif
+                @endif
+            @endif
 
+            
             <!-- Page Number Buttons -->
-            @for($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++)
+            @for($pageNumber = $startIndex; $pageNumber <= $endIndex; $pageNumber++)
                 <button class="btn btn-secondary {{ $pageNumber == $page ? 'active' : '' }}" 
                         style="margin: 0px 3px" 
                         onclick="renderByPage({{ $pageNumber }})">
                     {{ $pageNumber }}
                 </button>
             @endfor
+            
+            @if ($totalPages > 6)
+                @if ($page < ($totalPages - $pageNumberstoShowAroundPage))
+                    @if ($page < ($totalPages - ($pageNumberstoShowAroundPage + 1)))
+                        <span>...</span>
+                    @endif
+
+                    <button class="btn btn-secondary" 
+                        style="margin: 0px 3px" 
+                        onclick="renderByPage({{ $totalPages }})">
+                        {{ $totalPages }}
+                    </button>
+                @endif
+            @endif
+
 
             <!-- Next Button -->
             <button class="btn btn-secondary {{ $page == $totalPages ? 'disabled' : '' }}" 
