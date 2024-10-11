@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pub\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Pub\Profile\UserSettingsUpdateRequest;
 use App\UserSetting;
+use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
@@ -17,7 +18,7 @@ class SettingsController extends Controller
 	}
 
 
-	public function update(UserSettingsUpdateRequest $request)
+	public function update(Request $request)
 	{
 		$this->authorize('change', UserSetting::class);
 

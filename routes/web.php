@@ -220,7 +220,7 @@ Route::group([
 	
 		// Settings
 		Route::get('/profile/settings', 'Profile\SettingsController@index')->name('profile.settings.index');
-		Route::put('/profile/settings', 'Profile\SettingsController@update')->name('profile.settings.update');
+		Route::post('/profile/settings', 'Profile\SettingsController@update')->name('profile.settings.update');
 		
 		
 		Route::get('/upgrade/plan/{id}','Profile\PaymentController@loadUpgradePlan')->name('loadUpgradePlan');

@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-12">
             <form action="{{ route('pub.profile.settings.update') }}" method="POST">
-                {{ method_field('PUT') }}
+                <!-- {{ method_field('PUT') }} -->
                 {{ csrf_field() }}
 
                 <h3>Email Preferences</h3>
