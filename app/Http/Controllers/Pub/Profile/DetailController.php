@@ -214,7 +214,7 @@ class DetailController extends Controller
             $lenderDetail->stay_updated = isset($request->stay_updated) ? $request->stay_updated : '';
             $lenderDetail->handle_challanges =$request->handle_challanges;
             $lenderDetail->unique_experties = isset($request->unique_experties) ? $request->unique_experties : '';
-            $lenderDetail->partnership_with_realtor =$request->partnership_with_realtor == "yes" ? 1 : 0;
+            $lenderDetail->partnership_with_realtor =$request->partnership_with_realtor == "Yes" ? 1 : 0;
             $lenderDetail->save();
         }else if($user->user_type == "vendor"){
             $vendorMeta = VendorMeta::where(['userId' => $user->user_id])->first();
