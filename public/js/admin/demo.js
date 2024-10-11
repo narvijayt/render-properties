@@ -1391,63 +1391,65 @@ function renderByPage(pageNumber) {
 
 function updatePaginationButtons(totalPages, currentPage) {
     let paginationHtml = '<div id="pagination-container" class="text-right">';
-    let maxPagestoShow = 5;
-    let pageNumberstoShowAroundPage = Math.floor(maxPagestoShow / 2);
+    let maxPagesToShow = 5; // Number of visible pages
+    let pageNumbersToShowAroundPage = Math.floor(maxPagesToShow / 2);
     let startIndex = 1;
-    let endIndex = maxPagestoShow;
+    let endIndex = totalPages;
 
-    if (currentPage > (pageNumberstoShowAroundPage + 1)) {
-        startIndex = currentPage - ((currentPage >= (totalPages - pageNumberstoShowAroundPage)) ? maxPagestoShow : pageNumberstoShowAroundPage);
-        endIndex = (currentPage >= (totalPages - pageNumberstoShowAroundPage)) ? totalPages : currentPage + pageNumberstoShowAroundPage;
-    } 
-    
-    if (currentPage >= (totalPages - pageNumberstoShowAroundPage)) {
-        startIndex = (totalPages - maxPagestoShow) + 1;
-        endIndex = totalPages;
-    }
-
-    if (totalPages <= 6) { 
-        startIndex = 1;
-        endIndex = totalPages;
+    if (totalPages > maxPagesToShow) {
+        if (currentPage <= pageNumbersToShowAroundPage + 1) {
+            startIndex = 1;
+            endIndex = maxPagesToShow;
+        } else if (currentPage >= totalPages - pageNumbersToShowAroundPage) {
+            startIndex = totalPages - maxPagesToShow + 1;
+            endIndex = totalPages;
+        } else {
+            startIndex = currentPage - pageNumbersToShowAroundPage;
+            endIndex = currentPage + pageNumbersToShowAroundPage;
+        }
     }
 
     // Previous Button
     paginationHtml += `
-        <button class="btn btn-secondary ${currentPage === 1 ? 'disabled' : ''}" style="margin: 0px 3px" onclick="renderByPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+        <button class="btn btn-secondary ${currentPage === 1 ? 'disabled' : ''}" 
+            style="margin: 0px 3px" 
+            onclick="renderByPage(${currentPage - 1})" 
+            ${currentPage === 1 ? 'disabled' : ''}>
             Previous
         </button>`;
 
-    // Ellipses for pages skipped before startIndex
-    if (totalPages > 6) {
-        if (startIndex > 1) {
-            paginationHtml += `<button class="btn btn-secondary" style="margin: 0px 3px" onclick="renderByPage(1)">1</button>`;
-            if (startIndex > 2) {
-                paginationHtml += `<span>...</span>`;
-            }
+    // Ellipses before the first page
+    if (startIndex > 1) {
+        paginationHtml += `<button class="btn btn-secondary" style="margin: 0px 3px" onclick="renderByPage(1)">1</button>`;
+        if (startIndex > 2) {
+            paginationHtml += `<span>...</span>`;
         }
     }
 
     // Page Buttons
     for (let i = startIndex; i <= endIndex; i++) {
         paginationHtml += `
-            <button class="btn btn-secondary ${i === currentPage ? 'active' : ''}" style="margin: 0px 3px" onclick="renderByPage(${i})">
+            <button class="btn btn-secondary ${i === currentPage ? 'active' : ''}" 
+                style="margin: 0px 3px" 
+                onclick="renderByPage(${i})">
                 ${i}
             </button>`;
     }
 
-    // Ellipses for pages skipped after endIndex
-    if (totalPages > 6) {
-        if (currentPage < (totalPages - pageNumberstoShowAroundPage)) {
-            if (currentPage < (totalPages - (pageNumberstoShowAroundPage + 1))) {
-                paginationHtml += `<span>...</span>`;
-            }
-            paginationHtml += `<button class="btn btn-secondary" style="margin: 0px 3px" onclick="renderByPage(${totalPages})">${totalPages}</button>`;
+    // Ellipses after the last visible page
+    if (endIndex < totalPages) {
+        if (endIndex < totalPages - 1) {
+            paginationHtml += `<span>...</span>`;
         }
+        paginationHtml += `<button class="btn btn-secondary" style="margin: 0px 3px" onclick="renderByPage(${totalPages})">${totalPages}</button>`;
     }
 
     // Next Button
     paginationHtml += `
-        <button class="btn btn-secondary ${currentPage === totalPages ? 'disabled' : ''}" style="margin: 0px 3px" onclick="renderByPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+        <button class="btn btn-secondary ${currentPage === totalPages ? 'disabled' : ''}" 
+            style="margin: 0px 3px" 
+            onclick="renderByPage(${currentPage + 1})" 
+            ${currentPage === totalPages ? 'disabled' : ''}>
             Next
         </button>`;
 
@@ -1456,6 +1458,7 @@ function updatePaginationButtons(totalPages, currentPage) {
     // Render the pagination HTML
     $('#pagination-container').html(paginationHtml);
 }
+
 
 
 
