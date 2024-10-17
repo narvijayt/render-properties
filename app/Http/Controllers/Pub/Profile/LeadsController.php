@@ -41,11 +41,17 @@ class LeadsController extends Controller
 
             // Filter leads those matches with city and state
             // Where has will list only those which were sent via email to REA or LO, if we remove them it will show all of city and state.
-            $data['leads'] = BuySellProperty::whereRaw('LOWER(city) = ?', [$city])->where('state', '=', $state)
-                            ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
-                                $query->where('agent_id', $agentId);
-                            })->latest()->get();
+            $query = BuySellProperty::where('state', '=', $state)
+                                    ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
+                                        $query->where('agent_id', $agentId);
+                                    });
 
+            if (!$data['user']->user_type === "broker") {
+                $query->whereRaw('LOWER(city) = ?', [$city]);
+            }
+            
+            $data['leads'] = $query->latest()->get();
+            
             $data['showLeads'] = true;
         }
 

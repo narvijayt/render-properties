@@ -52,7 +52,7 @@
                 @else
                     <tr>
                         <td colspan="8" class="text-center">
-                            <p>There are no leads available in your city.</p>
+                            <p>There are no leads available in your {{ $role === 'realtor' ? 'city' : 'state' }}.</p>
                         </td>
                     </tr>
                 @endif

@@ -10,7 +10,7 @@
     @if ($email_type === "detailed_with_neither_realtor_nor_broker_found")
         <tr>
             <td colspan="2" style="color: #000; padding-bottom: 10px;">
-                There is no LO and REA found in this area.
+                There is no LO and no REA found in this area or state.
             </td>
         </tr>
     @elseif ($email_type === "detailed_with_no_realtor_found")
@@ -22,7 +22,7 @@
     @elseif ($email_type === "detailed_with_no_broker_found")
         <tr>
             <td colspan="2" style="color: #000; padding-bottom: 10px;">
-                There is no LO found in this area.
+                There is no LO found in this state.
             </td>
         </tr>
     @elseif (in_array($email_type, ["detailed", "detailed_with_lead_matched"]))

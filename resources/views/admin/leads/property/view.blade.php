@@ -215,11 +215,11 @@
                         <div class="d-flex">
                             @if(isset($richardTocadoLeads) && $richardTocadoLeads->isNotEmpty())
                                 @if ($realtorSentLeads->isEmpty() && $brokerSentLeads->isNotEmpty()) 
-                                    <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Realtor found in this area.</span></h4>
+                                    <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Realtors are found in this area.</span></h4>
                                 @elseif ($realtorSentLeads->isNotEmpty() && $brokerSentLeads->isEmpty())
-                                    <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Loan Officer found in this area.</span></h4>
+                                    <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Loan Officers are found in this state.</span></h4>
                                 @elseif ($realtorSentLeads->isEmpty() && $brokerSentLeads->isEmpty())
-                                    <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Loan Officer or Realtor found in this area.</span></h4>
+                                    <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Loan Officers and no Realtors are found in this state or area.</span></h4>
                                 @endif
                             @endif
 

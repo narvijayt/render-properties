@@ -181,7 +181,7 @@
                         <h3 class="mb-2"><b>Lead Sent To :</b></h3>
                         <div class="d-flex">
                             @if(isset($richardTocadoLeads) && $richardTocadoLeads->isNotEmpty() && $brokerSentLeads->isEmpty())
-                                <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Loan Officer found in this area.</span></h4>
+                                <h4 class="mb-3"><span><b class="lead-sent-title">Richard Tocado:&nbsp;</b> </span><span class="text-red">No Loan Officer found in this state.</span></h4>
                             @endif
 
                             @if(isset($brokerSentLeads) && $brokerSentLeads->isNotEmpty())
