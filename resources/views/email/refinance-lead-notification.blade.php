@@ -10,7 +10,7 @@
     @if ($email_type === "detailed_with_no_broker_found")
         <tr>
             <td colspan="2" style="color: #000; padding-bottom: 10px;">
-                There is no LO found in this area.
+                There is no LO found in this state.
             </td>
         </tr>
     @elseif (in_array($email_type, ["detailed_with_paid_loan_officer"]))
