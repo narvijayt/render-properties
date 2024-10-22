@@ -207,12 +207,10 @@
                                     <div class="mb-1">
                                         <select class="form-control" name="priceRange" aria-label="Select Price Range">
                                             <option value="" {{ old('priceRange') == '' ? 'selected' : '' }}>Please Select</option>
-                                            <option value="Under $100,000" {{ old('priceRange') == 'Under $100,000' ? 'selected' : '' }}>Under $100,000</option>
-                                            <option value="$100,000 to $150,000" {{ old('priceRange') == '$100,000 to $150,000' ? 'selected' : '' }}>$100,000 to $150,000</option>
-                                            <option value="$150,000 to $200,000" {{ old('priceRange') == '$150,000 to $200,000' ? 'selected' : '' }}>$150,000 to $200,000</option>
-                                            <option value="$200,000 to $250,000" {{ old('priceRange') == '$200,000 to $250,000' ? 'selected' : '' }}>$200,000 to $250,000</option>
-                                            <option value="$250,000 to $300,000" {{ old('priceRange') == '$250,000 to $300,000' ? 'selected' : '' }}>$250,000 to $300,000</option>
-                                            <option value="$300,000+" {{ old('priceRange') == '$300,000+' ? 'selected' : '' }}>$300,000+</option>
+                                            <option value="$100k to $300k" {{ old('priceRange') == '$100k to $300k' ? 'selected' : '' }}>$100k to $300k</option>
+                                            <option value="$300k to $600k" {{ old('priceRange') == '$300k to $600k' ? 'selected' : '' }}>$300k to $600k</option>
+                                            <option value="$600k to $1 million" {{ old('priceRange') == '$600k to $1 million' ? 'selected' : '' }}>$600k to $1 million</option>
+                                            <option value="$1 million plus" {{ old('priceRange') == '$1 million plus' ? 'selected' : '' }}>$1 million plus</option>
                                         </select>
                                     </div>
                                 </div>
