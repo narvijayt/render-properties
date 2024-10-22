@@ -1,3 +1,4 @@
 User-agent: *
-Allow: /
-Disallow: /thank-you$
+Disallow:
+
+Sitemap: https://www.render.properties/sitemap.xml
