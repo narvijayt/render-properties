@@ -380,6 +380,21 @@ class User extends Authenticatable implements ISecurable
 	}
 
 	/**
+	 * Return a count of existing/available matches the user has
+	 *
+	 * @return int
+	 */
+	public function getAvailableMatchCount() {
+		$user = User::find($this->user_id);
+		$matches = Match::findForUser($user, true);
+		$activeMatches = $matches->filter(function(Match $match) use ($user) {
+			return $match->isActive();
+		});
+
+		return $activeMatches->count();
+	}
+
+	/**
 	 * Return the count of pending matches for the user
 	 *
 	 * @return int

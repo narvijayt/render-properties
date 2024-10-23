@@ -37,15 +37,21 @@ class LeadsController extends Controller
 
         // Show leads if user is paid broker or matched REA
         if (($data['user']->user_type === "broker" && $data['user']->payment_status == 1) ||
-            ($data['user']->user_type === "realtor" && $data['user']->availableMatchCount() > 0)) {
+            ($data['user']->user_type === "realtor" && $data['user']->getAvailableMatchCount() > 0)) {
 
             // Filter leads those matches with city and state
             // Where has will list only those which were sent via email to REA or LO, if we remove them it will show all of city and state.
-            $data['leads'] = BuySellProperty::whereRaw('LOWER(city) = ?', [$city])->where('state', '=', $state)
-                            ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
-                                $query->where('agent_id', $agentId);
-                            })->latest()->get();
+            $query = BuySellProperty::where('state', '=', $state)
+                                    ->whereHas('areLeadsVisible', function ($query) use ($agentId) {
+                                        $query->where('agent_id', $agentId);
+                                    });
 
+            if (!$data['user']->user_type === "broker") {
+                $query->whereRaw('LOWER(city) = ?', [$city]);
+            }
+            
+            $data['leads'] = $query->latest()->get();
+            
             $data['showLeads'] = true;
         }
 
@@ -79,7 +85,7 @@ class LeadsController extends Controller
         if ($user->user_type === "broker" && $user->payment_status != 1) {
             return redirect()->route('pub.profile.leads.property')->with('error', 'Please upgrade your subscription to access this lead.');
             
-        } else if ($user->user_type === "realtor" && $user->availableMatchCount() < 0) {
+        } else if ($user->user_type === "realtor" && $user->getAvailableMatchCount() <= 0) {
             return redirect()->route('pub.profile.leads.property')->with('error', 'Please match with someone to view the lead details.');
         }
 

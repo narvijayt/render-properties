@@ -54,13 +54,13 @@ class SendLeadNotification
 
         // Filter users with city and state
         $city = strtolower($propertyForm->city);
-        $users = User::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' ,$propertyForm->state)->get();
+        
+        $users_in_city = User::whereRaw('LOWER(city) = ?', [$city])->where('state', '=' ,$propertyForm->state);
+        $realtorCount = $users_in_city->where('user_type', 'realtor')->count();
+        $brokerCount = User::where('state', '=' , $propertyForm->state)->where('user_type', 'broker')->count();
 
-        // Get users with realtor (REA) and broker (Loan Officer) roles
-        $usersWithRoles = $users->whereIn('user_type', ['realtor', 'broker']);
-        $realtorCount = $users->where('user_type', 'realtor')->count();
-        $brokerCount = $users->where('user_type', 'broker')->count();
-
+        $users = User::where('state', '=' , $propertyForm->state)->whereIn('user_type', ['broker', 'realtor'])->get();
+        
         // Get Form Details
         $formDetails = BuySellProperty::find($propertyForm->id);
         $smsHeaderMessage = "$formDetails->firstName $formDetails->lastName wants to $formDetails->formPropertyType property";
@@ -69,9 +69,8 @@ class SendLeadNotification
         $findRichardUserId = User::where('email', '=', 'richardtocado@gmail.com')->first();
         $recipient_name = "Richard Tocado";
         $recipient_email = "richardtocado@gmail.com";
-        
 
-        // Send Email to Richard Tocado if there is Realtor in the area but not the Broker.
+        // Send Email to Richard Tocado if there is Realtor in the area but not the Broker in state.
         if ($realtorCount > 0 && !$brokerCount > 0) {
 
             // Email/Notification Type.
@@ -91,7 +90,7 @@ class SendLeadNotification
             $lead->save();
         }
 
-        // Send Email to Richard Tocado if there is Broker in the area but not the Realtor.
+        // Send Email to Richard Tocado if there is Broker in the state but not the Realtor in area.
         if (!$realtorCount > 0 && $brokerCount > 0) {
 
             // Email/Notification Type.
@@ -111,7 +110,7 @@ class SendLeadNotification
             $lead->save();
         }
 
-        // Send Email to Richard Tocado if neither Realtor nor Broker found in the area.
+        // Send Email to Richard Tocado if neither Realtor nor Broker found in the area/state.
         if (!$realtorCount > 0 && !$brokerCount > 0) {
 
             // Email/Notification Type.
@@ -133,8 +132,7 @@ class SendLeadNotification
 
 
         // Send an email and SMS message to users with the roles of realtor and broker.
-        foreach ($usersWithRoles as $currentUser) {
-
+        foreach ($users as $currentUser) {
             $toPhoneNumber = $currentUser->phone_number;
             $user_email = $currentUser->email;
             $user_name = "$currentUser->first_name $currentUser->last_name";
@@ -178,9 +176,9 @@ class SendLeadNotification
                     $lead->save();
                 }
 
-            } else if ($currentUser->user_type === "realtor") {
+            } else if ($currentUser->user_type === "realtor" && strtolower($currentUser->city) == $city) {
                 // Check match count
-                $availableMatches = $currentUser->availableMatchCount();
+                $availableMatches = $currentUser->getAvailableMatchCount();
                 $hasMatches = $availableMatches > 0;
                 
                 // Matched and Unmatched REA case.
