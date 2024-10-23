@@ -636,7 +636,7 @@ class UsersController extends Controller
                 Mail::to($user->email)->send($email);
             }
 
-            return Response::json(['subscription' => $userSubscription], 200);
+            return Response::json(['subscription' => $userSubscription, 'subscriptionInvoice' => $subscriptionInvoice], 200);
         }else{
             return Response::json($customer, 400);
         }
@@ -715,7 +715,7 @@ class UsersController extends Controller
                 Mail::to($user->email)->send($email);
             }
 
-            return Response::json(['subscription' => $userSubscription], 200);
+            return Response::json(['subscription' => $userSubscription, 'subscriptionInvoice' => $subscriptionInvoice], 200);
         }else{
             return Response::json(['status' => $payment_intent['status'], 'payment_intent' => $payment_intent ], 400);
         }

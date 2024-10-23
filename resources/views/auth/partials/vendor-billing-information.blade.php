@@ -276,6 +276,19 @@ async function handleSubscrSubmit(e) {
                 .then(data => {
                     console.log("data ", data);
                     if (data.subscription){
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-11277202705/2MVhCPHS_N8ZEJHqsYEq',
+                            'value': data.subscription.paid_amount,
+                            'currency': 'USD',
+                            'transaction_id': data.subscriptionInvoice.charge
+                        });
+
+                        gtag('event', 'purchase', {
+                            transaction_id: data.subscriptionInvoice.charge,  // Replace with dynamic transaction ID
+                            value: data.subscription.paid_amount,  // Replace with dynamic total value
+                            currency: 'USD',  // Replace with your currency code
+                        });
+                        
                         // paymentProcess(data.subscriptionId, data.clientSecret, data.customerId);
                         window.location = "<?=route("register.paymentStatus", ["user_id" => $userDetails->user_id])?>";
                     } else {
