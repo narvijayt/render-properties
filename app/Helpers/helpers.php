@@ -642,22 +642,14 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 /**
  * Set canonical URL
  */
-/**
- * Set canonical URL.
- */
 if (!function_exists('canonical_url')) {
     function canonical_url()
     {
         // Get the current full URL.
         $currentUrl = url()->full();
-
+		
         // Remove www. from the url.
         $formattedUrl = str_replace('https://www.', 'https://', $currentUrl);
-
-        // Check if the host name is render.properties.
-        if (!\Illuminate\Support\Str::startsWith($formattedUrl, 'https://render.properties')) {
-            $formattedUrl = str_replace('https://', 'https://render.properties/', $formattedUrl);
-        }
 
         // Add trailing slash to the path if it’s missing
         $urlParts = parse_url($formattedUrl);
