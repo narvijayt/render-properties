@@ -35,7 +35,9 @@
 		<meta name="jwt-token" content="{{ JWTAuth::fromUser(Auth::user()) }}">
 	@endauth
 		<!-- Styles -->
-		<link rel="canonical" href="{{ canonical_url() }}">	
+		@if (config('app.env') != "local")
+			<link rel="canonical" href="{{ canonical_url() }}">	
+		@endif
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100" rel="stylesheet">
 		{{--<link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
 		<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
