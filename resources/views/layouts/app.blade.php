@@ -22,8 +22,6 @@
 		gtag('config', 'AW-11277202705');
 	</script>
 
-	<link rel="canonical" href="{{ canonical_url() }}">	
-
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>@yield('title', 'Default') | {{ config('app.name', 'Render') }}</title>
 	<link rel="icon" href="/img/icon.png" sizes="32x32" type="image/png">
@@ -36,7 +34,8 @@
 		<!-- JWT Token -->
 		<meta name="jwt-token" content="{{ JWTAuth::fromUser(Auth::user()) }}">
 	@endauth
-	 <!-- Styles -->
+		<!-- Styles -->
+		<link rel="canonical" href="{{ canonical_url() }}">	
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100" rel="stylesheet">
 		{{--<link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
 		<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
