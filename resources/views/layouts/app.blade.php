@@ -22,7 +22,7 @@
 		gtag('config', 'AW-11277202705');
 	</script>
 
-	
+	<link rel="canonical" href="{{ canonical_url() }}">	
 
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>@yield('title', 'Default') | {{ config('app.name', 'Render') }}</title>

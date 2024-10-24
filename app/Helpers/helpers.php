@@ -639,3 +639,28 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 	return stream_get_contents($file);
 }
 
+/**
+ * Set canonical URL
+ */
+/**
+ * Set canonical URL.
+ */
+if (!function_exists('canonical_url')) {
+    function canonical_url()
+    {
+        // Get the current URL.
+        $currentUrl = url()->current();
+
+        // Remove www. from the url.
+        $formattedUrl = str_replace('https://www.', 'https://', $currentUrl);
+
+        // Check if the host name is render.properties.
+        if (!\Illuminate\Support\Str::startsWith($formattedUrl, 'https://render.properties')) {
+            $formattedUrl = str_replace('https://', 'https://render.properties/', $formattedUrl);
+        }
+
+        // Add a slash at the end.
+        return rtrim($formattedUrl, '/') . '/';
+    }
+}
+
