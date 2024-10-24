@@ -647,17 +647,14 @@ if (!function_exists('canonical_url')) {
     {
         // Get the current full URL.
         $currentUrl = url()->full();
-		
-        // Remove www. from the url.
-        $formattedUrl = str_replace('https://www.', 'https://', $currentUrl);
 
         // Add trailing slash to the path if it’s missing
-        $urlParts = parse_url($formattedUrl);
-        $path = isset($urlParts['path']) ? rtrim($urlParts['path'], '/') . '/' : '/';
+        $urlParts = parse_url($currentUrl);
+        $path = isset($urlParts['path']) ? rtrim($urlParts['path'], '/') : '/';
         $query = isset($urlParts['query']) ? '?' . $urlParts['query'] : '';
 
         // Reconstruct the URL with the path and query parameters
-        return "https://render.properties{$path}{$query}";
+        return "https://www.render.properties{$path}{$query}";
     }
 }
 
