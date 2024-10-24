@@ -648,8 +648,8 @@ function leads_csv_builder(\Illuminate\Database\Eloquent\Collection $leads, $for
 if (!function_exists('canonical_url')) {
     function canonical_url()
     {
-        // Get the current URL.
-        $currentUrl = url()->current();
+        // Get the current full URL.
+        $currentUrl = url()->full();
 
         // Remove www. from the url.
         $formattedUrl = str_replace('https://www.', 'https://', $currentUrl);
@@ -659,8 +659,13 @@ if (!function_exists('canonical_url')) {
             $formattedUrl = str_replace('https://', 'https://render.properties/', $formattedUrl);
         }
 
-        // Add a slash at the end.
-        return rtrim($formattedUrl, '/') . '/';
+        // Add trailing slash to the path if it’s missing
+        $urlParts = parse_url($formattedUrl);
+        $path = isset($urlParts['path']) ? rtrim($urlParts['path'], '/') . '/' : '/';
+        $query = isset($urlParts['query']) ? '?' . $urlParts['query'] : '';
+
+        // Reconstruct the URL with the path and query parameters
+        return "https://render.properties{$path}{$query}";
     }
 }
 
